@@ -1,0 +1,9 @@
+___
+#### switch _f_
+#### case true
+[Write with text: "schapen" ]
+#### case false
+[Write with text: "Kippen" ]
+#### default
+[Write with text: "niks" ]
+___
