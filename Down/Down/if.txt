@@ -1,0 +1,7 @@
+
+#### if _f_ like false
+[Write with text: "Kippen" ]
+#### else if _f_ like true
+[Write with text: "schapen" ]
+#### else  
+[Write with text: "niks" ]  

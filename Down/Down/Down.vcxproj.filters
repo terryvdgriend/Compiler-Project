@@ -19,9 +19,33 @@
     <Filter Include="Header Files\Tokenizer">
       <UniqueIdentifier>{990d6c60-b0b7-40e7-9db3-3e715a59520f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Libs">
+      <UniqueIdentifier>{565d4ecc-7028-422a-bb32-88245a473653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs">
+      <UniqueIdentifier>{ff4c1690-be39-48c8-9ad5-9e787812052d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="if.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="calc.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="switch.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="func.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -36,6 +60,12 @@
     <ClInclude Include="Token.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
+    <ClInclude Include="FileStreamer.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -49,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="Tokenizer.cpp">
       <Filter>Source Files\Tokenizer</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStreamer.cpp">
+      <Filter>Source Files\Libs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

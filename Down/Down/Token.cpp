@@ -2,7 +2,7 @@
 #include "Token.h"
 
 
-Token::Token()
+Token::Token() : Text{ "NotSet" }, Level{ 1 } //etc..
 {
 }
 
