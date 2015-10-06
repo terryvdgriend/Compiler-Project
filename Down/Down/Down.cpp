@@ -6,7 +6,7 @@
 #include "Tokenizer.h"
 #include "Token.h"
 #include "FileStreamer.h"
-
+#include "Format.h"
 
 int main()
 {
@@ -26,7 +26,7 @@ int main()
 	
 	//Lezen van code uit file
 	string codefromfile = fs.reader(datFile);
-	std::vector<std::string> splitCode = fs.split(codefromfile, ' ');
+	vector<string> splitCode = Format::split(codefromfile, '\n');
 
 	//code doorgeven aan de Tokenizert
 	tnzr.createTokenList(cTokenList, splitCode);

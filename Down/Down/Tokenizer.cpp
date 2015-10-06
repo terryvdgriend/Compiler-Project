@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
-
+#include "Format.h"
 #include <iostream>
 
 Tokenizer::Tokenizer()
@@ -25,11 +25,18 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, std::vector<string
 	cTokenList.push_back(pToken);
 
 	//
-	for (std::vector<string>::iterator it = codeSplit.begin(); it != codeSplit.end(); ++it) 
+	int rowNr = 1;
+	int colNr = 1;
+	//voor elke rij
+	for (vector<string>::iterator lines = codeSplit.begin(); lines != codeSplit.end(); ++lines)
 	{
-		string keyword = (*it);
+		vector<string> rows = Format::split((*lines), ' ');
+		for (std::vector<string>::iterator rws = rows.begin(); rws != rows.end(); ++rws)
+		{
+			std::cout << (*rws);
+		}
 
-		std::cout << (*it);
+		
 	}
 }
 
