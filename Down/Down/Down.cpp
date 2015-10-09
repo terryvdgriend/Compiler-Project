@@ -4,9 +4,13 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Tokenizer.h"
+#include "Compute.h"
+#include "Program.h"
 #include "Token.h"
 #include "FileStreamer.h"
 #include "Format.h"
+
+string getTextFromFile();
 
 int main()
 {
@@ -20,12 +24,13 @@ int main()
 
 
 	//=========COMPILER==============
-
+	Compute comp{ Compute(cTokenList) };
 
 
 
 	//=========VM==============
-
+	//TODO: meesturen wat je terug krijgt van de compute
+	Program prog{ Program() }; 
 
 
 

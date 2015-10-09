@@ -20,7 +20,11 @@ public:
 		NUMBER,
 		CONDITION_OPEN,
 		CONDITION_CLOSE,
-		SEMICOLON
+		SEMICOLON,
+		WHILE,
+		IF,
+		ELSE,
+		ELIF,
 	};
 
 public:

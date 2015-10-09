@@ -25,6 +25,30 @@
     <Filter Include="Source Files\Libs">
       <UniqueIdentifier>{ff4c1690-be39-48c8-9ad5-9e787812052d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Compiler">
+      <UniqueIdentifier>{e1a3dfd5-ec34-44f6-8ad5-959b545c5fef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM">
+      <UniqueIdentifier>{6fb11984-134d-405b-ac0a-abb89c2bb385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{6654e14a-307f-4301-a10a-63729fb0ad5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{72991237-6857-473e-87f1-b68dfde12e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Nodes">
+      <UniqueIdentifier>{91ee0ddf-07fa-4a09-9510-ea6c7802d9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile">
+      <UniqueIdentifier>{848b68c2-12dd-4e07-a11c-edb8b3b6e708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile">
+      <UniqueIdentifier>{06affdd3-5bc7-49f2-bf10-92287c8c8936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Nodes">
+      <UniqueIdentifier>{fac2dac8-b3a4-46bf-957b-1b5efc2e3b6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -69,6 +93,15 @@
     <ClInclude Include="Format.h">
       <Filter>Header Files\Libs</Filter>
     </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -88,6 +121,15 @@
     </ClCompile>
     <ClCompile Include="Format.cpp">
       <Filter>Source Files\Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
