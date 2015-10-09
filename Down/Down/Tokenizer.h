@@ -6,7 +6,7 @@ class Tokenizer
 {
 public:
 	Tokenizer();
-	void createTokenList(Token::TokenList& cTokenList, std::vector<std::string> codeSplit);
+	void createTokenList(Token::TokenList& cTokenList, string codefromfile);
 	~Tokenizer();
 };
 

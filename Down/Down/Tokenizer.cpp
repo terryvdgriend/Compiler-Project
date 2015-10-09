@@ -8,10 +8,10 @@ Tokenizer::Tokenizer()
 	//
 }
 
-void Tokenizer::createTokenList(Token::TokenList& cTokenList, std::vector<string> codeSplit)
+void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfile)
 {
 	Token  *pToken;
-
+	std::vector<string> codeSplit =  Format::split(codefromfile, '\n');
 
 	// VOORBEELD CODE: aanmaken van Token en stoppen op de 'stack'
 	pToken = new Token;

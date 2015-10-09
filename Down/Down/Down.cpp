@@ -10,29 +10,40 @@
 
 int main()
 {
-	cout << "so it begins..." << std::endl;
-
-	// vul naam in van de resource, die je wilt testen
-	// if / while / etc
-	string txtTje = "if"; 
-	string datFile = "./" + txtTje + ".txt";
-
 	//Declas
-	FileStreamer fs{ FileStreamer() };
-	Tokenizer tnzr{ Tokenizer() };
 	Token::TokenList cTokenList;
+	string codefromfile = getTextFromFile();//
 
-	
-	
-	//Lezen van code uit file
-	string codefromfile = fs.reader(datFile);
-	vector<string> splitCode = Format::split(codefromfile, '\n');
+	//=========TOKENIZER==============
+	Tokenizer tnzr{ Tokenizer() };
+	tnzr.createTokenList(cTokenList, codefromfile);
 
-	//code doorgeven aan de Tokenizert
-	tnzr.createTokenList(cTokenList, splitCode);
 
+	//=========COMPILER==============
+
+
+
+
+	//=========VM==============
+
+
+
+
+
+	//ZI ENDZ
 	int inputz = -1;
 	std::cin >> inputz;
 	return 0;
 }
 
+
+string getTextFromFile()
+{
+	// vul naam in van de resource, die je wilt testen
+	// if / while / etc
+	string txtTje = "if";
+	//
+	string datFile = "./" + txtTje + ".txt";
+	FileStreamer fs{ FileStreamer() };
+	return fs.reader(datFile);;
+}
