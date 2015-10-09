@@ -18,13 +18,9 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 	pToken->setText("x");
 	pToken->setEnum(Token::IDENTIFIER);
 	cTokenList.push_back(pToken);
+	//END
 
-	pToken = new Token;
-	pToken->setText("+");
-	pToken->setEnum(Token::PLUS);
-	cTokenList.push_back(pToken);
 
-	//
 	int rowNr = 1;
 	int colNr = 1;
 	//voor elke rij
