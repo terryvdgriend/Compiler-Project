@@ -1,8 +1,11 @@
 
-#### if _f_ like false
-[ Write with text: "Kippen" ]
-
-#### else if _f_ like true
-[ Write with text: "schapen" ]
+___
+#### if **i** like false
+**A** is **A** plus 1
+#### else if **i** like true
+**B** is **B** plus 1
 #### else  
-[ Write with text: "niks" ]  
+**C** is **C** plus 1  
+___
+
+

@@ -16,15 +16,20 @@ public:
 		DIVIDE,
 		LESS_THAN,
 		LARGER_THAN,
-		IDENTIFIER,
+		IDENTIFIER, // VARB (x, z )
 		NUMBER,
-		CONDITION_OPEN,
-		CONDITION_CLOSE,
-		SEMICOLON,
+		TEXT,
+		CONDITION_OPEN,  // ( -> simuleren?
+		CONDITION_CLOSE, // ) -> simuleren?
+		BODY_OPEN, // ____
+		BODY_CLOSED,// ____
 		WHILE,
 		IF,
 		ELSE,
 		ELIF,
+		EQUALS, // IS
+		EQUALS_TO, // LIKE
+		AND_PARA, // , (comma)
 	};
 
 public:
@@ -43,6 +48,7 @@ public:
 public:
 	std::string     getText() { return Text; };
 	iToken          getEnum(){ return type; };
+	
 	iterator       *getPartner()   { return Partner; };
 
 private:

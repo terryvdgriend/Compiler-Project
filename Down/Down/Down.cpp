@@ -21,7 +21,7 @@ int main()
 	//=========TOKENIZER==============
 	Tokenizer tnzr{ Tokenizer() };
 	tnzr.createTokenList(cTokenList, codefromfile);
-
+	tnzr.printTokenList(cTokenList);
 
 	//=========COMPILER==============
 	Compute comp{ Compute(cTokenList) };

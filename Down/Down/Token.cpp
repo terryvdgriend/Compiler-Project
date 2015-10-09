@@ -7,6 +7,7 @@ Token::Token() : Text{ "NotSet" }, Level{ 1 } //etc..
 }
 
 
+
 Token::~Token()
 {
 }
