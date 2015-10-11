@@ -2,6 +2,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include "Text.h"
 
 using namespace std;
 
@@ -9,14 +10,17 @@ class Token
 {
 public:
 	enum iToken {
+		// PROG ONLY
 		NONE = 0,
+		NEWLINE,
+		// REALDEAL
 		PLUS,
 		MINUS,
 		TIMES,
 		DIVIDE,
 		LESS_THAN,
 		LARGER_THAN,
-		IDENTIFIER, // VARB (x, z )
+		IDENTIFIER, // VARB **i**
 		NUMBER,
 		TEXT,
 		CONDITION_OPEN,  // ( -> simuleren?
@@ -30,10 +34,13 @@ public:
 		EQUALS, // IS
 		EQUALS_TO, // LIKE
 		AND_PARA, // , (comma)
+		CLASS,
+		BOOL,
 	};
 
 public:
 	typedef std::list<Token*>   TokenList;
+	typedef std::list<Token*>   Stack;
 	typedef TokenList::iterator iterator;
 
 public:
@@ -44,19 +51,21 @@ public:
 	virtual void    setText(std::string txt){ Text = txt; };
 	virtual void    setEnum(iToken itoken){ type = itoken; };
 	virtual void    setPartner(iterator& partner){ *Partner = partner; };
+	virtual void    setPositieInList(int txt){ PositieInList = txt; };
+	virtual void    setRegelnummer(int txt){ Regelnummer = txt; };
+	virtual void    setPositie(int txt){ Positie = txt; };
+	virtual void    setLevel(int txt){ Level = txt; };
 
 public:
 	std::string     getText() { return Text; };
 	iToken          getEnum(){ return type; };
-	
 	iterator       *getPartner()   { return Partner; };
+	void Print();
 
 private:
 	std::string     Text;
 	iToken          type;
 	iterator       *Partner;
-	
-	//Wat niet in de copy paste zat: (ook nog geen set;get;)
 	int PositieInList;
 	int Regelnummer;
 	int Positie;

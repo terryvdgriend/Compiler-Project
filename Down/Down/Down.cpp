@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include <iostream>
 #include "Tokenizer.h"
 #include "Compute.h"
 #include "Program.h"
@@ -33,6 +32,14 @@ int main()
 	Program prog{ Program() }; 
 
 
+	//HAZ errorz?
+	int a = tnzr.getErrors().size();
+	//comp.getErrors();
+	//prog.getErrors();
+	if (a != 0)
+	{
+		Text::PrintLine("Tokenizah haz errors :(");
+	}
 
 
 	//ZI ENDZ

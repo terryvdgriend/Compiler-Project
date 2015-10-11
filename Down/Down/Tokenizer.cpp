@@ -6,41 +6,86 @@
 
 Tokenizer::Tokenizer()
 {
-	// Incomplete cases
+	//
+	mappert["\n"] = Token::NEWLINE;
+	// 
+	mappert["###"] = Token::CLASS;
 	mappert["#### if"] = Token::IF;
 	mappert["#### else"] = Token::ELSE;
 	mappert["#### else if"] = Token::ELIF;
-	mappert["___"] = Token::BODY_OPEN;
+	mappert["___"] = Token::BODY_CLOSED;
+	mappert["---"] = Token::BODY_OPEN;
 	mappert["is"] = Token::EQUALS;
 	mappert["like"] = Token::EQUALS_TO;
+	//
+	mappert["_number_"] = Token::NUMBER;
+	mappert["_text_"] = Token::TEXT;
+	mappert["_fact_"] = Token::BOOL;
+	//
+	mappert["plus"] = Token::PLUS;
+	mappert["minus"] = Token::MINUS;
+	mappert["divide"] = Token::DIVIDE;
+	mappert["multiply"] = Token::TIMES;
+	mappert["modulo"] = Token::NONE;
+	//
+	mappert["**whut**"] = Token::IDENTIFIER;
 }
 
 void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfile)
 {
 	Token  *pToken;
-	
+	Token::Stack stack;
+
 	string s(codefromfile);
 	smatch m;
-	regex e("(#+ (?:else if|else|if|case)|\\w+|\\S+)"); 
+	regex e("(#+ (?:else if|else|if|case)|\\w+|\\S+|\n)");
 	// (#+ (?:else if|else|if|case)|\w+|\S+)
+	// M: (""|'.'\d+\.\d+|\w|\S|\n)
+	// 
 
 	int rowNr = 1;
 	int colNr = 1;
-	bool isBodyOpen = false;
-	bool isDone = false;
-	Token::iToken previousToken;
+	int lvl = 1;
 
 	while (regex_search(s, m, e))
 	{
 		string part = m[0];
 		Token::iToken currentToken = mappert[part];
 
-		
+		//New Lines
+		if (currentToken == Token::NEWLINE)
+		{
+			colNr = 1;
+			rowNr++;
+			s = m.suffix().str();
+			continue;
+		}
+
+		//Levels
+		if (currentToken == Token::BODY_OPEN)
+		{
+			lvl++;
+			//Token tok = stack.front();
+		}
 
 		pToken = new Token;
 		pToken->setText((part));
+		pToken->setLevel(lvl); // {} deep
+		pToken->setPositie(colNr);
+		pToken->setPositieInList(3);
+		pToken->setRegelnummer(rowNr);
+		//pToken->setPartner(&cTokenList.back()); // TODO
 		pToken->setEnum(currentToken);
 		cTokenList.push_back(pToken);
+
+		//++ col
+		colNr += part.size() + 1;
+		
+		//Levels
+		if (currentToken == Token::BODY_CLOSED)
+		{
+			lvl--;
+		}
 
 		//Next
 		s = m.suffix().str();
@@ -49,47 +94,13 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 
 void Tokenizer::printTokenList(Token::TokenList& cTokenList)
 {
+	Text::PrintLine("TEXT - REGELNR - COLNR - LEVEL - PARTNAH");
 	for (std::list<Token *>::iterator it = cTokenList.begin(); it != cTokenList.end(); it++)
-	{
-		Token *tokkie = (*it);
-		cout << ">> " + tokkie->getText() + "\n";
-
-	}
+		(*it)->Print();
 }
 
 
 Tokenizer::~Tokenizer()
 {
-	/*vector<string> rows = Format::split((*lines), ' ');
-	for (std::vector<string>::iterator rws = rows.begin(); rws != rows.end(); ++rws)
-	{*/
-
-	/*bool butwait = true;
-	while (butwait)
-	{
-	s = m.suffix().str();
-	regex_search(s, m, e);
-	string part2 = m[0];
-	Token::iToken datToken2 = mappert[part2];
-	if (datToken2 == Token::IF)
-	part = part + part2;
-	}*/
-
-	/*
-	if (currentToken == Token::NIV4)
-		{
-			previousToken = currentToken;
-			continue;
-		}
-		if (currentToken == Token::ELSE && previousToken == Token::NIV4)
-		{
-			// na ELSE kan nog ELSE IF komen
-		}
-		if (!(currentToken == Token::IF || currentToken == Token::ELSE) && previousToken == Token::NIV4)
-		{
-			errnoez.push_back("must have IF or ELSE on line X col X");
-			continue;
-		}
-	*/
 
 }
