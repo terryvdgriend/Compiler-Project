@@ -28,7 +28,7 @@ Tokenizer::Tokenizer()
 	mappert["multiply"] = Token::TIMES;
 	mappert["modulo"] = Token::NONE;
 	//
-	mappert["**whut**"] = Token::IDENTIFIER;
+	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
 }
 
 void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfile)
@@ -39,6 +39,7 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 	string s(codefromfile);
 	smatch m;
 	regex e("(#+ (?:else if|else|if|case)|\\w+|\\S+|\n)");
+	regex se("\\*\\*.+\\*\\*");
 	// (#+ (?:else if|else|if|case)|\w+|\S+)
 	// M: (""|'.'\d+\.\d+|\w|\S|\n)
 	// 
@@ -49,8 +50,16 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 
 	while (regex_search(s, m, e))
 	{
+		pToken = new Token;
+		Token::iToken currentToken;
 		string part = m[0];
-		Token::iToken currentToken = mappert[part];
+		//Check identifier
+		smatch sm;
+		regex_search(part, sm, se);
+		if (sm.size() != 0)
+			currentToken = Token::IDENTIFIER;
+		else
+			currentToken = mappert[part];
 
 		//New Lines
 		if (currentToken == Token::NEWLINE)
@@ -65,18 +74,17 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 		if (currentToken == Token::BODY_OPEN)
 		{
 			lvl++;
-			//Token tok = stack.front();
+			stack.push_front(pToken);
 		}
 
-		pToken = new Token;
+		
 		pToken->setText((part));
-		pToken->setLevel(lvl); // {} deep
+		pToken->setLevel(lvl); 
 		pToken->setPositie(colNr);
 		pToken->setPositieInList(3);
 		pToken->setRegelnummer(rowNr);
-		//pToken->setPartner(&cTokenList.back()); // TODO
 		pToken->setEnum(currentToken);
-		cTokenList.push_back(pToken);
+		
 
 		//++ col
 		colNr += part.size() + 1;
@@ -85,9 +93,13 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 		if (currentToken == Token::BODY_CLOSED)
 		{
 			lvl--;
+			//Token tok = *cTokenList.back();
+			//pToken->setPartner(tok); // TODO
+			stack.pop_front();
 		}
 
-		//Next
+		//Add + Next
+		cTokenList.push_back(pToken);
 		s = m.suffix().str();
 	}
 }
@@ -97,6 +109,7 @@ void Tokenizer::printTokenList(Token::TokenList& cTokenList)
 	Text::PrintLine("TEXT - REGELNR - COLNR - LEVEL - PARTNAH");
 	for (std::list<Token *>::iterator it = cTokenList.begin(); it != cTokenList.end(); it++)
 		(*it)->Print();
+
 }
 
 

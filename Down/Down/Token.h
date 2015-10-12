@@ -8,6 +8,7 @@ using namespace std;
 
 class Token
 {
+
 public:
 	enum iToken {
 		// PROG ONLY
@@ -37,6 +38,7 @@ public:
 		CLASS,
 		BOOL,
 	};
+
 
 public:
 	typedef std::list<Token*>   TokenList;
