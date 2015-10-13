@@ -64,7 +64,9 @@ public:
 	iToken          getEnum(){ return type; };
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
+	int				getLineNumber(){ return Regelnummer; };
 	void Print();
+	void PrintError();
 	Token*			next;
 	Token*			previous;
 

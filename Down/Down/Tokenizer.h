@@ -13,6 +13,7 @@ private:
 	std::list<string> errnoez;
 	Stack stack;
 	void checkStack();
+	bool tokenError = false;
 public:
 	Tokenizer();
 	void createTokenList(LinkedList& cTokenList, string codefromfile);
@@ -20,6 +21,8 @@ public:
 	void CheckStack(Token& token, int& lvl);
 	void CheckCondition(Token& token, int& lvl);
 	void CheckBrackets(Token& token, int& lvl);
+	void CheckRemainingStack();
+	bool GetTokenError() { return tokenError; };
 	Token::iToken getEnumByString(string name, bool &isDone);
 	std::list<string> getErrors(){ return errnoez; };
 	~Tokenizer();

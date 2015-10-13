@@ -27,6 +27,20 @@ void Token::Print()
 
 }
 
+void Token::PrintError()
+{
+	int space = 15;
+	//
+	string spacer = std::string(space - this->Text.size(), ' ');
+	Text::Print("Error at line:" + std::string(4, ' '));
+	Text::Print(to_string(this->Regelnummer) + std::string(4, ' '));
+	Text::Print("token error:" + std::string(4, ' '));
+	Text::Print(this->Text + spacer);
+	//
+	Text::PrintLine("");
+
+}
+
 Token::~Token()
 {
 }

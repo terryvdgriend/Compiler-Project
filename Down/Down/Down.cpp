@@ -23,24 +23,19 @@ int main()
 	tnzr.createTokenList(cTokenList, codefromfile);
 	tnzr.printTokenList(cTokenList);
 
-	//=========COMPILER==============
-	//Compute comp{ Compute(cTokenList) };
+	if (!tnzr.GetTokenError()){
+		//=========COMPILER==============
+		//Compute comp{ Compute(cTokenList) };
 
 
 
-	//=========VM==============
-	//TODO: meesturen wat je terug krijgt van de compute
-	Program prog{ Program() }; 
+		//=========VM==============
+		//TODO: meesturen wat je terug krijgt van de compute
+		Program prog{ Program() };
 
-
-	//HAZ errorz?
-	int a = tnzr.getErrors().size();
-	//comp.getErrors();
-	//prog.getErrors();
-	if (a != 0)
-	{
-		Text::PrintLine("Tokenizah haz errors :(");
 	}
+
+
 
 
 	//ZI ENDZ

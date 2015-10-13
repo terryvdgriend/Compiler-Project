@@ -106,15 +106,32 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		CheckStack(*pToken,lvl);
 		s = m.suffix().str();
 	}
+	CheckRemainingStack();
 }
 
 void Tokenizer::printTokenList(LinkedList& cTokenList)
 {
-	Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
-	Token* start = cTokenList.first;
-	while (start != nullptr){
-		start->Print();
-		start = start->next;
+	if (this->stack.size() > 0){
+		tokenError = true;
+		while (this->stack.size() > 0){
+			Token* token = this->stack.top();
+			this->stack.pop();
+			token->PrintError();
+		}
+	}
+	else{
+		Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
+		Token* start = cTokenList.first;
+		while (start != nullptr){
+			start->Print();
+			start = start->next;
+		}
+	}
+}
+
+void Tokenizer::CheckRemainingStack(){
+	if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF){
+		this->stack.pop();
 	}
 }
 
@@ -140,6 +157,49 @@ void Tokenizer::CheckCondition(Token& token, int& lvl){
 			token.setPartner(stackToken);
 			stackToken->setPartner(&token);
 			this->stack.pop();
+		}
+		else if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::ELIF)
+		{
+			Token* stackToken = this->stack.top();
+			Token* partner = stackToken->getPartner();
+			if (partner == nullptr){
+				this->stack.push(&token);
+			}
+			else{
+				while (partner->getEnum() != Token::IF){
+					partner = partner->getPartner();
+				}
+				token.setPartner(partner);
+				stackToken->setPartner(&token);
+				this->stack.pop();
+			}
+
+		}
+		else{
+			this->stack.push(&token);
+		}
+	}
+	if (token.getEnum() == Token::ELIF)
+	{
+		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
+		{
+			Token* stackToken = this->stack.top();
+			token.setPartner(stackToken);
+			stackToken->setPartner(&token);
+			this->stack.pop();
+			this->stack.push(&token);
+		}
+		else if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::ELIF)
+		{
+			Token* stackToken = this->stack.top();
+			Token* partner = stackToken->getPartner();
+			while (partner->getEnum() != Token::IF){
+				partner = partner->getPartner();
+			}
+			token.setPartner(partner);
+			stackToken->setPartner(&token);
+			this->stack.pop();
+			this->stack.push(&token);
 		}
 		else{
 			this->stack.push(&token);
