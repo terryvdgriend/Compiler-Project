@@ -89,6 +89,7 @@
     <ClInclude Include="Compute.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="Down.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

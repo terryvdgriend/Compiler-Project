@@ -6,6 +6,7 @@
 #include "Compute.h"
 #include "Program.h"
 #include "Token.h"
+#include "LinkedList.h"
 #include "FileStreamer.h"
 #include "Format.h"
 
@@ -14,7 +15,7 @@ string getTextFromFile();
 int main()
 {
 	//Declas
-	Token::TokenList cTokenList;
+	LinkedList cTokenList;
 	string codefromfile = getTextFromFile();//
 
 	//=========TOKENIZER==============
@@ -23,7 +24,7 @@ int main()
 	tnzr.printTokenList(cTokenList);
 
 	//=========COMPILER==============
-	Compute comp{ Compute(cTokenList) };
+	//Compute comp{ Compute(cTokenList) };
 
 
 

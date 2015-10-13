@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
 #include "Format.h"
+#include "LinkedList.h"
 #include <iostream>
 #include <regex>
 
@@ -31,10 +32,9 @@ Tokenizer::Tokenizer()
 	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
 }
 
-void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfile)
+void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	Token  *pToken;
-	Token::Stack stack;
 
 	string s(codefromfile);
 	smatch m;
@@ -47,6 +47,7 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
+	int pInt = 0;
 
 	while (regex_search(s, m, e))
 	{
@@ -71,46 +72,115 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 		}
 
 		//Levels
-		if (currentToken == Token::BODY_OPEN)
-		{
-			lvl++;
-			stack.push_front(pToken);
-		}
+		//if (currentToken == Token::BODY_OPEN)
+		//{
+		//	lvl++;
+		//	stack.push_front(pToken);
+		//}
 
 		
 		pToken->setText((part));
 		pToken->setLevel(lvl); 
 		pToken->setPositie(colNr);
-		pToken->setPositieInList(3);
+		pToken->setPositieInList(pInt);
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
 		
 
 		//++ col
 		colNr += part.size() + 1;
+		pInt++;
 		
-		//Levels
-		if (currentToken == Token::BODY_CLOSED)
-		{
-			lvl--;
-			//Token tok = *cTokenList.back();
-			//pToken->setPartner(tok); // TODO
-			stack.pop_front();
-		}
+		////Levels
+		//if (currentToken == Token::BODY_CLOSED)
+		//{
+		//	lvl--;
+		//	//Token tok = *cTokenList.back();
+		//	//pToken->setPartner(tok); // TODO
+		//	stack.pop_front();
+		//}
 
 		//Add + Next
-		cTokenList.push_back(pToken);
+		cTokenList.add(pToken);
+		//
+		CheckStack(*pToken,lvl);
 		s = m.suffix().str();
 	}
 }
 
-void Tokenizer::printTokenList(Token::TokenList& cTokenList)
+void Tokenizer::printTokenList(LinkedList& cTokenList)
 {
-	Text::PrintLine("TEXT - REGELNR - COLNR - LEVEL - PARTNAH");
-	for (std::list<Token *>::iterator it = cTokenList.begin(); it != cTokenList.end(); it++)
-		(*it)->Print();
-
+	Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
+	Token* start = cTokenList.first;
+	while (start != nullptr){
+		start->Print();
+		start = start->next;
+	}
 }
+
+void Tokenizer::CheckStack(Token& token, int& lvl){
+	CheckCondition(token, lvl);
+	CheckBrackets(token, lvl);
+};
+
+void Tokenizer::CheckCondition(Token& token, int& lvl){
+	if (token.getEnum() == Token::IF)
+	{
+		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
+		{
+			this->stack.pop();
+		}
+		this->stack.push(&token);
+	}
+	if (token.getEnum() == Token::ELSE)
+	{
+		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
+		{
+			Token* stackToken = this->stack.top();
+			token.setPartner(stackToken);
+			stackToken->setPartner(&token);
+			this->stack.pop();
+		}
+		else{
+			this->stack.push(&token);
+		}
+	}
+};
+
+void Tokenizer::CheckBrackets(Token& token, int& lvl)
+{
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN)
+	{
+		this->stack.push(&token);
+		lvl++;
+	}
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE)
+	{
+		lvl--;
+		if (this->stack.size() > 0)
+		{
+			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::IF) && token.getLevel() == this->stack.top()->getLevel())
+			{
+				if (token.next != nullptr)
+				{
+					if (token.next->getEnum() != Token::ELSE)
+					{
+						this->stack.pop();
+					}
+				}
+			}
+			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
+				(token.getEnum() == Token::CONDITION_CLOSE & this->stack.top()->getEnum() == Token::CONDITION_OPEN))
+			{
+				token.setLevel(lvl);
+				Token* stackToken = this->stack.top();
+				token.setPartner(stackToken);
+				stackToken->setPartner(&token);
+				this->stack.pop();
+			}
+		}
+	}
+};
 
 
 Tokenizer::~Tokenizer()

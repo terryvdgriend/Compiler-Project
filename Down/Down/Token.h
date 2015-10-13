@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <list>
+#include <stack>
 #include <map>
 #include "Text.h"
 
@@ -42,7 +43,6 @@ public:
 
 public:
 	typedef std::list<Token*>   TokenList;
-	typedef std::list<Token*>   Stack;
 	typedef TokenList::iterator iterator;
 
 public:
@@ -52,22 +52,26 @@ public:
 public:
 	virtual void    setText(std::string txt){ Text = txt; };
 	virtual void    setEnum(iToken itoken){ type = itoken; };
-	virtual void    setPartner(iterator& partner){ *Partner = partner; };
+	virtual void    setPartner(Token* partner){ Partner = partner; };
 	virtual void    setPositieInList(int txt){ PositieInList = txt; };
 	virtual void    setRegelnummer(int txt){ Regelnummer = txt; };
 	virtual void    setPositie(int txt){ Positie = txt; };
 	virtual void    setLevel(int txt){ Level = txt; };
 
+
 public:
 	std::string     getText() { return Text; };
 	iToken          getEnum(){ return type; };
-	iterator       *getPartner()   { return Partner; };
+	Token*			getPartner()   { return Partner; };
+	int				getLevel() { return Level; };
 	void Print();
+	Token*			next;
+	Token*			previous;
 
 private:
 	std::string     Text;
 	iToken          type;
-	iterator       *Partner;
+	Token*			Partner;
 	int PositieInList;
 	int Regelnummer;
 	int Positie;
