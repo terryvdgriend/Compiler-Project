@@ -6,8 +6,9 @@ class Tokenizer
 {
 private: 
 	std::map<string, Token::iToken> mappert;
+	std::map<regex, Token::iToken> mappert2;
 	std::list<string> errnoez;
-
+	Token::iToken thinkAgain(std::string str);
 	void checkStack();
 public:
 	Tokenizer();

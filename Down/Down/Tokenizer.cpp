@@ -6,9 +6,14 @@
 
 Tokenizer::Tokenizer()
 {
-	//
+	//System only
 	mappert["\n"] = Token::NEWLINE;
-	// 
+
+	// Think again map
+	mappert2[std::regex("\\*\\*.+\\*\\*")] = Token::IDENTIFIER;
+	mappert2[std::regex("\d+")] = Token::NUMBER;
+	
+	// First Map
 	mappert["###"] = Token::CLASS;
 	mappert["#### if"] = Token::IF;
 	mappert["#### else"] = Token::ELSE;
@@ -17,18 +22,16 @@ Tokenizer::Tokenizer()
 	mappert["---"] = Token::BODY_OPEN;
 	mappert["is"] = Token::EQUALS;
 	mappert["like"] = Token::EQUALS_TO;
-	//
+	// klopt niet: moeten de types zijn
 	mappert["_number_"] = Token::NUMBER;
 	mappert["_text_"] = Token::TEXT;
 	mappert["_fact_"] = Token::BOOL;
-	//
+	//Reken dingen
 	mappert["plus"] = Token::PLUS;
 	mappert["minus"] = Token::MINUS;
 	mappert["divide"] = Token::DIVIDE;
 	mappert["multiply"] = Token::TIMES;
 	mappert["modulo"] = Token::NONE;
-	//
-	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
 }
 
 void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfile)
@@ -39,7 +42,7 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 	string s(codefromfile);
 	smatch m;
 	regex e("(#+ (?:else if|else|if|case)|\\w+|\\S+|\n)");
-	regex se("\\*\\*.+\\*\\*");
+	//regex se("\\*\\*.+\\*\\*");
 	// (#+ (?:else if|else|if|case)|\w+|\S+)
 	// M: (""|'.'\d+\.\d+|\w|\S|\n)
 	// 
@@ -54,12 +57,18 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 		Token::iToken currentToken;
 		string part = m[0];
 		//Check identifier
-		smatch sm;
-		regex_search(part, sm, se);
-		if (sm.size() != 0)
-			currentToken = Token::IDENTIFIER;
-		else
-			currentToken = mappert[part];
+		//smatch sm;
+		//regex_search(part, sm, se);
+		//if (sm.size() != 0)
+		//currentToken = Token::IDENTIFIER;
+		//currentToken = mappert2[std::regex("\\*\\*.+\\*\\*")];
+		//mappert2[se];
+
+		currentToken = mappert[part];
+		if (currentToken = Token::NONE)
+		{
+			currentToken = thinkAgain(part);
+		}
 
 		//New Lines
 		if (currentToken == Token::NEWLINE)
@@ -77,18 +86,18 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 			stack.push_front(pToken);
 		}
 
-		
+
 		pToken->setText((part));
-		pToken->setLevel(lvl); 
+		pToken->setLevel(lvl);
 		pToken->setPositie(colNr);
 		pToken->setPositieInList(3);
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
-		
+
 
 		//++ col
 		colNr += part.size() + 1;
-		
+
 		//Levels
 		if (currentToken == Token::BODY_CLOSED)
 		{
@@ -102,6 +111,16 @@ void Tokenizer::createTokenList(Token::TokenList& cTokenList, string codefromfil
 		cTokenList.push_back(pToken);
 		s = m.suffix().str();
 	}
+}
+
+Token::iToken Tokenizer::thinkAgain(std::string str)
+{
+	Token::iToken tokkie;
+	for (map<regex, Token::iToken>::iterator tt = mappert2.begin(); tt != mappert2.end(); tt++)
+	{
+
+	}
+	return tokkie;
 }
 
 void Tokenizer::printTokenList(Token::TokenList& cTokenList)

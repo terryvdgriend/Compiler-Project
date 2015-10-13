@@ -22,8 +22,8 @@ public:
 		LESS_THAN,
 		LARGER_THAN,
 		IDENTIFIER, // VARB **i**
-		NUMBER,
-		TEXT,
+		NUMBER, // 1-2-3-4
+		TEXT, // "txt" 
 		CONDITION_OPEN,  // ( -> simuleren?
 		CONDITION_CLOSE, // ) -> simuleren?
 		BODY_OPEN, // ____
