@@ -1,6 +1,13 @@
+___
 ### secret CalculateAge: gets _number_ **age**, _text_  name and gives _number_ **result**
 
 > Calculate the age by multiplying the given age by two.
+
+	___
+	#### if **i** like false
+	**A** is **A** plus 1
+	___
+
 
 **age** is **age** multiplied by 2  
 **result** is **age**  

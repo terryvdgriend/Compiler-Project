@@ -102,6 +102,9 @@
     <ClInclude Include="Compiler.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -130,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="Compiler.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\Libs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
