@@ -79,12 +79,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			continue;
 		}
 
-		//Levels
-		if (currentToken == Token::BODY_OPEN)
-		{
-			lvl++;
-			//stack.push_front(pToken);
-		}
+		
 
 		
 		pToken->setText((part));
@@ -93,6 +88,13 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken->setPositieInList(pInt);
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
+		
+		//Levels
+		if (currentToken == Token::BODY_OPEN )
+		{
+			lvl++;
+			//stack.push_front(pToken);
+		}
 		
 
 		//++ col
@@ -110,6 +112,12 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		//Add + Next
 		cTokenList.add(pToken);
+
+		if (currentToken == Token::IF || currentToken == Token::ELIF || currentToken == Token::ELSE)
+		{
+			lvl++;
+			//stack.push_front(pToken);
+		}
 		//
 		CheckStack(*pToken,lvl);
 		s = m.suffix().str();
