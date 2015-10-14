@@ -11,6 +11,7 @@ Tokenizer::Tokenizer()
 	mappert["\n"] = Token::NEWLINE;
 	// 
 	mappert["###"] = Token::CLASS;
+	mappert["secret"] = Token::PRIVATE;
 	mappert["#### if"] = Token::IF;
 	mappert["#### else"] = Token::ELSE;
 	mappert["#### else if"] = Token::ELIF;
@@ -22,14 +23,21 @@ Tokenizer::Tokenizer()
 	mappert["_number_"] = Token::NUMBER;
 	mappert["_text_"] = Token::TEXT;
 	mappert["_fact_"] = Token::BOOL;
+	mappert["_variable_"] = Token::IDENTIFIER;
 	//
 	mappert["plus"] = Token::PLUS;
 	mappert["minus"] = Token::MINUS;
 	mappert["divide"] = Token::DIVIDE;
 	mappert["multiply"] = Token::TIMES;
-	mappert["modulo"] = Token::NONE;
+	mappert["modulo"] = Token::MODULO;
 	//
 	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
+
+
+	regexert[std::string("\\d")] = Token::NUMBER;
+	regexert[std::string("\".*?\"")] = Token::TEXT;
+	regexert[std::string("(true|false)")] = Token::BOOL;
+	regexert[std::string("\\w")] = Token::IDENTIFIER;
 }
 
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
@@ -60,7 +68,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		if (sm.size() != 0)
 			currentToken = Token::IDENTIFIER;
 		else
-			currentToken = mappert[part];
+			currentToken = (mappert.find(part) == mappert.end()) ? getToken(part) : mappert[part];
 
 		//New Lines
 		if (currentToken == Token::NEWLINE)
@@ -72,11 +80,11 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 
 		//Levels
-		//if (currentToken == Token::BODY_OPEN)
-		//{
-		//	lvl++;
-		//	stack.push_front(pToken);
-		//}
+		if (currentToken == Token::BODY_OPEN)
+		{
+			lvl++;
+			//stack.push_front(pToken);
+		}
 
 		
 		pToken->setText((part));
@@ -92,13 +100,13 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pInt++;
 		
 		////Levels
-		//if (currentToken == Token::BODY_CLOSED)
-		//{
-		//	lvl--;
-		//	//Token tok = *cTokenList.back();
-		//	//pToken->setPartner(tok); // TODO
-		//	stack.pop_front();
-		//}
+		if (currentToken == Token::BODY_CLOSED)
+		{
+			lvl--;
+			//Token tok = *cTokenList.back();
+			//pToken->setPartner(tok); // TODO
+//			stack.pop_front();
+		}
 
 		//Add + Next
 		cTokenList.add(pToken);
@@ -123,7 +131,7 @@ void Tokenizer::printTokenList(LinkedList& cTokenList)
 		Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
 		Token* start = cTokenList.first;
 		while (start != nullptr){
-			start->Print();
+			start->Print(this->mappert);
 			start = start->next;
 		}
 	}
@@ -135,12 +143,13 @@ void Tokenizer::CheckRemainingStack(){
 	}
 }
 
-void Tokenizer::CheckStack(Token& token, int& lvl){
-	CheckCondition(token, lvl);
+
+void Tokenizer::CheckStack(Token& token, int &lvl){
+	CheckCondition(token,  lvl);
 	CheckBrackets(token, lvl);
 };
 
-void Tokenizer::CheckCondition(Token& token, int& lvl){
+void Tokenizer::CheckCondition(Token& token, int &lvl){
 	if (token.getEnum() == Token::IF)
 	{
 		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
@@ -207,16 +216,14 @@ void Tokenizer::CheckCondition(Token& token, int& lvl){
 	}
 };
 
-void Tokenizer::CheckBrackets(Token& token, int& lvl)
+void Tokenizer::CheckBrackets(Token& token,int &lvl)
 {
 	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN)
 	{
 		this->stack.push(&token);
-		lvl++;
 	}
 	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE)
 	{
-		lvl--;
 		if (this->stack.size() > 0)
 		{
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::IF) && token.getLevel() == this->stack.top()->getLevel())
@@ -230,7 +237,7 @@ void Tokenizer::CheckBrackets(Token& token, int& lvl)
 				}
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
-				(token.getEnum() == Token::CONDITION_CLOSE & this->stack.top()->getEnum() == Token::CONDITION_OPEN))
+				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
 				token.setLevel(lvl);
 				Token* stackToken = this->stack.top();
@@ -241,6 +248,21 @@ void Tokenizer::CheckBrackets(Token& token, int& lvl)
 		}
 	}
 };
+
+Token::iToken Tokenizer::getToken(std::string token){
+	typedef std::map<std::string, Token::iToken>::iterator it_type;
+	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) {
+		smatch m;
+		regex e(iterator->first);
+		regex_search(token, m, e);
+		if (m.size() != 0)
+		{
+			return iterator->second;
+		}
+
+	}
+	return Token::NONE;	
+}
 
 
 Tokenizer::~Tokenizer()

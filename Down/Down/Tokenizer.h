@@ -10,9 +10,12 @@ public:
 	typedef std::stack<Token*>   Stack;
 private: 
 	std::map<string, Token::iToken> mappert;
+	std::map<string, Token::iToken> regexert;
+	std::map<string, Token::iToken> Regex;
 	std::list<string> errnoez;
 	Stack stack;
 	void checkStack();
+	Token::iToken getToken(std::string token);
 	bool tokenError = false;
 public:
 	Tokenizer();

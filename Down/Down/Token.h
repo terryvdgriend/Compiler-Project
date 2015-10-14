@@ -38,6 +38,8 @@ public:
 		AND_PARA, // , (comma)
 		CLASS,
 		BOOL,
+		MODULO,
+		PRIVATE
 	};
 
 
@@ -65,7 +67,8 @@ public:
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
 	int				getLineNumber(){ return Regelnummer; };
-	void Print();
+	std::string getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token);
+	void Print(std::map<string, Token::iToken>& map);
 	void PrintError();
 	Token*			next;
 	Token*			previous;
