@@ -27,8 +27,11 @@ public:
 		TEXT, // "txt" 
 		CONDITION_OPEN,  // ( -> simuleren?
 		CONDITION_CLOSE, // ) -> simuleren?
+		FUNCTION_OPEN,  // ( -> simuleren?
+		FUNCTION_CLOSE, // ) -> simuleren?
 		BODY_OPEN, // ____
 		BODY_CLOSED,// ____
+		DO,
 		WHILE,
 		IF,
 		ELSE,
@@ -39,7 +42,16 @@ public:
 		CLASS,
 		BOOL,
 		MODULO,
-		PRIVATE
+		PRIVATE,
+		FOR,
+		FOREACH,
+		PLUSPLUS,
+		MINUSMINUS,
+		SEPARATOR,
+		DECLARATION,
+		IN,
+		FUNCTION,
+		NAMESPACE
 	};
 
 

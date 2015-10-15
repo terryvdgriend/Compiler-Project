@@ -10,23 +10,41 @@ Tokenizer::Tokenizer()
 	//
 	mappert["\n"] = Token::NEWLINE;
 	// 
-	mappert["###"] = Token::CLASS;
 	mappert["secret"] = Token::PRIVATE;
 	mappert["#### if"] = Token::IF;
 	mappert["#### else"] = Token::ELSE;
 	mappert["#### else if"] = Token::ELIF;
-	mappert["___"] = Token::BODY_CLOSED;
-	mappert["---"] = Token::BODY_OPEN;
+	mappert["#### for"] = Token::FOR;
+	mappert["#### foreach"] = Token::FOREACH;
+	mappert["#### while"] = Token::WHILE;
+	mappert["#### do"] = Token::DO;
+	mappert["---"] = Token::FUNCTION_OPEN;
+	mappert["___"] = Token::FUNCTION_CLOSE;
+	mappert["("] = Token::CONDITION_OPEN;
+	mappert[")"] = Token::CONDITION_CLOSE;
+	mappert["{"] = Token::BODY_OPEN;
+	mappert["}"] = Token::BODY_CLOSED;
+	//
 	mappert["is"] = Token::EQUALS;
 	mappert["like"] = Token::EQUALS_TO;
+	mappert["smaller than"] = Token::LESS_THAN;
+	mappert["larger than"] = Token::LARGER_THAN;
+	mappert["in"] = Token::IN;
 	//
 	mappert["_number_"] = Token::NUMBER;
 	mappert["_text_"] = Token::TEXT;
 	mappert["_fact_"] = Token::BOOL;
 	mappert["_variable_"] = Token::IDENTIFIER;
+	mappert[","] = Token::SEPARATOR;
+	mappert["_declarition_"] = Token::DECLARATION;
+	mappert["_function_"] = Token::FUNCTION;
+	mappert["_class_"] = Token::CLASS;
+	mappert["_namespace_"] = Token::NAMESPACE;
 	//
 	mappert["plus"] = Token::PLUS;
+	mappert["increased"] = Token::PLUSPLUS;
 	mappert["minus"] = Token::MINUS;
+	mappert["decreased"] = Token::MINUSMINUS;
 	mappert["divide"] = Token::DIVIDE;
 	mappert["multiply"] = Token::TIMES;
 	mappert["modulo"] = Token::MODULO;
@@ -37,7 +55,12 @@ Tokenizer::Tokenizer()
 	regexert[std::string("\\d")] = Token::NUMBER;
 	regexert[std::string("\".*?\"")] = Token::TEXT;
 	regexert[std::string("(true|false)")] = Token::BOOL;
-	regexert[std::string("\\w")] = Token::IDENTIFIER;
+	regexert[std::string("\\*\\*(\\w*)?\\*\\*")] = Token::IDENTIFIER;
+	regexert[std::string("(_(\\w*)_)")] = Token::DECLARATION;
+	regexert[std::string("(# (\\w*))")] = Token::NAMESPACE;
+	regexert[std::string("(## (\\w*))")] = Token::CLASS;
+	regexert[std::string("(### (\\w*):)")] = Token::FUNCTION;
+
 }
 
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
@@ -46,7 +69,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 	string s(codefromfile);
 	smatch m;
-	regex e("(#+ (?:else if|else|if|case)|\\w+|\\S+|\n)");
+	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for)|(#+)? (\\w+)?|(smaller|larger) than|\\w+|\\S+|\n)");
 	regex se("\\*\\*.+\\*\\*");
 	// (#+ (?:else if|else|if|case)|\w+|\S+)
 	// M: (""|'.'\d+\.\d+|\w|\S|\n)
@@ -56,7 +79,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	int colNr = 1;
 	int lvl = 1;
 	int pInt = 0;
-
+	Token *prevToken;
 	while (regex_search(s, m, e))
 	{
 		pToken = new Token;
@@ -88,39 +111,32 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken->setPositieInList(pInt);
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
-		
+
+		//Add + Next
+		cTokenList.add(pToken);
+
+
+
 		//Levels
-		if (currentToken == Token::BODY_OPEN )
+		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN)
 		{
 			lvl++;
-			//stack.push_front(pToken);
 		}
-		
 
 		//++ col
 		colNr += part.size() + 1;
 		pInt++;
 		
 		////Levels
-		if (currentToken == Token::BODY_CLOSED)
+		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE)
 		{
 			lvl--;
-			//Token tok = *cTokenList.back();
-			//pToken->setPartner(tok); // TODO
-//			stack.pop_front();
 		}
 
-		//Add + Next
-		cTokenList.add(pToken);
+		CheckStack(*pToken, lvl);
 
-		if (currentToken == Token::IF || currentToken == Token::ELIF || currentToken == Token::ELSE)
-		{
-			lvl++;
-			//stack.push_front(pToken);
-		}
-		//
-		CheckStack(*pToken,lvl);
 		s = m.suffix().str();
+		prevToken = pToken;
 	}
 	CheckRemainingStack();
 }

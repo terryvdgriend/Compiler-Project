@@ -1,8 +1,13 @@
 
-#### while **i** is smaller than 10
+#### while ( **i** is smaller than 10 ) {
 
-#### for _number_ **i** is 0, **i** is smaller than 10, **i** increased
+}
 
-#### foreach _Animal_ **chicken** in **animals**
+#### for ( _number_ **i** is 0, **i** is smaller than 10, **i** increased ) {
+}
 
-#### do **i** increased while **i** is smaller than 10
+#### foreach ( _Animal_ **chicken** in **animals** ) {
+}
+
+#### do ( **i** increased ) #### while ( **i** is smaller than 10 ) {
+}

@@ -49,7 +49,7 @@ string getTextFromFile()
 {
 	// vul naam in van de resource, die je wilt testen
 	// if / while / etc
-	string txtTje = "if";
+	string txtTje = "func";
 	//
 	string datFile = "./" + txtTje + ".txt";
 	FileStreamer fs{ FileStreamer() };

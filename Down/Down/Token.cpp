@@ -10,7 +10,7 @@ Token::Token() : Text{ "NotSet" }, Level{ 1 }, next{ nullptr }, previous{nullptr
 
 void Token::Print(std::map<string, Token::iToken>& map)
 {
-	int space = 15;
+	int space = 20;
 	//
 	string spacer = std::string(space - this->Text.size(), ' ');
 	Text::Print(to_string(this->PositieInList) + std::string(4, ' '));
