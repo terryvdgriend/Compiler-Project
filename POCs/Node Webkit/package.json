@@ -1,0 +1,12 @@
+{
+  "name": "Node_Webkit",
+  "main": "./html/index.html",
+  "window": {
+    "toolbar": true,
+    "show": true,
+    "icon": "./img/icon.png"
+  },
+  "dependencies": {
+    "marked": "^0.3.3"
+  }
+}
