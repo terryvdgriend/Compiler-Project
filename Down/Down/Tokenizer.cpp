@@ -69,7 +69,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 	string s(codefromfile);
 	smatch m;
-	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for)|(#+)? (\\w+)?|(smaller|larger) than|\\w+|\\S+|\n)");
+	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for)|(smaller|larger) than|\\w+|\\S+|\n)");
 	regex se("\\*\\*.+\\*\\*");
 	// (#+ (?:else if|else|if|case)|\w+|\S+)
 	// M: (""|'.'\d+\.\d+|\w|\S|\n)
