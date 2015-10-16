@@ -22,8 +22,13 @@ Tokenizer::Tokenizer()
 	mappert["___"] = Token::FUNCTION_CLOSE;
 	mappert["("] = Token::CONDITION_OPEN;
 	mappert[")"] = Token::CONDITION_CLOSE;
-	mappert["{"] = Token::BODY_OPEN;
-	mappert["}"] = Token::BODY_CLOSED;
+	mappert["--"] = Token::BODY_OPEN;
+	mappert["__"] = Token::BODY_CLOSED;
+	mappert["{"] = Token::ARRAY_OPEN;
+	mappert["}"] = Token::ARRAY_CLOSED;
+	mappert[":"] = Token::ASSIGNMENT;
+	mappert["["] = Token::FUNCTION_DECLARE_OPEN;
+	mappert["]"] = Token::FUNCTION_DECLARE_CLOSE;
 	//
 	mappert["is"] = Token::EQUALS;
 	mappert["like"] = Token::EQUALS_TO;
@@ -31,8 +36,8 @@ Tokenizer::Tokenizer()
 	mappert["larger than"] = Token::LARGER_THAN;
 	mappert["in"] = Token::IN;
 	//
-	mappert["_number_"] = Token::NUMBER;
-	mappert["_text_"] = Token::TEXT;
+	mappert["_getal_"] = Token::NUMBER;
+	mappert["_tekst_"] = Token::TEXT;
 	mappert["_fact_"] = Token::BOOL;
 	mappert["_variable_"] = Token::IDENTIFIER;
 	mappert[","] = Token::SEPARATOR;
@@ -40,6 +45,7 @@ Tokenizer::Tokenizer()
 	mappert["_function_"] = Token::FUNCTION;
 	mappert["_class_"] = Token::CLASS;
 	mappert["_namespace_"] = Token::NAMESPACE;
+	mappert["_comment_"] = Token::COMMENT;
 	//
 	mappert["plus"] = Token::PLUS;
 	mappert["increased"] = Token::PLUSPLUS;
@@ -48,18 +54,62 @@ Tokenizer::Tokenizer()
 	mappert["divide"] = Token::DIVIDE;
 	mappert["multiply"] = Token::TIMES;
 	mappert["modulo"] = Token::MODULO;
+
+	mappert["and gives"] = Token::RETURNVALUE;
+	mappert["gets"] = Token::START_PARAMETERS;
+	mappert[","] = Token::AND_PARA;
+	mappert["_function-use_"] = Token::FUNCTIONUSE;
+	mappert["_coming-params_"] = Token::COMINGPARAMETER;
 	//
 	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
 
 
 	regexert[std::string("\\d")] = Token::NUMBER;
-	regexert[std::string("\".*?\"")] = Token::TEXT;
+	regexert[std::string("^\".*?\"$")] = Token::TEXT;
 	regexert[std::string("(true|false)")] = Token::BOOL;
-	regexert[std::string("\\*\\*(\\w*)?\\*\\*")] = Token::IDENTIFIER;
-	regexert[std::string("(_(\\w*)_)")] = Token::DECLARATION;
-	regexert[std::string("(# (\\w*))")] = Token::NAMESPACE;
-	regexert[std::string("(## (\\w*))")] = Token::CLASS;
-	regexert[std::string("(### (\\w*):)")] = Token::FUNCTION;
+	regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER;
+	regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION;
+	regexert[std::string("^(### (\\w*)$)")] = Token::FUNCTION;
+	regexert[std::string("^(## (\\w*))$")] = Token::CLASS;
+	regexert[std::string("^(# (\\w*))$")] = Token::NAMESPACE;
+	regexert[std::string("^>.*\n")] = Token::COMMENT;
+	regexert[std::string("\n")] = Token::NEWLINE;
+	regexert[std::string("secret")] = Token::PRIVATE;
+	regexert[std::string("^#### if$")] = Token::IF;
+	regexert[std::string("^#### else$")] = Token::ELSE;
+	regexert[std::string("^#### else if$")] = Token::ELIF;
+	regexert[std::string("^#### for$")] = Token::FOR;
+	regexert[std::string("^#### foreach$")] = Token::FOREACH;
+	regexert[std::string("^#### while$")] = Token::WHILE;
+	regexert[std::string("^#### do$")] = Token::DO;
+	regexert[std::string("^:$")] = Token::ASSIGNMENT;
+	regexert[std::string("---")] = Token::FUNCTION_OPEN;
+	regexert[std::string("___")] = Token::FUNCTION_CLOSE;
+	regexert[std::string("^\\[$")] = Token::FUNCTION_DECLARE_OPEN;
+	regexert[std::string("^\\]$")] = Token::FUNCTION_DECLARE_CLOSE;
+	regexert[std::string("^\\{$")] = Token::ARRAY_OPEN;
+	regexert[std::string("^\\}$")] = Token::ARRAY_CLOSED;
+	regexert[std::string("\\(")] = Token::CONDITION_OPEN;
+	regexert[std::string("\\)")] = Token::CONDITION_CLOSE;
+	regexert[std::string("^--$")] = Token::BODY_OPEN;
+	regexert[std::string("^__$")] = Token::BODY_CLOSED;
+	regexert[std::string("is")] = Token::EQUALS;
+	regexert[std::string("like")] = Token::EQUALS_TO;
+	regexert[std::string("larger than")] = Token::LARGER_THAN;
+	regexert[std::string("smaller than")] = Token::LESS_THAN;
+	regexert[std::string("in")] = Token::IN;
+	regexert[std::string("plus")] = Token::PLUS;
+	regexert[std::string("increased")] = Token::PLUSPLUS;
+	regexert[std::string("minus")] = Token::MINUS;
+	regexert[std::string("decreased")] = Token::MINUSMINUS;
+	regexert[std::string("divide")] = Token::DIVIDE;
+	regexert[std::string("^multiplied by|multiply$")] = Token::TIMES;
+	regexert[std::string("modulo")] = Token::MODULO;
+	regexert[std::string("^and gives$")] = Token::RETURNVALUE;
+	regexert[std::string("^gets$")] = Token::START_PARAMETERS;
+	regexert[std::string("^with$")] = Token::COMINGPARAMETER;
+	regexert[std::string("^,")] = Token::AND_PARA;
+
 
 }
 
@@ -69,7 +119,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 	string s(codefromfile);
 	smatch m;
-	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for)|(smaller|larger) than|\\w+|\\S+|\n)");
+	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
 	regex se("\\*\\*.+\\*\\*");
 	// (#+ (?:else if|else|if|case)|\w+|\S+)
 	// M: (""|'.'\d+\.\d+|\w|\S|\n)
@@ -80,18 +130,27 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	int lvl = 1;
 	int pInt = 0;
 	Token *prevToken;
+	bool isFunctionCall = false;
 	while (regex_search(s, m, e))
 	{
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-		//Check identifier
-		smatch sm;
-		regex_search(part, sm, se);
-		if (sm.size() != 0)
-			currentToken = Token::IDENTIFIER;
-		else
-			currentToken = (mappert.find(part) == mappert.end()) ? getToken(part) : mappert[part];
+		////Check identifier
+		//smatch sm;
+		//regex_search(part, sm, se);
+		//if (sm.size() != 0)
+		//	currentToken = Token::IDENTIFIER;
+		//else
+		//	currentToken = (mappert.find(part) == mappert.end()) ? getToken(part) : mappert[part];
+		
+		currentToken = getToken(part);
+		if (isFunctionCall){
+			currentToken = Token::FUNCTIONUSE;
+			isFunctionCall = false;
+		}
+		if (currentToken == Token::FUNCTION_DECLARE_OPEN)
+			isFunctionCall = true;
 
 		//New Lines
 		if (currentToken == Token::NEWLINE)
