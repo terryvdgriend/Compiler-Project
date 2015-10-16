@@ -245,7 +245,7 @@ _Pvt_Extensions
 *.lib
 
 # Executables
-*.exe
+# *.exe
 *.out
 *.app
 
