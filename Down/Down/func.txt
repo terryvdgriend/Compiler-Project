@@ -1,12 +1,12 @@
-___
-### secret CalculateAge: gets _number_ **age**, _text_  name and gives _number_ **result**
+---
+### CalculateAge: gets __number__ **age** , __text__  **name** and gives __number__ **result**
 
-> Calculate the age by multiplying the given age by two.
+> faasfasfasfasd.
 
-	___
-	#### if **i** like false
-	**A** is **A** plus 1
-	___
+#### if ( **i** like false) {
+**A** is **A** plus 1
+}
+
 
 
 **age** is **age** multiplied by 2  
@@ -15,4 +15,4 @@ ___
 
 
 
-_number_ **newAge** is [CalculateAge with age: 1 ,dingen: “kip”]
+__number__ **newAge** is [ CalculateAge with **age** : 1 , **dingen** : "kip" ]

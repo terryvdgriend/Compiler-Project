@@ -1,4 +1,4 @@
-_number_ **i** is 0
+__number__ **i** is 0
 **i** is **i** plus 1
 **i** is **i** minus 1
 **i** is **i** divide 2

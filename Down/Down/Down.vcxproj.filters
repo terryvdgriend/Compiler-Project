@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Compiler\Nodes">
       <UniqueIdentifier>{fac2dac8-b3a4-46bf-957b-1b5efc2e3b6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{cce45383-3129-4110-8e3e-b08cb921d1c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{6e285845-8eee-4646-838a-1c3147428ad4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -105,6 +111,9 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Libs</Filter>
     </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>Source Files\Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
