@@ -85,11 +85,29 @@
     <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractFuntionCall.h" />
+    <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="CompileComparison.h" />
+    <ClInclude Include="CompileCondition.h" />
+    <ClInclude Include="CompileEquals.h" />
+    <ClInclude Include="CompileFunction.h" />
+    <ClInclude Include="CompileIf.h" />
+    <ClInclude Include="CompileLValue.h" />
+    <ClInclude Include="CompileMultiply.h" />
+    <ClInclude Include="CompileOperator.h" />
+    <ClInclude Include="CompilePlusMin.h" />
     <ClInclude Include="Compiler.h" />
+    <ClInclude Include="CompileSingleStatement.h" />
+    <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
+    <ClInclude Include="ConditionalJumpNode.h" />
+    <ClInclude Include="DoNothingNode.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
+    <ClInclude Include="JumpGotoNode.h" />
+    <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="NodeVisitor.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -99,12 +117,30 @@
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractFuntionCall.cpp" />
+    <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="CompileComparison.cpp" />
+    <ClCompile Include="CompileCondition.cpp" />
+    <ClCompile Include="CompileEquals.cpp" />
+    <ClCompile Include="CompileFunction.cpp" />
+    <ClCompile Include="CompileIf.cpp" />
+    <ClCompile Include="CompileLValue.cpp" />
+    <ClCompile Include="CompileMultiply.cpp" />
+    <ClCompile Include="CompileOperator.cpp" />
+    <ClCompile Include="CompilePlusMin.cpp" />
     <ClCompile Include="Compiler.cpp" />
+    <ClCompile Include="CompileSingleStatement.cpp" />
+    <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
+    <ClCompile Include="ConditionalJumpNode.cpp" />
+    <ClCompile Include="DoNothingNode.cpp" />
     <ClCompile Include="Down.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
+    <ClCompile Include="JumpGotoNode.cpp" />
+    <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
