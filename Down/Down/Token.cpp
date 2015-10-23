@@ -2,7 +2,7 @@
 #include "Token.h"
 
 
-Token::Token() : Text{ "NotSet" }, Level{ 1 }, next{ nullptr }, previous{nullptr} //etc..
+Token::Token() : Level{ 1 }, next{ nullptr }, previous{nullptr} //etc...
 {
 }
 

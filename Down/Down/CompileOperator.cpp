@@ -2,6 +2,11 @@
 #include "CompileOperator.h"
 
 
+CompileOperator::CompileOperator(Compiler* pNextLevel)
+	: pNextLevel(pNextLevel)
+{
+}
+
 CompileOperator::CompileOperator()
 {
 }
