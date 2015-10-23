@@ -1,0 +1,18 @@
+---
+### CalculateAge: gets __number__ **age** , __text__  **name** and gives __number__ **result**
+
+> faasfasfasfasd.
+
+#### if ( **i** like false) {
+**A** is **A** plus 1
+}
+
+
+
+**age** is **age** multiplied by 2  
+**result** is **age**  
+___
+
+
+
+__number__ **newAge** is [ CalculateAge with **age** : 1 , **dingen** : "kip" ]
