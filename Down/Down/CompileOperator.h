@@ -9,7 +9,7 @@ private:
 public:
 	CompileOperator(Compiler* pNext);
 	CompileOperator();
-	void Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore);
+	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
 	~CompileOperator();
 
 protected:

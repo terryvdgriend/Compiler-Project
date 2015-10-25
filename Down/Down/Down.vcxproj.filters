@@ -135,7 +135,13 @@
     <ClInclude Include="CompileLValue.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="CompileOperator.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilePlusMinus.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileSingleStatement.h">
@@ -150,9 +156,6 @@
     <ClInclude Include="NodeVisitor.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractFuntionCall.h">
-      <Filter>Header Files\Compiler\Nodes</Filter>
-    </ClInclude>
     <ClInclude Include="ConditionalJumpNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
@@ -162,11 +165,14 @@
     <ClInclude Include="JumpGotoNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CompilePlusMinus.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
+    <ClInclude Include="AbstractFunctionCall.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CompileTimesDivideModulo.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
+    <ClInclude Include="DirectFunctionCall.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionCall.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +230,13 @@
     <ClCompile Include="CompileLValue.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
+    <ClCompile Include="CompileTimesDivideModulo.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
     <ClCompile Include="CompileOperator.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilePlusMinus.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileSingleStatement.cpp">
@@ -239,9 +251,6 @@
     <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractFuntionCall.cpp">
-      <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
@@ -251,10 +260,13 @@
     <ClCompile Include="JumpGotoNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CompilePlusMinus.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
+    <ClCompile Include="AbstractFunctionCall.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CompileTimesDivideModulo.cpp">
+    <ClCompile Include="DirectFunctionCall.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionCall.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>

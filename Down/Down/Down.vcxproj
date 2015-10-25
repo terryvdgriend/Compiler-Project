@@ -85,7 +85,7 @@
     <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractFuntionCall.h" />
+    <ClInclude Include="AbstractFunctionCall.h" />
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
@@ -101,9 +101,11 @@
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
+    <ClInclude Include="DirectFunctionCall.h" />
     <ClInclude Include="DoNothingNode.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
+    <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="JumpGotoNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
@@ -117,7 +119,7 @@
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractFuntionCall.cpp" />
+    <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
@@ -133,10 +135,12 @@
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
+    <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
     <ClCompile Include="Down.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
+    <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="JumpGotoNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
