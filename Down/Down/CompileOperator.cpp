@@ -11,7 +11,7 @@ CompileOperator::CompileOperator()
 {
 }
 
-void CompileOperator::Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore)
+void CompileOperator::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList listActionNodes, ActionNode actionBefore)
 {
 }
 

@@ -156,9 +156,6 @@
     <ClInclude Include="NodeVisitor.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractFuntionCall.h">
-      <Filter>Header Files\Compiler\Nodes</Filter>
-    </ClInclude>
     <ClInclude Include="ConditionalJumpNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
@@ -166,6 +163,12 @@
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="JumpGotoNode.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFunctionCall.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectFunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -245,9 +248,6 @@
     <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractFuntionCall.cpp">
-      <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
@@ -255,6 +255,12 @@
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="JumpGotoNode.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractFunctionCall.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectFunctionCall.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
   </ItemGroup>
