@@ -1,9 +1,13 @@
-___
-#### switch _f_
-#### case true
-[Write with text: "schapen" ]
-#### case false
-[Write with text: "Kippen" ]
-#### default
-[Write with text: "niks" ]
-___
+#### switch ( **f** )
+case ( true )
+--
+[ Write with **text** : "schapen" ]
+__
+case ( false )
+--
+[ Write with **text** : "Kippen" ]
+__
+default
+--
+[ Write with **text** : "niks" ]
+__

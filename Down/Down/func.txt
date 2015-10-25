@@ -1,5 +1,5 @@
 ---
-### CalculateAge: gets __number__ **age** , __text__  **name** and gives __number__ **result**
+### CalculateAge gets __number__ **age** , __text__  **name** and gives __number__ **result**
 
 > faasfasfasfasd.
 
