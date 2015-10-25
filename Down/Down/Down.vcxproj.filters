@@ -171,6 +171,9 @@
     <ClInclude Include="DirectFunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="FunctionCall.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="DirectFunctionCall.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

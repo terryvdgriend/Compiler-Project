@@ -7,11 +7,11 @@ LinkedActionList::LinkedActionList()
 	this->count = 0;
 }
 
-ActionNode* LinkedActionList::insertBefore(ActionNode *right, ActionNode *value){
+ActionNode* LinkedActionList::insertBefore(ActionNode* right, ActionNode* value){
 	return nullptr;
 }
 
-ActionNode* LinkedActionList::insertLast(ActionNode *value){
+ActionNode* LinkedActionList::insertLast(ActionNode* value){
 	if (value != nullptr){
 		this->count++;
 		if (first != nullptr)

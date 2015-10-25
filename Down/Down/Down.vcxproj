@@ -105,6 +105,7 @@
     <ClInclude Include="DoNothingNode.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
+    <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="JumpGotoNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="Down.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
+    <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="JumpGotoNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
