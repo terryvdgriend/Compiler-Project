@@ -1,7 +1,7 @@
 #pragma once
 #include "Compiler.h"
 
-class CompileSingleStatement : Compiler
+class CompileSingleStatement : public Compiler
 {
 public:
 	CompileSingleStatement();

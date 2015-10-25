@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CompileCondition.h"
+#include "CompilePlusMinus.h"
 
-
-CompileCondition::CompileCondition()
+CompileCondition::CompileCondition(): CompileOperator(new CompilePlusMinus)
 {
 	std::map<Token::iToken, string> tokenMap = getTokenMap();
 	tokenMap[Token::LARGER_THAN] = "$>";
