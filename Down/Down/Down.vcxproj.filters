@@ -135,13 +135,7 @@
     <ClInclude Include="CompileLValue.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompileMultiply.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="CompileOperator.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompilePlusMin.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileSingleStatement.h">
@@ -167,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="JumpGotoNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilePlusMinus.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,13 +224,7 @@
     <ClCompile Include="CompileLValue.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileMultiply.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileOperator.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompilePlusMin.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileSingleStatement.cpp">
@@ -256,6 +250,12 @@
     </ClCompile>
     <ClCompile Include="JumpGotoNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilePlusMinus.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileTimesDivideModulo.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
