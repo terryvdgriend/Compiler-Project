@@ -7,11 +7,7 @@ CompileOperator::CompileOperator(Compiler* pNextLevel)
 {
 }
 
-CompileOperator::CompileOperator()
-{
-}
-
-void CompileOperator::Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore)
+void CompileOperator::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 }
 
@@ -22,4 +18,5 @@ std::map<Token::iToken, string> CompileOperator::getTokenMap()
 
 CompileOperator::~CompileOperator()
 {
+	delete pNextLevel;
 }
