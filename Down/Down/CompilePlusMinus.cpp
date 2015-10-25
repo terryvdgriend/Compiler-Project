@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CompilePlusMinus.h"
-#include "CompileTimesDivide.h"
+#include "CompileTimesDivideModulo.h"
 
-CompilePlusMinus::CompilePlusMinus() : CompileOperator(new CompileTimesDivide)
+CompilePlusMinus::CompilePlusMinus() : CompileOperator(new CompileTimesDivideModulo)
 {
 	map<Token::iToken, string> tokenMap = getTokenMap();
 	tokenMap[Token::PLUS] = "$+";
