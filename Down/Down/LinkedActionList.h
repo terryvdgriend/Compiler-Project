@@ -11,6 +11,8 @@ public:
 	LinkedActionList();
 	ActionNode* insertBefore(ActionNode* right, ActionNode* value);
 	ActionNode* insertLast(ActionNode* value);
+	ActionNode* add(ActionNode* value);
+	ActionNode* add(LinkedActionList* list);
 	~LinkedActionList();
 };
 
