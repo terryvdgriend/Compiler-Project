@@ -13,6 +13,8 @@ public:
 	ActionNode* insertLast(ActionNode* value);
 	ActionNode* add(ActionNode* value);
 	ActionNode* add(LinkedActionList* list);
+	ActionNode* getFirst(){ return first; };
+	ActionNode* getLast(){ return last; };
 	~LinkedActionList();
 };
 

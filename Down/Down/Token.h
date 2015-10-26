@@ -59,7 +59,8 @@ public:
 		FUNCTIONUSE,
 		COMINGPARAMETER,
 		ARRAY_OPEN,
-		ARRAY_CLOSED
+		ARRAY_CLOSED,
+		ANY
 	};
 
 
@@ -87,6 +88,7 @@ public:
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
 	int				getLineNumber(){ return Regelnummer; };
+	int				getPositie(){ return Positie; };
 	std::string getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token);
 	void Print(std::map<string, Token::iToken>& map);
 	void PrintError();

@@ -3,9 +3,30 @@
 
 class CompileWhile : Compiler
 {
+private:
+	LinkedActionList* _compiledStatement;
+	LinkedActionList* _condition;
+	LinkedActionList* _body;
 public:
 	CompileWhile();
-	virtual void Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore);
+	void ConnectLists();
+	virtual void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
 	~CompileWhile();
 };
 
+
+struct TokenExpectation
+{
+public:
+	int Level;
+public:
+	Token::iToken TokenType;
+
+public:
+	TokenExpectation(int level, Token::iToken tokenType)
+	{
+		Level = level;
+		TokenType = tokenType;
+	}
+
+};
