@@ -30,6 +30,4 @@ void LinkedList::insertLast(Token* value){
 
 LinkedList::~LinkedList()
 {
-	delete first;
-	delete last;
 }

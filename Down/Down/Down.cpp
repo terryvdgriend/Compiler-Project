@@ -54,13 +54,6 @@ int main(int argc, const char * argv[])
 	tnzr.createTokenList(cTokenList, code);
 	tnzr.printTokenList(cTokenList);
 
-	//=========COMPILE CONDITION======
-	CompileCondition condition = CompileCondition();
-	LinkedActionList actionList = LinkedActionList();
-	DoNothingNode node1 = DoNothingNode();
-	actionList.insertLast(&node1);
-	condition.Compile(cTokenList, *cTokenList.first, *cTokenList.last, actionList, node1);
-	actionList.printList();
 
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
