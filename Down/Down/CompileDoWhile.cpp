@@ -8,6 +8,9 @@
 
 CompileDoWhile::CompileDoWhile()
 {
+	_compiledStatement = new LinkedActionList();
+	_condition = new LinkedActionList();
+	_body = new LinkedActionList();
 	_compiledStatement->add(new DoNothingNode());
 }
 

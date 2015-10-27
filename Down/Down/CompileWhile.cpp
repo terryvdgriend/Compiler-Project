@@ -7,6 +7,9 @@
 
 CompileWhile::CompileWhile()
 {
+	_compiledStatement = new LinkedActionList();
+	_condition = new LinkedActionList();
+	_body = new LinkedActionList();
 	_compiledStatement->add(new DoNothingNode());
 }
 
@@ -27,13 +30,13 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 {
 	int whileLevel = begin.getLevel();
 	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_front(TokenExpectation(whileLevel, Token::WHILE));
-	expected.push_front(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
-	expected.push_front(TokenExpectation(whileLevel+1, Token::ANY));
-	expected.push_front(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
-	expected.push_front(TokenExpectation(whileLevel, Token::BODY_OPEN));
-	expected.push_front(TokenExpectation(whileLevel+1, Token::ANY));
-	expected.push_front(TokenExpectation(whileLevel, Token::BODY_CLOSED));
+	expected.push_back(TokenExpectation(whileLevel, Token::WHILE));
+	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
+	expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
+	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
 
 	for each (TokenExpectation expectation in expected)
 	{

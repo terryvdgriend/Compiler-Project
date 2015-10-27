@@ -50,7 +50,7 @@ ActionNode* LinkedActionList::insertBefore(ActionNode* right, ActionNode* value)
 ActionNode* LinkedActionList::insertLast(ActionNode* value){
 	if (value != nullptr){
 		this->count++;
-		if (first != nullptr)
+		if (first == nullptr)
 			this->first = this->last = value;
 		else{
 			this->last->setNext(value);
