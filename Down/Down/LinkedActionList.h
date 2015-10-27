@@ -11,7 +11,11 @@ public:
 	LinkedActionList();
 	ActionNode* insertBefore(ActionNode* right, ActionNode* value);
 	ActionNode* insertLast(ActionNode* value);
-	int getSize(){ return count; };
+	ActionNode* add(ActionNode* value);
+	ActionNode* add(LinkedActionList* list);
+	ActionNode* getFirst(){ return first; };
+	ActionNode* getLast(){ return last; };
+	int Count() { return count; };
 	void printList();
 	~LinkedActionList();
 };
