@@ -29,12 +29,12 @@ int main(int argc, const char * argv[])
 
 		if (option == "-f") {
 			// File
-			// std::cout << value << std::endl;
+			std::cout << value << std::endl;
 			code = getTextFromFile(value);
 		}
 		else if (option == "-c") {
 			// Code
-			// std::cout << value << std::endl;
+			std::cout << value << std::endl;
 			code = value;
 		}
 		else {
