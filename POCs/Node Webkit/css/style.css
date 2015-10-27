@@ -46,7 +46,7 @@ a {
     position: absolute;
 }
 
-.ace_editor {
+#editor > .ace_editor {
     margin: 0;
     width: 100% !important;
     height: 100% !important;

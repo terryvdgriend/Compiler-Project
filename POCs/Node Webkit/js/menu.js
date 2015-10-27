@@ -6,13 +6,6 @@ exports.initMenu = function() {
     var editor = require("./../js/editor.js");
     var compiler = require("./../js/compiler.js");
 
-    //Allow CMD + A on OSX
-    if (process.platform === "darwin") {
-        menubar.createMacBuiltin('Down IDE', {
-            hideEdit: false,
-        });
-    }
-
     fileMenu.append(new global.gui.MenuItem({
         label: 'Nieuw',
         click: function() {
@@ -32,8 +25,7 @@ exports.initMenu = function() {
         click: function() {
             editor.chooseFile("#saveFileDialog", function(filename) {
                 var fs = require('fs');
-                var textEditor = global.$('#editor');
-                fs.writeFile(filename, textEditor.val(), function(err) {
+                fs.writeFile(filename, global.editor.getValue(), function(err) {
                     if (err) {
                         console.log(err);
                     } else {
@@ -60,7 +52,20 @@ exports.initMenu = function() {
         }
     }));
 
-    menubar.append(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }));
+    //Allow CMD + A on OSX
+    if (process.platform === "darwin") {
+        menubar.createMacBuiltin('Down IDE', {
+            hideEdit: false,
+            hideWindow: true
+        });
+    }
+
+    if (process.platform === "darwin") {
+        menubar.insert(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }), 1);
+    } else {
+        menubar.append(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }));
+    }
+
     menubar.append(new global.gui.MenuItem({ label: 'Programma', submenu: programMenu }));
     win.menu = menubar;
 }
