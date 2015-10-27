@@ -174,15 +174,7 @@
     <ClInclude Include="FunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CompileDoWhile.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileFactory.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="CompilerHeader.h">
-      <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
+
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -277,12 +269,6 @@
     </ClCompile>
     <ClCompile Include="FunctionCall.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileDoWhile.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileFactory.cpp">
-      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
