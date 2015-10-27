@@ -10,3 +10,8 @@ ConstantToReturnValueCommand::ConstantToReturnValueCommand()
 ConstantToReturnValueCommand::~ConstantToReturnValueCommand()
 {
 }
+
+void ConstantToReturnValueCommand::execute(VirtualMachine *vm, vector<string> *parameters)
+{
+
+}

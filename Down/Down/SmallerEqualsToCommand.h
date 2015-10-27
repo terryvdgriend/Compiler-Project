@@ -1,8 +1,10 @@
 #pragma once
-class SmallerEqualsToCommand
-{
-public:
-	SmallerEqualsToCommand();
-	~SmallerEqualsToCommand();
-};
+#include "BaseCommand.h"
 
+class SmallerEqualsToCommand : public BaseCommand
+{
+	public:
+		SmallerEqualsToCommand();
+		~SmallerEqualsToCommand();
+		void execute(VirtualMachine *vm, vector<string> *parameters);
+};

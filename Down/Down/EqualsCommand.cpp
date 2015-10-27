@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include "EqualsCommand.h"
 
 EqualsCommand::EqualsCommand()

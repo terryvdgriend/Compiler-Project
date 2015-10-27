@@ -1,8 +1,10 @@
 #pragma once
-class SmallerThanCommand
-{
-public:
-	SmallerThanCommand();
-	~SmallerThanCommand();
-};
+#include "BaseCommand.h"
 
+class SmallerThanCommand : public BaseCommand
+{
+	public:
+		SmallerThanCommand();
+		~SmallerThanCommand();
+		void execute(VirtualMachine *vm, vector<string> *parameters);
+};

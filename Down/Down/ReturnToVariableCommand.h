@@ -1,8 +1,10 @@
 #pragma once
-class ReturnToVariableCommand
-{
-public:
-	ReturnToVariableCommand();
-	~ReturnToVariableCommand();
-};
+#include "BaseCommand.h"
 
+class ReturnToVariableCommand : public BaseCommand
+{
+	public:
+		ReturnToVariableCommand();
+		~ReturnToVariableCommand();
+		void execute(VirtualMachine *vm, vector<string> *parameters);
+};
