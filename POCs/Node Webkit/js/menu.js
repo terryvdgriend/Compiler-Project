@@ -54,13 +54,9 @@ exports.initMenu = function() {
     programMenu.append(new global.gui.MenuItem({
         label: 'Run',
         click: function() {
-            var code = global.$('#editor textarea').val();
-            compiler.run(code);
             $('body').addClass('showLog');
-
-            var textEditor = global.$('#editor textarea');
-            var ace = textEditor.data('ace').editor.ace;
-            ace.resize();
+            compiler.run(global.editor.getValue());
+            global.editor.resize();
         }
     }));
 

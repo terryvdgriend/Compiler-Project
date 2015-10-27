@@ -11,14 +11,11 @@ exports.reload = function(){
         smartypants: false
     });
     var resultDiv = global.$('#markdown');
-    var textEditor = global.$('#editor textarea');
-    var text = textEditor.val();
-    resultDiv.html(marked(text));
+    resultDiv.html(marked(global.editor.getValue()));
 };
 
 exports.loadText = function(text) {
-    var textEditor = global.$('#editor textarea');
-    textEditor.val(text);
+    global.editor.setValue(text);
     exports.reload();
 };
 

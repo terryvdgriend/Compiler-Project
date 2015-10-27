@@ -15,16 +15,27 @@ function init()
             console.log('This should be eight: ', som.Add(3,5));
         });
 
-        textEditor.ace({ theme: 'twilight' })
-        var ace = textEditor.data('ace').editor.ace;
+        global.editor = ace.edit("code");
+        global.editor.setTheme("ace/theme/twilight");
+        //global.editor.session.setMode("ace/mode/html");
+        global.editor.setOptions({
+            wrap : true,
+            highlightSelectedWord: true,
+            showPrintMargin: false,
+            vScrollBarAlwaysVisible: false,
+            fontSize: "15px",
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: false
+        });
 
-        ace.getSession().on('change', function(e) {
+        global.editor.on('change', function(e) {
             editor.reload();
         });
 
         $('#log a.close').on('click', function() {
             $('body').removeClass('showLog');
-            ace.resize();
+            global.editor.resize();
         });
     });
 }
