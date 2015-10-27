@@ -7,6 +7,7 @@ private:
 	LinkedActionList* _compiledStatement;
 	LinkedActionList* _condition;
 	LinkedActionList* _body;
+	ActionNode* bodyNode;
 public:
 	CompileWhile();
 	void ConnectLists();

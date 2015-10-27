@@ -15,6 +15,7 @@ public:
 	ActionNode* add(LinkedActionList* list);
 	ActionNode* getFirst(){ return first; };
 	ActionNode* getLast(){ return last; };
+	int Count() { return count; };
 	~LinkedActionList();
 };
 

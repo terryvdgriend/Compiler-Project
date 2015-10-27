@@ -14,12 +14,11 @@ void CompileWhile::ConnectLists(){
 	JumpGotoNode* jumpBackNode = new JumpGotoNode();
 	_compiledStatement->add(_condition);
 	_compiledStatement->add(conditionalJumpNode);
-	ActionNode* bodyNothing = _compiledStatement->add(new DoNothingNode);
 	_compiledStatement->add(_body);
 	_compiledStatement->add(jumpBackNode);
 	_compiledStatement->add(new DoNothingNode());
 	jumpBackNode->setJumpToNode(_compiledStatement->getFirst());
-	conditionalJumpNode->setOnTrue(bodyNothing);
+	conditionalJumpNode->setOnTrue(_body->getFirst());
 	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 }
 
@@ -46,17 +45,18 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				begin = *begin.next;
 		}
 		else if (expectation.Level >= whileLevel){
-			if (_condition->getFirst() == nullptr){
+			if (_condition->Count() == 0){
 				CompileCondition* condition{};
 
-				condition->Compile(cTokenList, begin, *begin.previous->getPartner(), *_condition, *_condition->getFirst());
+				condition->Compile(cTokenList, begin, *begin.previous->getPartner(), *_condition, *_condition->getLast());
 				begin = *begin.previous->getPartner();
 			}
 			else{
+				bodyNode = _body->add(new DoNothingNode());
 				while (begin.getLevel() > whileLevel){
 					Compiler* compiledBodyPart{};
 					if (compiledBodyPart != nullptr){
-						compiledBodyPart->Compile(cTokenList, begin, *begin.previous->getPartner(), *_body, *_body->getFirst());
+						compiledBodyPart->Compile(cTokenList, begin, *begin.previous->getPartner(), *_body, *_body->getLast());
 					}
 					else
 						begin = *begin.next;
