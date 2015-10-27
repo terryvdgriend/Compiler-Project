@@ -10,14 +10,14 @@ exports.reload = function(){
         smartLists: true,
         smartypants: false
     });
-    var resultDiv = global.$('.md_result');
-    var textEditor = global.$('#editor');
+    var resultDiv = global.$('#markdown');
+    var textEditor = global.$('#editor textarea');
     var text = textEditor.val();
     resultDiv.html(marked(text));
 };
 
 exports.loadText = function(text) {
-    var textEditor = global.$('#editor');
+    var textEditor = global.$('#editor textarea');
     textEditor.val(text);
     exports.reload();
 };

@@ -1,27 +1,102 @@
-html, body{
-    height:98%;
-}
-body{
-    font-family:Arial;
-}
-a{
-    text-decoration:none !important;
+* {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
-.md_editor{
-    float:left;
-    width:49%;
+*:focus {
+    outline:0;
+}
+
+html, body{
     height:100%;
-    resize:none;
+    background: #262626;
+    font-family:Arial;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+#editor{
+    float:left;
+    width:50%;
+    height:100%;
     padding:0;
     margin:0;
+    border: 0;
+    border-right: 1px solid #535353;
+    background: #2e2e2e;
+    overflow-x: hidden;
 }
-.md_result{
+
+#editor textarea {
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    font-size: 16px;
+    color: #fff;
+    background: none;
+    padding:8px 0 0 8px;
+    margin: 0;
+    resize:none;
+    width:100%;
+    height:100%;
+}
+
+.ace_editor {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#markdown {
     float:right;
-    width:49%;
-    box-sizing:border-box;
-    /*padding:10px 10px 8px 10px;*/
-    margin:0;
+    width:50%;
     height:100%;
     overflow-y:scroll;
+    padding:8px 8px 0 8px;
+    color: #fff;
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    font-size: 16px;
+}
+
+#markdown *:first-child {
+    margin-top: 0;
+}
+
+#log {
+    display: none;
+    width: 100%;
+    height: 30%;
+    float: left;
+    border-top: 1px solid #535353;
+    background: #262626;
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    color: #fff;
+    padding:8px 8px 0 8px;
+    font-size: 14px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+#log div {
+    width: 100%;
+    height: 100%;
+}
+
+#log a.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+}
+
+.showLog #editor, .showLog #markdown {
+    height: 70%;
+}
+
+.showLog #log {
+    display: block;
 }

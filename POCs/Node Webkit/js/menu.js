@@ -4,6 +4,14 @@ exports.initMenu = function() {
     var fileMenu = new global.gui.Menu();
 
     var editor = require("./../js/editor.js");
+    var compiler = require("./../js/compiler.js");
+
+    //Allow CMD + A on OSX
+    if (process.platform === "darwin") {
+        menubar.createMacBuiltin('Down IDE', {
+            hideEdit: false,
+        });
+    }
 
     fileMenu.append(new global.gui.MenuItem({
         label: 'Nieuw',
@@ -22,17 +30,17 @@ exports.initMenu = function() {
     fileMenu.append(new global.gui.MenuItem({
         label: 'Opslaan',
         click: function() {
-        	editor.chooseFile("#saveFileDialog", function(filename) {
-        		var fs = require('fs');
-        		var textEditor = global.$('#editor');
-        		fs.writeFile(filename, textEditor.val(), function(err) {
-        			if (err) {
-        				console.log(err);
-        			} else {
-        				console.log("The file was saved!");
-        			}
-        		});
-        	});
+            editor.chooseFile("#saveFileDialog", function(filename) {
+                var fs = require('fs');
+                var textEditor = global.$('#editor');
+                fs.writeFile(filename, textEditor.val(), function(err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("The file was saved!");
+                    }
+                });
+            });
         }
     }));
     fileMenu.append(new global.gui.MenuItem({
@@ -42,6 +50,17 @@ exports.initMenu = function() {
         }
     }));
 
+    var programMenu = new global.gui.Menu();
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Run',
+        click: function() {
+            var code = global.$('#editor textarea').val();
+            compiler.run(code);
+            $('body').addClass('showLog');
+        }
+    }));
+
     menubar.append(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }));
+    menubar.append(new global.gui.MenuItem({ label: 'Programma', submenu: programMenu }));
     win.menu = menubar;
 }
