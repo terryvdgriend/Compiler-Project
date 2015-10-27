@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
 #include "Compute.h"
-#include "Program.h"
 #include "Token.h"
 #include "LinkedList.h"
 #include "FileStreamer.h"
@@ -31,7 +30,7 @@ int main()
 
 		//=========VM==============
 		//TODO: meesturen wat je terug krijgt van de compute
-		Program prog{ Program() };
+		// Define vm
 
 	}
 
