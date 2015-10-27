@@ -1,18 +1,21 @@
 #include "stdafx.h"
 #include "CompileFactory.h"
-#include "CompilePlusMinus.h"
+#include "CompilerHeader.h"
 
 CompileFactory::CompileFactory()
 {
-	mappert[Token::IF] = new CompileOperator();
+	mappert[Token::IF] = new CompileIf();
+	mappert[Token::WHILE] = new CompileWhile();
+	mappert[Token::DO] = new CompileWhile();
+	mappert[Token::FUNCTION] = new CompileFunction();
 }
 
 Compiler * CompileFactory::CreateCompileStatement(const Token::iToken tknzr)
 {
-	Compiler * dieding = mappert.find(Token::IF)->second;
-	//Compiler * aaa(NULL);
-	//CompileEquals compily{};// = new CompileEquals();
-	return dieding->Create();
+	std::map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr);
+	if (it != mappert.end())
+		return it->second->Create(); // Create is een copy maken
+	return NULL;
 }
 
 

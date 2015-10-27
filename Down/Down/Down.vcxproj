@@ -94,6 +94,7 @@
     <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
+    <ClInclude Include="CompilerHeader.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
     <ClInclude Include="CompileOperator.h" />
     <ClInclude Include="CompilePlusMinus.h" />

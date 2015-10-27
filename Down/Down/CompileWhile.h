@@ -1,7 +1,7 @@
 #pragma once
 #include "Compiler.h"
 
-class CompileWhile : Compiler
+class CompileWhile : public Compiler
 {
 private:
 	LinkedActionList* _compiledStatement;
@@ -11,7 +11,7 @@ private:
 public:
 	CompileWhile();
 	void ConnectLists();
-	virtual void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
 	Compiler * Create() { return new CompileWhile(); };
 	~CompileWhile();
 };
