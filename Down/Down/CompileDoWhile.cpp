@@ -1,39 +1,38 @@
 #include "stdafx.h"
-#include "CompileWhile.h"
+#include "CompileDoWhile.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
 
-CompileWhile::CompileWhile()
+
+CompileDoWhile::CompileDoWhile()
 {
 	_compiledStatement->add(new DoNothingNode());
 }
 
-void CompileWhile::ConnectLists(){
+void CompileDoWhile::ConnectLists(){
 	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	JumpGotoNode* jumpBackNode = new JumpGotoNode();
+	_compiledStatement->add(_body);
 	_compiledStatement->add(_condition);
 	_compiledStatement->add(conditionalJumpNode);
-	_compiledStatement->add(_body);
-	_compiledStatement->add(jumpBackNode);
 	_compiledStatement->add(new DoNothingNode());
-	jumpBackNode->setJumpToNode(_compiledStatement->getFirst());
 	conditionalJumpNode->setOnTrue(_body->getFirst());
 	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 }
 
-void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 	int whileLevel = begin.getLevel();
 	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
+	expected.push_front(TokenExpectation(whileLevel, Token::DO));
+	expected.push_front(TokenExpectation(whileLevel, Token::BODY_OPEN));
+	expected.push_front(TokenExpectation(whileLevel + 1, Token::ANY));
+	expected.push_front(TokenExpectation(whileLevel, Token::BODY_CLOSED));
 	expected.push_front(TokenExpectation(whileLevel, Token::WHILE));
 	expected.push_front(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
-	expected.push_front(TokenExpectation(whileLevel+1, Token::ANY));
+	expected.push_front(TokenExpectation(whileLevel + 1, Token::ANY));
 	expected.push_front(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
-	expected.push_front(TokenExpectation(whileLevel, Token::BODY_OPEN));
-	expected.push_front(TokenExpectation(whileLevel+1, Token::ANY));
-	expected.push_front(TokenExpectation(whileLevel, Token::BODY_CLOSED));
 
 	for each (TokenExpectation expectation in expected)
 	{
@@ -69,6 +68,6 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 	listActionNodes.add(_compiledStatement);
 }
 
-CompileWhile::~CompileWhile()
+CompileDoWhile::~CompileDoWhile()
 {
 }
