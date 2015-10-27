@@ -29,6 +29,16 @@ function init()
             enableLiveAutocompletion: true
         });
 
+        global.editor.commands.addCommand({
+            name: "Run",
+            bindKey: {win: "Ctrl-R", mac: "Command-R"},
+            exec: function(editor) {
+                $('body').addClass('showLog');
+                compiler.run(global.editor.getValue());
+                global.editor.resize();
+            }
+        });
+
         var autoComplete = [
             { key: "if", value: "#### if" },
             { key: "else", value: "#### else" },
