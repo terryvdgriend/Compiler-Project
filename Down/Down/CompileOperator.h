@@ -10,6 +10,7 @@ public:
 	CompileOperator(Compiler* pNext);
 	CompileOperator();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	Compiler * Create() { return new CompileOperator(); };
 	~CompileOperator();
 
 protected:

@@ -5,6 +5,7 @@ class CompileCondition :
 {
 public:
 	CompileCondition();
+	Compiler * Create() { return new CompileCondition(); };
 	~CompileCondition();
 };
 

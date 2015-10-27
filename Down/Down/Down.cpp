@@ -12,10 +12,20 @@
 #include "CompileWhile.h"
 #include "DoNothingNode.h"
 
+#include "CompileFactory.h"
+
 string getTextFromFile();
 
 int main()
 {
+	//DIE FACTORY TAST M8!!!
+	CompileFactory FACKtory{};
+	Compiler * CUMpiler =  FACKtory.CreateCompileStatement(Token::IF);
+	//
+	CUMpiler->asd = 14;;
+	Compiler * CUMpiler2 = FACKtory.CreateCompileStatement(Token::IF);
+
+
 	//Declas
 	LinkedList cTokenList;
 	string codefromfile = getTextFromFile();//

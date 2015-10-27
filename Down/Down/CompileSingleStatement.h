@@ -7,6 +7,7 @@
 class CompileSingleStatement : public Compiler
 {
 public:
-	virtual void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	Compiler * Create() { return new CompileSingleStatement(); };
 };
 
