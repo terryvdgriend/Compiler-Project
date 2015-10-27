@@ -29,6 +29,10 @@ VariableType Variable::getType() {
 	return type;
 }
 
+string Variable::getValue() {
+	return value;
+}
+
 bool Variable::is_number(const string& s)
 {
 	std::string::const_iterator it = s.begin();
