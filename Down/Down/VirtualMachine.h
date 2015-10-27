@@ -27,6 +27,9 @@ class VirtualMachine
 		void addIdentifer(string name);
 		bool isAnIdentifier(string name);
 
+		string getReturnValue();
+		void setReturnValue(string value);
+
 	private:
 		string returnValue;
 

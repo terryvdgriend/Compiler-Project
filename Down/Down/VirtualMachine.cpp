@@ -57,3 +57,13 @@ bool VirtualMachine::isAnIdentifier(string name)
 {
 	return false;
 }
+
+string VirtualMachine::getReturnValue()
+{
+	return returnValue;
+}
+
+void VirtualMachine::setReturnValue(string value)
+{
+	returnValue = value;
+}
