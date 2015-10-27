@@ -4,6 +4,7 @@
 #include "ConditionalJumpNode.h"
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
+#include "CompileFactory.h"
 
 CompileWhile::CompileWhile()
 {
@@ -50,15 +51,15 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 		}
 		else if (expectation.Level >= whileLevel){
 			if (_condition->Count() == 0){
-				CompileCondition* condition{};
-
+				CompileCondition* condition = new CompileCondition();
+				_condition->add(new DoNothingNode());
 				condition->Compile(cTokenList, begin, *begin.previous->getPartner(), *_condition, *_condition->getLast());
 				begin = *begin.previous->getPartner();
 			}
 			else{
 				bodyNode = _body->add(new DoNothingNode());
 				while (begin.getLevel() > whileLevel){
-					Compiler* compiledBodyPart{};
+					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(begin.getEnum());
 					if (compiledBodyPart != nullptr){
 						compiledBodyPart->Compile(cTokenList, begin, *begin.previous->getPartner(), *_body, *_body->getLast());
 					}

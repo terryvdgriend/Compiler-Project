@@ -11,12 +11,13 @@ private:
 public:
 	CompileDoWhile();
 	void ConnectLists();
-	virtual void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	Compiler * Create() { return new CompileDoWhile(); };
 	~CompileDoWhile();
 };
 
 
-struct TokenExpectation
+struct TokenExpectations
 {
 public:
 	int Level;
@@ -24,7 +25,7 @@ public:
 	Token::iToken TokenType;
 
 public:
-	TokenExpectation(int level, Token::iToken tokenType)
+	TokenExpectations(int level, Token::iToken tokenType)
 	{
 		Level = level;
 		TokenType = tokenType;
