@@ -135,13 +135,13 @@
     <ClInclude Include="CompileLValue.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompileMultiply.h">
+    <ClInclude Include="CompileTimesDivideModulo.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileOperator.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompilePlusMin.h">
+    <ClInclude Include="CompilePlusMinus.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileSingleStatement.h">
@@ -230,13 +230,13 @@
     <ClCompile Include="CompileLValue.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileMultiply.cpp">
+    <ClCompile Include="CompileTimesDivideModulo.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileOperator.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompilePlusMin.cpp">
+    <ClCompile Include="CompilePlusMinus.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileSingleStatement.cpp">
