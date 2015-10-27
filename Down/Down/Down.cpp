@@ -9,6 +9,8 @@
 #include "LinkedList.h"
 #include "FileStreamer.h"
 #include "Format.h"
+#include "CompileWhile.h"
+#include "DoNothingNode.h"
 
 //Mogen weg!!
 #include "CompileCondition.h"
@@ -37,10 +39,14 @@ int main()
 
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
-		//Compute comp{ Compute(cTokenList) };
+		
+		LinkedActionList cRunList{ LinkedActionList() };
+		cRunList.add(new DoNothingNode());
 
+		Compute compute{ Compute() };
 
-
+		compute.ComputeCompile(&cTokenList, &cRunList);
+		cRunList.printList();
 		//=========VM==============
 		//TODO: meesturen wat je terug krijgt van de compute
 		Program prog{ Program() };
@@ -61,7 +67,7 @@ string getTextFromFile()
 {
 	// vul naam in van de resource, die je wilt testen
 	// if / while / etc
-	string txtTje = "condition";
+	string txtTje = "while";
 	//
 	string datFile = "./" + txtTje + ".txt";
 	FileStreamer fs{ FileStreamer() };
