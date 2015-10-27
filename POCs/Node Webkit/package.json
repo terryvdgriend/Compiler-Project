@@ -1,8 +1,9 @@
 {
   "name": "Node_Webkit",
+  "version": 0.1,
   "main": "./html/index.html",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "show": true,
     "icon": "./img/icon.png"
   },

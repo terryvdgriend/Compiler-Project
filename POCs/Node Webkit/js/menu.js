@@ -57,6 +57,10 @@ exports.initMenu = function() {
             var code = global.$('#editor textarea').val();
             compiler.run(code);
             $('body').addClass('showLog');
+
+            var textEditor = global.$('#editor textarea');
+            var ace = textEditor.data('ace').editor.ace;
+            ace.resize();
         }
     }));
 
