@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-
+/*
 Compiler::Compiler()
 {
 }
@@ -11,7 +11,7 @@ Compiler::Compiler()
 
 Compiler::~Compiler()
 {
-}
+}*/
 
 std::string Compiler::getNextLocalVariableName(std::string& sBuffer)
 {

@@ -1,11 +1,14 @@
 #pragma once
 #include "Compiler.h"
 
-class CompileIf : Compiler
+
+class CompileIf : public Compiler
 {
 public:
 	CompileIf();
-	virtual void Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore);
+	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	Compiler * Create() { return new CompileIf(); };
+
 	~CompileIf();
 };
 

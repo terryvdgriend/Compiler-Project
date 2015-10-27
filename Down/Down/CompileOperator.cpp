@@ -7,6 +7,10 @@ CompileOperator::CompileOperator(Compiler* pNextLevel)
 {
 }
 
+CompileOperator::CompileOperator()
+{
+}
+
 void CompileOperator::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 }

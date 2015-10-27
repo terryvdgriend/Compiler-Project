@@ -5,6 +5,7 @@ class CompileFunction :
 {
 public:
 	CompileFunction();
+	Compiler * Create() { return new CompileFunction(); };
 	~CompileFunction();
 };
 

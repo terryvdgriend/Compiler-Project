@@ -5,6 +5,7 @@ class CompileComparison :
 {
 public:
 	CompileComparison();
+	Compiler * Create() { return new CompileComparison(); };
 	~CompileComparison();
 };
 
