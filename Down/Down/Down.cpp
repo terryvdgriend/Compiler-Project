@@ -12,56 +12,64 @@
 
 #include "CompileFactory.h"
 
-string getTextFromFile();
-
-int main()
-{
-	//DIE FACTORY TAST M8!!!
-	CompileFactory FACKtory{};
-	Compiler * CUMpiler =  FACKtory.CreateCompileStatement(Token::IF);
-	//
-	CUMpiler->asd = 14;;
-	Compiler * CUMpiler2 = FACKtory.CreateCompileStatement(Token::IF);
-
-
-	//Declas
-	LinkedList cTokenList;
-	string codefromfile = getTextFromFile();//
-
-	//=========TOKENIZER==============
-	Tokenizer tnzr{ Tokenizer() };
-	tnzr.createTokenList(cTokenList, codefromfile);
-	tnzr.printTokenList(cTokenList);
-
-	if (!tnzr.GetTokenError()){
-		//=========COMPILER==============
-		//Compute comp{ Compute(cTokenList) };
-
-
-
-		//=========VM==============
-		//TODO: meesturen wat je terug krijgt van de compute
-		Program prog{ Program() };
-
-	}
-
-
-
-
-	//ZI ENDZ
-	int inputz = -1;
-	std::cin >> inputz;
-	return 0;
+string getTextFromFile(string fileName) {
+    string datFile = "./" + fileName + ".md";
+    FileStreamer fs{ FileStreamer() };
+    return fs.reader(datFile);
 }
 
-
-string getTextFromFile()
+int main(int argc, const char * argv[])
 {
-	// vul naam in van de resource, die je wilt testen
-	// if / while / etc
-	string txtTje = "if";
-	//
-	string datFile = "./" + txtTje + ".txt";
-	FileStreamer fs{ FileStreamer() };
-	return fs.reader(datFile);;
+    string code = "";
+    
+    if(argc == 3) {
+        string option = argv[1];
+        string value = argv[2];
+        
+        if(option == "-f") {
+            // File
+            // std::cout << value << std::endl;
+            code = getTextFromFile(value);
+        } else if(option == "-c") {
+            // Code
+            // std::cout << value << std::endl;
+            code = value;
+        } else {
+            std::cout << "No valid option: " << option << std::endl;
+        }
+    } else {
+        std::cout << "Not enough params" << std::endl;
+    }
+    
+    
+    //DIE FACTORY TAST M8!!!
+    CompileFactory FACKtory{};
+    Compiler * CUMpiler =  FACKtory.CreateCompileStatement(Token::IF);
+    //
+    CUMpiler->asd = 14;;
+    Compiler * CUMpiler2 = FACKtory.CreateCompileStatement(Token::IF); // WORDT NIET GEBRUIKT?
+    
+    //Declas
+    LinkedList cTokenList;
+    
+    //=========TOKENIZER==============
+    Tokenizer tnzr{ Tokenizer() };
+    tnzr.createTokenList(cTokenList, code);
+    tnzr.printTokenList(cTokenList);
+    
+    if (!tnzr.GetTokenError()){
+        //=========COMPILER==============
+        //Compute comp{ Compute(cTokenList) };
+        
+        
+        //=========VM==============
+        //TODO: meesturen wat je terug krijgt van de compute
+        Program prog{ Program() };
+        
+    }
+    
+    //ZI ENDZ
+    int inputz = -1;
+    std::cin >> inputz;
+    return 0;
 }

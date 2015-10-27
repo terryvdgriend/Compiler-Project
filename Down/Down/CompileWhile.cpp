@@ -33,12 +33,13 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 	expected.push_front(TokenExpectation(whileLevel, Token::BODY_OPEN));
 	expected.push_front(TokenExpectation(whileLevel+1, Token::ANY));
 	expected.push_front(TokenExpectation(whileLevel, Token::BODY_CLOSED));
-
-	for each (TokenExpectation expectation in expected)
+    
+    for(TokenExpectation expectation: expected)
+	//for each (TokenExpectation expectation in expected)
 	{
 		if (expectation.Level == whileLevel){
 			if (begin.getEnum() != expectation.TokenType){
-				throw exception("Dingen enzo");
+				//throw exception("Dingen enzo"); WERKT NIET?
 				break;
 			}
 			else
