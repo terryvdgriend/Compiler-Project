@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -85,7 +85,7 @@
     <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractFuntionCall.h" />
+    <ClInclude Include="AbstractFunctionCall.h" />
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
@@ -93,17 +93,19 @@
     <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
-    <ClInclude Include="CompileMultiply.h" />
+    <ClInclude Include="CompileTimesDivideModulo.h" />
     <ClInclude Include="CompileOperator.h" />
-    <ClInclude Include="CompilePlusMin.h" />
+    <ClInclude Include="CompilePlusMinus.h" />
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="CompileSingleStatement.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
+    <ClInclude Include="DirectFunctionCall.h" />
     <ClInclude Include="DoNothingNode.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
+    <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="JumpGotoNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
@@ -117,7 +119,7 @@
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractFuntionCall.cpp" />
+    <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
@@ -125,18 +127,20 @@
     <ClCompile Include="CompileFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />
-    <ClCompile Include="CompileMultiply.cpp" />
+    <ClCompile Include="CompileTimesDivideModulo.cpp" />
     <ClCompile Include="CompileOperator.cpp" />
-    <ClCompile Include="CompilePlusMin.cpp" />
+    <ClCompile Include="CompilePlusMinus.cpp" />
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="CompileSingleStatement.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
+    <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
     <ClCompile Include="Down.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
+    <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="JumpGotoNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />

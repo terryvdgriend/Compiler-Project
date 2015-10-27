@@ -1,11 +1,12 @@
 #pragma once
 #include "Compiler.h"
+#include "DirectFunctionCall.h"
+#include "FunctionCall.h"
+#include "CompileCondition.h"
 
-class CompileSingleStatement : Compiler
+class CompileSingleStatement : public Compiler
 {
 public:
-	CompileSingleStatement();
-	virtual void Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore);
-	~CompileSingleStatement();
+	virtual void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
 };
 
