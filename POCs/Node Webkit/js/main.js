@@ -17,7 +17,7 @@ function init()
 
         global.editor = ace.edit("code");
         global.editor.setTheme("ace/theme/twilight");
-        //global.editor.session.setMode("ace/mode/html");
+        global.editor.session.setMode("ace/mode/markdown");
         global.editor.setOptions({
             wrap : true,
             highlightSelectedWord: true,
