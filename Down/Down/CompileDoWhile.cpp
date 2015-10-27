@@ -45,13 +45,7 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 				begin = *begin.next;
 		}
 		else if (expectation.Level >= whileLevel){
-			if (_condition->Count() == 0){
-				CompileCondition* condition{};
-
-				condition->Compile(cTokenList, begin, *begin.previous->getPartner(), *_condition, *_condition->getLast());
-				begin = *begin.previous->getPartner();
-			}
-			else{
+			if (_body->Count() == 0){
 				bodyNode = _body->add(new DoNothingNode());
 				while (begin.getLevel() > whileLevel){
 					Compiler* compiledBodyPart{};
@@ -61,6 +55,13 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 					else
 						begin = *begin.next;
 				}
+			}
+			else{
+				CompileCondition* condition{};
+
+				condition->Compile(cTokenList, begin, *begin.previous->getPartner(), *_condition, *_condition->getLast());
+				begin = *begin.previous->getPartner();
+				
 			}
 		}
 	}
