@@ -9,7 +9,7 @@ DoNothingNode::DoNothingNode()
 
 void  DoNothingNode::Show()
 {
-
+	std::cout << "Do nothing. \n";
 }
 
 void  DoNothingNode::Action()

@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="calc.txt" />
+    <Text Include="condition.txt" />
     <Text Include="func.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
@@ -95,12 +96,13 @@
     <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
-    <ClInclude Include="CompilerHeader.h" />
-    <ClInclude Include="CompileTimesDivideModulo.h" />
+    <ClInclude Include="CompileNextLevel.h" />
     <ClInclude Include="CompileOperator.h" />
     <ClInclude Include="CompilePlusMinus.h" />
     <ClInclude Include="Compiler.h" />
+    <ClInclude Include="CompilerHeader.h" />
     <ClInclude Include="CompileSingleStatement.h" />
+    <ClInclude Include="CompileTimesDivideModulo.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
@@ -132,11 +134,12 @@
     <ClCompile Include="CompileFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />
-    <ClCompile Include="CompileTimesDivideModulo.cpp" />
+    <ClCompile Include="CompileNextLevel.cpp" />
     <ClCompile Include="CompileOperator.cpp" />
     <ClCompile Include="CompilePlusMinus.cpp" />
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="CompileSingleStatement.cpp" />
+    <ClCompile Include="CompileTimesDivideModulo.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />

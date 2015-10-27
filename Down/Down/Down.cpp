@@ -12,20 +12,14 @@
 #include "CompileWhile.h"
 #include "DoNothingNode.h"
 
-#include "CompileFactory.h"
+//Mogen weg!!
+#include "CompileCondition.h"
+#include "DoNothingNode.h"
 
 string getTextFromFile();
 
 int main()
 {
-	//DIE FACTORY TAST M8!!!
-	CompileFactory FACKtory{};
-	Compiler * CUMpiler =  FACKtory.CreateCompileStatement(Token::IF);
-	//
-	CUMpiler->asd = 14;;
-	Compiler * CUMpiler2 = FACKtory.CreateCompileStatement(Token::IF);
-
-
 	//Declas
 	LinkedList cTokenList;
 	string codefromfile = getTextFromFile();//
@@ -34,6 +28,14 @@ int main()
 	Tokenizer tnzr{ Tokenizer() };
 	tnzr.createTokenList(cTokenList, codefromfile);
 	tnzr.printTokenList(cTokenList);
+
+	//=========COMPILE CONDITION======
+	CompileCondition condition = CompileCondition();
+	LinkedActionList actionList = LinkedActionList();
+	DoNothingNode node1 = DoNothingNode();
+	actionList.insertLast(&node1);
+	condition.Compile(cTokenList, *cTokenList.first, *cTokenList.last, actionList, node1);
+	actionList.printList();
 
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============

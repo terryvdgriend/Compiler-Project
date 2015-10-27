@@ -8,7 +8,7 @@ FunctionCall::FunctionCall()
 
 void  FunctionCall::Show()
 {
-
+	std::cout << "Function. \n";
 }
 
 void  FunctionCall::Action()
