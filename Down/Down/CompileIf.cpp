@@ -6,7 +6,7 @@ CompileIf::CompileIf()
 {
 }
 
-void CompileIf::Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore)
+void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 }
 

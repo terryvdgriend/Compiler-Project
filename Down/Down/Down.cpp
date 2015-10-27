@@ -27,6 +27,7 @@ int main()
 	tnzr.createTokenList(cTokenList, codefromfile);
 	tnzr.printTokenList(cTokenList);
 
+	//=========COMPILE CONDITION======
 	CompileCondition condition = CompileCondition();
 	LinkedActionList actionList = LinkedActionList();
 	DoNothingNode node1 = DoNothingNode();
