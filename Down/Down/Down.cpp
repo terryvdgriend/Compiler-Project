@@ -10,6 +10,10 @@
 #include "FileStreamer.h"
 #include "Format.h"
 
+//Mogen weg!!
+#include "CompileCondition.h"
+#include "DoNothingNode.h"
+
 string getTextFromFile();
 
 int main()
@@ -22,6 +26,13 @@ int main()
 	Tokenizer tnzr{ Tokenizer() };
 	tnzr.createTokenList(cTokenList, codefromfile);
 	tnzr.printTokenList(cTokenList);
+
+	CompileCondition condition = CompileCondition();
+	LinkedActionList actionList = LinkedActionList();
+	DoNothingNode node1 = DoNothingNode();
+	actionList.insertLast(&node1);
+	condition.Compile(cTokenList, *cTokenList.first, *cTokenList.last, actionList, node1);
+	actionList.printList();
 
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
@@ -49,7 +60,7 @@ string getTextFromFile()
 {
 	// vul naam in van de resource, die je wilt testen
 	// if / while / etc
-	string txtTje = "if";
+	string txtTje = "condition";
 	//
 	string datFile = "./" + txtTje + ".txt";
 	FileStreamer fs{ FileStreamer() };

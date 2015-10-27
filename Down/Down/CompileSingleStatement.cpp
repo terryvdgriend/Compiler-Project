@@ -5,6 +5,13 @@
 #define SET_CONST_TO_RT  "ConstantToReturnValue"
 #define SET_GET_FROM_RT  "getFromReturnValue"
 
+CompileSingleStatement::CompileSingleStatement()
+{
+}
+
+CompileSingleStatement::~CompileSingleStatement()
+{
+}
 
 void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {

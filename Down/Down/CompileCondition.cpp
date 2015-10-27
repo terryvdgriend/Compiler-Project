@@ -6,7 +6,7 @@
 CompileCondition::CompileCondition()
 	: CompileOperator(new CompilePlusMin)
 {
-	std::map<Token::iToken, string> tokenMap = getTokenMap();
+	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::LARGER_THAN] = "$>";
 	tokenMap[Token::LESS_THAN] = "$<";
 	tokenMap[Token::EQUALS_TO] = "$==";

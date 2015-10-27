@@ -76,6 +76,9 @@
     <Text Include="func.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="condition.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -174,6 +177,9 @@
     <ClInclude Include="FunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="CompileNextLevel.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -267,6 +273,9 @@
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileNextLevel.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
