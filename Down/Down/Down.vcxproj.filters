@@ -76,9 +76,7 @@
     <Text Include="func.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="condition.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <Text Include="condition.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -138,7 +136,13 @@
     <ClInclude Include="CompileLValue.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="CompileOperator.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilePlusMinus.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileSingleStatement.h">
@@ -171,20 +175,17 @@
     <ClInclude Include="FunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="CompileDoWhile.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFactory.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="CompileNextLevel.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompilePlusMinus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CompilerHeader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileTimesDivideModulo.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,7 +243,13 @@
     <ClCompile Include="CompileLValue.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
+    <ClCompile Include="CompileTimesDivideModulo.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
     <ClCompile Include="CompileOperator.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilePlusMinus.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileSingleStatement.cpp">
@@ -275,17 +282,14 @@
     <ClCompile Include="FunctionCall.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
+    <ClCompile Include="CompileDoWhile.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
     <ClCompile Include="CompileNextLevel.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompilePlusMinus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CompileFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileTimesDivideModulo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

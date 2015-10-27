@@ -27,45 +27,48 @@ void CompileDoWhile::ConnectLists(){
 
 void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
+	Token* current = &begin;
 	int whileLevel = begin.getLevel();
 	std::list<TokenExpectations> expected = std::list<TokenExpectations>();
-	expected.push_front(TokenExpectations(whileLevel, Token::DO));
-	expected.push_front(TokenExpectations(whileLevel, Token::BODY_OPEN));
-	expected.push_front(TokenExpectations(whileLevel + 1, Token::ANY));
-	expected.push_front(TokenExpectations(whileLevel, Token::BODY_CLOSED));
-	expected.push_front(TokenExpectations(whileLevel, Token::WHILE));
-	expected.push_front(TokenExpectations(whileLevel, Token::CONDITION_OPEN));
-	expected.push_front(TokenExpectations(whileLevel + 1, Token::ANY));
-	expected.push_front(TokenExpectations(whileLevel, Token::CONDITION_CLOSE));
+	expected.push_back(TokenExpectations(whileLevel, Token::DO));
+	expected.push_back(TokenExpectations(whileLevel, Token::BODY_OPEN));
+	expected.push_back(TokenExpectations(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectations(whileLevel, Token::BODY_CLOSED));
+	expected.push_back(TokenExpectations(whileLevel, Token::WHILE));
+	expected.push_back(TokenExpectations(whileLevel, Token::CONDITION_OPEN));
+	expected.push_back(TokenExpectations(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectations(whileLevel, Token::CONDITION_CLOSE));
 
-	for each (TokenExpectations expectation in expected)
+	for(TokenExpectations expectation : expected)
 	{
 		if (expectation.Level == whileLevel){
-			if (begin.getEnum() != expectation.TokenType){
-				throw exception("Dingen enzo");
+			if (current->getEnum() != expectation.TokenType){
+				//throw exception("Dingen enzo");
 				break;
 			}
 			else
-				begin = *begin.next;
+				current = current->next;
 		}
 		else if (expectation.Level >= whileLevel){
 			if (_body->Count() == 0){
 				bodyNode = _body->add(new DoNothingNode());
-				while (begin.getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(begin.getEnum());
+				while (current->getLevel() > whileLevel){
+					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
 					if (compiledBodyPart != nullptr){
-						compiledBodyPart->Compile(cTokenList, begin, *begin.previous->getPartner(), *_body, *_body->getLast());
+						compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_body, *_body->getLast());
+						current = current->previous->getPartner();
+						begin = *current;
 					}
 					else
-						begin = *begin.next;
+						current = current->next;
 				}
 			}
 			else{
 				CompileCondition* condition = new CompileCondition();
 
-				condition->Compile(cTokenList, begin, *begin.previous->getPartner(), *_condition, *_condition->getLast());
-				begin = *begin.previous->getPartner();
-				
+				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+				current = current->previous->getPartner();
+				begin = *current;
 			}
 		}
 	}

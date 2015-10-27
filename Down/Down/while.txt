@@ -1,4 +1,5 @@
-#### while ( **i** smaller than 10 ) 
+#### do 
 --
 	**i** is **i** plus 1
 __
+#### while ( **i** smaller than 10 ) 
