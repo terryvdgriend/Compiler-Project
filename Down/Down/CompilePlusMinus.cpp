@@ -4,7 +4,7 @@
 
 CompilePlusMinus::CompilePlusMinus() : CompileOperator(new CompileTimesDivideModulo)
 {
-	map<Token::iToken, string> tokenMap = getTokenMap();
+	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::PLUS] = "$+";
 	tokenMap[Token::MINUS] = "$-";
 

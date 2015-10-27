@@ -39,13 +39,14 @@ int main()
 
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
-		//Compute comp{ Compute(cTokenList) };
+		
 		LinkedActionList cRunList{ LinkedActionList() };
 		cRunList.add(new DoNothingNode());
-		CompileWhile compiler{ CompileWhile() };
 
-		compiler.Compile(cTokenList, *cTokenList.first, *cTokenList.first, cRunList, *cRunList.getLast());
+		Compute compute{ Compute() };
 
+		compute.ComputeCompile(&cTokenList, &cRunList);
+		cRunList.printList();
 		//=========VM==============
 		//TODO: meesturen wat je terug krijgt van de compute
 		Program prog{ Program() };
