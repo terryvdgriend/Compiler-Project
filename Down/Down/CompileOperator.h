@@ -13,6 +13,7 @@ public:
 	Compiler * Create() { return new CompileOperator(); };
 	~CompileOperator();
 
+
 protected:
 	std::map<Token::iToken, string> getTokenMap();
 };
