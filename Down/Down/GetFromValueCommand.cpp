@@ -1,15 +1,13 @@
+#pragma once
 #include "stdafx.h"
 #include "GetFromValueCommand.h"
 
-GetFromValueCommand::GetFromValueCommand()
-{
-}
-
 GetFromValueCommand::~GetFromValueCommand()
 {
+	//Todo
 }
 
 void GetFromValueCommand::execute(VirtualMachine *vm, vector<string> *parameters)
 {
-
+	//Todo
 }

@@ -89,6 +89,7 @@
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
+    <ClInclude Include="CommandList.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileEquals.h" />

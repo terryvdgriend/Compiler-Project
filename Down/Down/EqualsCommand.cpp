@@ -2,15 +2,12 @@
 #include "stdafx.h"
 #include "EqualsCommand.h"
 
-EqualsCommand::EqualsCommand()
-{
-}
-
 EqualsCommand::~EqualsCommand()
 {
+	//Todo
 }
 
 void EqualsCommand::execute(VirtualMachine *vm, vector<string> *parameters)
 {
-
+	//Todo
 }

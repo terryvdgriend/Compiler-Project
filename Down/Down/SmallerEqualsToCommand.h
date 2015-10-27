@@ -4,7 +4,6 @@
 class SmallerEqualsToCommand : public BaseCommand
 {
 	public:
-		SmallerEqualsToCommand();
 		~SmallerEqualsToCommand();
 		void execute(VirtualMachine *vm, vector<string> *parameters);
 };
