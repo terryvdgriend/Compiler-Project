@@ -4,9 +4,7 @@
 class Variable
 {
 	public:
-		Variable();
 		Variable(string param);
-		~Variable();
 		VariableType getType();
 		string getValue();
 	private:
