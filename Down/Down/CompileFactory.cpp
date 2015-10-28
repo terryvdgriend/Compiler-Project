@@ -6,8 +6,9 @@ CompileFactory::CompileFactory()
 {
 	mappert[Token::IF] = new CompileIf();
 	mappert[Token::WHILE] = new CompileWhile();
-	mappert[Token::DO] = new CompileWhile();
+	mappert[Token::DO] = new CompileDoWhile();
 	mappert[Token::FUNCTION] = new CompileFunction();
+	mappert[Token::IDENTIFIER] = new CompileEquals();
 }
 
 Compiler * CompileFactory::CreateCompileStatement(const Token::iToken tknzr)

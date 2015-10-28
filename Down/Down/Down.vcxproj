@@ -90,6 +90,7 @@
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
+    <ClInclude Include="CompileDoWhile.h" />
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFunction.h" />
@@ -107,6 +108,8 @@
     <ClInclude Include="ConditionalJumpNode.h" />
     <ClInclude Include="DirectFunctionCall.h" />
     <ClInclude Include="DoNothingNode.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
@@ -127,6 +130,7 @@
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
+    <ClCompile Include="CompileDoWhile.cpp" />
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
@@ -144,6 +148,8 @@
     <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
     <ClCompile Include="Down.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
