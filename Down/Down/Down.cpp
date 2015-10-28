@@ -54,7 +54,7 @@ int main(int argc, const char * argv[])
 		std::cout << "Not enough params" << std::endl;
 		return 0;
 	}
-	//Declas
+	////Declas
 	LinkedList cTokenList;
 
 	//=========TOKENIZER==============
