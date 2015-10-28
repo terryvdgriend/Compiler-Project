@@ -4,17 +4,11 @@ function init()
         var editor = require("./../js/editor.js");
         var compiler = require("./../js/compiler.js");
         var textEditor = global.$('#editor textarea');
-
 		var menu = require("./../js/menu.js");
-		menu.initMenu();
+		
+        menu.initMenu();
 
-        var compile = global.$('#compile');
-
-        compile.bind('click', function() {
-            var som = require('./../cpp/Som');
-            console.log('This should be eight: ', som.Add(3,5));
-        });
-
+        global.fileName = null;
         global.editor = ace.edit("code");
         global.editor.setTheme("ace/theme/twilight");
         global.editor.session.setMode("ace/mode/markdown");
@@ -28,7 +22,7 @@ function init()
             enableSnippets: true,
             enableLiveAutocompletion: true
         });
-
+        
         var autoComplete = [
             { key: "if", value: "#### if" },
             { key: "else", value: "#### else" },
@@ -77,6 +71,19 @@ function init()
             $('body').removeClass('showLog');
             global.editor.resize();
         });
+
+        window.ondragover = function(e) { e.preventDefault(); return false };
+        window.ondrop = function(e) { e.preventDefault(); return false };
+        $('body').get(0).ondrop = function (e) {
+            e.preventDefault();
+
+            // for (var i = 0; i < e.dataTransfer.files.length; ++i) {
+            //     console.log(e.dataTransfer.files[i].path);
+            // }
+
+            editor.loadFile(e.dataTransfer.files[0].path);
+            return false;
+        };
     });
 }
 

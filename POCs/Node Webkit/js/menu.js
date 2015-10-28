@@ -8,12 +8,17 @@ exports.initMenu = function() {
 
     fileMenu.append(new global.gui.MenuItem({
         label: 'Nieuw',
+        key: "n",
+        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
         	editor.loadText("");
+            global.fileName = null;
         }
     }));
     fileMenu.append(new global.gui.MenuItem({
         label: 'Openen',
+        key: "o",
+        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
         	editor.chooseFile("#openFileDialog", function(filename) {
         		editor.loadFile(filename);
@@ -22,17 +27,16 @@ exports.initMenu = function() {
     }));
     fileMenu.append(new global.gui.MenuItem({
         label: 'Opslaan',
+        key: "s",
+        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
-            editor.chooseFile("#saveFileDialog", function(filename) {
-                var fs = require('fs');
-                fs.writeFile(filename, global.editor.getValue(), function(err) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("The file was saved!");
-                    }
+            if(!global.fileName) {
+                editor.chooseFile("#saveFileDialog", function(filename) {
+                    editor.saveFile(filename);
                 });
-            });
+            } else {
+                editor.saveFile(global.fileName);
+            }
         }
     }));
     fileMenu.append(new global.gui.MenuItem({

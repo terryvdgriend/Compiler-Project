@@ -26,6 +26,7 @@ exports.loadFile = function(file) {
             return console.log(err);
         } else {
             console.log("The file was loaded!");
+            global.fileName = file;
         }
         exports.loadText(data);
     });
@@ -41,4 +42,16 @@ exports.chooseFile = function(name, callback) {
     });
 
     $(name).trigger('click');       
+};
+
+exports.saveFile = function(filename, callback) {
+    global.fileName = filename;
+    var fs = require('fs');
+    fs.writeFile(filename, global.editor.getValue(), function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("The file was saved!");
+        }
+    });     
 };
