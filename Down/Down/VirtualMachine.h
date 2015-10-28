@@ -9,7 +9,7 @@ class VirtualMachine
 	public:
 		VirtualMachine();
 
-		void execute(LinkedActionList actionList);
+		void execute(LinkedActionList& actionList);
 
 		void addIdentifer(string name);
 

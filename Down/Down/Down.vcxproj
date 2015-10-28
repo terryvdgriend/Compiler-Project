@@ -122,6 +122,7 @@
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
+    <ClInclude Include="NextNodeVisitor.h" />
     <ClInclude Include="NodeVisitor.h" />
     <ClInclude Include="NotEqualsToCommand.h" />
     <ClInclude Include="PlusCommand.h" />
@@ -178,7 +179,7 @@
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="MinusCommand.cpp" />
     <ClCompile Include="MinusMinusCommand.cpp" />
-    <ClCompile Include="NodeVisitor.cpp" />
+    <ClCompile Include="NextNodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />

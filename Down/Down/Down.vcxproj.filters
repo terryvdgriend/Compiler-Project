@@ -255,6 +255,9 @@
     <ClInclude Include="Variable.h">
       <Filter>Header Files\VM\Variable</Filter>
     </ClInclude>
+    <ClInclude Include="NextNodeVisitor.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -324,9 +327,6 @@
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="LinkedActionList.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
@@ -409,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\VM\Variable</Filter>
+    </ClCompile>
+    <ClCompile Include="NextNodeVisitor.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

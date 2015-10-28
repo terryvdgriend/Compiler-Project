@@ -1,17 +1,29 @@
-#pragma once
 #include "stdafx.h"
 #include "VirtualMachine.h"
 #include "CommandDictionary.h"
 #include "ActionNode.h"
+#include "NextNodeVisitor.h"
+#include "AbstractFunctionCall.h"
 
 VirtualMachine::VirtualMachine()
 {
 	commandDictionary = CommandDictionary().getMap();
 }
 
-void VirtualMachine::execute(LinkedActionList actionList)
+void VirtualMachine::execute(LinkedActionList& actionList)
 {
-	//ActionNode currentNode = *actionList.getFirst();
+	ActionNode* currentNode = actionList.getFirst();
+	NextNodeVisitor* visitor = new NextNodeVisitor(this);
+
+	while (currentNode != nullptr)
+	{
+		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+
+		if (actionNode != nullptr)
+		{
+			//string name = (*actionNode).get
+		}
+	}
 }
 
 void VirtualMachine::addIdentifer(string name)
