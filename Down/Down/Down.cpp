@@ -136,7 +136,7 @@ void doDingen(int argc, const char * argv[]){
 }
 
 string getTextFromFile(string fileName) {
-	string datFile = "./" + fileName + ".md";
+	string datFile = fileName;
 	FileStreamer fs{ FileStreamer() };
 	return fs.reader(datFile);
 }
