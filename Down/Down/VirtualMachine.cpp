@@ -34,7 +34,7 @@ bool VirtualMachine::hasValueInFunctionParameters(string parameter)
 	return functionParamters.find(parameter) != functionParamters.end();
 }
 
-vector<string> VirtualMachine::getFunctionParamters(string name)
+vector<string> VirtualMachine::getFunctionParameters(string name)
 {
 	return vector<string>();
 }
@@ -44,7 +44,7 @@ vector<string> VirtualMachine::getFunctionParametersByValue(string value)
 	return vector<string>();
 }
 
-void VirtualMachine::setFunctionParamter(string name, string value)
+void VirtualMachine::setFunctionParameter(string name, string value)
 {
 	functionParamters[name] = value;
 }

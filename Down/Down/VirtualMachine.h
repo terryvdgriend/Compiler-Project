@@ -19,9 +19,9 @@ class VirtualMachine
 		void setVariable(string name, string value);
 
 		bool hasValueInFunctionParameters(string parameter);
-		vector<string> getFunctionParamters(string name);
+		vector<string> getFunctionParameters(string name);
 		vector<string> getFunctionParametersByValue(string value);
-		void setFunctionParamter(string name, string value);
+		void setFunctionParameter(string name, string value);
 
 		void addIdentifer(string name);
 		bool isAnIdentifier(string name);

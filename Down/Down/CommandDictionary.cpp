@@ -21,10 +21,9 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$++"] = new PlusPlusCommand();
 	commandDictionary["$--"] = new MinusMinusCommand();
 
-	commandDictionary["ReturnToVariable"] = new ReturnToVariableCommand();
-	commandDictionary["SetIdentifierToReturnValue"] = new IdentifierToReturnValueCommand();
-	commandDictionary["SetConstantToReturnValue"] = new ConstantToReturnValueCommand();
-	commandDictionary["GetFromReturnValue"] = new GetFromValueCommand();
+	commandDictionary["IdentifierToReturnValue"] = new IdentifierToReturnValueCommand();
+	commandDictionary["ConstantToReturnValue"] = new ConstantToReturnValueCommand();
+	commandDictionary["getFromReturnValue"] = new GetFromValueCommand();
 }
 
 CommandDictionary::~CommandDictionary()

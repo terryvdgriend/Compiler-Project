@@ -222,9 +222,6 @@
     <ClInclude Include="ReturnToValueCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnToVariableCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="ShowFunctionCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
@@ -384,9 +381,6 @@
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="ReturnToValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ReturnToVariableCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="ShowFunctionCommand.cpp">
