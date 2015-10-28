@@ -15,20 +15,3 @@ public:
 	Compiler * Create() { return new CompileWhile(); };
 	~CompileWhile();
 };
-
-
-struct TokenExpectation
-{
-public:
-	int Level;
-public:
-	Token::iToken TokenType;
-
-public:
-	TokenExpectation(int level, Token::iToken tokenType)
-	{
-		Level = level;
-		TokenType = tokenType;
-	}
-
-};

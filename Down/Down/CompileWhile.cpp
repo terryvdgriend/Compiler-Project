@@ -5,6 +5,7 @@
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
+#include "TokenExpectation.h"
 
 CompileWhile::CompileWhile()
 {

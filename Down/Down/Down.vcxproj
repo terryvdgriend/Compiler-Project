@@ -81,7 +81,7 @@
     <Text Include="func.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
-    <Text Include="if.txt" />
+    <Text Include="if.md" />
     <Text Include="switch.txt" />
     <Text Include="while.txt" />
   </ItemGroup>
@@ -123,6 +123,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,9 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="if else elseif.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
