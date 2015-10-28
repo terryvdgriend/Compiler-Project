@@ -2,19 +2,16 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
 #include "CommandDictionary.h"
-#include <algorithm>
+#include "ActionNode.h"
 
 VirtualMachine::VirtualMachine()
 {
 	commandDictionary = CommandDictionary().getMap();
 }
 
-VirtualMachine::~VirtualMachine()
-{
-}
-
 void VirtualMachine::execute(LinkedList linkedList)
 {
+		
 }
 
 BaseCommand * VirtualMachine::getCommandByString(string name)
@@ -24,15 +21,12 @@ BaseCommand * VirtualMachine::getCommandByString(string name)
 
 Variable VirtualMachine::getVariable(string parameter)
 {
-	Variable temp;
-	temp = variableDictionary.find(parameter)->second;
-
-	return temp;
+	return variableDictionary[parameter];
 }
 
 void VirtualMachine::setVariable(string name, string value)
 {
-
+	variableDictionary[name] = Variable(value);
 }
 
 bool VirtualMachine::hasValueInFunctionParameters(string parameter)

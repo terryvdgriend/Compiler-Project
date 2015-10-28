@@ -10,7 +10,6 @@ class VirtualMachine
 {
 	public:
 		VirtualMachine();
-		~VirtualMachine();
 
 		void execute(LinkedList linkedList);
 
