@@ -1,7 +1,7 @@
 #pragma once
 #include "Compiler.h"
-
-class CompileWhile : public Compiler
+class CompileDoWhile :
+	public Compiler
 {
 private:
 	LinkedActionList* _compiledStatement;
@@ -9,15 +9,15 @@ private:
 	LinkedActionList* _body;
 	ActionNode* bodyNode;
 public:
-	CompileWhile();
+	CompileDoWhile();
 	void ConnectLists();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileWhile(); };
-	~CompileWhile();
+	Compiler * Create() { return new CompileDoWhile(); };
+	~CompileDoWhile();
 };
 
 
-struct TokenExpectation
+struct TokenExpectations
 {
 public:
 	int Level;
@@ -25,7 +25,7 @@ public:
 	Token::iToken TokenType;
 
 public:
-	TokenExpectation(int level, Token::iToken tokenType)
+	TokenExpectations(int level, Token::iToken tokenType)
 	{
 		Level = level;
 		TokenType = tokenType;

@@ -16,6 +16,7 @@ public:
 	ActionNode* getFirst(){ return first; };
 	ActionNode* getLast(){ return last; };
 	int Count() { return count; };
+	void printList();
 	~LinkedActionList();
 };
 
