@@ -66,7 +66,7 @@ int main(int argc, const char * argv[])
 
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
-
+		
 		LinkedActionList cRunList{ LinkedActionList() };
 		cRunList.add(new DoNothingNode());
 
@@ -74,9 +74,10 @@ int main(int argc, const char * argv[])
 
 		compute.ComputeCompile(&cTokenList, &cRunList);
 		cRunList.printList();
-		//	//=========VM==============
-		//	//TODO: meesturen wat je terug krijgt van de compute
-		//Program prog{ Program() };
+		//=========VM==============
+		//TODO: meesturen wat je terug krijgt van de compute
+	
+		Program prog{ Program() };
 
 	}
 	return 0;
