@@ -4,15 +4,19 @@
 
 class ErrorHandler
 {
+
 private: 
+	ErrorHandler() {};
 	static bool instanceFlag;
 	static ErrorHandler *handler;
-	ErrorHandler() {};
-	static std::list<Error*> errors;
-	
+	static std::list<Error> errors;
+	~ErrorHandler();
+
 public:
 	static ErrorHandler *getInstance();
 	void ErrorHandler::addError(Error::type t, std::string s);
-	~ErrorHandler();
+	void ErrorHandler::addError(Error e);
+	std::list<Error> getErrors();
+	
 };
 
