@@ -71,6 +71,12 @@ void LinkedActionList::printList(){
 
 LinkedActionList::~LinkedActionList()
 {
+	ActionNode* iter = this->first;
+	while (iter != nullptr){
+		ActionNode* current = iter;
+		iter = iter->getNext();
+		delete current;
+	}
 }
 
 

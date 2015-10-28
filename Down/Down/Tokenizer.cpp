@@ -115,36 +115,27 @@ Tokenizer::Tokenizer()
 
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
-	Token  *pToken;
+	Token  *pToken{};
 
 	string s(codefromfile);
 	smatch m;
 	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
 	regex se("\\*\\*.+\\*\\*");
-	// (#+ (?:else if|else|if|case)|\w+|\S+)
-	// M: (""|'.'\d+\.\d+|\w|\S|\n)
-	// 
+
 
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
 	int pInt = 0;
-	Token *prevToken;
 	bool isFunctionCall = false;
 	while (regex_search(s, m, e))
 	{
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-		////Check identifier
-		//smatch sm;
-		//regex_search(part, sm, se);
-		//if (sm.size() != 0)
-		//	currentToken = Token::IDENTIFIER;
-		//else
-		//	currentToken = (mappert.find(part) == mappert.end()) ? getToken(part) : mappert[part];
 		
 		currentToken = getToken(part);
+		
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
 			isFunctionCall = false;
@@ -158,6 +149,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			colNr = 1;
 			rowNr++;
 			s = m.suffix().str();
+			delete pToken;
 			continue;
 		}
 
@@ -193,9 +185,9 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 
 		CheckStack(*pToken, lvl);
-
+		
 		s = m.suffix().str();
-		prevToken = pToken;
+		
 	}
 	CheckRemainingStack();
 }
@@ -350,5 +342,4 @@ Token::iToken Tokenizer::getToken(std::string token){
 
 Tokenizer::~Tokenizer()
 {
-
 }

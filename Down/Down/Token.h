@@ -63,11 +63,6 @@ public:
 		ANY
 	};
 
-
-public:
-	typedef std::list<Token*>   TokenList;
-	typedef TokenList::iterator iterator;
-
 public:
 	Token();
 	~Token();

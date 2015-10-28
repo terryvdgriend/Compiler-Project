@@ -61,14 +61,15 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 					}
 					else
 						current = current->next;
+					delete compiledBodyPart;
 				}
 			}
 			else{
 				CompileCondition* condition = new CompileCondition();
-
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 				current = current->previous->getPartner();
 				begin = *current;
+				delete condition;
 			}
 		}
 	}
@@ -78,4 +79,8 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 
 CompileDoWhile::~CompileDoWhile()
 {
+	delete bodyNode;
+	delete _body;
+	delete _condition;
+	delete _compiledStatement;
 }
