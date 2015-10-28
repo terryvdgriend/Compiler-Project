@@ -59,7 +59,7 @@ function init()
                 }));
             }
         }
-        
+                
         var langTools = ace.require("ace/ext/language_tools");
         langTools.addCompleter(downCompleter);
 
