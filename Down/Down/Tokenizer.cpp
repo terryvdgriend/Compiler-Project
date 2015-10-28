@@ -214,7 +214,7 @@ void Tokenizer::printTokenList(LinkedList& cTokenList)
 }
 
 void Tokenizer::CheckRemainingStack(){
-	if (this->stack.size() > 0 && (this->stack.top()->getEnum() == Token::IF || this->stack.top()->getEnum() == Token::WHILE)){
+	if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF){
 		this->stack.pop();
 	}
 }
@@ -226,25 +226,18 @@ void Tokenizer::CheckStack(Token& token, int &lvl){
 };
 
 void Tokenizer::CheckCondition(Token& token, int &lvl){
-	/*if (token.getEnum() == Token::WHILE)
+	if (token.getEnum() == Token::DO)
 	{
-		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::WHILE)
-		{
-			this->stack.pop();
-		}
 		this->stack.push(&token);
 	}
-	if (token.getEnum() == Token::DO){
+	if (token.getEnum() == Token::WHILE){
 		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::DO){
 			Token* stackToken = this->stack.top();
 			token.setPartner(stackToken);
 			stackToken->setPartner(&token);
 			this->stack.pop();
 		}
-		else{
-			this->stack.push(&token);
-		}
-	}*/
+	}
 	if (token.getEnum() == Token::IF)
 	{
 		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
