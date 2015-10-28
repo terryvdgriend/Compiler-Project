@@ -17,6 +17,8 @@ exports.run = function(code) {
 		var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 		exports.setLogResult(resultWithSpaces);
 
+		console.log(stdout);
+		
 		if(error || stderr) {
 			var result = "<br><br>" + error + "<br><br>" + stderr;
 			exports.appendLogResult(result);
