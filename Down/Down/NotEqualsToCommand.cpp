@@ -2,12 +2,7 @@
 #include "stdafx.h"
 #include "NotEqualsToCommand.h"
 
-NotEqualsToCommand::~NotEqualsToCommand()
-{
-	//Todo
-}
-
-void NotEqualsToCommand::execute(VirtualMachine *vm, vector<string> *parameters)
+void NotEqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
 	//Todo
 }

@@ -4,6 +4,5 @@
 class GreaterEqualsToCommand : public BaseCommand
 {
 	public:
-		~GreaterEqualsToCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

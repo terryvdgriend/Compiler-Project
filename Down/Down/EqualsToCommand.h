@@ -4,6 +4,5 @@
 class EqualsToCommand : public BaseCommand
 {
 	public:
-		~EqualsToCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

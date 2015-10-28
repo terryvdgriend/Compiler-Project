@@ -4,6 +4,5 @@
 class TimesCommand : public BaseCommand
 {
 	public:
-		~TimesCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

@@ -1,10 +1,10 @@
 #pragma once
-
 #include "VariableType.h"
 
 class Variable
 {
 	public:
+		Variable();
 		Variable(string param);
 		~Variable();
 		VariableType getType();
@@ -13,4 +13,5 @@ class Variable
 		string value;
 		bool is_number(const string& s);
 		VariableType type;
+		bool is_bool(const string& s);
 };

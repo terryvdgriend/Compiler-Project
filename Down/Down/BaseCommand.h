@@ -4,5 +4,5 @@
 class BaseCommand
 {
 	public:
-		virtual void execute(VirtualMachine *vm, vector<string> *parameters) = 0;
+		virtual void execute(VirtualMachine& vm, vector<string>& parameters) = 0;
 };

@@ -14,7 +14,7 @@ void VirtualMachine::execute(LinkedList linkedList)
 		
 }
 
-BaseCommand * VirtualMachine::getCommandByString(string name)
+BaseCommand* VirtualMachine::getCommandByString(string name)
 {
 	return commandDictionary[name];
 }
@@ -26,7 +26,7 @@ Variable VirtualMachine::getVariable(string parameter)
 
 void VirtualMachine::setVariable(string name, string value)
 {
-	variableDictionary[name] = Variable(value);
+	//variableDictionary[name] = Variable(value);
 }
 
 bool VirtualMachine::hasValueInFunctionParameters(string parameter)
@@ -36,6 +36,10 @@ bool VirtualMachine::hasValueInFunctionParameters(string parameter)
 
 vector<string> VirtualMachine::getFunctionParameters(string name)
 {
+	vector<string> tempList;
+
+
+
 	return vector<string>();
 }
 

@@ -61,6 +61,12 @@
     <Filter Include="Source Files\VM\Commands">
       <UniqueIdentifier>{32734ffb-6435-4ba7-9e4d-202a756087b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\VM\Variable">
+      <UniqueIdentifier>{3c7375f1-349a-4936-a46d-cb70499038a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Variable">
+      <UniqueIdentifier>{2ea028aa-eb26-47b9-891f-9c4ab51d4b92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -234,12 +240,6 @@
     <ClInclude Include="TimesCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Variable.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="VariableType.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="CommandDictionary.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
@@ -248,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="CommandList.h">
       <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableType.h">
+      <Filter>Header Files\VM\Variable</Filter>
+    </ClInclude>
+    <ClInclude Include="Variable.h">
+      <Filter>Header Files\VM\Variable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -395,14 +401,14 @@
     <ClCompile Include="TimesCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="Variable.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="VirtualMachine.cpp">
       <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="Variable.cpp">
+      <Filter>Source Files\VM\Variable</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

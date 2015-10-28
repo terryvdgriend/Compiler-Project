@@ -4,6 +4,5 @@
 class ShowFunctionCommand : public BaseCommand
 {
 	public:
-		~ShowFunctionCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

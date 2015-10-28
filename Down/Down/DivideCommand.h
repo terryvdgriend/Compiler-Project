@@ -4,6 +4,5 @@
 class DivideCommand : public BaseCommand
 {
 	public:
-		~DivideCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

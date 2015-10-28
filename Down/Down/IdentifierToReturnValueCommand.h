@@ -3,7 +3,6 @@
 
 class IdentifierToReturnValueCommand : public BaseCommand
 {
-	public:
-		~IdentifierToReturnValueCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+	public:;
+		   void execute(VirtualMachine& vm, vector<string>& parameters);
 };

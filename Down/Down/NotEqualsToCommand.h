@@ -4,6 +4,5 @@
 class NotEqualsToCommand : public BaseCommand
 {
 	public:
-		~NotEqualsToCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

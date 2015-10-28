@@ -4,6 +4,5 @@
 class ConstantToReturnValueCommand : public BaseCommand
 {
 	public:
-		~ConstantToReturnValueCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };

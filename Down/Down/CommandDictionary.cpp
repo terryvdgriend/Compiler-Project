@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 #include "CommandDictionary.h"
 #include "CommandList.h"
@@ -24,11 +23,6 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["IdentifierToReturnValue"] = new IdentifierToReturnValueCommand();
 	commandDictionary["ConstantToReturnValue"] = new ConstantToReturnValueCommand();
 	commandDictionary["getFromReturnValue"] = new GetFromValueCommand();
-}
-
-CommandDictionary::~CommandDictionary()
-{
-	//Todo
 }
 
 map<string, BaseCommand*> CommandDictionary::getMap()

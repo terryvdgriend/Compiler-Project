@@ -4,6 +4,5 @@
 class PlusCommand : public BaseCommand
 {
 	public:
-		~PlusCommand();
-		void execute(VirtualMachine *vm, vector<string> *parameters);
+		void execute(VirtualMachine& vm, vector<string>& parameters);
 };
