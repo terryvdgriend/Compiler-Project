@@ -67,6 +67,7 @@ int main(int argc, const char * argv[])
 		cRunList.printList();
 		//=========VM==============
 		//TODO: meesturen wat je terug krijgt van de compute
+	
 		Program prog{ Program() };
 
 	}
