@@ -5,6 +5,8 @@
 LinkedActionList::LinkedActionList()
 {
 	this->count = 0;
+	this->first = nullptr;
+	this->last = nullptr;
 }
 
 ActionNode* LinkedActionList::add(ActionNode* value){

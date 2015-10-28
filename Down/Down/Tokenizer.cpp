@@ -162,6 +162,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken->setPositieInList(pInt);
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
+		pToken->setPartner(nullptr);
 
 		//Add + Next
 		cTokenList.add(pToken);

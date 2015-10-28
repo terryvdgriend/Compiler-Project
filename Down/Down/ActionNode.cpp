@@ -4,6 +4,8 @@
 
 ActionNode::ActionNode()
 {
+	this->next = nullptr;
+	this->previous = nullptr;
 }
 
 void  ActionNode::Show()

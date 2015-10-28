@@ -30,31 +30,31 @@ void doDingen(int argc, const char * argv[]);
 
 int main(int argc, const char * argv[])
 {
-	string code = "";
+	string code = "**i** is 1 plus 1";
 
-	if (argc == 3) {
-		string option = argv[1];
-		string value = argv[2];
+	//if (argc == 3) {
+	//	string option = argv[1];
+	//	string value = argv[2];
 
-		if (option == "-f") {
-			// File
-			// std::cout << value << std::endl;
-			code = getTextFromFile(value);
-		}
-		else if (option == "-c") {
-			// Code
-			// std::cout << value << std::endl;
-			code = value;
-		}
-		else {
-			std::cout << "No valid option: " << option << std::endl;
-			return 0;
-		}
-	}
-	else {
-		std::cout << "Not enough params" << std::endl;
-		return 0;
-	}
+	//	if (option == "-f") {
+	//		// File
+	//		// std::cout << value << std::endl;
+	//		code = getTextFromFile(value);
+	//	}
+	//	else if (option == "-c") {
+	//		// Code
+	//		// std::cout << value << std::endl;
+	//		code = value;
+	//	}
+	//	else {
+	//		std::cout << "No valid option: " << option << std::endl;
+	//		return 0;
+	//	}
+	//}
+	//else {
+	//	std::cout << "Not enough params" << std::endl;
+	//	return 0;
+	//}
 	//Declas
 	LinkedList cTokenList;
 
