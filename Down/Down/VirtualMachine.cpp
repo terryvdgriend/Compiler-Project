@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
 #include "CommandDictionary.h"
+#include <algorithm>
 
 VirtualMachine::VirtualMachine()
 {
@@ -18,21 +19,25 @@ void VirtualMachine::execute(LinkedList linkedList)
 
 BaseCommand * VirtualMachine::getCommandByString(string name)
 {
-	return nullptr;
+	return commandDictionary[name];
 }
 
 Variable VirtualMachine::getVariable(string parameter)
 {
-	return Variable();
+	Variable temp;
+	temp = variableDictionary.find(parameter)->second;
+
+	return temp;
 }
 
 void VirtualMachine::setVariable(string name, string value)
 {
+
 }
 
 bool VirtualMachine::hasValueInFunctionParameters(string parameter)
 {
-	return false;
+	return functionParamters.find(parameter) != functionParamters.end();
 }
 
 vector<string> VirtualMachine::getFunctionParamters(string name)
@@ -47,15 +52,20 @@ vector<string> VirtualMachine::getFunctionParametersByValue(string value)
 
 void VirtualMachine::setFunctionParamter(string name, string value)
 {
+	functionParamters[name] = value;
 }
 
 void VirtualMachine::addIdentifer(string name)
 {
+	if (!isAnIdentifier(name))
+	{
+		identifierList.push_back(name);
+	}
 }
 
 bool VirtualMachine::isAnIdentifier(string name)
 {
-	return false;
+	return find(identifierList.begin(), identifierList.end(), name) != identifierList.end();
 }
 
 string VirtualMachine::getReturnValue()
