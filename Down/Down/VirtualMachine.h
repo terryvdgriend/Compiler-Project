@@ -1,8 +1,6 @@
 #pragma once
-#include "LinkedList.h"
+#include "LinkedActionList.h"
 #include "Variable.h"
-
-using namespace std;
 
 class BaseCommand;
 
@@ -11,24 +9,23 @@ class VirtualMachine
 	public:
 		VirtualMachine();
 
-		void execute(LinkedList linkedList);
-
-		BaseCommand* getCommandByString(string name);
-
-		Variable getVariable(string parameter);
-		void setVariable(string name, string value);
-
-		bool hasValueInFunctionParameters(string parameter);
-		vector<string> getFunctionParameters(string name);
-		vector<string> getFunctionParametersByValue(string value);
-		void setFunctionParameter(string name, string value);
+		void execute(LinkedActionList actionList);
 
 		void addIdentifer(string name);
-		bool isAnIdentifier(string name);
 
+		BaseCommand* getCommandByString(string name);
+		Variable* getVariable(string parameter);
+		void setVariable(string name, string value);
+		vector<string> getFunctionParametersByKey(string name);
+		vector<string> getFunctionParametersByValue(string value);
+		void setFunctionParameter(string name, string value);
 		string getReturnValue();
 		void setReturnValue(string value);
 
+		bool hasValueInVariableDictionary(map<string, Variable>::iterator& it);
+		bool hasValueInFunctionParameters(string parameter);
+		bool isAnIdentifier(string name);
+		
 	private:
 		string returnValue;
 

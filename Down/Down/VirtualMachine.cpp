@@ -9,48 +9,9 @@ VirtualMachine::VirtualMachine()
 	commandDictionary = CommandDictionary().getMap();
 }
 
-void VirtualMachine::execute(LinkedList linkedList)
+void VirtualMachine::execute(LinkedActionList actionList)
 {
-		
-}
-
-BaseCommand* VirtualMachine::getCommandByString(string name)
-{
-	return commandDictionary[name];
-}
-
-Variable VirtualMachine::getVariable(string parameter)
-{
-	return variableDictionary[parameter];
-}
-
-void VirtualMachine::setVariable(string name, string value)
-{
-	//variableDictionary[name] = Variable(value);
-}
-
-bool VirtualMachine::hasValueInFunctionParameters(string parameter)
-{
-	return functionParamters.find(parameter) != functionParamters.end();
-}
-
-vector<string> VirtualMachine::getFunctionParameters(string name)
-{
-	vector<string> tempList;
-
-
-
-	return vector<string>();
-}
-
-vector<string> VirtualMachine::getFunctionParametersByValue(string value)
-{
-	return vector<string>();
-}
-
-void VirtualMachine::setFunctionParameter(string name, string value)
-{
-	functionParamters[name] = value;
+	//ActionNode currentNode = *actionList.getFirst();
 }
 
 void VirtualMachine::addIdentifer(string name)
@@ -61,9 +22,72 @@ void VirtualMachine::addIdentifer(string name)
 	}
 }
 
-bool VirtualMachine::isAnIdentifier(string name)
+BaseCommand* VirtualMachine::getCommandByString(string key)
 {
-	return find(identifierList.begin(), identifierList.end(), name) != identifierList.end();
+	return commandDictionary[key];
+}
+
+Variable* VirtualMachine::getVariable(string key)
+{
+	map<string, Variable>::iterator it = variableDictionary.find(key);
+
+	if (hasValueInVariableDictionary(it))
+	{
+		return &it->second;
+	}
+
+	return nullptr;
+}
+
+void VirtualMachine::setVariable(string key, string value)
+{
+	map<string, Variable>::iterator it = variableDictionary.find(key);
+
+	if (!hasValueInVariableDictionary(it))
+	{
+		it->second = value;
+	}
+	else
+	{
+		variableDictionary.insert(make_pair(key, value));
+	}
+}
+
+vector<string> VirtualMachine::getFunctionParametersByKey(string key)
+{
+	vector<string> parameterList;
+	map<string, string>::iterator it = functionParamters.begin();
+
+	for (it; it != functionParamters.end(); it++)
+	{
+		if (it->second == functionParamters[key])
+		{
+			parameterList.push_back(it->first);
+		}
+	}
+
+	return parameterList;
+}
+
+vector<string> VirtualMachine::getFunctionParametersByValue(string value)
+{
+	vector<string> parameterList;
+	map<string, string>::iterator it = functionParamters.begin();
+
+	for (it; it != functionParamters.end(); it++)
+	{
+		if (it->second == value)
+		{
+			parameterList.push_back(it->first);
+		}
+	}
+
+	return parameterList;
+}
+
+void VirtualMachine::setFunctionParameter(string name, string value)
+{
+	functionParamters[name] = value;
 }
 
 string VirtualMachine::getReturnValue()
@@ -74,4 +98,19 @@ string VirtualMachine::getReturnValue()
 void VirtualMachine::setReturnValue(string value)
 {
 	returnValue = value;
+}
+
+bool VirtualMachine::hasValueInVariableDictionary(map<string, Variable>::iterator& it)
+{
+	return it != variableDictionary.end();
+}
+
+bool VirtualMachine::hasValueInFunctionParameters(string key)
+{
+	return functionParamters.find(key) != functionParamters.end();
+}
+
+bool VirtualMachine::isAnIdentifier(string name)
+{
+	return find(identifierList.begin(), identifierList.end(), name) != identifierList.end();
 }

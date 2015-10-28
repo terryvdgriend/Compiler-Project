@@ -2,22 +2,13 @@
 #include "stdafx.h"
 #include "Variable.h"
 
-Variable::Variable()
-{
-	// Todo - Kill
-}
-
 Variable::Variable(string param) : value{ param }
 {
-	int val;
-	bool bol;
-
 	if (is_number(value)) 
 	{
 		type = VariableType::NUMBER;
 	}
-
-	if (is_bool(value)) 
+	else if (is_bool(value)) 
 	{
 		type = VariableType::BOOL;
 	}
@@ -25,11 +16,6 @@ Variable::Variable(string param) : value{ param }
 	{
 		type = VariableType::TEXT;
 	}
-}
-
-Variable::~Variable()
-{
-
 }
 
 VariableType Variable::getType() 
