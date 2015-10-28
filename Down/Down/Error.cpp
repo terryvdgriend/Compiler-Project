@@ -8,6 +8,19 @@ Error::Error(std::string _name, type _type)
 	t = _type;
 }
 
+Error::Error(std::string _name, std::string _file, int _line, int _column, notice _notice)
+{
+	name = _name;
+	file = _file;
+	line = _line;
+	column = _column;
+
+	// Voor even zo
+	note = "Error";
+	if (_notice == warning)
+		note = "Warning";
+}
+
 void Error::print()
 {
 	Text::Print("Line: '1' - Column: '2' - ");
@@ -24,7 +37,7 @@ std::string Error::asJsonObject()
 	JSON += "\"line\":\"" + std::to_string(line) + "\"";
 	JSON += "\"column\":\"" + std::to_string(column) + "\"";
 	JSON += "\"file\":\"" + file + "\"";
-	JSON += "\"notice\":\"error\"";
+	JSON += "\"notice\":\"" + note + "\"";
 	//JSON += "\"description\":\"" + name + "\"";
 	JSON += "}";
 	return JSON;
