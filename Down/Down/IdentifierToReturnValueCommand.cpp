@@ -4,5 +4,6 @@
 
 void IdentifierToReturnValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
-	//Todo
+	vm.setReturnValue(parameters.at(1));
+	vm.addIdentifer(parameters.at(1));
 }

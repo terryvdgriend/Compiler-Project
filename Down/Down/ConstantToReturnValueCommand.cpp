@@ -4,5 +4,5 @@
 
 void ConstantToReturnValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
-	//Todo
+	vm.setReturnValue(parameters.at(1));
 }
