@@ -1,4 +1,5 @@
 exports.run = function(code) {
+	global.editor.getSession().clearAnnotations();
 	exports.clearLogResult();
 	$('body').addClass('showLog');
     global.editor.resize();
@@ -23,6 +24,17 @@ exports.run = function(code) {
 			console.log(error);
 		}
 	});
+
+	// var errors = [{row: 2, error: "Mooie error hoor!"}];
+	// global.editor.getSession().setAnnotations(errors.map(function(x) {
+	//     return {
+	//         row: x.row-1,
+	//         column: 0,
+	//         text: x.error,
+	//         type: "error" // also warning and information
+	//     }
+	// }));
+
 };
 
 exports.parseData = function(data) {
