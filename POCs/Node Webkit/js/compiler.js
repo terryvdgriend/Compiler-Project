@@ -1,11 +1,14 @@
 exports.run = function(code) {
-	compilerFile = "Compiler-Windows.exe";
+	$('body').addClass('showLog');
+    global.editor.resize();
+
+	compilerFile = "compiler\\Compiler-Windows.exe";
 	if (process.platform === "darwin") {
-		compilerFile = "Compiler-OSX";
+		compilerFile = "./compiler/Compiler-OSX";
     }
 
 	var exec = require('child_process').exec;
-	var cmd = './compiler/' + compilerFile + ' -c "' + code + '"';
+	var cmd = compilerFile + ' -c "' + code + '"';
 	
 	exec(cmd, function(error, stdout, stderr) {
 		var resultWithBrs = stdout.replace(/(?:\r\n|\r|\n)/g, '<br/>');

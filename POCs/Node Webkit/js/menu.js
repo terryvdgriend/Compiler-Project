@@ -45,10 +45,10 @@ exports.initMenu = function() {
     var programMenu = new global.gui.Menu();
     programMenu.append(new global.gui.MenuItem({
         label: 'Run',
+        key: "r",
+        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
-            $('body').addClass('showLog');
             compiler.run(global.editor.getValue());
-            global.editor.resize();
         }
     }));
 
