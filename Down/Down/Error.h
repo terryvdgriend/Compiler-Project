@@ -8,5 +8,7 @@ public:
 	enum type { tokenizer, compiler, vm };
 	Error(std::string _name, type type);
 	~Error();
+
+	std::string getName(){ return name; };
 };
 

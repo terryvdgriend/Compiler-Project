@@ -61,9 +61,6 @@
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="while.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="calc.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -75,6 +72,9 @@
     </Text>
     <Text Include="condition.txt" />
     <Text Include="if.md">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

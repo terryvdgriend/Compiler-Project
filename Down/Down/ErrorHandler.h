@@ -13,9 +13,9 @@ private:
 	~ErrorHandler();
 
 public:
-	static ErrorHandler *getInstance();
 	void ErrorHandler::addError(Error::type t, std::string s);
 	void ErrorHandler::addError(Error e);
+	static ErrorHandler *getInstance();
 	std::list<Error> getErrors();
 	
 };

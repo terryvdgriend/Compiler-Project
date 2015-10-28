@@ -9,6 +9,10 @@
 
 CompileIf::CompileIf()
 {
+	_compiledStatement = new LinkedActionList();
+	_condition = new LinkedActionList();
+	_body = new LinkedActionList();
+	_compiledStatement->add(new DoNothingNode());
 }
 
 void CompileIf::ConnectLists(){
@@ -26,7 +30,7 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	Token* current = &begin;
 	int whileLevel = begin.getLevel();
 	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_back(TokenExpectation(whileLevel, Token::WHILE));
+	expected.push_back(TokenExpectation(whileLevel, Token::IF));
 	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
 	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
 	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
@@ -39,7 +43,8 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	{
 		if (expectation.Level == whileLevel){
 			if (current->getEnum() != expectation.TokenType){
-				//throw exception("Dingen enzo"); WERKT NIET?
+				//TODO ERROR Mike-u
+				begin = end;
 				break;
 			}
 			else
@@ -74,4 +79,5 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 
 CompileIf::~CompileIf()
 {
+	delete _compiledStatement, _condition, _body;
 }
