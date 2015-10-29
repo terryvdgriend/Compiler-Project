@@ -196,6 +196,9 @@
     <ClInclude Include="TokenExpectation.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
+    <ClInclude Include="CompileElseIf.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -306,8 +309,13 @@
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CompileElseIf.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="if else elseif.md" />
+    <None Include="if else elseif.md">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
