@@ -46,7 +46,6 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 	{
 		if (expectation.Level == whileLevel){
 			if (current == nullptr || current->getEnum() != expectation.TokenType){
-
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType,current->getEnum());
 				begin = end;
 				break;
@@ -66,13 +65,17 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				bodyNode = _body->add(new DoNothingNode());
 				while (current->getLevel() > whileLevel){
 					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
+
 					if (compiledBodyPart != nullptr){
 						compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_body, *_body->getLast());
 						current = current->previous->getPartner();
 						begin = *current;
 					}
 					else
+					{
+						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
+					}
 					delete compiledBodyPart;
 				}
 			}

@@ -62,9 +62,8 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	{
 		if (expectation.Level == whileLevel){
 			if (current->getEnum() != expectation.TokenType){
-				//TODO ERROR Mike-u
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 				begin = end;
-				std::cout << "ERROR!";
 				break;
 			}
 			else
@@ -87,7 +86,10 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 						begin = *current;
 					}
 					else
+					{
+						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
+					}
 				}
 			}
 		}
@@ -135,7 +137,10 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 						begin = *current;
 					}
 					else
+					{
+						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
+					}
 				}
 			}
 		}

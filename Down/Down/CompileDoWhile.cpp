@@ -40,11 +40,11 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
 	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
 
-	for(TokenExpectation expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		if (expectation.Level == whileLevel){
 			if (current == nullptr || current->getEnum() != expectation.TokenType){
-				ErrorHandler::getInstance()->addError(Error{ "Unexpected token: '" + current->getText() + "' in do while loop", ".md", current->getLevel(), current->getPositie(), Error::error });
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 				begin = end;
 				break;
 			}
@@ -62,7 +62,10 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 						begin = *current;
 					}
 					else
+					{
+						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
+					}
 					delete compiledBodyPart;
 				}
 			}
