@@ -36,11 +36,9 @@ int main(int argc, const char * argv[])
 {
 	string code = "";
 
-	argc = 3;
-
 	if (argc == 3) {
-		string option = "-f";//argv[1];
-		string value = "if else elseif.md";//argv[2];
+		string option = argv[1];
+		string value = argv[2];
 
 		if (option == "-f") {
 			// File
