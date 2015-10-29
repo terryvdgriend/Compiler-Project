@@ -209,6 +209,7 @@ void Tokenizer::checkRemainingErrors()
 {
 	if (this->stack.size() > 0)
 	{
+		tokenError = true;
 		while (this->stack.size() > 0)
 		{
 			Token* token = this->stack.top();
@@ -220,17 +221,11 @@ void Tokenizer::checkRemainingErrors()
 
 void Tokenizer::printTokenList(LinkedList& cTokenList)
 {
-	if (this->stack.size() > 0)
-	{
-		tokenError = true;
-	}
-	else{
-		Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
-		Token* start = cTokenList.first;
-		while (start != nullptr){
-			start->Print(this->mappert);
-			start = start->next;
-		}
+	Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
+	Token* start = cTokenList.first;
+	while (start != nullptr){
+		start->Print(this->mappert);
+		start = start->next;
 	}
 }
 
@@ -327,11 +322,11 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 
 void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN)
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN)
 	{
 		this->stack.push(&token);
 	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE)
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE)
 	{
 		if (this->stack.size() > 0)
 		{
@@ -346,6 +341,7 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 				}
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
+				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
 				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
 				token.setLevel(lvl);

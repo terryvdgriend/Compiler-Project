@@ -38,7 +38,7 @@ int main(int argc, const char * argv[])
 {
 	string code = "";
 
-	code = IDEstuff(argc, argv);
+	//code = IDEstuff(argc, argv);
     if(code == "BREAK") {
         return 0;
     }
@@ -48,10 +48,10 @@ int main(int argc, const char * argv[])
 
 	//=========TOKENIZER==============
 	Tokenizer tnzr{ Tokenizer() };
-	tnzr.createTokenList(cTokenList,code);
+	tnzr.createTokenList(cTokenList,getTextFromFile("while.md"));
 	tnzr.printTokenList(cTokenList);
     
-	if (!tnzr.GetTokenError()){
+	if (ErrorHandler::getInstance()->getErrors().empty()){
 		//=========COMPILER==============
 		
 		LinkedActionList cRunList{ LinkedActionList() };
@@ -63,8 +63,9 @@ int main(int argc, const char * argv[])
 		cRunList.printList();
 		//=========VM==============
 		//TODO: meesturen wat je terug krijgt van de compute
-	
-		Program prog{ Program() };
+		if (ErrorHandler::getInstance()->getErrors().empty()){
+			Program prog{ Program() };
+		}
 	}
     
 	if (!ErrorHandler::getInstance()->getErrors().empty())
@@ -72,7 +73,7 @@ int main(int argc, const char * argv[])
 		std::cerr << ErrorHandler::getInstance()->asJson();
 	}
 
-	//cin >> code;
+	cin >> code;
 	
 	return 0;
 }
