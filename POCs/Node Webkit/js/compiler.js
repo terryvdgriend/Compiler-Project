@@ -31,21 +31,21 @@ exports.run = function(code) {
 
 				if(error || stderr) {
 					//var result = "<br><br>" + stderr;
-					//exports.appendLogResult(JSON.stringify(stderr));
-					//console.log(error);
-					console.log(JSON.parse(stderr));
+					//exports.appendLogResult(result);
+					
+					var errors = JSON.parse(stderr)
+					console.log(errors);
+					global.editor.getSession().setAnnotations(errors.map(function(x) {
+					    return {
+					        row: x.line-1,
+					        column: x.column,
+					        text: x.description,
+					        type: (x.errorType) ? x.errorType.toLowerCase() : "error"
+					    }
+					}));
+
 				}
 			});
-
-			// var errors = [{row: 2, error: "Mooie error hoor!"}];
-			// global.editor.getSession().setAnnotations(errors.map(function(x) {
-			//     return {
-			//         row: x.row-1,
-			//         column: 0,
-			//         text: x.error,
-			//         type: "error" // also warning and information
-			//     }
-			// }));
         }
     });
 };
