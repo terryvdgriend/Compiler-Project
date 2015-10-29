@@ -36,29 +36,8 @@ int main(int argc, const char * argv[])
 {
 	string code = "";
 
-	if (argc == 3) {
-		string option = argv[1];
-		string value = argv[2];
-
-		if (option == "-f") {
-			// File
-			// std::cout << value << std::endl;
-			code = getTextFromFile(value);
-		}
-		else if (option == "-c") {
-			// Code
-			// std::cout << value << std::endl;
-			code = value;
-		}
-		else {
-			std::cout << "No valid option: " << option << std::endl;
-			return 0;
-		}
-	}
-	else {
-		std::cout << "Not enough params" << std::endl;
-		return 0;
-	}
+	code = IDEstuff(argc, argv);
+	
 	////Declas
 	LinkedList cTokenList;
 
@@ -66,7 +45,7 @@ int main(int argc, const char * argv[])
 	Tokenizer tnzr{ Tokenizer() };
 	tnzr.createTokenList(cTokenList,code);
 	tnzr.printTokenList(cTokenList);
-
+	tnzr.getKeywordsAsJson();
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
 		
@@ -90,6 +69,35 @@ int main(int argc, const char * argv[])
 	//cin >> code;
 	
 	return 0;
+}
+
+std::string IDEstuff(int argc, const char * argv[])
+{
+	string code = "";
+	if (argc == 3) {
+		string option = argv[1];
+		string value = argv[2];
+
+		if (option == "-f") {
+			// File
+			// std::cout << value << std::endl;
+			code = getTextFromFile(value);
+		}
+		else if (option == "-c") {
+			// Code
+			// std::cout << value << std::endl;
+			code = value;
+		}
+		else {
+			std::cout << "No valid option: " << option << std::endl;
+			return 0;
+		}
+	}
+	else {
+		std::cout << "Not enough params" << std::endl;
+		return 0;
+	}
+	return code;
 }
 
 void doDingen(int argc, const char * argv[]){

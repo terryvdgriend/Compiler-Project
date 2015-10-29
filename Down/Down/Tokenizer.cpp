@@ -41,7 +41,7 @@ Tokenizer::Tokenizer()
 	mappert["_fact_"] = Token::BOOL;
 	mappert["_variable_"] = Token::IDENTIFIER;
 	mappert[","] = Token::SEPARATOR;
-	mappert["_declarition_"] = Token::DECLARATION;
+	mappert["_declaration_"] = Token::DECLARATION;
 	mappert["_function_"] = Token::FUNCTION;
 	mappert["_class_"] = Token::CLASS;
 	mappert["_namespace_"] = Token::NAMESPACE;
@@ -372,6 +372,28 @@ Token::iToken Tokenizer::getToken(std::string token){
 	}
 
 	return Token::NONE;
+}
+
+std::string Tokenizer::getKeywordsAsJson()
+{
+	std::string JSON = "[";
+	int size = mappert.size();
+	int i = 0;
+	for (std::map<std::string,Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
+	{
+		if ((*it).second == Token::NEWLINE)
+		{
+			i++;
+			continue;
+		}
+		JSON += "{\"keyword\":\"" + (*it).first + "\"}";
+
+		if (i < size -1)
+			JSON += ",";
+		i++;
+	}
+	JSON += "]";
+	return JSON;
 }
 
 
