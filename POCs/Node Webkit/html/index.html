@@ -19,6 +19,10 @@
 		global.gui = require('nw.gui');
 		init();
 
+        global.alert = function(text) {
+            alert(text);
+        }
+
         // Jquery UI
         $(function() {
             var tabs = $("#log > div").tabs();
@@ -54,7 +58,7 @@
         });
 	</script>
 </head>
-<body class="showLog">
+<body>
     <!-- Dialogs  -->
     <input style="display:none;" id="openFileDialog" type="file" accept=".md" />
     <input style="display:none;" id="saveFileDialog" type="file" accept=".md" nwsaveas />

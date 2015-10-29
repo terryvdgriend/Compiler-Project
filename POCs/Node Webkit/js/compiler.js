@@ -30,7 +30,6 @@ exports.run = function(code) {
 					compilerFilePath = global.compilerFile.replace(/ /g,"\\ ");
 			    } else {
 			    	compilerFilePath = global.compilerFile
-			    	console.log("Hij gebruikt custom compiler");
 			    }
 		    }
 
@@ -88,8 +87,10 @@ exports.chooseCompilerFile = function(callback) {
 	var input = $("#chooseCompilerFile");
     input.on("change", function(e) {
         val = $(this).val();
-        $(this).val(null); 
-        callback(val);
+        if(val != "") {
+        	$(this).val(""); 
+        	callback(val);
+        }
         return false;
     });
 
