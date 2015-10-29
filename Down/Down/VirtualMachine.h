@@ -21,6 +21,7 @@ class VirtualMachine
 		void setFunctionParameter(string name, string value);
 		string getReturnValue();
 		void setReturnValue(string value);
+		void triggerRunFailure();
 
 		bool hasValueInVariableDictionary(map<string, Variable>::iterator& it);
 		bool hasValueInFunctionParameters(string parameter);
@@ -28,6 +29,7 @@ class VirtualMachine
 		
 	private:
 		string returnValue;
+		bool runsVeryNaz;
 
 		map<string, BaseCommand*> commandDictionary;
 		map<string, Variable> variableDictionary;

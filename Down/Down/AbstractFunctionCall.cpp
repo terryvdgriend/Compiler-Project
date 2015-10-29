@@ -17,3 +17,8 @@ AbstractFunctionCall::getContentArray() const
 {
 	return m_sContentArray;
 }
+
+vector<string>& AbstractFunctionCall::getContentArrayNonConstant()
+{
+	return m_sContentArray;
+}

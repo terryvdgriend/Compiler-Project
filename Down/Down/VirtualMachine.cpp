@@ -1,27 +1,34 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
 #include "CommandDictionary.h"
-
+#include "AbstractFunctionCall.h"
 
 VirtualMachine::VirtualMachine()
 {
 	commandDictionary = CommandDictionary().getMap();
+	runsVeryNaz = true;
 }
 
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
-	//ActionNode* currentNode = actionList.getFirst();
-	//NodeVisitor* visitor = new NodeVisitor(*this);
+	ActionNode* currentNode = actionList.getFirst();
+	NodeVisitor* visitor = new NodeVisitor(*this);
 
-	//while (currentNode != nullptr)
-	//{
-	//	AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+	cout << "AAAAAAAAAAAAAAAAAAAAAAAAARGH" << endl;
 
-	//	if (actionNode != nullptr)
-	//	{
-	//		//string name = (*actionNode).get
-	//	}
-	//}
+	while (currentNode != nullptr && runsVeryNaz)
+	{
+		
+		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+		currentNode->show();
+		if (actionNode)
+		{
+			string name = (*actionNode).getContentArrayNonConstant()[0];
+			(*commandDictionary[name]).execute(*this, (*actionNode).getContentArrayNonConstant());
+		}
+		(*currentNode).accept(*visitor);
+		currentNode = (*visitor).nextNode;
+	}
 }
 
 void VirtualMachine::addIdentifer(string name)
@@ -53,7 +60,7 @@ void VirtualMachine::setVariable(string key, string value)
 {
 	map<string, Variable>::iterator it = variableDictionary.find(key);
 
-	if (!hasValueInVariableDictionary(it))
+	if (hasValueInVariableDictionary(it))
 	{
 		it->second = value;
 	}
@@ -108,6 +115,11 @@ string VirtualMachine::getReturnValue()
 void VirtualMachine::setReturnValue(string value)
 {
 	returnValue = value;
+}
+
+void VirtualMachine::triggerRunFailure()
+{
+	runsVeryNaz = false;
 }
 
 bool VirtualMachine::hasValueInVariableDictionary(map<string, Variable>::iterator& it)

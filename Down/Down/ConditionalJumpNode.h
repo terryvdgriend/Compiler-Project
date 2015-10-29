@@ -5,7 +5,7 @@ class ConditionalJumpNode :	public ActionNode
 {
 	public:
 		void setOnTrue(ActionNode* value){ nextOnTrue = value; };
-		void setOnFalse(ActionNode* value){ nextOnTrue = value; };
+		void setOnFalse(ActionNode* value){ nextOnFalse = value; };
 		ActionNode* getOnTrue(){ return nextOnTrue; };
 		ActionNode* getOnFalse(){ return nextOnFalse; };
 		void show();

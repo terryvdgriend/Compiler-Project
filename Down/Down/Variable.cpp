@@ -4,11 +4,11 @@
 Variable::Variable(string param) 
 	: value{ param }
 {
-	if (&param == nullptr) 
+	if (&param == nullptr || param == "") 
 	{
 		type = VariableType::NULLTYPE;
 	}
-	if (is_number(value)) 
+	else if (is_number(value)) 
 	{
 		type = VariableType::NUMBER;
 	}

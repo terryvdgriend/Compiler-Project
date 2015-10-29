@@ -35,9 +35,11 @@ int main(int argc, const char * argv[])
 {
 	string code = "";
 
+	argc = 3;
+
 	if (argc == 3) {
-		string option = argv[1];
-		string value = argv[2];
+		string option = "-f"; //argv[1];
+		string value = "while.md"; //argv[2];
 
 		if (option == "-f") {
 			// File
@@ -79,13 +81,15 @@ int main(int argc, const char * argv[])
 		//=========VM==============
 		//TODO: meesturen wat je terug krijgt van de compute
 		// Define vm
+		VirtualMachine vm{ VirtualMachine() };
+		vm.execute(cRunList);
 	}
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		std::cerr << ErrorHandler::getInstance()->asJson();
 	}
 
-	//cin >> code;
+	cin >> code;
 	
 	return 0;
 }
