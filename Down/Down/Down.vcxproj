@@ -28,6 +28,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -73,16 +74,18 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="calc.txt" />
+    <Text Include="condition.txt" />
     <Text Include="func.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
-    <Text Include="if.txt" />
+    <Text Include="if.md" />
     <Text Include="switch.txt" />
-    <Text Include="while.txt" />
+    <Text Include="while.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -92,15 +95,20 @@
     <ClInclude Include="CommandList.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
+    <ClInclude Include="CompileDoWhile.h" />
+    <ClInclude Include="CompileElseIf.h" />
     <ClInclude Include="CompileEquals.h" />
+    <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
-    <ClInclude Include="CompileTimesDivideModulo.h" />
+    <ClInclude Include="CompileNextLevel.h" />
     <ClInclude Include="CompileOperator.h" />
     <ClInclude Include="CompilePlusMinus.h" />
     <ClInclude Include="Compiler.h" />
+    <ClInclude Include="CompilerHeader.h" />
     <ClInclude Include="CompileSingleStatement.h" />
+    <ClInclude Include="CompileTimesDivideModulo.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
@@ -110,6 +118,8 @@
     <ClInclude Include="DoNothingNode.h" />
     <ClInclude Include="EqualsCommand.h" />
     <ClInclude Include="EqualsToCommand.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
@@ -117,7 +127,7 @@
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
     <ClInclude Include="IdentifierToReturnValueCommand.h" />
-    <ClInclude Include="JumpGotoNode.h" />
+    <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MinusCommand.h" />
@@ -135,6 +145,7 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
@@ -146,15 +157,19 @@
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
+    <ClCompile Include="CompileDoWhile.cpp" />
+    <ClCompile Include="CompileElseIf.cpp" />
     <ClCompile Include="CompileEquals.cpp" />
+    <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />
-    <ClCompile Include="CompileTimesDivideModulo.cpp" />
+    <ClCompile Include="CompileNextLevel.cpp" />
     <ClCompile Include="CompileOperator.cpp" />
     <ClCompile Include="CompilePlusMinus.cpp" />
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="CompileSingleStatement.cpp" />
+    <ClCompile Include="CompileTimesDivideModulo.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
@@ -162,9 +177,13 @@
     <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DivideCommand.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
-    <ClCompile Include="Down.cpp" />
+    <ClCompile Include="Down.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreaded</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="EqualsCommand.cpp" />
     <ClCompile Include="EqualsToCommand.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
@@ -172,7 +191,7 @@
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
     <ClCompile Include="IdentifierToReturnValueCommand.cpp" />
-    <ClCompile Include="JumpGotoNode.cpp" />
+    <ClCompile Include="JumpGoToNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="MinusCommand.cpp" />
@@ -194,6 +213,9 @@
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="if else elseif.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

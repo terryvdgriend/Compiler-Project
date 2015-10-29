@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 #include "ShowFunctionCommand.h"
 #include <iostream>

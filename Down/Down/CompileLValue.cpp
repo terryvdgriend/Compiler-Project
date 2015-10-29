@@ -6,7 +6,7 @@ CompileLValue::CompileLValue()
 {
 }
 
-void CompileLValue::Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore)
+void CompileLValue::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 }
 

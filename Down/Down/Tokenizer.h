@@ -17,6 +17,7 @@ private:
 	void checkStack();
 	Token::iToken getToken(std::string token);
 	bool tokenError = false;
+	void checkRemainingErrors();
 public:
 	Tokenizer();
 	void createTokenList(LinkedList& cTokenList, string codefromfile);
@@ -28,6 +29,8 @@ public:
 	bool GetTokenError() { return tokenError; };
 	Token::iToken getEnumByString(string name, bool &isDone);
 	std::list<string> getErrors(){ return errnoez; };
+	
+	std::string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();
 };
 

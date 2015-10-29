@@ -1,26 +1,17 @@
 #include "stdafx.h"
 #include "DirectFunctionCall.h"
 
-
-DirectFunctionCall::DirectFunctionCall() : AbstractFunctionCall()
+void DirectFunctionCall::show()
 {
+	cout << "Direct function call: " << getContentArray()[0] << " - " << getContentArray()[1] << " \n";
 }
 
-void  DirectFunctionCall::Show()
+void DirectFunctionCall::action()
 {
-
+	//
 }
 
-void  DirectFunctionCall::Action()
-{
-
-}
-
-void  DirectFunctionCall::Accept(NodeVisitor visitor)
+void DirectFunctionCall::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
-}
-
-DirectFunctionCall::~DirectFunctionCall()
-{
 }
