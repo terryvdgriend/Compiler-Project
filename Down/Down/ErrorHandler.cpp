@@ -28,17 +28,20 @@ std::list<Error> ErrorHandler::getErrors()
 
 std::string ErrorHandler::asJson()
 {
-	if (errors.size() == 0)
-		return "No errors found";
-
-	std::string JSON = "\"errors\":[";
-	for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
-	{
-		JSON += (*it).asJsonObject();
-		JSON += ",";
-	}
-	JSON += "]";
-	return JSON;
+    if (errors.size() == 0)
+        return "No errors found";
+    
+    std::string JSON = "{\"errors\":[";
+    for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
+    {
+        JSON += (*it).asJsonObject();
+        JSON += ",";
+    }
+    
+    JSON = JSON.substr(0, JSON.size()-1);
+    
+    JSON += "]}";
+    return JSON;
 };
 
 void ErrorHandler::printErrors()

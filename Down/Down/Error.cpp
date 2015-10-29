@@ -32,15 +32,15 @@ void Error::print()
 
 std::string Error::asJsonObject()
 {
-	std::string JSON = "{";
-	JSON += "\"description\":\"" + name + "\"";
-	JSON += "\"line\":\"" + std::to_string(line) + "\"";
-	JSON += "\"column\":\"" + std::to_string(column) + "\"";
-	JSON += "\"file\":\"" + file + "\"";
-	JSON += "\"notice\":\"" + note + "\"";
-	//JSON += "\"description\":\"" + name + "\"";
-	JSON += "}";
-	return JSON;
+    std::string JSON = "{";
+    JSON += "\"description\":\"" + name + "\", ";
+    JSON += "\"line\":\"" + std::to_string(line) + "\", ";
+    JSON += "\"column\":\"" + std::to_string(column) + "\", ";
+    JSON += "\"file\":\"" + file + "\", ";
+    JSON += "\"notice\":\"" + note + "\"";
+    //JSON += "\"description\":\"" + name + "\"";
+    JSON += "}";
+    return JSON;
 }
 
 Error::~Error()
