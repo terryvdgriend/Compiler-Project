@@ -7,7 +7,7 @@ CompileFactory::CompileFactory()
 	mappert[Token::IF] = new CompileIf();
 	mappert[Token::WHILE] = new CompileWhile();
 	mappert[Token::DO] = new CompileDoWhile();
-	mappert[Token::FUNCTION] = new CompileFunction();
+	mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileFunction();
 	mappert[Token::IDENTIFIER] = new CompileEquals();
 }
 

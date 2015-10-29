@@ -18,7 +18,7 @@ std::string Compiler::getNextLocalVariableName(std::string& sBuffer)
 	static  int         nValue = 0;
 	std::stringstream   sStream;
 
-	sStream << " " << ++nValue;
+	sStream << "$" << ++nValue;
 
 	sBuffer = sStream.str();
 

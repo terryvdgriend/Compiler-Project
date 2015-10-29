@@ -29,7 +29,7 @@ void CompileIf::ConnectLists(){
 
 void CompileIf::ConnectListsWithElse(){
     ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-    JumpGotoNode* jumpOverSecondBody = new JumpGotoNode();
+	JumpGoToNode* jumpOverSecondBody = new JumpGoToNode();
     DoNothingNode* secondBodyStart = new DoNothingNode();
     _compiledStatement->add(_condition);
     _compiledStatement->add(conditionalJumpNode);
@@ -61,6 +61,11 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 		//for each (TokenExpectation expectation in expected)
 	{
 		if (expectation.Level == whileLevel){
+			if (current == nullptr){
+				ErrorHandler::getInstance()->addError(Error{ "if statement not completed", ".md",-1, -1, Error::error });
+				begin = end;
+				break;
+			}
 			if (current->getEnum() != expectation.TokenType){
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 				begin = end;
@@ -94,63 +99,71 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 		}
 	}
-
-	//Check if there is an else if-statement 
-	while (current->getEnum() == Token::ELIF)
-	{
-		CompileElseIf* compileElseIf = new CompileElseIf;
-		compileElseIf->Compile(cTokenList, *current, end, *_body, *_body->getLast());
-		if (current->next != nullptr){
-			current = current->next;
-		}
-	}
-	//Check if there is an else-statement 
-	if (current->getEnum() == Token::ELSE)
-	{
-		int whileLevel = begin.getLevel();
-		std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-		expected.push_back(TokenExpectation(whileLevel, Token::ELSE));
-		expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
-		expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-		expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
-
-		for (TokenExpectation expectation : expected)
-			//for each (TokenExpectation expectation in expected)
+	if (current != nullptr){
+		//Check if there is an else if-statement 
+		while (current->getEnum() == Token::ELIF)
 		{
-			if (expectation.Level == whileLevel){
-				if (current->getEnum() != expectation.TokenType){
-					//TODO ERROR Mike-u
-					begin = end;
-					std::cout << "ERROR!";
-					break;
-				}
-				else
-					current = current->next;
+			CompileElseIf* compileElseIf = new CompileElseIf;
+			compileElseIf->Compile(cTokenList, *current, end, *_body, *_body->getLast());
+			if (current->next != nullptr){
+				current = current->next;
 			}
-			else if (expectation.Level >= whileLevel){
-				bodyNode = _bodyElse->add(new DoNothingNode);
-				while (current->getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
-					if (compiledBodyPart != nullptr){
-						compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_bodyElse, *_bodyElse->getLast());
-						current = current->previous->getPartner();
-						begin = *current;
+		}
+		//Check if there is an else-statement 
+		if (current->getEnum() == Token::ELSE)
+		{
+			int whileLevel = begin.getLevel();
+			std::list<TokenExpectation> expected = std::list<TokenExpectation>();
+			expected.push_back(TokenExpectation(whileLevel, Token::ELSE));
+			expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
+			expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
+			expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
+
+			for (TokenExpectation expectation : expected)
+				//for each (TokenExpectation expectation in expected)
+			{
+				if (expectation.Level == whileLevel){
+					if (current->getEnum() != expectation.TokenType){
+						//TODO ERROR Mike-u
+						begin = end;
+						std::cout << "ERROR!";
+						break;
 					}
 					else
-					{
-						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
+				}
+				else if (expectation.Level >= whileLevel){
+					bodyNode = _bodyElse->add(new DoNothingNode);
+					while (current->getLevel() > whileLevel){
+						Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
+						if (compiledBodyPart != nullptr){
+							compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_bodyElse, *_bodyElse->getLast());
+							current = current->previous->getPartner();
+							begin = *current;
+						}
+						else
+						{
+							ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
+							current = current->next;
+						}
 					}
 				}
 			}
+			//Build list with else
+			ConnectListsWithElse();
 		}
-		//Build list with else
-		ConnectListsWithElse();
+		else {
+			//Build list without else
+			ConnectLists();
+		}
+
 	}
-	else{
+	else {
 		//Build list without else
 		ConnectLists();
 	}
+
+
 	listActionNodes.add(_compiledStatement);
 }
 

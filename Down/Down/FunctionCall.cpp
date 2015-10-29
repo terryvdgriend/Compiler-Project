@@ -1,26 +1,17 @@
 #include "stdafx.h"
 #include "FunctionCall.h"
 
-
-FunctionCall::FunctionCall()
+void FunctionCall::show()
 {
+	std::cout << "Function: " << getContentArray()[0] << " " << getContentArray()[1] << " " << getContentArray()[2] << " \n";
 }
 
-void  FunctionCall::Show()
+void FunctionCall::action()
 {
-	std::cout << "Function. \n";
+	//
 }
 
-void  FunctionCall::Action()
-{
-
-}
-
-void  FunctionCall::Accept(NodeVisitor visitor)
+void FunctionCall::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
-}
-
-FunctionCall::~FunctionCall()
-{
 }

@@ -43,6 +43,7 @@ public:
 		PRIVATE,
 		FOR,
 		FOREACH,
+		PRINT,
 		PLUSPLUS,
 		MINUSMINUS,
 		SEPARATOR,

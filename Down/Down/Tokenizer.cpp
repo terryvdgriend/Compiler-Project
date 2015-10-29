@@ -41,7 +41,7 @@ Tokenizer::Tokenizer()
 	mappert["_fact_"] = Token::BOOL;
 	mappert["_variable_"] = Token::IDENTIFIER;
 	mappert[","] = Token::SEPARATOR;
-	mappert["_declarition_"] = Token::DECLARATION;
+	mappert["_declaration_"] = Token::DECLARATION;
 	mappert["_function_"] = Token::FUNCTION;
 	mappert["_class_"] = Token::CLASS;
 	mappert["_namespace_"] = Token::NAMESPACE;
@@ -209,6 +209,7 @@ void Tokenizer::checkRemainingErrors()
 {
 	if (this->stack.size() > 0)
 	{
+		tokenError = true;
 		while (this->stack.size() > 0)
 		{
 			Token* token = this->stack.top();
@@ -220,17 +221,11 @@ void Tokenizer::checkRemainingErrors()
 
 void Tokenizer::printTokenList(LinkedList& cTokenList)
 {
-	if (this->stack.size() > 0)
-	{
-		tokenError = true;
-	}
-	else{
-		Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
-		Token* start = cTokenList.first;
-		while (start != nullptr){
-			start->Print(this->mappert);
-			start = start->next;
-		}
+	Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
+	Token* start = cTokenList.first;
+	while (start != nullptr){
+		start->Print(this->mappert);
+		start = start->next;
 	}
 }
 
@@ -327,11 +322,11 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 
 void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN)
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN)
 	{
 		this->stack.push(&token);
 	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE)
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE)
 	{
 		if (this->stack.size() > 0)
 		{
@@ -346,6 +341,7 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 				}
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
+				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
 				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
 				token.setLevel(lvl);
@@ -372,6 +368,28 @@ Token::iToken Tokenizer::getToken(std::string token){
 	}
 
 	return Token::NONE;
+}
+
+std::string Tokenizer::getKeywordsAsJson()
+{
+	std::string JSON = "[";
+	int size = (int) mappert.size();
+	int i = 0;
+	for (std::map<std::string,Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
+	{
+		if ((*it).second == Token::NEWLINE)
+		{
+			i++;
+			continue;
+		}
+		JSON += "{\"keyword\":\"" + (*it).first + "\"}";
+
+		if (i < size -1)
+			JSON += ",";
+		i++;
+	}
+	JSON += "]";
+	return JSON;
 }
 
 

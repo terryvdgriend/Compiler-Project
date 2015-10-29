@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
@@ -90,6 +90,9 @@
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
     <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="BaseCommand.h" />
+    <ClInclude Include="CommandDictionary.h" />
+    <ClInclude Include="CommandList.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -109,29 +112,49 @@
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
+    <ClInclude Include="ConstantToReturnValueCommand.h" />
     <ClInclude Include="DirectFunctionCall.h" />
+    <ClInclude Include="DivideCommand.h" />
     <ClInclude Include="DoNothingNode.h" />
+    <ClInclude Include="EqualsCommand.h" />
+    <ClInclude Include="EqualsToCommand.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
-    <ClInclude Include="JumpGotoNode.h" />
+    <ClInclude Include="GetFromValueCommand.h" />
+    <ClInclude Include="GreaterEqualsToCommand.h" />
+    <ClInclude Include="GreaterThanCommand.h" />
+    <ClInclude Include="IdentifierToReturnValueCommand.h" />
+    <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="MinusCommand.h" />
+    <ClInclude Include="MinusMinusCommand.h" />
     <ClInclude Include="NodeVisitor.h" />
-    <ClInclude Include="Program.h" />
+    <ClInclude Include="NotEqualsToCommand.h" />
+    <ClInclude Include="PlusCommand.h" />
+    <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ShowFunctionCommand.h" />
+    <ClInclude Include="SmallerEqualsToCommand.h" />
+    <ClInclude Include="SmallerThanCommand.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="TimesCommand.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Variable.h" />
+    <ClInclude Include="VariableType.h" />
+    <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
@@ -150,28 +173,46 @@
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
+    <ClCompile Include="ConstantToReturnValueCommand.cpp" />
     <ClCompile Include="DirectFunctionCall.cpp" />
+    <ClCompile Include="DivideCommand.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
     <ClCompile Include="Down.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreaded</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="EqualsCommand.cpp" />
+    <ClCompile Include="EqualsToCommand.cpp" />
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
-    <ClCompile Include="JumpGotoNode.cpp" />
+    <ClCompile Include="GetFromValueCommand.cpp" />
+    <ClCompile Include="GreaterEqualsToCommand.cpp" />
+    <ClCompile Include="GreaterThanCommand.cpp" />
+    <ClCompile Include="IdentifierToReturnValueCommand.cpp" />
+    <ClCompile Include="JumpGoToNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="MinusCommand.cpp" />
+    <ClCompile Include="MinusMinusCommand.cpp" />
     <ClCompile Include="NodeVisitor.cpp" />
-    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="NotEqualsToCommand.cpp" />
+    <ClCompile Include="PlusCommand.cpp" />
+    <ClCompile Include="PlusPlusCommand.cpp" />
+    <ClCompile Include="ShowFunctionCommand.cpp" />
+    <ClCompile Include="SmallerEqualsToCommand.cpp" />
+    <ClCompile Include="SmallerThanCommand.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TimesCommand.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="Variable.cpp" />
+    <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="if else elseif.md" />

@@ -2,7 +2,7 @@
 #include "CompileDoWhile.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
+#include "JumpGoToNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 #include "TokenExpectation.h"
@@ -43,7 +43,12 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 	for (TokenExpectation expectation : expected)
 	{
 		if (expectation.Level == whileLevel){
-			if (current == nullptr || current->getEnum() != expectation.TokenType){
+			if (current == nullptr){
+				ErrorHandler::getInstance()->addError(Error{ "do while statement not completed", ".md", -1, -1, Error::error });
+				begin = end;
+				break;
+			}
+			if (current->getEnum() != expectation.TokenType){
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 				begin = end;
 				break;
