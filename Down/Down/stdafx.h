@@ -11,5 +11,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
+#include "ErrorHandler.h"
+
 using namespace std;
 // TODO: reference additional headers your program requires here

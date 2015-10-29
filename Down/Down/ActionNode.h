@@ -1,23 +1,22 @@
 #pragma once
-#include "NodeVisitor.h"
+#include "NextNodeVisitor.h"
 
-class NodeVisitor;
+class NextNodeVisitor;
 
 class ActionNode
 {
-private:
-	ActionNode* next;
-	ActionNode* previous;
-public:
-	ActionNode();
-	virtual void  Show();
-	virtual void  Action();
-	virtual void  Accept(NodeVisitor visitor);
+	public:
+		ActionNode();
+		~ActionNode();
+		ActionNode* getNext() { return next; }
+		ActionNode* getPrevious() { return previous; }
+		ActionNode* setNext(ActionNode* value) { return this->next = value; }
+		ActionNode* setPrevious(ActionNode* value) { return this->previous = value; }
+		virtual void show() = 0;
+		virtual void action() = 0;
+		virtual void accept(NextNodeVisitor& visitor) = 0;
 
-	ActionNode* getNext(){ return next; }
-	ActionNode* getPrevious(){ return previous; }
-	ActionNode* setNext(ActionNode* value) { return this->next = value; }
-	ActionNode* setPrevious(ActionNode* value) { return this->previous = value; }
-	~ActionNode();
+	private:
+		ActionNode* next;
+		ActionNode* previous;
 };
-

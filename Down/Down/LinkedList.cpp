@@ -30,6 +30,10 @@ void LinkedList::insertLast(Token* value){
 
 LinkedList::~LinkedList()
 {
-	delete first;
-	delete last;
+	Token* iter = this->first;
+	while (iter != nullptr){
+		Token* current = iter;
+			iter = iter->next;
+		delete current;
+	}
 }

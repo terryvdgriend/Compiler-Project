@@ -5,7 +5,6 @@
 #define SET_CONST_TO_RT  "ConstantToReturnValue"
 #define SET_GET_FROM_RT  "getFromReturnValue"
 
-
 void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 	switch (begin.getEnum())
@@ -22,6 +21,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 				directFunctionCall = new DirectFunctionCall();
 				saArguments[0] = begin.getText();
 				saArguments[1] = getNextLocalVariableName(sBuffer);
+				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_ID_TO_RT);
 				directFunctionCall->setAt(1, saArguments[1].c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
@@ -36,9 +36,10 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 				saArguments[1] = begin.getText();
 
 				directFunctionCall = new DirectFunctionCall;
+				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, saArguments[0].c_str());
 				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(&beforeFunction, directFunctionCall);
+				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 			}
 		}
 		break;
@@ -61,5 +62,12 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		}
 		break;
 	}
+}
+
+CompileSingleStatement::CompileSingleStatement(){
+
+}
+
+CompileSingleStatement::~CompileSingleStatement(){
 }
 

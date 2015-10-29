@@ -5,11 +5,12 @@
 CompileEquals::CompileEquals()
 	: CompileOperator(new CompileCondition)
 {
-	std::map<Token::iToken, string> tokenMap = getTokenMap();
+	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::EQUALS] = "$=";
 }
 
 
 CompileEquals::~CompileEquals()
 {
+
 }

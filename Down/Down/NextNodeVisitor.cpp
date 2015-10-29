@@ -11,34 +11,34 @@ NextNodeVisitor::~NextNodeVisitor()
 	delete nextNode;
 }
 
-void NextNodeVisitor::visit(ConditionalJumpNode node)
+void NextNodeVisitor::visit(ConditionalJumpNode& node)
 {
 	if ((*vm).getReturnValue() == "true")
 	{
-		// nextNode = node.nextOnTrue;
+		nextNode = node.getOnTrue();
 	}
 	else if ((*vm).getReturnValue() == "false")
 	{
-		// nextNode = node.nextOnFalse;
+		nextNode = node.getOnFalse();
 	}
 }
 
-//void NextNodeVisitor::visit(DirectFunctionCallNode node)
-//{
-//	nextNode = node.getNext();
-//}
-
-void NextNodeVisitor::visit(DoNothingNode node)
+void NextNodeVisitor::visit(DirectFunctionCall* node)
 {
-	nextNode = node.getNext();
+	nextNode = (*node).getNext();
 }
 
-//void NextNodeVisitor::visit(FunctionCallNode node)
-//{
-//	nextNode = node.getNext();
-//}
-
-void NextNodeVisitor::visit(JumpGotoNode node)
+void NextNodeVisitor::visit(DoNothingNode* node)
 {
-	nextNode = node.getNext();
+	nextNode = (*node).getNext();
+}
+
+void NextNodeVisitor::visit(FunctionCall* node)
+{
+	nextNode = (*node).getNext();
+}
+
+void NextNodeVisitor::visit(JumpGotoNode* node)
+{
+	nextNode = (*node).getNext();
 }

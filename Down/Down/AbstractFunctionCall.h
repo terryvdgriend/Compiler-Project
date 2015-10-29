@@ -1,25 +1,21 @@
 #pragma once
 #include "ActionNode.h"
-class AbstractFunctionCall :
-	public ActionNode
+
+class NextNodeVisitor;
+
+class AbstractFunctionCall : public ActionNode
 {
+	public:
+		void setArraySize(size_t);
+		void setAt(unsigned, const char*);
+		virtual void show() = 0;
+		virtual void action() = 0;
+		virtual void accept(NextNodeVisitor& visitor) = 0;
 
-protected:
-	typedef std::vector<std::string> contentArray;
+	protected:
+		typedef vector<string> contentArray;
+		const contentArray &getContentArray() const;
 
-protected:
-	virtual const contentArray &getContentArray()   const;
-
-private:
-	contentArray                m_sContentArray;
-public:
-	virtual void                setArraySize(size_t);
-	virtual void                setAt(unsigned, const char*);
-public:
-	AbstractFunctionCall();
-	virtual void  Show();
-	virtual void  Action();
-	virtual void  Accept(NodeVisitor visitor);
-	~AbstractFunctionCall();
+	private:
+		contentArray  m_sContentArray;
 };
-

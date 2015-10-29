@@ -1,27 +1,17 @@
 #include "stdafx.h"
 #include "DoNothingNode.h"
 
-
-DoNothingNode::DoNothingNode()
+void DoNothingNode::show()
 {
+	cout << "Do nothing. \n";
 }
 
-
-void  DoNothingNode::Show()
+void DoNothingNode::action()
 {
-
+	//
 }
 
-void  DoNothingNode::Action()
+void DoNothingNode::accept(NextNodeVisitor& visitor)
 {
-
-}
-
-void  DoNothingNode::Accept(NodeVisitor visitor)
-{
-	visitor.visit(*this);
-}
-
-DoNothingNode::~DoNothingNode()
-{
+	visitor.visit(this);
 }

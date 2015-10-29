@@ -1,12 +1,13 @@
 #include "stdafx.h"
-#include "CompileWhile.h"
+#include "CompileDoWhile.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 
-CompileWhile::CompileWhile()
+
+CompileDoWhile::CompileDoWhile()
 {
 	_compiledStatement = new LinkedActionList();
 	_condition = new LinkedActionList();
@@ -14,52 +15,42 @@ CompileWhile::CompileWhile()
 	_compiledStatement->add(new DoNothingNode());
 }
 
-void CompileWhile::ConnectLists(){
+void CompileDoWhile::ConnectLists(){
 	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	JumpGotoNode* jumpBackNode = new JumpGotoNode();
+	_compiledStatement->add(_body);
 	_compiledStatement->add(_condition);
 	_compiledStatement->add(conditionalJumpNode);
-	_compiledStatement->add(_body);
-	_compiledStatement->add(jumpBackNode);
 	_compiledStatement->add(new DoNothingNode());
-	jumpBackNode->setJumpToNode(_compiledStatement->getFirst());
 	conditionalJumpNode->setOnTrue(_body->getFirst());
 	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 }
 
-void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 	Token* current = &begin;
 	int whileLevel = begin.getLevel();
-	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_back(TokenExpectation(whileLevel, Token::WHILE));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
+	std::list<TokenExpectations> expected = std::list<TokenExpectations>();
+	expected.push_back(TokenExpectations(whileLevel, Token::DO));
+	expected.push_back(TokenExpectations(whileLevel, Token::BODY_OPEN));
+	expected.push_back(TokenExpectations(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectations(whileLevel, Token::BODY_CLOSED));
+	expected.push_back(TokenExpectations(whileLevel, Token::WHILE));
+	expected.push_back(TokenExpectations(whileLevel, Token::CONDITION_OPEN));
+	expected.push_back(TokenExpectations(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectations(whileLevel, Token::CONDITION_CLOSE));
 
-    for(TokenExpectation expectation: expected)
-	//for each (TokenExpectation expectation in expected)
+	for(TokenExpectations expectation : expected)
 	{
 		if (expectation.Level == whileLevel){
 			if (current->getEnum() != expectation.TokenType){
-				//throw exception("Dingen enzo"); WERKT NIET?
+				//throw exception("Dingen enzo");
 				break;
 			}
 			else
 				current = current->next;
 		}
 		else if (expectation.Level >= whileLevel){
-			if (_condition->Count() == 0){
-				CompileCondition* condition = new CompileCondition();
-				_condition->add(new DoNothingNode());
-				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
-				current = current->previous->getPartner();
-				delete condition;
-			}
-			else{
+			if (_body->Count() == 0){
 				bodyNode = _body->add(new DoNothingNode());
 				while (current->getLevel() > whileLevel){
 					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
@@ -73,13 +64,20 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					delete compiledBodyPart;
 				}
 			}
+			else{
+				CompileCondition* condition = new CompileCondition();
+				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+				current = current->previous->getPartner();
+				begin = *current;
+				delete condition;
+			}
 		}
 	}
 	ConnectLists();
 	listActionNodes.add(_compiledStatement);
 }
 
-CompileWhile::~CompileWhile()
+CompileDoWhile::~CompileDoWhile()
 {
 	delete bodyNode;
 	delete _body;

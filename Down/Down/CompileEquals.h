@@ -5,6 +5,7 @@ class CompileEquals :
 {
 public:
 	CompileEquals();
+	Compiler * Create() { return new CompileEquals(); };
 	~CompileEquals();
 };
 

@@ -6,7 +6,7 @@
 CompileComparison::CompileComparison()
 	: CompileOperator(new CompileCondition)
 {
-	std::map<Token::iToken, string> tokenMap = getTokenMap();
+	TokenMap &tokenMap = getTokenMap();
 	//tokenMap[Token::AND] = "$&&"; //TODO deze 2 
 	//tokenMap[Token::OR] = "$||";
 }

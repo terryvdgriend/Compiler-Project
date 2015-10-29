@@ -1,26 +1,17 @@
 #include "stdafx.h"
 #include "JumpGotoNode.h"
 
-
-JumpGotoNode::JumpGotoNode()
+void JumpGotoNode::show()
 {
+	cout << "Jump and go to. \n";
 }
 
-void  JumpGotoNode::Show()
+void JumpGotoNode::action()
 {
-
+	//
 }
 
-void  JumpGotoNode::Action()
+void JumpGotoNode::accept(NextNodeVisitor& visitor)
 {
-
-}
-
-void  JumpGotoNode::Accept(NodeVisitor visitor)
-{
-	visitor.visit(*this);
-}
-
-JumpGotoNode::~JumpGotoNode()
-{
+	visitor.visit(this);
 }

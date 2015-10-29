@@ -1,21 +1,22 @@
 #pragma once
-#include "ActionNode.h"
 #include "ConditionalJumpNode.h"
-//#include "DirectFunctionCall.h"
+#include "DirectFunctionCall.h"
 #include "DoNothingNode.h"
-//#include "FunctionCallNode.h"
+#include "FunctionCall.h"
 #include "JumpGotoNode.h"
 
-class ActionNode;
+class ConditionalJumpNode;
+class DirectFunctionCall;
+class DoNothingNode;
+class FunctionCall;
+class JumpGotoNode;
 
 class NodeVisitor
 {
 	public:
-		NodeVisitor();
-		~NodeVisitor();
-		virtual void visit(DoNothingNode node);
-		virtual void visit(JumpGotoNode node);
-		virtual void visit(ConditionalJumpNode node);
-		//virtual void visit(FunctionalCallNode node);
-		//virtual void visit(DirectFunctionCallNode node);
+		virtual void visit(DoNothingNode node) = 0;
+		virtual void visit(JumpGotoNode node) = 0;
+		virtual void visit(ConditionalJumpNode node) = 0;
+		virtual void visit(FunctionCall node) = 0;
+		virtual void visit(DirectFunctionCall node) = 0;
 };

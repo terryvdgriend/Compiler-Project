@@ -4,7 +4,7 @@
 
 CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(new CompileSingleStatement)
 {
-	map<Token::iToken, string> tokenMap = getTokenMap();
+	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::TIMES] = "$*";
 	tokenMap[Token::DIVIDE] = "$/";
 	tokenMap[Token::MODULO] = "$%";
@@ -12,4 +12,5 @@ CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(new Compi
 
 CompileTimesDivideModulo::~CompileTimesDivideModulo()
 {
+	//delete pNextLevel;
 }

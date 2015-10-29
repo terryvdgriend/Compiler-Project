@@ -1,13 +1,12 @@
 #pragma once
 #include "AbstractFunctionCall.h"
-class DirectFunctionCall :
-	public AbstractFunctionCall
-{
-public:
-	DirectFunctionCall();
-	virtual void Show();
-	virtual void Action();
-	virtual void Accept(NodeVisitor visitor);
-	~DirectFunctionCall();
-};
 
+class NextNodeVisitor;
+
+class DirectFunctionCall : public AbstractFunctionCall
+{
+	public:
+		void show();
+		void action();
+		void accept(NextNodeVisitor& visitor);
+};
