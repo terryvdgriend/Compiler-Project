@@ -172,9 +172,6 @@
     <ClInclude Include="DoNothingNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="JumpGotoNode.h">
-      <Filter>Header Files\Compiler\Nodes</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractFunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
@@ -274,6 +271,9 @@
     <ClInclude Include="VariableType.h">
       <Filter>Header Files\VM\Variable</Filter>
     </ClInclude>
+    <ClInclude Include="JumpGoToNode.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -349,9 +349,6 @@
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="DoNothingNode.cpp">
-      <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpGotoNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="AbstractFunctionCall.cpp">
@@ -442,6 +439,9 @@
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpGoToNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
   </ItemGroup>

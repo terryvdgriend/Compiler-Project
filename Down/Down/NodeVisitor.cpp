@@ -38,7 +38,7 @@ void NodeVisitor::visit(FunctionCall& node)
 	nextNode = node.getNext();
 }
 
-void NodeVisitor::visit(JumpGotoNode& node)
+void NodeVisitor::visit(JumpGoToNode& node)
 {
 	nextNode = node.getNext();
 }

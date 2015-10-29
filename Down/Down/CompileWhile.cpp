@@ -16,7 +16,7 @@ CompileWhile::CompileWhile()
 
 void CompileWhile::ConnectLists(){
 	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	JumpGotoNode* jumpBackNode = new JumpGotoNode();
+	JumpGoToNode* jumpBackNode = new JumpGoToNode();
 	_compiledStatement->add(_condition);
 	_compiledStatement->add(conditionalJumpNode);
 	_compiledStatement->add(_body);

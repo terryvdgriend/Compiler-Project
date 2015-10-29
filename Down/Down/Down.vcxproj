@@ -126,7 +126,7 @@
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
     <ClInclude Include="IdentifierToReturnValueCommand.h" />
-    <ClInclude Include="JumpGotoNode.h" />
+    <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MinusCommand.h" />
@@ -189,7 +189,7 @@
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
     <ClCompile Include="IdentifierToReturnValueCommand.cpp" />
-    <ClCompile Include="JumpGotoNode.cpp" />
+    <ClCompile Include="JumpGoToNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="MinusCommand.cpp" />

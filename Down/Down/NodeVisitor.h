@@ -4,7 +4,7 @@
 #include "DirectFunctionCall.h"
 #include "DoNothingNode.h"
 #include "FunctionCall.h"
-#include "JumpGotoNode.h"
+#include "JumpGoToNode.h"
 
 class NodeVisitor
 {
@@ -15,7 +15,7 @@ class NodeVisitor
 		void visit(DirectFunctionCall& node);
 		void visit(DoNothingNode& node);
 		void visit(FunctionCall& node);
-		void visit(JumpGotoNode& node);
+		void visit(JumpGoToNode& node);
 		ActionNode* nextNode; // make private implement the below getters and setters
 		//void getNextNode();
 		//ActionNode* setNextNode();

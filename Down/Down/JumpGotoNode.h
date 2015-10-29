@@ -1,7 +1,7 @@
 #pragma once
 #include "ActionNode.h"
 
-class JumpGotoNode : public ActionNode
+class JumpGoToNode : public ActionNode
 {
 	public:
 		ActionNode* getJumpToNode(){ return jumpToNode; };
