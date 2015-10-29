@@ -1,11 +1,7 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
 #include "CommandDictionary.h"
-//#include "ActionNode.h"
-//#include "NodeVisitor.h"
-//#include "AbstractFunctionCall.h"
 
-class NodeVisitor;
 
 VirtualMachine::VirtualMachine()
 {

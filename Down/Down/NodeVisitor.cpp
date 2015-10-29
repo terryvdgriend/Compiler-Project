@@ -1,5 +1,10 @@
 #include "stdafx.h"
 #include "NodeVisitor.h"
+#include "ConditionalJumpNode.h"
+#include "DirectFunctionCall.h"
+#include "DoNothingNode.h"
+#include "FunctionCall.h"
+#include "JumpGoToNode.h"
 
 NodeVisitor::NodeVisitor(VirtualMachine& vm) : vm{ &vm }
 {
