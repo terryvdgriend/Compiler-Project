@@ -6,7 +6,7 @@
 CompileComparison::CompileComparison()
 	: CompileOperator(new CompileCondition)
 {
-	TokenMap &tokenMap = getTokenMap();
+	//TokenMap &tokenMap = getTokenMap();
 	//tokenMap[Token::AND] = "$&&"; //TODO deze 2 
 	//tokenMap[Token::OR] = "$||";
 }

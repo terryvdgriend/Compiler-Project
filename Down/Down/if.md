@@ -1,8 +1,6 @@
 #### if ( **i** like false ) 
 --
-**A** is **A** plus 1 
+[ printdown **i** ]
 __
-#### else 
---
-**A** is **A** minus 1
-__ 
+
+**i** is 2
