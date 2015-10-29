@@ -8,9 +8,7 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 	string val = "";
 
-	string * valpointer = &variable2.getValue();
-
-	if (valpointer != nullptr) {
+	if (variable2.getType() != VariableType::NULLTYPE) {
 		val += variable2.getValue();
 	}
 
