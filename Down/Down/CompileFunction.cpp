@@ -7,7 +7,7 @@
 CompileFunction::CompileFunction()
 	: CompileOperator(new CompileCondition)
 {
-	TokenMap &tokenMap = getTokenMap();
+	//TokenMap &tokenMap = getTokenMap();
 	//tokenMap[Token::PrintDingen:)] = "$IETSMETPRINTENOFANDEREFUNCTIESHIERO";
 }
 
