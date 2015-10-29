@@ -34,7 +34,7 @@ void doDingen(int argc, const char * argv[]);
 
 int main(int argc, const char * argv[])
 {
-	string code = "#### while ( **i** like false ) 		---	**A** is **A** plus 1		__";
+	string code = "";
 
 	if (argc == 3) {
 		string option = argv[1];
