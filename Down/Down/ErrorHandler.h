@@ -17,6 +17,7 @@ public:
 	static ErrorHandler *getInstance();
 	void ErrorHandler::addError(Error::location t, std::string s);
 	void ErrorHandler::addError(Error e);
+	static ErrorHandler *getInstance();
 	std::list<Error> getErrors();
 	std::string asJson();
 	void ErrorHandler::printErrors();

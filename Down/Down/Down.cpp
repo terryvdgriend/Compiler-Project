@@ -31,9 +31,10 @@ void doDingen(int argc, const char * argv[]);
 int main(int argc, const char * argv[])
 {
 	string code = "";
+
 	if (argc == 3) {
-		string option = argv[1];
-		string value = argv[2];
+		string option = "-f";//argv[1];
+		string value = "if";//argv[2];
 
 		if (option == "-f") {
 			// File
@@ -62,7 +63,6 @@ int main(int argc, const char * argv[])
 	tnzr.createTokenList(cTokenList,code);
 	tnzr.printTokenList(cTokenList);
 
-
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
 		
@@ -77,8 +77,15 @@ int main(int argc, const char * argv[])
 		//TODO: meesturen wat je terug krijgt van de compute
 	
 		Program prog{ Program() };
-
 	}
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+	{
+		cout << "ERRORS! \n";
+		for (Error e : ErrorHandler::getInstance()->getErrors()){
+			cout << e.getName() << " \n";
+		}
+	}
+	cin >> code;
 	return 0;
 }
 

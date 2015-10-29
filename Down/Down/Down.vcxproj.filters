@@ -61,12 +61,6 @@
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="if.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="calc.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -77,6 +71,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="condition.txt" />
+    <Text Include="if.md">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.md">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -193,6 +193,9 @@
     <ClInclude Include="Error.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TokenExpectation.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -303,5 +306,8 @@
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="if else elseif.md" />
   </ItemGroup>
 </Project>
