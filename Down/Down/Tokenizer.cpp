@@ -133,9 +133,13 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-		
+
 		currentToken = getToken(part);
-		
+
+		// Geen token, dus add error
+		if (currentToken == Token::NONE)
+			ErrorHandler::getInstance()->addError(Error{ "Token not found :(", "unknown.MD", rowNr, colNr, Error::errorType::error });
+
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
 			isFunctionCall = false;
@@ -153,11 +157,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			continue;
 		}
 
-		
-
-		
 		pToken->setText((part));
-		pToken->setLevel(lvl); 
+		pToken->setLevel(lvl);
 		pToken->setPositie(colNr);
 		pToken->setPositieInList(pInt);
 		pToken->setRegelnummer(rowNr);
@@ -166,8 +167,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		//Add + Next
 		cTokenList.add(pToken);
-
-
 
 		//Levels
 		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN)
@@ -178,7 +177,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		//++ col
 		colNr += part.size() + 1;
 		pInt++;
-		
+
 		////Levels
 		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE)
 		{
@@ -186,22 +185,33 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 
 		CheckStack(*pToken, lvl);
-		
+
 		s = m.suffix().str();
-		
+
 	}
 	CheckRemainingStack();
+	//
+	checkRemainingErrors();
+}
+
+void Tokenizer::checkRemainingErrors()
+{
+	if (this->stack.size() > 0)
+	{
+		while (this->stack.size() > 0)
+		{
+			Token* token = this->stack.top();
+			this->stack.pop();
+			token->addError();
+		}
+	}
 }
 
 void Tokenizer::printTokenList(LinkedList& cTokenList)
 {
-	if (this->stack.size() > 0){
+	if (this->stack.size() > 0)
+	{
 		tokenError = true;
-		while (this->stack.size() > 0){
-			Token* token = this->stack.top();
-			this->stack.pop();
-			token->PrintError();
-		}
 	}
 	else{
 		Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
@@ -221,7 +231,7 @@ void Tokenizer::CheckRemainingStack(){
 
 
 void Tokenizer::CheckStack(Token& token, int &lvl){
-	CheckCondition(token,  lvl);
+	CheckCondition(token, lvl);
 	CheckBrackets(token, lvl);
 };
 
@@ -304,7 +314,7 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 	}
 };
 
-void Tokenizer::CheckBrackets(Token& token,int &lvl)
+void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
 	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN)
 	{
@@ -349,7 +359,8 @@ Token::iToken Tokenizer::getToken(std::string token){
 		}
 
 	}
-	return Token::NONE;	
+
+	return Token::NONE;
 }
 
 

@@ -17,6 +17,7 @@ private:
 	void checkStack();
 	Token::iToken getToken(std::string token);
 	bool tokenError = false;
+	void checkRemainingErrors();
 public:
 	Tokenizer();
 	void createTokenList(LinkedList& cTokenList, string codefromfile);
