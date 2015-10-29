@@ -80,12 +80,11 @@ int main(int argc, const char * argv[])
 	}
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
-		cout << "ERRORS! \n";
-		for (Error e : ErrorHandler::getInstance()->getErrors()){
-			cout << e.getName() << " \n";
-		}
+		std::cerr << ErrorHandler::getInstance()->asJson();
 	}
-	cin >> code;
+
+	//cin >> code;
+	
 	return 0;
 }
 
