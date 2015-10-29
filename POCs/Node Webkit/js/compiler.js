@@ -10,7 +10,6 @@ exports.run = function(code) {
     // Save temp file
     var fs = require('fs');
     var tempFile = dir + "/tempCode.md";
-    console.log(tempFile);
     fs.writeFile(tempFile, global.editor.getValue(), function(err) {
         if (err) {
             console.log(err);
@@ -22,12 +21,13 @@ exports.run = function(code) {
 
 			var exec = require('child_process').exec;
 			var cmd = compilerFile + ' -f ' + '"' + tempFile + '"';
-			console.log(cmd);
 
 			exec(cmd, {maxBuffer: 25000000}, function(_error, stdout, stderr) {
 				var resultWithBrs = stdout.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.setLogResult(resultWithSpaces);
+
+				console.log(stdout);
 
 				if(stderr) {
 					var errors = JSON.parse(stderr)
