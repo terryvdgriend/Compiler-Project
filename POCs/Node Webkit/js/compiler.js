@@ -30,10 +30,10 @@ exports.run = function(code) {
 				exports.setLogResult(resultWithSpaces);
 
 				if(error || stderr) {
-					var result = "<br><br>" + error + "<br><br>" + stderr;
-					exports.appendLogResult(result);
-					exports.appendLogResult(JSON.stringify(error));
-					console.log(error);
+					//var result = "<br><br>" + stderr;
+					//exports.appendLogResult(JSON.stringify(stderr));
+					//console.log(error);
+					console.log(JSON.parse(stderr));
 				}
 			});
 
