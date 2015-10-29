@@ -45,7 +45,7 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 	//for each (TokenExpectation expectation in expected)
 	{
 		if (expectation.Level == whileLevel){
-			if (current->getEnum() != expectation.TokenType){
+			if (current == nullptr || current->getEnum() != expectation.TokenType){
 				//throw exception("Dingen enzo"); WERKT NIET?
 				begin = end;
 				break;
