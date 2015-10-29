@@ -23,12 +23,6 @@ exports.run = function(code) {
 			var cmd = compilerFile + ' -f ' + '"' + tempFile + '"';
 
 			exec(cmd, {maxBuffer: 25000000}, function(_error, stdout, stderr) {
-				var resultWithBrs = stdout.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
-				exports.setLogResult(resultWithSpaces);
-
-				console.log(stdout);
-
 				if(stderr) {
 					var errors = JSON.parse(stderr)
 					console.log(errors);
@@ -56,9 +50,15 @@ exports.run = function(code) {
 					        type: (error.errorType) ? error.errorType.toLowerCase() : "error"
 					    }
 					}));
-				} else {
-					exports.appendLogResult("Program finished! <br>");
 				}
+
+				var resultWithBrs = stdout.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
+				exports.appendLogResult(resultWithSpaces);
+				console.log(stdout);
+				if(!stderr) {
+					exports.appendLogResult("Program finished! <br>");
+				}				
 			});
         }
     });
