@@ -2,7 +2,7 @@
 #include "CompileDoWhile.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
+#include "JumpGoToNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 
