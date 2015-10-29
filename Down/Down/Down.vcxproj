@@ -83,9 +83,9 @@
     <Text Include="func.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
-    <Text Include="if.txt" />
+    <Text Include="if.md" />
     <Text Include="switch.txt" />
-    <Text Include="while.txt" />
+    <Text Include="while.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -96,6 +96,7 @@
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
+    <ClInclude Include="CompileElseIf.h" />
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFunction.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
@@ -157,6 +159,7 @@
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
+    <ClCompile Include="CompileElseIf.cpp" />
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
@@ -212,6 +215,9 @@
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="if else elseif.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

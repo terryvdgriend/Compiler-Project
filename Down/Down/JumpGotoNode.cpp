@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "JumpGoToNode.h"
 
-void JumpGoToNode::show()
+void  JumpGoToNode::show()
 {
-	cout << "Jump and go to. \n";
+	cout << "JumpGoToNode. Jumps to ";
+	jumpToNode->show();
 }
 
-void JumpGoToNode::action()
+void  JumpGoToNode::action()
 {
 	//
 }

@@ -55,28 +55,22 @@
     <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{6e285845-8eee-4646-838a-1c3147428ad4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\VM\Commands">
-      <UniqueIdentifier>{b1b0418f-83d3-4d0b-a82f-228e361e3659}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\VM\Variable">
-      <UniqueIdentifier>{91befac6-4bbc-4770-a8ff-a6f1e02275e9}</UniqueIdentifier>
+    <Filter Include="Header Files\VM\Commands">
+      <UniqueIdentifier>{c8b51d8f-67a9-4df3-a1d6-3a1e8f5aa4c9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\VM\Variable">
-      <UniqueIdentifier>{9bc2499e-a2cc-45e2-a06b-0b2f66aa1c4e}</UniqueIdentifier>
+      <UniqueIdentifier>{639a44fb-7bef-498d-adb7-431c7dd288d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\VM\Commands">
-      <UniqueIdentifier>{e3d396ed-f641-47ab-8201-748b6801a1e1}</UniqueIdentifier>
+    <Filter Include="Source Files\VM\Commands">
+      <UniqueIdentifier>{ec5e6931-8917-4ee4-85c5-b678b032a7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Variable">
+      <UniqueIdentifier>{e583ce7c-bde8-4370-ab1b-f57e59881246}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="if.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="calc.txt">
@@ -89,6 +83,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="condition.txt" />
+    <Text Include="if.md">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.md">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -172,6 +172,9 @@
     <ClInclude Include="DoNothingNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="JumpGotoNode.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
     <ClInclude Include="AbstractFunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
@@ -199,7 +202,16 @@
     <ClInclude Include="Error.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TokenExpectation.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileElseIf.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="BaseCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandList.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="ConstantToReturnValueCommand.h">
@@ -256,23 +268,17 @@
     <ClInclude Include="TimesCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandList.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandDictionary.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="VirtualMachine.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
     <ClInclude Include="Variable.h">
       <Filter>Header Files\VM\Variable</Filter>
     </ClInclude>
     <ClInclude Include="VariableType.h">
       <Filter>Header Files\VM\Variable</Filter>
     </ClInclude>
-    <ClInclude Include="JumpGoToNode.h">
-      <Filter>Header Files\Compiler\Nodes</Filter>
+    <ClInclude Include="VirtualMachine.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandDictionary.h">
+      <Filter>Header Files\VM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,10 +351,16 @@
     <ClCompile Include="LinkedActionList.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="NodeVisitor.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="DoNothingNode.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpGotoNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="AbstractFunctionCall.cpp">
@@ -356,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="DirectFunctionCall.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileDoWhile.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
@@ -372,77 +387,76 @@
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="SmallerThanCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+    <ClCompile Include="CompileElseIf.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="SmallerEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ShowFunctionCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ReturnToValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlusPlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="NotEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="MinusMinusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="MinusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="IdentifierToReturnValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GreaterThanCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GreaterEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GetFromValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EqualsToCommand.cpp">
+    <ClCompile Include="DivideCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="EqualsCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="DivideCommand.cpp">
+    <ClCompile Include="EqualsToCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="ConstantToReturnValueCommand.cpp">
+    <ClCompile Include="GetFromValueCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GreaterEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GreaterThanCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="IdentifierToReturnValueCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusMinusCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="PlusCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="PlusPlusCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ReturnToValueCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallerEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallerThanCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="TimesCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="ConstantToReturnValueCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\VM\Variable</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualMachine.cpp">
-      <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
-    <ClCompile Include="NodeVisitor.cpp">
-      <Filter>Source Files\Utils</Filter>
+    <ClCompile Include="VirtualMachine.cpp">
+      <Filter>Source Files\VM</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionCall.cpp">
-      <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpGoToNode.cpp">
-      <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="if else elseif.md">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

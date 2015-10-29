@@ -2,7 +2,11 @@
 //
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
+
+//Laten staan voor de apple gebruikert
+#ifdef _WIN32
 #include <crtdbg.h>
+#endif
 
 #include "stdafx.h"
 #include "Token.h"
@@ -30,6 +34,7 @@ void doDingen(int argc, const char * argv[]);
 int main(int argc, const char * argv[])
 {
 	string code = "";
+
 	if (argc == 3) {
 		string option = argv[1];
 		string value = argv[2];
@@ -61,7 +66,6 @@ int main(int argc, const char * argv[])
 	tnzr.createTokenList(cTokenList,code);
 	tnzr.printTokenList(cTokenList);
 
-
 	if (!tnzr.GetTokenError()){
 		//=========COMPILER==============
 		
@@ -76,6 +80,13 @@ int main(int argc, const char * argv[])
 		//TODO: meesturen wat je terug krijgt van de compute
 		// Define vm
 	}
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+	{
+		std::cerr << ErrorHandler::getInstance()->asJson();
+	}
+
+	//cin >> code;
+	
 	return 0;
 }
 
