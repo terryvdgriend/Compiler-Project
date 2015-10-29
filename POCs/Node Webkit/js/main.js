@@ -84,6 +84,10 @@ function init()
             editor.loadFile(e.dataTransfer.files[0].path);
             return false;
         };
+
+        $('body').on('click', 'table.errors tr', function(event) {
+            event.preventDefault();
+            global.editor.gotoLine($(this).data('line'), $(this).data('column'), true);
+        });
     });
 }
-

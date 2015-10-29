@@ -24,26 +24,40 @@ exports.run = function(code) {
 			var cmd = compilerFile + ' -f ' + '"' + tempFile + '"';
 			console.log(cmd);
 
-			exec(cmd, {maxBuffer: 25000000}, function(error, stdout, stderr) {
+			exec(cmd, {maxBuffer: 25000000}, function(_error, stdout, stderr) {
 				var resultWithBrs = stdout.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.setLogResult(resultWithSpaces);
 
-				if(error || stderr) {
-					//var result = "<br><br>" + stderr;
-					//exports.appendLogResult(result);
-					
+				if(stderr) {
 					var errors = JSON.parse(stderr)
 					console.log(errors);
-					global.editor.getSession().setAnnotations(errors.map(function(x) {
+					
+					errorHtml = "<table class=\"errors\" cellspacing=\"0\">"
+
+					for (var i = 0; i < errors.length; i++) {
+						var error = errors[i];
+						var errorType = (error.errorType) ? error.errorType : "Uknown type";
+						errorHtml += "<tr data-line=\"" + error.line + "\" data-column=\"" + error.column + "\">";
+						errorHtml += "<td width=\"120\"><b>" + errorType + "</b></td>";
+						errorHtml += "<td>" + error.description + "</td>";
+						errorHtml += "<td style=\"text-align: right;\">on line " + error.line + ", column " + error.column + "</td>";
+						errorHtml += "</tr>";
+					}
+
+					errorHtml += "</table>";
+					exports.appendLogResult(errorHtml);			
+					
+					global.editor.getSession().setAnnotations(errors.map(function(error) {
 					    return {
-					        row: x.line-1,
-					        column: x.column,
-					        text: x.description,
-					        type: (x.errorType) ? x.errorType.toLowerCase() : "error"
+					        row: error.line-1,
+					        column: error.column,
+					        text: error.description,
+					        type: (error.errorType) ? error.errorType.toLowerCase() : "error"
 					    }
 					}));
-
+				} else {
+					exports.appendLogResult("Program finished! <br>");
 				}
 			});
         }

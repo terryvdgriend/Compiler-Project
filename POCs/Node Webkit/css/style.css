@@ -52,6 +52,10 @@ a {
     height: 100% !important;
 }
 
+#editor .ace_active-line {
+    background: rgba(255, 255, 255, 0.045);
+}
+
 #markdown {
     float:right;
     width:50%;
@@ -80,6 +84,36 @@ a {
     font-size: 14px;
     overflow-y: scroll;
     position: relative;
+}
+
+#log table.errors {
+    border: 2px dotted red;
+    width: 100%;
+    margin: 5px 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+#log table.errors tr {
+    cursor: pointer;
+}
+
+#log table.errors tr:hover {
+    background: rgba(255, 255, 255, 0.065);
+}
+
+
+#log table.errors td {
+    margin: 0;
+    padding: 0;
+    height: 25px;
+    line-height: 25px !important;
+    vertical-align:middle;
+}
+
+#log table.errors td a {
+    color: #fff;
+    text-decoration: underline !important;
 }
 
 #log div {
