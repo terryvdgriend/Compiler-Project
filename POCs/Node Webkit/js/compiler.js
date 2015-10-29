@@ -15,13 +15,27 @@ exports.run = function(code) {
         if (err) {
             console.log(err);
         } else {
-			compilerFile = "compiler\\Compiler-Windows.exe";
+        	var windowsCompiler = "Compiler-Windows.exe";
+        	var osxCompiler = "Compiler-OSX"
+
+        	// Do custom compiler defined
+			compilerFilePath = "compiler\\" + windowsCompiler;
 			if (process.platform === "darwin") {
-				compilerFile = "./compiler/Compiler-OSX";
+				compilerFilePath = "./compiler/" + osxCompiler;
+		    }
+
+		    // Custom compiler defined
+		    if(global.compilerFile != null) {
+				if (process.platform === "darwin") {
+					compilerFilePath = global.compilerFile.replace(/ /g,"\\ ");
+			    } else {
+			    	compilerFilePath = global.compilerFile
+			    	console.log("Hij gebruikt custom compiler");
+			    }
 		    }
 
 			var exec = require('child_process').exec;
-			var cmd = compilerFile + ' -f ' + '"' + tempFile + '"';
+			var cmd = compilerFilePath + ' -f ' + '"' + tempFile + '"';
 
 			exec(cmd, {maxBuffer: 25000000}, function(_error, stdout, stderr) {
 				if(stderr) {
@@ -69,6 +83,19 @@ exports.run = function(code) {
         }
     });
 };
+
+exports.chooseCompilerFile = function(callback) {
+	var input = $("#chooseCompilerFile");
+    input.on("change", function(e) {
+        val = $(this).val();
+        $(this).val(null); 
+        callback(val);
+        return false;
+    });
+
+    input.trigger('click');       
+};
+
 
 exports.parseData = function(data) {
 	var data = data.toString();

@@ -9,6 +9,7 @@ function init()
         menu.initMenu();
 
         global.fileName = null;
+        global.compilerFile = null;
         global.editor = ace.edit("code");
         global.editor.setTheme("ace/theme/twilight");
         global.editor.session.setMode("ace/mode/markdown");

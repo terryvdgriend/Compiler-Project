@@ -39,6 +39,9 @@ exports.initMenu = function() {
             }
         }
     }));
+
+    fileMenu.append(new gui.MenuItem({ type: 'separator' }));
+
     fileMenu.append(new global.gui.MenuItem({
         label: 'Afsluiten',
         click: function() {
@@ -53,6 +56,24 @@ exports.initMenu = function() {
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
             compiler.run(global.editor.getValue());
+        }
+    }));
+
+    programMenu.append(new gui.MenuItem({ type: 'separator' }));
+
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Kies compiler',
+        click: function() {
+            compiler.chooseCompilerFile(function(file) {
+                global.compilerFile = file;
+            });
+        }
+    }));
+
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Reset compiler file',
+        click: function() {
+            global.compilerFile = null;
         }
     }));
 
