@@ -7,23 +7,23 @@ std::list<Error> ErrorHandler::errors = std::list<Error>();
 
 ErrorHandler* ErrorHandler::getInstance()
 {
-	return handler;
+    return handler;
 }
 
-void ErrorHandler::addError(Error::type t, std::string s)
+void ErrorHandler::addError(Error::location t, std::string s)
 {
-	Error err = Error{ s, t };
-	errors.push_back(err);
+    Error err = Error{ s, t };
+    errors.push_back(err);
 }
 
 void ErrorHandler::addError(Error e)
 {
-	errors.push_back(e);
+    errors.push_back(e);
 }
 
 std::list<Error> ErrorHandler::getErrors()
-{ 
-	return errors;
+{
+    return errors;
 };
 
 std::string ErrorHandler::asJson()
@@ -31,7 +31,7 @@ std::string ErrorHandler::asJson()
     if (errors.size() == 0)
         return "No errors found";
     
-    std::string JSON = "{\"errors\":[";
+    std::string JSON = "[";
     for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
     {
         JSON += (*it).asJsonObject();
@@ -40,16 +40,16 @@ std::string ErrorHandler::asJson()
     
     JSON = JSON.substr(0, JSON.size()-1);
     
-    JSON += "]}";
+    JSON += "]";
     return JSON;
 };
 
 void ErrorHandler::printErrors()
 {
-	for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
-	{
-		(*it).print();
-	}
+    for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
+    {
+        (*it).print();
+    }
 }
 
 ErrorHandler::~ErrorHandler()
