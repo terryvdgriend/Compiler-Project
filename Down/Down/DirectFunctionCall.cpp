@@ -13,5 +13,5 @@ void DirectFunctionCall::action()
 
 void DirectFunctionCall::accept(NextNodeVisitor& visitor)
 {
-	visitor.visit(this);
+	visitor.visit(*this);
 }

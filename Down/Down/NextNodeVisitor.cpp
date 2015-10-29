@@ -23,22 +23,22 @@ void NextNodeVisitor::visit(ConditionalJumpNode& node)
 	}
 }
 
-void NextNodeVisitor::visit(DirectFunctionCall* node)
+void NextNodeVisitor::visit(DirectFunctionCall& node)
 {
-	nextNode = (*node).getNext();
+	nextNode = node.getNext();
 }
 
-void NextNodeVisitor::visit(DoNothingNode* node)
+void NextNodeVisitor::visit(DoNothingNode& node)
 {
-	nextNode = (*node).getNext();
+	nextNode = node.getNext();
 }
 
-void NextNodeVisitor::visit(FunctionCall* node)
+void NextNodeVisitor::visit(FunctionCall& node)
 {
-	nextNode = (*node).getNext();
+	nextNode = node.getNext();
 }
 
-void NextNodeVisitor::visit(JumpGotoNode* node)
+void NextNodeVisitor::visit(JumpGotoNode& node)
 {
-	nextNode = (*node).getNext();
+	nextNode = node.getNext();
 }

@@ -1,8 +1,6 @@
 #pragma once
 #include "NextNodeVisitor.h"
 
-class NextNodeVisitor;
-
 class ActionNode
 {
 	public:

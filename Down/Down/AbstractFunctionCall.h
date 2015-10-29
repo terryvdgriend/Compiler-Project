@@ -1,8 +1,6 @@
 #pragma once
 #include "ActionNode.h"
 
-class NextNodeVisitor;
-
 class AbstractFunctionCall : public ActionNode
 {
 	public:

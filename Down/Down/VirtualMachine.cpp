@@ -12,18 +12,18 @@ VirtualMachine::VirtualMachine()
 
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
-	ActionNode* currentNode = actionList.getFirst();
-	NextNodeVisitor* visitor = new NextNodeVisitor(this);
+	//ActionNode* currentNode = actionList.getFirst();
+	//NextNodeVisitor* visitor = new NextNodeVisitor(this);
 
-	while (currentNode != nullptr)
-	{
-		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+	//while (currentNode != nullptr)
+	//{
+	//	AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
 
-		if (actionNode != nullptr)
-		{
-			//string name = (*actionNode).get
-		}
-	}
+	//	if (actionNode != nullptr)
+	//	{
+	//		//string name = (*actionNode).get
+	//	}
+	//}
 }
 
 void VirtualMachine::addIdentifer(string name)
