@@ -12,4 +12,5 @@ CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(new Compi
 
 CompileTimesDivideModulo::~CompileTimesDivideModulo()
 {
+	//delete pNextLevel;
 }

@@ -5,6 +5,8 @@
 LinkedActionList::LinkedActionList()
 {
 	this->count = 0;
+	this->first = nullptr;
+	this->last = nullptr;
 }
 
 ActionNode* LinkedActionList::add(ActionNode* value){
@@ -71,6 +73,12 @@ void LinkedActionList::printList(){
 
 LinkedActionList::~LinkedActionList()
 {
+	ActionNode* iter = this->first;
+	while (iter != nullptr){
+		ActionNode* current = iter;
+		iter = iter->getNext();
+		delete current;
+	}
 }
 
 

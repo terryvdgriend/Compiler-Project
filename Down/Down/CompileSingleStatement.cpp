@@ -64,3 +64,10 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 	}
 }
 
+CompileSingleStatement::CompileSingleStatement(){
+
+}
+
+CompileSingleStatement::~CompileSingleStatement(){
+}
+

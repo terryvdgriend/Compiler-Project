@@ -10,6 +10,7 @@ Compute::Compute()
 
 LinkedActionList* Compute::ComputeCompile(LinkedList* lToken, LinkedActionList* lRun){
 	CheckNewCompile(lToken, lRun, lToken->first);
+	_CrtDumpMemoryLeaks();
 	return lRun;
 }
 

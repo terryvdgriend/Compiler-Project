@@ -59,6 +59,7 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				_condition->add(new DoNothingNode());
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 				current = current->previous->getPartner();
+				delete condition;
 			}
 			else{
 				bodyNode = _body->add(new DoNothingNode());
@@ -71,6 +72,7 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					}
 					else
 						current = current->next;
+					delete compiledBodyPart;
 				}
 			}
 		}
@@ -81,4 +83,8 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 
 CompileWhile::~CompileWhile()
 {
+	delete bodyNode;
+	delete _body;
+	delete _condition;
+	delete _compiledStatement;
 }
