@@ -4,6 +4,32 @@
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
+.ui-widget{
+    font-size:14px !important;
+}
+
+.ui-tabs {
+    padding:0 !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 12px 8px !important;
+    overflow-y: scroll;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    padding: 0.15em 1em !important;
+}
+
+#log li a {
+    cursor: pointer;
+    bottom: 0 !important;
+}
+
+p {
+    line-height: 20px;
+}
+
 *:focus {
     outline:0;
 }
@@ -14,6 +40,7 @@ html, body{
     font-family:Arial;
     padding: 0;
     margin: 0;
+    overflow: hidden;
 }
 
 a {
@@ -80,18 +107,15 @@ a {
     background: #262626;
     font-family: "Consolas", "Menlo Regular", sans-serif;
     color: #fff;
-    padding:8px 8px 0 8px;
+    /*padding:8px 8px 0 8px;*/
     font-size: 14px;
-    overflow-y: scroll;
     position: relative;
+    overflow: hidden;
 }
 
 #log table.errors {
-    border: 2px dotted red;
     width: 100%;
-    margin: 5px 0;
-    border-left: 0;
-    border-right: 0;
+    margin: 0;
     margin-bottom: 20px;
 }
 
@@ -102,7 +126,6 @@ a {
 #log table.errors tr:hover {
     background: rgba(255, 255, 255, 0.065);
 }
-
 
 #log table.errors td {
     margin: 0;
@@ -124,11 +147,12 @@ a {
 
 #log a.close {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 7px;
+    top: 7px;
     text-decoration: none;
     color: #FFF;
     font-weight: bold;
+    z-index: 99999;
 }
 
 .showLog #editor, .showLog #markdown {

@@ -1,6 +1,7 @@
 exports.run = function(code) {
 	global.editor.getSession().clearAnnotations();
 	exports.clearLogResult();
+	exports.clearErrorLog();
 	$('body').addClass('showLog');
     global.editor.resize();
 
@@ -40,8 +41,11 @@ exports.run = function(code) {
 					}
 
 					errorHtml += "</table>";
-					exports.appendLogResult(errorHtml);			
-					
+					exports.appendErrorLog(errorHtml);
+
+					var index = $('#log > div a[href="#errors"]').parent().index();
+					$("#log > div").tabs("option", "active", index);
+
 					global.editor.getSession().setAnnotations(errors.map(function(error) {
 					    return {
 					        row: error.line-1,
@@ -57,7 +61,9 @@ exports.run = function(code) {
 				exports.appendLogResult(resultWithSpaces);
 				console.log(stdout);
 				if(!stderr) {
-					exports.appendLogResult("Program finished! <br>");
+					exports.appendLogResult("<br>Program finished! <br>");
+					var index = $('#log > div a[href="#output"]').parent().index();
+					$("#log > div").tabs("option", "active", index);
 				}				
 			});
         }
@@ -72,13 +78,25 @@ exports.parseData = function(data) {
 }
 
 exports.clearLogResult = function(html) {
-	$("#log div").html("");
+	$("#output").html("");
 }
 
 exports.setLogResult = function(html) {
-	$("#log div").html(html);
+	$("#output").html(html);
 }
 
 exports.appendLogResult = function(html) {
-	$("#log div").html($("#log div").html() + html);
+	$("#output").html($("#output").html() + html);
+}
+
+exports.clearErrorLog = function(html) {
+	$("#errors").html("");
+}
+
+exports.setErrorLog = function(html) {
+	$("#errors").html(html);
+}
+
+exports.appendErrorLog = function(html) {
+	$("#errors").html($("#errors").html() + html);
 }
