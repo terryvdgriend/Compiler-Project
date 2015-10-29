@@ -31,35 +31,17 @@ string getTextFromFile();
 string getTextFromFile(string filename);
 void doDingen(int argc, const char * argv[]);
 
+std::string IDEstuff(int argc, const char * argv[]);
+
 int main(int argc, const char * argv[])
 {
 	string code = "";
 
-	argc = 3;
+	code = IDEstuff(argc, argv);
+    if(code == "BREAK") {
+        return 0;
+    }
 
-	if (argc == 3) {
-		string option = "-f"; //argv[1];
-		string value = "while.md"; //argv[2];
-
-		if (option == "-f") {
-			// File
-			// std::cout << value << std::endl;
-			code = getTextFromFile(value);
-		}
-		else if (option == "-c") {
-			// Code
-			// std::cout << value << std::endl;
-			code = value;
-		}
-		else {
-			std::cout << "No valid option: " << option << std::endl;
-			return 0;
-		}
-	}
-	else {
-		std::cout << "Not enough params" << std::endl;
-		return 0;
-	}
 	////Declas
 	LinkedList cTokenList;
 
@@ -67,8 +49,8 @@ int main(int argc, const char * argv[])
 	Tokenizer tnzr{ Tokenizer() };
 	tnzr.createTokenList(cTokenList,code);
 	tnzr.printTokenList(cTokenList);
-
-	if (!tnzr.GetTokenError()){
+    
+	if (ErrorHandler::getInstance()->getErrors().empty()){
 		//=========COMPILER==============
 		
 		LinkedActionList cRunList{ LinkedActionList() };
@@ -79,11 +61,12 @@ int main(int argc, const char * argv[])
 		compute.ComputeCompile(&cTokenList, &cRunList);
 		cRunList.printList();
 		//=========VM==============
-		//TODO: meesturen wat je terug krijgt van de compute
-		// Define vm
-		VirtualMachine vm{ VirtualMachine() };
+		if (ErrorHandler::getInstance()->getErrors().empty()){
+					VirtualMachine vm{ VirtualMachine() };
 		vm.execute(cRunList);
+		}
 	}
+    
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		std::cerr << ErrorHandler::getInstance()->asJson();
@@ -92,6 +75,43 @@ int main(int argc, const char * argv[])
 	cin >> code;
 	
 	return 0;
+}
+
+std::string IDEstuff(int argc, const char * argv[])
+{
+	string code = "BREAK";
+	if (argc == 3) {
+		string option = argv[1];
+		string value = argv[2];
+
+		if (option == "-f") {
+			// File
+			// std::cout << value << std::endl;
+			code = getTextFromFile(value);
+		}
+        else if (option == "-c") {
+            // Code
+            // std::cout << value << std::endl;
+            code = value;
+        }
+		else {
+			std::cout << "No valid option: " << option << std::endl;
+			return 0;
+		}
+	}
+	else if (argc == 2) {
+        string action = argv[1];
+        if (action == "getTokens") {
+            std::cout << Tokenizer().getKeywordsAsJson();
+        } else {
+            std::cout << "No valid action" << std::endl;
+        }
+    }
+    else {
+		std::cout << "Not enough params" << std::endl;
+	}
+    
+	return code;
 }
 
 void doDingen(int argc, const char * argv[]){

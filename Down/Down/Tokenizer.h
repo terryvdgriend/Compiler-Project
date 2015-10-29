@@ -29,7 +29,7 @@ public:
 	bool GetTokenError() { return tokenError; };
 	Token::iToken getEnumByString(string name, bool &isDone);
 	std::list<string> getErrors(){ return errnoez; };
-	
+	std::string getKeywordsAsJson();
 	std::string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();
 };

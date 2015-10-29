@@ -1,6 +1,4 @@
-**A** is 1 
-#### do
+#### while ( **i** like false ) 
 --
 **A** is **A** plus 1 
 __
-#### while ( **A** smaller than 2 ) 

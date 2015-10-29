@@ -12,7 +12,6 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		case Token::IDENTIFIER:
 		{
 			Token* next = begin.next;
-			FunctionCall* functionCall = nullptr;
 			DirectFunctionCall* directFunctionCall = nullptr;
 			string sBuffer, saArguments[2];
 			ActionNode* beforeFunction = nullptr;
@@ -41,13 +40,16 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 				directFunctionCall->setAt(1, saArguments[1].c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 			}
+            
+            break;
 		}
-		break;
+		
 		case Token::CONDITION_OPEN:
 		{
 			Token* next = &begin;
 			CompileCondition condition;
 			condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, actionBefore);
+            break;
 		}
 		case Token::NUMBER:
 		case Token::TEXT:
@@ -58,8 +60,11 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 			directFunctionCall->setAt(0, SET_CONST_TO_RT);
 			directFunctionCall->setAt(1, begin.getText().c_str());
 			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+            break;
 		}
-		break;
+        default: {
+            break;
+        }
 	}
 }
 
