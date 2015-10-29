@@ -21,6 +21,15 @@ void ErrorHandler::addError(Error e)
     errors.push_back(e);
 }
 
+void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken result)
+{
+	Tokenizer tokert{};
+	std::string expt =  tokert.getKeyByValueMappert(expected);
+	std::string res = tokert.getKeyByValueMappert(expected);
+	e.setName("Incorrect token! Expected: '" + expt + "' Result: '" + res + "'");
+	errors.push_back(e);
+}
+
 std::list<Error> ErrorHandler::getErrors()
 {
     return errors;

@@ -34,13 +34,11 @@ void doDingen(int argc, const char * argv[]);
 
 int main(int argc, const char * argv[])
 {
-	string code = "";
-
-	argc = 3;
+	string code = "#### while ( **i** like false ) 		---	**A** is **A** plus 1		__";
 
 	if (argc == 3) {
-		string option = "-f";//argv[1];
-		string value = "if else elseif.md";//argv[2];
+		string option = argv[1];
+		string value = argv[2];
 
 		if (option == "-f") {
 			// File

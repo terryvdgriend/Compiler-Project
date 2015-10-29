@@ -113,6 +113,17 @@ Tokenizer::Tokenizer()
 
 }
 
+std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
+{
+	for (std::map<std::string, Token::iToken>::const_iterator it = mappert.begin(); it != mappert.end(); ++it)
+	{
+		if (it->second == tkn)
+			return it->first;
+	}
+
+	return "";
+}
+
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	Token  *pToken{};

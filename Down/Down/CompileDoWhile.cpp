@@ -44,7 +44,8 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 	{
 		if (expectation.Level == whileLevel){
 			if (current == nullptr || current->getEnum() != expectation.TokenType){
-				//throw exception("Dingen enzo");
+				ErrorHandler::getInstance()->addError(Error{ "Unexpected token: '" + current->getText() + "' in do while loop", ".md", current->getLevel(), current->getPositie(), Error::error });
+				begin = end;
 				break;
 			}
 			else
