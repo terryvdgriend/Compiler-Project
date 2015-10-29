@@ -14,13 +14,10 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 	ActionNode* currentNode = actionList.getFirst();
 	NodeVisitor* visitor = new NodeVisitor(*this);
 
-	cout << "AAAAAAAAAAAAAAAAAAAAAAAAARGH" << endl;
-
 	while (currentNode != nullptr && runsVeryNaz)
 	{
 		
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
-		currentNode->show();
 		if (actionNode)
 		{
 			string name = (*actionNode).getContentArrayNonConstant()[0];

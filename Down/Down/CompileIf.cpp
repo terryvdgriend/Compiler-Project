@@ -152,11 +152,17 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			//Build list with else
 			ConnectListsWithElse();
 		}
-		else{
+		else {
 			//Build list without else
 			ConnectLists();
 		}
+
 	}
+	else {
+		//Build list without else
+		ConnectLists();
+	}
+
 
 	listActionNodes.add(_compiledStatement);
 }

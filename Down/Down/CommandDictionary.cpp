@@ -19,6 +19,7 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$-"] = new MinusCommand();
 	commandDictionary["$++"] = new PlusPlusCommand();
 	commandDictionary["$--"] = new MinusMinusCommand();
+	commandDictionary["$FUNC"] = new ShowFunctionCommand();
 
 	commandDictionary["IdentifierToReturnValue"] = new IdentifierToReturnValueCommand();
 	commandDictionary["ConstantToReturnValue"] = new ConstantToReturnValueCommand();

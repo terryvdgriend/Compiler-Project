@@ -50,7 +50,7 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				begin = end;
 				break;
 			}
-			if (current == nullptr || current->getEnum() != expectation.TokenType){
+			if (current->getEnum() != expectation.TokenType){
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType,current->getEnum());
 				begin = end;
 				break;

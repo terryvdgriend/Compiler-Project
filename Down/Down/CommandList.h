@@ -20,3 +20,5 @@
 #include "IdentifierToReturnValueCommand.h"
 #include "ConstantToReturnValueCommand.h"
 #include "GetFromValueCommand.h"
+
+#include "ShowFunctionCommand.h"
