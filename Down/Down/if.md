@@ -1,6 +1,10 @@
-#### if ( **i** like false ) 
+**i** is 1
+
+#### if ( **i** like 1 ) 
 --
 [ printdown **i** ]
 __
-
-**i** is 2
+#### else
+--
+[ printdown **i** ]
+__

@@ -12,7 +12,6 @@
 #include "Token.h"
 #include "Tokenizer.h"
 #include "Compute.h"
-#include "Program.h"
 #include "Token.h"
 #include "LinkedList.h"
 #include "FileStreamer.h"
@@ -38,17 +37,17 @@ int main(int argc, const char * argv[])
 {
 	string code = "";
 
-	code = IDEstuff(argc, argv);
+	//code = IDEstuff(argc, argv);
     if(code == "BREAK") {
         return 0;
     }
-    
+
 	////Declas
 	LinkedList cTokenList;
 
 	//=========TOKENIZER==============
 	Tokenizer tnzr{ Tokenizer() };
-	tnzr.createTokenList(cTokenList,code);
+	tnzr.createTokenList(cTokenList,getTextFromFile("while.md"));
 	tnzr.printTokenList(cTokenList);
     
 	if (ErrorHandler::getInstance()->getErrors().empty()){
@@ -62,9 +61,9 @@ int main(int argc, const char * argv[])
 		compute.ComputeCompile(&cTokenList, &cRunList);
 		cRunList.printList();
 		//=========VM==============
-		//TODO: meesturen wat je terug krijgt van de compute
 		if (ErrorHandler::getInstance()->getErrors().empty()){
-			Program prog{ Program() };
+					VirtualMachine vm{ VirtualMachine() };
+		vm.execute(cRunList);
 		}
 	}
     

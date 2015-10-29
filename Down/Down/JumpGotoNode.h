@@ -1,17 +1,14 @@
 #pragma once
-#include "ActionNode.h"
-class JumpGotoNode :
-	public ActionNode
-{
-private:
-	ActionNode* jumpToNode;
-public:
-	ActionNode* getJumpToNode(){ return jumpToNode; };
-	void setJumpToNode(ActionNode* value){ jumpToNode = value; };
-	JumpGotoNode();
-	virtual void  Show();
-	virtual void  Action();
-	virtual void  Accept(NodeVisitor visitor);
-	~JumpGotoNode();
-};
+#include "NodeVisitor.h"
 
+class JumpGoToNode : public ActionNode
+{
+	public:
+		ActionNode* getJumpToNode(){ return jumpToNode; };
+		void setJumpToNode(ActionNode* value){ jumpToNode = value; };
+		void show();
+		void action();
+		void accept(NodeVisitor& visitor);
+	private:
+		ActionNode* jumpToNode;
+};

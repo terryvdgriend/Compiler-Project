@@ -2,7 +2,7 @@
 #include "CompileDoWhile.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
+#include "JumpGoToNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 #include "TokenExpectation.h"
@@ -48,7 +48,7 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 				begin = end;
 				break;
 			}
-			if (current == nullptr || current->getEnum() != expectation.TokenType){
+			if (current->getEnum() != expectation.TokenType){
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 				begin = end;
 				break;

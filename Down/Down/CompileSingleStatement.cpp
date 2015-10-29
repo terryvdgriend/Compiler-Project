@@ -13,10 +13,11 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		{
 			Token* next = begin.next;
 			DirectFunctionCall* directFunctionCall = nullptr;
-			std::string sBuffer, saArguments[2];
-			ActionNode beforeFunction;
+			string sBuffer, saArguments[2];
+			ActionNode* beforeFunction = nullptr;
 
-			if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN){
+			if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
+			{
 				directFunctionCall = new DirectFunctionCall();
 				saArguments[0] = begin.getText();
 				saArguments[1] = getNextLocalVariableName(sBuffer);
@@ -26,8 +27,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
 				CompileCondition condition;
-				condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, beforeFunction);
-
+				condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, *beforeFunction);
 			}
 			else
 			{

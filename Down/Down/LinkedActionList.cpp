@@ -66,7 +66,7 @@ ActionNode* LinkedActionList::insertLast(ActionNode* value){
 void LinkedActionList::printList(){
 	ActionNode* current = first;
 	while (current != nullptr){
-		current->Show();
+		current->show();
 		current = current->getNext();
 	}
 }

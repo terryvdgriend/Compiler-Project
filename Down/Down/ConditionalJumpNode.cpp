@@ -1,28 +1,17 @@
 #include "stdafx.h"
 #include "ConditionalJumpNode.h"
 
-
-ConditionalJumpNode::ConditionalJumpNode()
+void ConditionalJumpNode::show()
 {
+	cout << "Conditional jump. \n";
 }
 
-
-void  ConditionalJumpNode::Show()
+void ConditionalJumpNode::action()
 {
-	cout << "ConditionalJumpNode. \n";
+	//
 }
 
-void  ConditionalJumpNode::Action()
-{
-
-}
-
-void  ConditionalJumpNode::Accept(NodeVisitor visitor)
+void ConditionalJumpNode::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
-}
-
-
-ConditionalJumpNode::~ConditionalJumpNode()
-{
 }

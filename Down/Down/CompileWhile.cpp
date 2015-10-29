@@ -2,7 +2,7 @@
 #include "CompileWhile.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
+#include "JumpGoToNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 #include "TokenExpectation.h"
@@ -17,7 +17,7 @@ CompileWhile::CompileWhile()
 
 void CompileWhile::ConnectLists(){
 	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	JumpGotoNode* jumpBackNode = new JumpGotoNode();
+	JumpGoToNode* jumpBackNode = new JumpGoToNode();
 	_compiledStatement->add(_condition);
 	_compiledStatement->add(conditionalJumpNode);
 	_compiledStatement->add(_body);
@@ -50,7 +50,7 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				begin = end;
 				break;
 			}
-			if (current == nullptr || current->getEnum() != expectation.TokenType){
+			if (current->getEnum() != expectation.TokenType){
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType,current->getEnum());
 				begin = end;
 				break;

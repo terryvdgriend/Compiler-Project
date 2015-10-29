@@ -29,7 +29,7 @@ void CompileIf::ConnectLists(){
 
 void CompileIf::ConnectListsWithElse(){
     ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-    JumpGotoNode* jumpOverSecondBody = new JumpGotoNode();
+	JumpGoToNode* jumpOverSecondBody = new JumpGoToNode();
     DoNothingNode* secondBodyStart = new DoNothingNode();
     _compiledStatement->add(_condition);
     _compiledStatement->add(conditionalJumpNode);
@@ -152,11 +152,17 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			//Build list with else
 			ConnectListsWithElse();
 		}
-		else{
+		else {
 			//Build list without else
 			ConnectLists();
 		}
+
 	}
+	else {
+		//Build list without else
+		ConnectLists();
+	}
+
 
 	listActionNodes.add(_compiledStatement);
 }

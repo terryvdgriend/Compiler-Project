@@ -22,7 +22,6 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 
 	while (current != nullptr && current != &end)
 	{
-		std::cout << current->getText() << "\n";
 		if (current->getEnum() == Token::NEWLINE)
 			break;
 		if (current->getPartner() != nullptr)
