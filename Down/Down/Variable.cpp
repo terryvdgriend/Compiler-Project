@@ -2,8 +2,8 @@
 #include "Variable.h"
 
 Variable::Variable(string param) 
-	: value{ param }
 {
+	value = param;
 	if (&param == nullptr || param == "") 
 	{
 		type = VariableType::NULLTYPE;

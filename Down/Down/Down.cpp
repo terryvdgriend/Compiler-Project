@@ -37,7 +37,7 @@ int main(int argc, const char * argv[])
 {
 	string code = "";
 
-	//code = IDEstuff(argc, argv);
+	code = IDEstuff(argc, argv);
     if(code == "BREAK") {
         return 0;
     }
@@ -47,8 +47,8 @@ int main(int argc, const char * argv[])
 
 	//=========TOKENIZER==============
 	Tokenizer tnzr{ Tokenizer() };
-	tnzr.createTokenList(cTokenList,getTextFromFile("while.md"));
-	tnzr.printTokenList(cTokenList);
+	tnzr.createTokenList(cTokenList,code);
+	//tnzr.printTokenList(cTokenList);
     
 	if (ErrorHandler::getInstance()->getErrors().empty()){
 		//=========COMPILER==============
@@ -59,7 +59,7 @@ int main(int argc, const char * argv[])
 		Compute compute{ Compute() };
 
 		compute.ComputeCompile(&cTokenList, &cRunList);
-		cRunList.printList();
+		//cRunList.printList();
 		//=========VM==============
 		if (ErrorHandler::getInstance()->getErrors().empty()){
 					VirtualMachine vm{ VirtualMachine() };
@@ -72,7 +72,7 @@ int main(int argc, const char * argv[])
 		std::cerr << ErrorHandler::getInstance()->asJson();
 	}
 
-	cin >> code;
+	//cin >> code;
 	
 	return 0;
 }
