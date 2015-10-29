@@ -137,7 +137,6 @@
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ReturnToValueCommand.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
     <ClInclude Include="SmallerEqualsToCommand.h" />
     <ClInclude Include="SmallerThanCommand.h" />
@@ -201,7 +200,6 @@
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
-    <ClCompile Include="ReturnToValueCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
     <ClCompile Include="SmallerEqualsToCommand.cpp" />
     <ClCompile Include="SmallerThanCommand.cpp" />
