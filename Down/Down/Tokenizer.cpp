@@ -377,7 +377,7 @@ Token::iToken Tokenizer::getToken(std::string token){
 std::string Tokenizer::getKeywordsAsJson()
 {
 	std::string JSON = "[";
-	int size = mappert.size();
+	int size = (int) mappert.size();
 	int i = 0;
 	for (std::map<std::string,Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
 	{
