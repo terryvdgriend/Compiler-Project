@@ -225,9 +225,6 @@
     <ClInclude Include="PlusPlusCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnToValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="ShowFunctionCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
@@ -258,9 +255,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Down.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Token.cpp">
@@ -386,9 +380,6 @@
     <ClCompile Include="PlusPlusCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="ReturnToValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="ShowFunctionCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
@@ -409,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\VM\Variable</Filter>
+    </ClCompile>
+    <ClCompile Include="Down.cpp">
+      <Filter>Source Files\VM</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

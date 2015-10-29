@@ -2,8 +2,13 @@
 #include "stdafx.h"
 #include "Variable.h"
 
-Variable::Variable(string param) : value{ param }
+Variable::Variable(string param) 
+	: value{ param }
 {
+	if (&param == nullptr) 
+	{
+		type = VariableType::NULLTYPE;
+	}
 	if (is_number(value)) 
 	{
 		type = VariableType::NUMBER;
