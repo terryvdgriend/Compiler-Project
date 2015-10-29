@@ -8,7 +8,8 @@ JumpGotoNode::JumpGotoNode()
 
 void  JumpGotoNode::Show()
 {
-
+	cout << "JumpGoToNode. Jumps to ";
+	jumpToNode->Show();
 }
 
 void  JumpGotoNode::Action()

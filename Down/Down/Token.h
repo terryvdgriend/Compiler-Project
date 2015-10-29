@@ -63,11 +63,6 @@ public:
 		ANY
 	};
 
-
-public:
-	typedef std::list<Token*>   TokenList;
-	typedef TokenList::iterator iterator;
-
 public:
 	Token();
 	~Token();
@@ -91,7 +86,7 @@ public:
 	int				getPositie(){ return Positie; };
 	std::string getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token);
 	void Print(std::map<string, Token::iToken>& map);
-	void PrintError();
+	void addError();
 	Token*			next;
 	Token*			previous;
 

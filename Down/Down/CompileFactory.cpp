@@ -16,7 +16,10 @@ Compiler * CompileFactory::CreateCompileStatement(const Token::iToken tknzr)
 	std::map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr);
 	if (it != mappert.end())
 		return it->second->Create(); // Create is een copy maken
-	return NULL;
+	//
+
+
+	return nullptr;
 }
 
 

@@ -2,6 +2,7 @@
 #include <list>
 #include "Error.h"
 #include "Text.h"
+#include "Tokenizer.h"
 
 class ErrorHandler
 {
@@ -14,9 +15,11 @@ private:
 	~ErrorHandler();
 
 public:
-	static ErrorHandler *getInstance();
-	void ErrorHandler::addError(Error::type t, std::string s);
+	void ErrorHandler::addError(Error::location t, std::string s);
 	void ErrorHandler::addError(Error e);
+	void ErrorHandler::addError(std::string s , Token * t);
+	void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken result);
+	static ErrorHandler *getInstance();
 	std::list<Error> getErrors();
 	std::string asJson();
 	void ErrorHandler::printErrors();

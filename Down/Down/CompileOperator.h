@@ -4,7 +4,7 @@
 
 class CompileOperator : public	Compiler
 {
-private:
+protected:
 	Compiler *pNextLevel;
 public:
 	CompileOperator(Compiler* pNext);

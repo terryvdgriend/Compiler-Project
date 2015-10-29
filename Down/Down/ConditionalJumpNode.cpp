@@ -9,7 +9,7 @@ ConditionalJumpNode::ConditionalJumpNode()
 
 void  ConditionalJumpNode::Show()
 {
-
+	cout << "ConditionalJumpNode. \n";
 }
 
 void  ConditionalJumpNode::Action()

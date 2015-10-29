@@ -119,5 +119,4 @@ CompileOperator::TokenMap& CompileOperator::getTokenMap()
 CompileOperator::~CompileOperator()
 {
 	delete pNextLevel;
-	delete &tokenMap;
 }

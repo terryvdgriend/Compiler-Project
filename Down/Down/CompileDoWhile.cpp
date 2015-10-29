@@ -5,6 +5,7 @@
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
+#include "TokenExpectation.h"
 
 
 CompileDoWhile::CompileDoWhile()
@@ -29,21 +30,22 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 {
 	Token* current = &begin;
 	int whileLevel = begin.getLevel();
-	std::list<TokenExpectations> expected = std::list<TokenExpectations>();
-	expected.push_back(TokenExpectations(whileLevel, Token::DO));
-	expected.push_back(TokenExpectations(whileLevel, Token::BODY_OPEN));
-	expected.push_back(TokenExpectations(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectations(whileLevel, Token::BODY_CLOSED));
-	expected.push_back(TokenExpectations(whileLevel, Token::WHILE));
-	expected.push_back(TokenExpectations(whileLevel, Token::CONDITION_OPEN));
-	expected.push_back(TokenExpectations(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectations(whileLevel, Token::CONDITION_CLOSE));
+	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
+	expected.push_back(TokenExpectation(whileLevel, Token::DO));
+	expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
+	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
+	expected.push_back(TokenExpectation(whileLevel, Token::WHILE));
+	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
 
-	for(TokenExpectations expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		if (expectation.Level == whileLevel){
-			if (current->getEnum() != expectation.TokenType){
-				ErrorHandler::getInstance()->addError(Error{ "Unexpected token '" + current->getText() + "' in do-while loop", "X.MD", current->getLineNumber(), current->getPositie(), Error::notice::errort });
+			if (current == nullptr || current->getEnum() != expectation.TokenType){
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+				begin = end;
 				break;
 			}
 			else
@@ -60,15 +62,19 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 						begin = *current;
 					}
 					else
+					{
+						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
+					}
+					delete compiledBodyPart;
 				}
 			}
 			else{
 				CompileCondition* condition = new CompileCondition();
-
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 				current = current->previous->getPartner();
 				begin = *current;
+				delete condition;
 			}
 		}
 	}
@@ -78,4 +84,8 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 
 CompileDoWhile::~CompileDoWhile()
 {
+	delete bodyNode;
+	delete _body;
+	delete _condition;
+	delete _compiledStatement;
 }
