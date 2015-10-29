@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+
 ErrorHandler* ErrorHandler::handler = NULL;
 std::list<Error> ErrorHandler::errors = std::list<Error>();
 
@@ -24,6 +25,29 @@ std::list<Error> ErrorHandler::getErrors()
 { 
 	return errors;
 };
+
+std::string ErrorHandler::asJson()
+{
+	if (errors.size() == 0)
+		return "No errors found";
+
+	std::string JSON = "\"errors\":[";
+	for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
+	{
+		JSON += (*it).asJsonObject();
+		JSON += ",";
+	}
+	JSON += "]";
+	return JSON;
+};
+
+void ErrorHandler::printErrors()
+{
+	for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
+	{
+		(*it).print();
+	}
+}
 
 ErrorHandler::~ErrorHandler()
 {

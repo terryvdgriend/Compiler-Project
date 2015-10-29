@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include "Error.h"
+#include "Text.h"
 
 class ErrorHandler
 {
@@ -17,6 +18,7 @@ public:
 	void ErrorHandler::addError(Error e);
 	static ErrorHandler *getInstance();
 	std::list<Error> getErrors();
-	
+	std::string asJson();
+	void ErrorHandler::printErrors();
 };
 
