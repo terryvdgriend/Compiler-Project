@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CompileIf.h"
+#include "CompileElseIf.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
 #include "JumpGotoNode.h"
@@ -93,6 +94,14 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	}
 
 	//Check if there is an else-statement and check if the tokens afterwards are correct
+	while (current->getEnum() == Token::ELIF)
+	{
+		CompileElseIf* compileElseIf = new CompileElseIf;
+		compileElseIf->Compile(cTokenList, *current, end, *_body, *_body->getLast());
+		if (current->next != nullptr){
+			current = current->next;
+		}
+	}
 	if (current->getEnum() == Token::ELSE)
 	{
 		int whileLevel = begin.getLevel();
