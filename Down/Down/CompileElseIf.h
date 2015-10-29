@@ -4,7 +4,6 @@
 class CompileElseIf : public Compiler
 {
 public:
-
 	CompileElseIf();
 	~CompileElseIf();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);

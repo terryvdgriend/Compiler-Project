@@ -22,6 +22,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 
 	while (current != nullptr && current != &end)
 	{
+		std::cout << current->getText() << "\n";
 		if (current->getEnum() == Token::NEWLINE)
 			break;
 		if (current->getPartner() != nullptr)
@@ -48,13 +49,21 @@ void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedAction
 	std::string             sBuffer;
 	FunctionCall           *pFunction = nullptr;
 	DirectFunctionCall     *pDirectFunction = nullptr;
-	int                     n;
+	int                     maxN = 2;
 
 	saArguments[0] = sFunctionName;
-	saArguments[1] = getNextLocalVariableName(sBuffer);
-	saArguments[2] = getNextLocalVariableName(sBuffer);
+	
+	if (sFunctionName == "$FUNC"){
+		//TODO: FIX SUPER UGLY HARDCODING
+		saArguments[1] = "printdown";
+		saArguments[2] = getNextLocalVariableName(sBuffer);
+	}
+	else{
+		saArguments[1] = getNextLocalVariableName(sBuffer);
+		saArguments[2] = getNextLocalVariableName(sBuffer);
+	}
 
-	for (n = 0; n<2; n++)
+	for (int n = 0; n<maxN; n++)
 	{
 		pDirectFunction = new DirectFunctionCall;
 		pDirectFunction->setArraySize(2);
@@ -65,7 +74,7 @@ void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedAction
 
 	pFunction = new FunctionCall;
 	pFunction->setArraySize(3);
-	for (n = 0; n<3; n++)
+	for (int n = 0; n<3; n++)
 		pFunction->setAt(n, saArguments[n].c_str());
 	listActionNodes.insertBefore(&iBefore, pFunction);
 }

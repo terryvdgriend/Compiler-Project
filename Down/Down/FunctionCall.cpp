@@ -8,7 +8,7 @@ FunctionCall::FunctionCall()
 
 void  FunctionCall::Show()
 {
-	std::cout << "Function. \n";
+	std::cout << "Function: " << getContentArray()[0] << " " << getContentArray()[1] << " " << getContentArray()[2] << " \n";
 }
 
 void  FunctionCall::Action()

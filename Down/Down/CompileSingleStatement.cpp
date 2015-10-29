@@ -12,7 +12,6 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		case Token::IDENTIFIER:
 		{
 			Token* next = begin.next;
-			FunctionCall* functionCall = nullptr;
 			DirectFunctionCall* directFunctionCall = nullptr;
 			std::string sBuffer, saArguments[2];
 			ActionNode beforeFunction;
