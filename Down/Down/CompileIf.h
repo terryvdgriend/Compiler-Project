@@ -13,6 +13,8 @@ private:
 	LinkedActionList* _compiledStatement;
 	LinkedActionList* _condition;
 	LinkedActionList* _body;
+	LinkedActionList* _bodyElse;
 	ActionNode* bodyNode;
 	void ConnectLists();
+	void ConnectListsWithElse();
 };
