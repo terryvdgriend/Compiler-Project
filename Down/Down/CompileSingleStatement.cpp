@@ -41,8 +41,6 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 				directFunctionCall->setAt(1, saArguments[1].c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 			}
-
-			delete beforeFunction;
 		}
 		break;
 		case Token::CONDITION_OPEN:

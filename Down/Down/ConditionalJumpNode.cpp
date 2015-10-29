@@ -11,7 +11,7 @@ void ConditionalJumpNode::action()
 	//
 }
 
-void ConditionalJumpNode::accept(NextNodeVisitor& visitor)
+void ConditionalJumpNode::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
 }

@@ -274,9 +274,6 @@
     <ClInclude Include="VariableType.h">
       <Filter>Header Files\VM\Variable</Filter>
     </ClInclude>
-    <ClInclude Include="NextNodeVisitor.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -363,9 +360,6 @@
     <ClCompile Include="DirectFunctionCall.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionCall.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileDoWhile.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
@@ -438,14 +432,17 @@
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\VM\Variable</Filter>
     </ClCompile>
-    <ClCompile Include="NextNodeVisitor.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="VirtualMachine.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeVisitor.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

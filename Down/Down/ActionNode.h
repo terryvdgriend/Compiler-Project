@@ -1,5 +1,6 @@
 #pragma once
-#include "NextNodeVisitor.h"
+
+class NodeVisitor;
 
 class ActionNode
 {
@@ -12,7 +13,7 @@ class ActionNode
 		ActionNode* setPrevious(ActionNode* value) { return this->previous = value; }
 		virtual void show() = 0;
 		virtual void action() = 0;
-		virtual void accept(NextNodeVisitor& visitor) = 0;
+		virtual void accept(NodeVisitor& visitor) = 0;
 
 	private:
 		ActionNode* next;

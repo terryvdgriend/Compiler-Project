@@ -1,8 +1,6 @@
 #pragma once
 #include "ActionNode.h"
 
-class NextNodeVisitor;
-
 class ConditionalJumpNode :	public ActionNode
 {
 	public:
@@ -12,7 +10,7 @@ class ConditionalJumpNode :	public ActionNode
 		ActionNode* getOnFalse(){ return nextOnFalse; };
 		void show();
 		void action();
-		void accept(NextNodeVisitor& visitor);
+		void accept(NodeVisitor& visitor);
 
 	private:
 		ActionNode* nextOnTrue;

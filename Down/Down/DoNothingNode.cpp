@@ -11,7 +11,7 @@ void DoNothingNode::action()
 	//
 }
 
-void DoNothingNode::accept(NextNodeVisitor& visitor)
+void DoNothingNode::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
 }

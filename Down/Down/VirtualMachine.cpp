@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
 #include "CommandDictionary.h"
-#include "ActionNode.h"
-#include "NextNodeVisitor.h"
-#include "AbstractFunctionCall.h"
+//#include "ActionNode.h"
+//#include "NodeVisitor.h"
+//#include "AbstractFunctionCall.h"
+
+class NodeVisitor;
 
 VirtualMachine::VirtualMachine()
 {
@@ -13,7 +15,7 @@ VirtualMachine::VirtualMachine()
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
 	//ActionNode* currentNode = actionList.getFirst();
-	//NextNodeVisitor* visitor = new NextNodeVisitor(this);
+	//NodeVisitor* visitor = new NodeVisitor(*this);
 
 	//while (currentNode != nullptr)
 	//{

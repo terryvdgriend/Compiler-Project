@@ -131,7 +131,6 @@
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
-    <ClInclude Include="NextNodeVisitor.h" />
     <ClInclude Include="NodeVisitor.h" />
     <ClInclude Include="NotEqualsToCommand.h" />
     <ClInclude Include="PlusCommand.h" />
@@ -176,9 +175,9 @@
     <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DivideCommand.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
-		<ClCompile Include="Down.cpp">
-			<RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreaded</RuntimeLibrary>
-		</ClCompile>
+    <ClCompile Include="Down.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreaded</RuntimeLibrary>
+    </ClCompile>
     <ClCompile Include="EqualsCommand.cpp" />
     <ClCompile Include="EqualsToCommand.cpp" />
     <ClCompile Include="Error.cpp" />
@@ -195,7 +194,7 @@
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="MinusCommand.cpp" />
     <ClCompile Include="MinusMinusCommand.cpp" />
-    <ClCompile Include="NextNodeVisitor.cpp" />
+    <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />

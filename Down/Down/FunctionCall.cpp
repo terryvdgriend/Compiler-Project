@@ -1,16 +1,6 @@
 #include "stdafx.h"
 #include "FunctionCall.h"
 
-FunctionCall::FunctionCall()
-{
-
-}
-
-FunctionCall::~FunctionCall()
-{
-
-}
-
 void FunctionCall::show()
 {
 	std::cout << "Function. \n";
@@ -21,7 +11,7 @@ void FunctionCall::action()
 	//
 }
 
-void  FunctionCall::accept(NextNodeVisitor& visitor)
+void FunctionCall::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
 }

@@ -11,7 +11,7 @@ void JumpGotoNode::action()
 	//
 }
 
-void JumpGotoNode::accept(NextNodeVisitor& visitor)
+void JumpGotoNode::accept(NodeVisitor& visitor)
 {
 	visitor.visit(*this);
 }

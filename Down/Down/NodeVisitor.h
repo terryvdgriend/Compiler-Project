@@ -1,11 +1,25 @@
 #pragma once
+#include "VirtualMachine.h"
+#include "ConditionalJumpNode.h"
+#include "DirectFunctionCall.h"
+#include "DoNothingNode.h"
+#include "FunctionCall.h"
+#include "JumpGotoNode.h"
 
 class NodeVisitor
 {
 	public:
-		virtual void visit(ConditionalJumpNode node) = 0;
-		virtual void visit(DirectFunctionCall node) = 0;
-		virtual void visit(DoNothingNode node) = 0;
-		virtual void visit(FunctionCall node) = 0;
-		virtual void visit(JumpGotoNode node) = 0;
+		NodeVisitor(VirtualMachine& vm);
+		~NodeVisitor();
+		void visit(ConditionalJumpNode& node);
+		void visit(DirectFunctionCall& node);
+		void visit(DoNothingNode& node);
+		void visit(FunctionCall& node);
+		void visit(JumpGotoNode& node);
+		ActionNode* nextNode; // make private implement the below getters and setters
+		//void getNextNode();
+		//ActionNode* setNextNode();
+
+	private:
+		VirtualMachine* vm;
 };
