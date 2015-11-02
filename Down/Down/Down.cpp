@@ -49,10 +49,10 @@ int main(int argc, const char * argv[])
 	Tokenizer tnzr{ Tokenizer() };
 	tnzr.createTokenList(cTokenList,code);
 	//tnzr.printTokenList(cTokenList);
-    
+
 	if (ErrorHandler::getInstance()->getErrors().empty()){
 		//=========COMPILER==============
-		
+
 		LinkedActionList cRunList{ LinkedActionList() };
 		cRunList.add(new DoNothingNode());
 
@@ -66,14 +66,14 @@ int main(int argc, const char * argv[])
 		vm.execute(cRunList);
 		}
 	}
-    
+
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		std::cerr << ErrorHandler::getInstance()->asJson();
 	}
 
 	//cin >> code;
-	
+
 	return 0;
 }
 
@@ -96,8 +96,8 @@ std::string IDEstuff(int argc, const char * argv[])
         }
 		else {
 			std::cout << "No valid option: " << option << std::endl;
-			return 0;
-		}
+	return 0;
+}
 	}
 	else if (argc == 2) {
         string action = argv[1];

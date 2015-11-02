@@ -18,6 +18,7 @@ Tokenizer::Tokenizer()
 	mappert["#### foreach"] = Token::FOREACH;
 	mappert["#### while"] = Token::WHILE;
 	mappert["#### do"] = Token::DO;
+	mappert["#### switch"] = Token::SWITCH;
 	mappert["---"] = Token::FUNCTION_OPEN;
 	mappert["___"] = Token::FUNCTION_CLOSE;
 	mappert["("] = Token::CONDITION_OPEN;
@@ -46,6 +47,8 @@ Tokenizer::Tokenizer()
 	mappert["_class_"] = Token::CLASS;
 	mappert["_namespace_"] = Token::NAMESPACE;
 	mappert["_comment_"] = Token::COMMENT;
+	mappert["_switch-default_"] = Token::SWITCH_DEFAULT;
+	mappert["_switch-case_"] = Token::SWITCH_CASE;
 	//
 	mappert["plus"] = Token::PLUS;
 	mappert["increased"] = Token::PLUSPLUS;
@@ -76,6 +79,7 @@ Tokenizer::Tokenizer()
 	regexert[std::string("\n")] = Token::NEWLINE;
 	regexert[std::string("secret")] = Token::PRIVATE;
 	regexert[std::string("^#### if$")] = Token::IF;
+	regexert[std::string("^#### switch$")] = Token::SWITCH;
 	regexert[std::string("^#### else$")] = Token::ELSE;
 	regexert[std::string("^#### else if$")] = Token::ELIF;
 	regexert[std::string("^#### for$")] = Token::FOR;
@@ -109,6 +113,8 @@ Tokenizer::Tokenizer()
 	regexert[std::string("^gets$")] = Token::START_PARAMETERS;
 	regexert[std::string("^with$")] = Token::COMINGPARAMETER;
 	regexert[std::string("^,")] = Token::AND_PARA;
+	regexert[std::string("^default$")] = Token::SWITCH_DEFAULT;
+	regexert[std::string("^case$")] = Token::SWITCH_CASE;
 
 
 }
