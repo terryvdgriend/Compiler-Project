@@ -8,7 +8,7 @@ void EqualsCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 
 	variable1 = variable2;
 
-	for each(string item in vm.getFunctionParametersByKey(parameters.at(1))) {
-		vm.setVariable(item, variable1.getValue());
-	}
+    for(std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
+        vm.setVariable(item, variable1.getValue());
+    }
 }
