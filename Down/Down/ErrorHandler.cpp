@@ -37,6 +37,7 @@ void ErrorHandler::addError(std::string s, Token * t)
 	errors.push_back(Error{ s, ".MD", t->getLevel(), t->getPositie(), Error::error });
 }
 
+
 std::list<Error> ErrorHandler::getErrors()
 {
     return errors;

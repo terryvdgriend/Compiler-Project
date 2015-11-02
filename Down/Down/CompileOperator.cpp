@@ -39,6 +39,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 
 	insertLastNextLevel(end, before, nextLevel, nextLevelList);
 	compileNextLevel(tokenList, listActionNodes, nextLevelList);
+	begin = *current;
 }
 
 void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedActionList& listActionNodes, ActionNode& iBefore,

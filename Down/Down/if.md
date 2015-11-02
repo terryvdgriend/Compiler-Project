@@ -1,10 +1,9 @@
-**i** is 1
-
-#### if ( **i** like 1 ) 
---
-[ printdown **i** ]
+**i** is 8
+#### if ( **i** smaller than 7 )
+--  
+[ printdown "<7" ]
 __
 #### else
 --
-[ printdown **i** ]
+[ printdown ">7" ]
 __

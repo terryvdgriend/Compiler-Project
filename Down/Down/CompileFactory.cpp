@@ -9,15 +9,21 @@ CompileFactory::CompileFactory()
 	mappert[Token::DO] = new CompileDoWhile();
 	mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileFunction();
 	mappert[Token::IDENTIFIER] = new CompileEquals();
+	mappert[Token::NEWLINE] = nullptr;
 }
 
-Compiler * CompileFactory::CreateCompileStatement(const Token::iToken tknzr)
+Compiler * CompileFactory::CreateCompileStatement(Token& tknzr)
 {
-	std::map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr);
-	if (it != mappert.end())
-		return it->second->Create(); // Create is een copy maken
+	std::map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr.getEnum());
+	if (it != mappert.end()){
+		if (it->second != nullptr){
+			return it->second->Create(); // Create is een copy maken
+		}
+		return nullptr;
+	}
+		
 	//
-
+	ErrorHandler::getInstance()->addError("Incorrect syntax ", &tknzr);
 
 	return nullptr;
 }

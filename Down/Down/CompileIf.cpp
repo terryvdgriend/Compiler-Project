@@ -58,8 +58,10 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
 
 	for (TokenExpectation expectation : expected)
-		//for each (TokenExpectation expectation in expected)
 	{
+		while (current->getEnum() == Token::NEWLINE){
+			current = current->next;
+		}
 		if (expectation.Level == whileLevel){
 			if (current == nullptr){
 				ErrorHandler::getInstance()->addError(Error{ "if statement not completed", ".md",-1, -1, Error::error });
@@ -79,28 +81,35 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				CompileCondition* condition = new CompileCondition();
 				_condition->add(new DoNothingNode());
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
-				current = current->previous->getPartner();
+				delete condition;
 			}
 			else{
 				bodyNode = _body->add(new DoNothingNode());
+				Token* prev = current->previous;
+				while (prev->getEnum() != Token::BODY_OPEN){
+					prev = prev->previous;
+				}
+				prev = prev->getPartner();
 				while (current->getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
+					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+
 					if (compiledBodyPart != nullptr){
-						compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_body, *_body->getLast());
-						current = current->previous->getPartner();
-						begin = *current;
+						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
 					}
 					else
 					{
-						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
 					}
+					delete compiledBodyPart;
 				}
 			}
 		}
 	}
 	if (current != nullptr){
 		//Check if there is an else if-statement 
+		while (current->getEnum() == Token::NEWLINE){
+			current = current->next;
+		}
 		while (current->getEnum() == Token::ELIF)
 		{
 			CompileElseIf* compileElseIf = new CompileElseIf;
@@ -122,30 +131,41 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			for (TokenExpectation expectation : expected)
 				//for each (TokenExpectation expectation in expected)
 			{
+				while (current->getEnum() == Token::NEWLINE){
+					current = current->next;
+				}
 				if (expectation.Level == whileLevel){
-					if (current->getEnum() != expectation.TokenType){
-						//TODO ERROR Mike-u
+					if (current == nullptr){
+						ErrorHandler::getInstance()->addError(Error{ "else statement not completed", ".md", -1, -1, Error::error });
 						begin = end;
-						std::cout << "ERROR!";
+						break;
+					}
+					if (current->getEnum() != expectation.TokenType){
+						ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+						begin = end;
 						break;
 					}
 					else
 						current = current->next;
 				}
 				else if (expectation.Level >= whileLevel){
-					bodyNode = _bodyElse->add(new DoNothingNode);
+					bodyNode = _bodyElse->add(new DoNothingNode());
+					Token* prev = current->previous;
+					while (prev->getEnum() != Token::BODY_OPEN){
+						prev = prev->previous;
+					}
+					prev = prev->getPartner();
 					while (current->getLevel() > whileLevel){
-						Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
+						Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+
 						if (compiledBodyPart != nullptr){
-							compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_bodyElse, *_bodyElse->getLast());
-							current = current->previous->getPartner();
-							begin = *current;
+							compiledBodyPart->Compile(cTokenList, *current, *prev, *_bodyElse, *_bodyElse->getLast());
 						}
 						else
 						{
-							ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 							current = current->next;
 						}
+						delete compiledBodyPart;
 					}
 				}
 			}
@@ -165,6 +185,7 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 
 
 	listActionNodes.add(_compiledStatement);
+	begin = *current;
 }
 
 

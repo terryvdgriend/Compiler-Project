@@ -42,6 +42,9 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 
 	for (TokenExpectation expectation : expected)
 	{
+		while (current->getEnum() == Token::NEWLINE){
+			current = current->next;
+		}
 		if (expectation.Level == whileLevel){
 			if (current == nullptr){
 				ErrorHandler::getInstance()->addError(Error{ "do while statement not completed", ".md", -1, -1, Error::error });
@@ -59,16 +62,18 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 		else if (expectation.Level >= whileLevel){
 			if (_body->Count() == 0){
 				bodyNode = _body->add(new DoNothingNode());
+				Token* prev = current->previous;
+				while (prev->getEnum() != Token::BODY_OPEN){
+					prev = prev->previous;
+				}
+				prev = prev->getPartner();
 				while (current->getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(current->getEnum());
+					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
 					if (compiledBodyPart != nullptr){
-						compiledBodyPart->Compile(cTokenList, *current, *current->previous->getPartner(), *_body, *_body->getLast());
-						current = current->previous->getPartner();
-						begin = *current;
+						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
 					}
 					else
 					{
-						ErrorHandler::getInstance()->addError("Incorrect syntax ", current);
 						current = current->next;
 					}
 					delete compiledBodyPart;
@@ -77,14 +82,13 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 			else{
 				CompileCondition* condition = new CompileCondition();
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
-				current = current->previous->getPartner();
-				begin = *current;
 				delete condition;
 			}
 		}
 	}
 	ConnectLists();
 	listActionNodes.add(_compiledStatement);
+	begin = *current;
 }
 
 CompileDoWhile::~CompileDoWhile()

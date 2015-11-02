@@ -83,8 +83,8 @@ Tokenizer::Tokenizer()
 	regexert[std::string("^#### while$")] = Token::WHILE;
 	regexert[std::string("^#### do$")] = Token::DO;
 	regexert[std::string("^:$")] = Token::ASSIGNMENT;
-	regexert[std::string("---")] = Token::FUNCTION_OPEN;
-	regexert[std::string("___")] = Token::FUNCTION_CLOSE;
+	regexert[std::string("^---$")] = Token::FUNCTION_OPEN;
+	regexert[std::string("^___$")] = Token::FUNCTION_CLOSE;
 	regexert[std::string("^\\[$")] = Token::FUNCTION_DECLARE_OPEN;
 	regexert[std::string("^\\]$")] = Token::FUNCTION_DECLARE_CLOSE;
 	regexert[std::string("^\\{$")] = Token::ARRAY_OPEN;
@@ -163,9 +163,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		{
 			colNr = 1;
 			rowNr++;
-			s = m.suffix().str();
-			delete pToken;
-			continue;
 		}
 
 		pToken->setText((part));

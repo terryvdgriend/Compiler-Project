@@ -10,7 +10,7 @@ private:
 public:
 	CompileFactory();
 	
-	Compiler * CreateCompileStatement(const Token::iToken tknzr);
+	Compiler * CreateCompileStatement(Token& tknzr);
 
 	~CompileFactory();
 };
