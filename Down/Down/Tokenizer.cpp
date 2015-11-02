@@ -5,6 +5,12 @@
 #include <iostream>
 #include <regex>
 
+// Dit mag weg bij release (TODO) 
+#include <cstdio>
+#include <ctime>
+// ..
+
+
 Tokenizer::Tokenizer()
 {
 	//
@@ -132,8 +138,13 @@ std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
 
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
-	Token  *pToken{};
+	//
+	std::clock_t start;
+	double duration;
+	start = std::clock();
+	//
 
+	Token  *pToken{};
 	string s(codefromfile);
 	smatch m;
 	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
@@ -147,6 +158,9 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	bool isFunctionCall = false;
 	while (regex_search(s, m, e))
 	{
+		
+
+
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
@@ -202,6 +216,9 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		s = m.suffix().str();
 
+		
+		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		std::cout << "printf: " << duration << '\n';
 	}
 	CheckRemainingStack();
 	//

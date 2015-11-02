@@ -1,9 +1,7 @@
-**i** is 8
-#### if ( **i** smaller than 7 )
---  
-[ printdown "<7" ]
-__
+**i** is 8  
+**i** is **i** divide 2 plus 4 divide 3  
+[ printdown **i** ]
+
+#### if
 #### else
---
-[ printdown ">7" ]
-__
+#### else if
