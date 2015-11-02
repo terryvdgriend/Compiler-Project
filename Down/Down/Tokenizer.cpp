@@ -217,9 +217,11 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		s = m.suffix().str();
 
 		
-		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-		std::cout << "printf: " << duration << '\n';
+		
 	}
+	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	std::cout << "1000 Regels == 2 sec. \n";
+	std::cout << "TIJD(sec): " << duration << '\n';
 	CheckRemainingStack();
 	//
 	checkRemainingErrors();
