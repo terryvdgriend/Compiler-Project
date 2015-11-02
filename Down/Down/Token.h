@@ -43,6 +43,7 @@ public:
 		PRIVATE,
 		FOR,
 		FOREACH,
+		PRINT,
 		PLUSPLUS,
 		MINUSMINUS,
 		SEPARATOR,
@@ -62,13 +63,9 @@ public:
 		ARRAY_CLOSED,
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
-		SWITCH
+		SWITCH,
+		ANY
 	};
-
-
-public:
-	typedef std::list<Token*>   TokenList;
-	typedef TokenList::iterator iterator;
 
 public:
 	Token();
@@ -90,9 +87,10 @@ public:
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
 	int				getLineNumber(){ return Regelnummer; };
+	int				getPositie(){ return Positie; };
 	std::string getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token);
 	void Print(std::map<string, Token::iToken>& map);
-	void PrintError();
+	void addError();
 	Token*			next;
 	Token*			previous;
 

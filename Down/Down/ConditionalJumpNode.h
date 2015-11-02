@@ -1,12 +1,18 @@
 #pragma once
-#include "ActionNode.h"
+#include "NodeVisitor.h"
+
 class ConditionalJumpNode :	public ActionNode
 {
-public:
-	ConditionalJumpNode();
-	virtual void  Show();
-	virtual void  Action();
-	virtual void  Accept(NodeVisitor visitor);
-	~ConditionalJumpNode();
-};
+	public:
+		void setOnTrue(ActionNode* value){ nextOnTrue = value; };
+		void setOnFalse(ActionNode* value){ nextOnFalse = value; };
+		ActionNode* getOnTrue(){ return nextOnTrue; };
+		ActionNode* getOnFalse(){ return nextOnFalse; };
+		void show();
+		void action();
+		void accept(NodeVisitor& visitor);
 
+	private:
+		ActionNode* nextOnTrue;
+		ActionNode* nextOnFalse;
+};

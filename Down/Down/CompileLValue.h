@@ -1,11 +1,12 @@
 #pragma once
 #include "Compiler.h"
 
-class CompileLValue : Compiler
+class CompileLValue : public Compiler
 {
 public:
 	CompileLValue();
-	virtual void Compile(LinkedList& cTokenList, LinkedList& begin, LinkedList& end, LinkedActionList listActionNodes, ActionNode actionBefore);
+	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	Compiler * Create() { return new CompileLValue(); };
 	~CompileLValue();
 };
 
