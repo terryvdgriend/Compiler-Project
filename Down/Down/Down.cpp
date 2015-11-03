@@ -17,7 +17,7 @@
 #include "Format.h"
 #include "DoNothingNode.h"
 
-std::string IDEstuff(int argc, const char * argv[]);
+bool IDEstuff(int argc, const char * argv[], std::string &code);
 LinkedList RunTokenizer(std::string code, bool print);
 LinkedActionList RunCompiler(LinkedList* lToken, bool print);
 void RunVM(LinkedActionList lToken);
@@ -27,10 +27,8 @@ int main(int argc, const char * argv[])
 	string code = "";
 
 	//==========IDE=============
-	code = IDEstuff(argc, argv);
-	if (code == "BREAK") {
+	if (!IDEstuff(argc, argv, code))
 		return 0;
-	}
 
 	//=========TOKENIZER==============
 	LinkedList cTokenList = RunTokenizer(code, false);
@@ -95,42 +93,37 @@ void RunVM(LinkedActionList cRunList)
 
 
 
-std::string IDEstuff(int argc, const char * argv[])
+bool IDEstuff(int argc, const char * argv[], std::string &code)
 {
-	string code = "BREAK";
-	if (argc == 3) {
-		string option = argv[1];
-		string value = argv[2];
+	bool success = true;
+	string option = argv[1];
+	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
 
+	if (argc == 3) 
+	{
+		string value = argv[2];
 		if (option == "-f") {
 			// File
 			FileStreamer fs{};
 			code = fs.readerFromPath(value);
 		}
-		else if (option == "-c") {
-			// Code
-			// std::cout << value << std::endl;
-			code = value;
-		}
-		else {
-			std::cout << "No valid option: " << option << std::endl;
-			return 0;
-		}
+		else if (option == "-c") 
+			code = value; // Code
+		else 
+			success = false;
 	}
-	else if (argc == 2) {
-		string action = argv[1];
-		if (action == "getTokens") {
-			std::cout << Tokenizer().getKeywordsAsJson();
-		}
-		else {
-			std::cout << "No valid action" << std::endl;
-		}
+	else if (argc == 2) 
+	{
+		if (option == "getTokens") 
+			outz = Tokenizer().getKeywordsAsJson();
+		else 
+			success = false;		
 	}
-	else {
-		std::cout << "Not enough params" << std::endl;
-	}
-
-	return code;
+	else 
+		success = false;
+	
+	cout << outz;
+	return success;
 }
 
 
