@@ -31,12 +31,12 @@ int main(int argc, const char * argv[])
 		return 0;
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = RunTokenizer(code, true);
+	LinkedList cTokenList = RunTokenizer(code, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = RunCompiler(&cTokenList, true);
+	LinkedActionList cRunList = RunCompiler(&cTokenList, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 

@@ -73,11 +73,11 @@ Tokenizer::Tokenizer()
 	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
 
 
-	regexert[std::string("\\d")] = Token::NUMBER;
-	regexert[std::string("^\".*?\"$")] = Token::TEXT;
+	regexert[std::string("\\d")] = Token::NUMBER; //NIET TE MAPPEN
+	regexert[std::string("^\".*?\"$")] = Token::TEXT; //NIET TE MAPPEN
 	regexert[std::string("(true|false)")] = Token::BOOL;
-	regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER;
-	regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION;
+	regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER; //NIET TE MAPPEN __x__
+	regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION; //NIET TE MAPPEN __X__
 	regexert[std::string("^(### (\\w*)$)")] = Token::FUNCTION;
 	regexert[std::string("^(## (\\w*))$")] = Token::CLASS;
 	regexert[std::string("^(# (\\w*))$")] = Token::NAMESPACE;
@@ -138,12 +138,6 @@ std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
 
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
-	//
-	//std::clock_t start;
-	//double duration;
-	//start = std::clock();
-	//
-
 	Token  *pToken{};
 	string s(codefromfile);
 	smatch m;
@@ -156,16 +150,30 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	int lvl = 1;
 	int pInt = 0;
 	bool isFunctionCall = false;
+
+
+	std::clock_t startS;
+	double durationS;
+	startS = std::clock();
+
 	while (regex_search(s, m, e))
 	{
-		
+		std::clock_t start;
+		double duration;
+		start = std::clock();
 
 
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-
 		currentToken = getToken(part);
+
+
+		/*duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		if (duration != 0)
+		{
+			Text::PrintLine("GET_TOKEN(sec) : " + to_string(duration) + " bij token: " + to_string(currentToken));
+		}*/
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
@@ -215,14 +223,12 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		CheckStack(*pToken, lvl);
 
 		s = m.suffix().str();
-
-		
-		
 	}
-	//duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	//std::cout << "TIJD(sec): " << duration << " (1000 Regels == 2 sec)\n";
+
+	durationS = (std::clock() - startS) / (double)CLOCKS_PER_SEC;
+	Text::PrintLine("END(sec) : " + to_string(durationS) + " <<<<<<< ");
+
 	CheckRemainingStack();
-	//
 	checkRemainingErrors();
 }
 
@@ -375,10 +381,32 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 	}
 };
 
+struct check_x
+{
+	check_x(Token::iToken x) : x_(x) {}
+	bool operator()(const std::pair<int, Token::iToken>& v) const
+	{
+		return  v.second == x_;// v.second.x == x_;
+	}
+private:
+	Token::iToken x_;
+};
+
 Token::iToken Tokenizer::getToken(std::string token){
+	
+
+	Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
+	return asd;
+
+
+
+
+
+	/*smatch m;
 	typedef std::map<std::string, Token::iToken>::iterator it_type;
-	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) {
-		smatch m;
+	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
+	{
+		
 		regex e(iterator->first);
 		regex_search(token, m, e);
 		if (m.size() != 0)
@@ -386,17 +414,27 @@ Token::iToken Tokenizer::getToken(std::string token){
 			return iterator->second;
 		}
 
-	}
+	}*/
 
+
+
+	/*
+	std::string input("01/02/2003 blahblah 04/23/1999 blahblah 11/13/1981");
+	std::regex ws_re("\\s+");
+
+	// iterate over the days, months and years in the input
+	int const sub_matches[] = { 2, 1, 3 }; // day, month, year
+	sregex_token_iterator begin(input.begin(), input.end(), ws_re, sub_matches), end;
+	*/
 	return Token::NONE;
 }
 
 std::string Tokenizer::getKeywordsAsJson()
 {
 	std::string JSON = "[";
-	int size = (int) mappert.size();
+	int size = (int)mappert.size();
 	int i = 0;
-	for (std::map<std::string,Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
+	for (std::map<std::string, Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
 	{
 		if ((*it).second == Token::NEWLINE)
 		{
@@ -405,7 +443,7 @@ std::string Tokenizer::getKeywordsAsJson()
 		}
 		JSON += "{\"keyword\":\"" + (*it).first + "\"}";
 
-		if (i < size -1)
+		if (i < size - 1)
 			JSON += ",";
 		i++;
 	}
