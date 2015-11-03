@@ -8,7 +8,8 @@ class FileStreamer
 {
 public:
 	FileStreamer();
-	std::string reader(std::string path);
+	std::string readerFromPath(std::string path);
+	std::string readerFromResource(std::string path);
 	~FileStreamer();
 };
 

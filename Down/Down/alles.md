@@ -10,5 +10,5 @@ __
  **i** is **i** divide 2
 [ printdown **i** ]
 
- **i** is **i** minus 100
+ **i** is **i** minus 1
 [ printdown **i** ]
