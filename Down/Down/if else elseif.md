@@ -1,20 +1,17 @@
-#### if ( **i** like false ) 
+**i** is 4
+#### if ( **i** like 1 ) 
 --
-**A** is **A** plus 1 
+[ printdown "lol" ]
 __
-#### else if( **i** like true)
+#### else if ( **i** like 2 ) 
 --
-**B** is **B** plus 1
+[ printdown "drol" ]
 __
-#### else if( **i** like true)
+#### else if ( **i** like 3 ) 
 --
-**C** is **C** plus 1
+[ printdown "trol" ]
 __
-#### else if( **i** like true)
+#### else
 --
-**D** is **D** plus 1
+[ printdown "kak" ]
 __
-#### else 
---
-**E** is **E** minus 1
-__ 

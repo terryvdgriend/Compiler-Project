@@ -24,8 +24,8 @@ void CompileElseIf::ConnectLists(){
 	conditionalJumpNode->setOnTrue(_body->getFirst());
 	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 }
-
-void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore){};
+void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore,std::map<LinkedActionList*, LinkedActionList*>& _conditionBodyMap)
 {
 	//Check if all the tokens are correct
 	Token* current = &begin;
@@ -40,7 +40,6 @@ void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
 
 	for (TokenExpectation expectation : expected)
-		//for each (TokenExpectation expectation in expected)
 	{
 		while (current->getEnum() == Token::NEWLINE){
 			current = current->next;
@@ -88,9 +87,9 @@ void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 			}
 		}
 	}
-
-	ConnectLists();
-	listActionNodes.add(_compiledStatement);
+	_conditionBodyMap[_condition] = _body;
+	//ConnectLists();
+	//listActionNodes.add(_compiledStatement);
 	begin = *current;
 }
 
