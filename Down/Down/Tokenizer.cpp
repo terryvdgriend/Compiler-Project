@@ -139,9 +139,9 @@ std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	//
-	std::clock_t start;
-	double duration;
-	start = std::clock();
+	//std::clock_t start;
+	//double duration;
+	//start = std::clock();
 	//
 
 	Token  *pToken{};
@@ -219,9 +219,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		
 		
 	}
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	std::cout << "1000 Regels == 2 sec. \n";
-	std::cout << "TIJD(sec): " << duration << '\n';
+	//duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	//std::cout << "TIJD(sec): " << duration << " (1000 Regels == 2 sec)\n";
 	CheckRemainingStack();
 	//
 	checkRemainingErrors();

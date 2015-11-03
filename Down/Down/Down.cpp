@@ -1,5 +1,4 @@
-// Down.cpp : Defines the entry point for the console application.
-//
+
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 
@@ -16,66 +15,93 @@
 #include "LinkedList.h"
 #include "FileStreamer.h"
 #include "Format.h"
-#include "CompileWhile.h"
 #include "DoNothingNode.h"
-#include "CompileSingleStatement.h"
 
 //Mogen weg!!
-#include "CompileCondition.h"
-#include "CompileEquals.h"
-#include "CompilePlusMinus.h"
-#include "CompileTimesDivideModulo.h"
-#include "DoNothingNode.h"
+//Ook weg:
+#include <cstdio>
+#include <ctime>
+// ..
 
-string getTextFromFile();
-string getTextFromFile(string filename);
-void doDingen(int argc, const char * argv[]);
+
 
 std::string IDEstuff(int argc, const char * argv[]);
+LinkedList RunTokenizer(std::string code, bool print);
+LinkedActionList RunCompiler(LinkedList* lToken, bool print);
+void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
 {
 	string code = "";
 
+	//==========IDE=============
 	code = IDEstuff(argc, argv);
-    if(code == "BREAK") {
-        return 0;
-    }
-
-	////Declas
-	LinkedList cTokenList;
+	if (code == "BREAK") {
+		return 0;
+	}
 
 	//=========TOKENIZER==============
-	Tokenizer tnzr{ Tokenizer() };
-	tnzr.createTokenList(cTokenList,code);
-	//tnzr.printTokenList(cTokenList);
-
-	if (ErrorHandler::getInstance()->getErrors().empty()){
-		//=========COMPILER==============
-
-		LinkedActionList cRunList{ LinkedActionList() };
-		cRunList.add(new DoNothingNode());
-
-		Compute compute{ Compute() };
-
-		compute.ComputeCompile(&cTokenList, &cRunList);
-		//cRunList.printList();
-		//=========VM==============
-		if (ErrorHandler::getInstance()->getErrors().empty()){
-					VirtualMachine vm{ VirtualMachine() };
-		vm.execute(cRunList);
-		}
-	}
-
+	LinkedList cTokenList = RunTokenizer(code, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
-	{
-		std::cerr << ErrorHandler::getInstance()->asJson();
-	}
+		return 0;
 
-	//cin >> code;
+	//=========COMPILER==============
+	LinkedActionList cRunList = RunCompiler(&cTokenList, false);
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+		return 0;
+
+	//=========VM==============
+	RunVM(cRunList);
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+		std::cerr << ErrorHandler::getInstance()->asJson();
+
 
 	return 0;
 }
+
+LinkedList RunTokenizer(std::string code, bool print)
+{
+	//=========TOKENIZER==============
+	LinkedList cTokenList{};
+	Tokenizer tnzr{ Tokenizer() };
+	tnzr.createTokenList(cTokenList, code);
+	if (print)
+		tnzr.printTokenList(cTokenList);
+
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+		std::cerr << ErrorHandler::getInstance()->asJson();
+	return cTokenList;
+}
+
+LinkedActionList RunCompiler(LinkedList* lToken,bool print)
+{
+	//=========COMPILER==============
+	LinkedActionList cRunList{ LinkedActionList() };
+	cRunList.add(new DoNothingNode());
+	Compute compute{ Compute() };
+	compute.ComputeCompile(lToken, &cRunList);
+	if (print)
+		cRunList.printList();
+
+	return cRunList;
+}
+
+void RunVM(LinkedActionList cRunList)
+{
+	//=========VM==============
+	VirtualMachine vm{ VirtualMachine() };
+	vm.execute(cRunList);
+	
+
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+		std::cerr << ErrorHandler::getInstance()->asJson();
+
+}
+
+
+
+
+
 
 std::string IDEstuff(int argc, const char * argv[])
 {
@@ -86,101 +112,33 @@ std::string IDEstuff(int argc, const char * argv[])
 
 		if (option == "-f") {
 			// File
-			// std::cout << value << std::endl;
-			code = getTextFromFile(value);
+			FileStreamer fs{};
+			code = fs.readerFromPath(value);
 		}
-        else if (option == "-c") {
-            // Code
-            // std::cout << value << std::endl;
-            code = value;
-        }
+		else if (option == "-c") {
+			// Code
+			// std::cout << value << std::endl;
+			code = value;
+		}
 		else {
 			std::cout << "No valid option: " << option << std::endl;
-	return 0;
-}
+			return 0;
+		}
 	}
 	else if (argc == 2) {
-        string action = argv[1];
-        if (action == "getTokens") {
-            std::cout << Tokenizer().getKeywordsAsJson();
-        } else {
-            std::cout << "No valid action" << std::endl;
-        }
-    }
-    else {
+		string action = argv[1];
+		if (action == "getTokens") {
+			std::cout << Tokenizer().getKeywordsAsJson();
+		}
+		else {
+			std::cout << "No valid action" << std::endl;
+		}
+	}
+	else {
 		std::cout << "Not enough params" << std::endl;
 	}
-    
+
 	return code;
 }
 
-void doDingen(int argc, const char * argv[]){
-	//string code = "";
 
-	//if (argc == 3) {
-	//	string option = argv[1];
-	//	string value = argv[2];
-
-	//	if (option == "-f") {
-	//		// File
-	//		// std::cout << value << std::endl;
-	//		code = getTextFromFile(value);
-	//	}
-	//	else if (option == "-c") {
-	//		// Code
-	//		// std::cout << value << std::endl;
-	//		code = value;
-	//	}
-	//	else {
-	//		std::cout << "No valid option: " << option << std::endl;
-	//		return 0;
-	//	}
-	//}
-	//else {
-	//	std::cout << "Not enough params" << std::endl;
-	//	return 0;
-	//}
-	////Declas
-	//LinkedList cTokenList;
-
-	////=========TOKENIZER==============
-	//Tokenizer tnzr{ Tokenizer() };
-	//tnzr.createTokenList(cTokenList, getTextFromFile());
-	//tnzr.printTokenList(cTokenList);
-
-
-	//if (!tnzr.GetTokenError()){
-	//	//=========COMPILER==============
-	//	
-	//LinkedActionList cRunList{ LinkedActionList() };
-	//cRunList.add(new DoNothingNode());
-
-	//Compute compute{ Compute() };
-
-	//compute.ComputeCompile(&cTokenList, &cRunList);
-	//	cRunList.printList();
-	////	//=========VM==============
-	////	//TODO: meesturen wat je terug krijgt van de compute
-	////Program prog{ Program() };
-
-	//}
-	//CompileTimesDivideModulo* condition = new CompileTimesDivideModulo();
-}
-
-string getTextFromFile(string fileName) {
-	string datFile = fileName;
-	FileStreamer fs{ FileStreamer() };
-	return fs.reader(datFile);
-}
-
-
-string getTextFromFile()
-{
-	// vul naam in van de resource, die je wilt testen
-	// if / while / etc
-	string txtTje = "while";
-	//
-	string datFile = "./" + txtTje + ".txt";
-	FileStreamer fs{ FileStreamer() };
-	return fs.reader(datFile);;
-}
