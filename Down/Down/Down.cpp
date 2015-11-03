@@ -31,12 +31,12 @@ int main(int argc, const char * argv[])
 		return 0;
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = RunTokenizer(code, false);
+	LinkedList cTokenList = RunTokenizer(code, true);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = RunCompiler(&cTokenList, false);
+	LinkedActionList cRunList = RunCompiler(&cTokenList, true);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
@@ -92,10 +92,9 @@ void RunVM(LinkedActionList cRunList)
 
 
 
-
+//Return success
 bool IDEstuff(int argc, const char * argv[], std::string &code)
 {
-	bool success = true;
 	string option = argv[1];
 	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
 
@@ -106,24 +105,26 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 			// File
 			FileStreamer fs{};
 			code = fs.readerFromPath(value);
+			return true;
 		}
-		else if (option == "-c") 
+		else if (option == "-c")
 			code = value; // Code
-		else 
-			success = false;
+		else
+			return false;
 	}
 	else if (argc == 2) 
 	{
 		if (option == "getTokens") 
 			outz = Tokenizer().getKeywordsAsJson();
 		else 
-			success = false;		
+			return false;
 	}
 	else 
-		success = false;
+		return false;
+	
 	
 	cout << outz;
-	return success;
+	return false;
 }
 
 
