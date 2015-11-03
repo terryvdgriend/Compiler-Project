@@ -17,14 +17,6 @@
 #include "Format.h"
 #include "DoNothingNode.h"
 
-//Mogen weg!!
-//Ook weg:
-#include <cstdio>
-#include <ctime>
-// ..
-
-
-
 std::string IDEstuff(int argc, const char * argv[]);
 LinkedList RunTokenizer(std::string code, bool print);
 LinkedActionList RunCompiler(LinkedList* lToken, bool print);
