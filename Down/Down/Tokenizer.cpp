@@ -138,6 +138,7 @@ std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
 
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
+	//IDEE!: **?** ook in de onderste regex proppen, zonder de tekst? kun je er oook op matchen
 	Token  *pToken{};
 	string s(codefromfile);
 	smatch m;
@@ -404,11 +405,12 @@ private:
 
 Token::iToken Tokenizer::getToken(std::string token){
 	
-	Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
-	return asd;
+	//Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
+	//return asd;
 
+	// Boven en onder doen het zelfde op dezelfde snelheid.. (uiteraard)
 
-	/*smatch m;
+	smatch m;
 	typedef std::map<std::string, Token::iToken>::iterator it_type;
 	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
 	{
@@ -420,18 +422,8 @@ Token::iToken Tokenizer::getToken(std::string token){
 			return iterator->second;
 		}
 
-	}*/
+	}
 
-
-
-	/*
-	std::string input("01/02/2003 blahblah 04/23/1999 blahblah 11/13/1981");
-	std::regex ws_re("\\s+");
-
-	// iterate over the days, months and years in the input
-	int const sub_matches[] = { 2, 1, 3 }; // day, month, year
-	sregex_token_iterator begin(input.begin(), input.end(), ws_re, sub_matches), end;
-	*/
 	return Token::NONE;
 }
 

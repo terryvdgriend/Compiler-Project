@@ -1,8 +1,8 @@
-**x** is 6
-[ printdown **x** ]
-**x** is 12
-[ printdown **x** ]
-**x** is 24
+**x** is 6  
+[ printdown **x** ]  
+**x** is 12  
+[ printdown **x** ]  
+**x** is 24  
 [ printdown **x** ]
 [ printdown **x** ]
 [ printdown **x** ]
