@@ -383,23 +383,29 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 
 struct check_x
 {
-	check_x(Token::iToken x) : x_(x) {}
-	bool operator()(const std::pair<int, Token::iToken>& v) const
+	typedef std::map<std::string, Token::iToken>::iterator it_type;
+	typedef const std::pair<std::string, Token::iToken>& it_type2;
+
+	
+	check_x(const std::string token) : _token(token) {}
+	bool operator()(it_type2 v) const
 	{
-		return  v.second == x_;// v.second.x == x_;
+		smatch m;
+		regex e(v.first);
+		regex_search(_token, m, e);
+		if (m.size() != 0)
+		{
+			return true;// v->second;
+		}
 	}
 private:
-	Token::iToken x_;
+	std::string _token;
 };
 
 Token::iToken Tokenizer::getToken(std::string token){
 	
-
 	Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
 	return asd;
-
-
-
 
 
 	/*smatch m;
