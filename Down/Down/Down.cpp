@@ -25,7 +25,10 @@ void RunVM(LinkedActionList lToken);
 int main(int argc, const char * argv[])
 {
 	string code = "";
-
+	bool isDebuggingMe = false;
+	#ifdef DEBUG
+	isDebuggingMe = true;
+	#endif
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, code))
 		return 0;
