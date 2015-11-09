@@ -85,6 +85,7 @@
     <Text Include="ReadMe.txt" />
     <Text Include="if.md" />
     <Text Include="switch.txt" />
+    <Text Include="custom.txt" />
     <Text Include="while.md" />
   </ItemGroup>
   <ItemGroup>

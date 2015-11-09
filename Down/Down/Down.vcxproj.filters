@@ -89,6 +89,9 @@
     <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="custom.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -248,9 +251,6 @@
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="PlusPlusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ReturnToValueCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="ShowFunctionCommand.h">
@@ -424,9 +424,6 @@
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="PlusPlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ReturnToValueCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="ShowFunctionCommand.cpp">
