@@ -148,6 +148,8 @@
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Tokenmap.h" />
+    <ClInclude Include="Tokenregex.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
     <ClInclude Include="VirtualMachine.h" />

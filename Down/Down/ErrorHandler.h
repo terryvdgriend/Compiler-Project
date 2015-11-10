@@ -17,6 +17,7 @@ private:
 public:
     #ifdef _WIN32
 	void ErrorHandler::addError(Error::location t, std::string s);
+	void ErrorHandler::addError();
 	void ErrorHandler::addError(Error e);
 	void ErrorHandler::addError(std::string s , Token * t);
 	void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken result);

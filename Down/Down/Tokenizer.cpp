@@ -4,11 +4,12 @@
 #include "LinkedList.h"
 #include <iostream>
 #include <regex>
+#include "Tokenmap.h"
+#include "Tokenregex.h"
 
 // Dit mag weg bij release (TODO) 
 #include <cstdio>
-#include <ctime>
-// ..
+// 
 // -------------- IDEE -----------------
 //x: 2 lijst, regex lijst, mappert lijst
 //1: eerst zoeken mappert.find()
@@ -31,114 +32,11 @@
 
 Tokenizer::Tokenizer()
 {
+	//const map<string, Token::iToken> TokenMap::tm = TokenMap::get();
+	//mappert =  TokenMap::get();
 	//
-	mappert["\n"] = Token::NEWLINE;
-	// 
-	mappert["secret"] = Token::PRIVATE;
-	mappert["#### if"] = Token::IF;
-	mappert["#### else"] = Token::ELSE;
-	mappert["#### else if"] = Token::ELIF;
-	mappert["#### for"] = Token::FOR;
-	mappert["#### foreach"] = Token::FOREACH;
-	mappert["#### while"] = Token::WHILE;
-	mappert["#### do"] = Token::DO;
-	mappert["#### switch"] = Token::SWITCH;
-	mappert["---"] = Token::FUNCTION_OPEN;
-	mappert["___"] = Token::FUNCTION_CLOSE;
-	mappert["("] = Token::CONDITION_OPEN;
-	mappert[")"] = Token::CONDITION_CLOSE;
-	mappert["--"] = Token::BODY_OPEN;
-	mappert["__"] = Token::BODY_CLOSED;
-	mappert["{"] = Token::ARRAY_OPEN;
-	mappert["}"] = Token::ARRAY_CLOSED;
-	mappert[":"] = Token::ASSIGNMENT;
-	mappert["["] = Token::FUNCTION_DECLARE_OPEN;
-	mappert["]"] = Token::FUNCTION_DECLARE_CLOSE;
-	//
-	mappert["is"] = Token::EQUALS;
-	mappert["like"] = Token::EQUALS_TO;
-	mappert["smaller than"] = Token::LESS_THAN;
-	mappert["larger than"] = Token::LARGER_THAN;
-	mappert["in"] = Token::IN;
-	//
-	mappert["_getal_"] = Token::NUMBER;
-	mappert["_tekst_"] = Token::TEXT;
-	mappert["_fact_"] = Token::BOOL;
-	mappert["_variable_"] = Token::IDENTIFIER;
-	mappert[","] = Token::SEPARATOR;
-	mappert["_declaration_"] = Token::DECLARATION;
-	mappert["_function_"] = Token::FUNCTION;
-	mappert["_class_"] = Token::CLASS;
-	mappert["_namespace_"] = Token::NAMESPACE;
-	mappert["_comment_"] = Token::COMMENT;
-	mappert["_switch-default_"] = Token::SWITCH_DEFAULT;
-	mappert["_switch-case_"] = Token::SWITCH_CASE;
-	//
-	mappert["plus"] = Token::PLUS;
-	mappert["increased"] = Token::PLUSPLUS;
-	mappert["minus"] = Token::MINUS;
-	mappert["decreased"] = Token::MINUSMINUS;
-	mappert["divide"] = Token::DIVIDE;
-	mappert["multiply"] = Token::TIMES;
-	mappert["modulo"] = Token::MODULO;
-
-	mappert["and gives"] = Token::RETURNVALUE;
-	mappert["gets"] = Token::START_PARAMETERS;
-	mappert[","] = Token::AND_PARA;
-	mappert["_function-use_"] = Token::FUNCTIONUSE;
-	mappert["_coming-params_"] = Token::COMINGPARAMETER;
-	//
-	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
-
-
-	regexert[std::string("\\d")] = Token::NUMBER; //NIET TE MAPPEN
-	regexert[std::string("^\".*?\"$")] = Token::TEXT; //NIET TE MAPPEN
-	regexert[std::string("(true|false)")] = Token::BOOL;
-	regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER; //NIET TE MAPPEN __x__
-	regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION; //NIET TE MAPPEN __X__
-	regexert[std::string("^(### (\\w*)$)")] = Token::FUNCTION;
-	regexert[std::string("^(## (\\w*))$")] = Token::CLASS;
-	regexert[std::string("^(# (\\w*))$")] = Token::NAMESPACE;
-	regexert[std::string("^>.*\n")] = Token::COMMENT;
-	regexert[std::string("\n")] = Token::NEWLINE;
-	regexert[std::string("secret")] = Token::PRIVATE;
-	regexert[std::string("^#### if$")] = Token::IF;
-	regexert[std::string("^#### switch$")] = Token::SWITCH;
-	regexert[std::string("^#### else$")] = Token::ELSE;
-	regexert[std::string("^#### else if$")] = Token::ELIF;
-	regexert[std::string("^#### for$")] = Token::FOR;
-	regexert[std::string("^#### foreach$")] = Token::FOREACH;
-	regexert[std::string("^#### while$")] = Token::WHILE;
-	regexert[std::string("^#### do$")] = Token::DO;
-	regexert[std::string("^:$")] = Token::ASSIGNMENT;
-	regexert[std::string("^---$")] = Token::FUNCTION_OPEN;
-	regexert[std::string("^___$")] = Token::FUNCTION_CLOSE;
-	regexert[std::string("^\\[$")] = Token::FUNCTION_DECLARE_OPEN;
-	regexert[std::string("^\\]$")] = Token::FUNCTION_DECLARE_CLOSE;
-	regexert[std::string("^\\{$")] = Token::ARRAY_OPEN;
-	regexert[std::string("^\\}$")] = Token::ARRAY_CLOSED;
-	regexert[std::string("\\(")] = Token::CONDITION_OPEN;
-	regexert[std::string("\\)")] = Token::CONDITION_CLOSE;
-	regexert[std::string("^--$")] = Token::BODY_OPEN;
-	regexert[std::string("^__$")] = Token::BODY_CLOSED;
-	regexert[std::string("is")] = Token::EQUALS;
-	regexert[std::string("like")] = Token::EQUALS_TO;
-	regexert[std::string("larger than")] = Token::LARGER_THAN;
-	regexert[std::string("smaller than")] = Token::LESS_THAN;
-	regexert[std::string("in")] = Token::IN;
-	regexert[std::string("plus")] = Token::PLUS;
-	regexert[std::string("increased")] = Token::PLUSPLUS;
-	regexert[std::string("minus")] = Token::MINUS;
-	regexert[std::string("decreased")] = Token::MINUSMINUS;
-	regexert[std::string("divide")] = Token::DIVIDE;
-	regexert[std::string("^multiplied by|multiply$")] = Token::TIMES;
-	regexert[std::string("modulo")] = Token::MODULO;
-	regexert[std::string("^and gives$")] = Token::RETURNVALUE;
-	regexert[std::string("^gets$")] = Token::START_PARAMETERS;
-	regexert[std::string("^with$")] = Token::COMINGPARAMETER;
-	regexert[std::string("^,")] = Token::AND_PARA;
-	regexert[std::string("^default$")] = Token::SWITCH_DEFAULT;
-	regexert[std::string("^case$")] = Token::SWITCH_CASE;
+	mappert =  TokenMap::tm;
+	regexert = TokenRegex::tr;
 
 
 }
@@ -162,8 +60,38 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	smatch m;
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
 	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
-	regex se("\\*\\*.+\\*\\*");
+	
+	Text::PrintLine("========== BEGIN 1000 rgls = 2 sec. ====================");
+	std::clock_t start;
+	std::clock_t start2;
+	double duration;
+	start = std::clock();
 
+	while (regex_search(s, m, e))
+	{
+		//
+		pToken = new Token;
+		Token::iToken currentToken = Token::ANY;
+		string part = m[0];
+		currentToken = this->getToken2(part);
+		//
+		pToken->setText((part));
+		pToken->setLevel(1);
+		pToken->setPositie(1);
+		pToken->setPositieInList(1);
+		pToken->setRegelnummer(1);
+		pToken->setEnum(currentToken);
+		pToken->setPartner(nullptr);
+
+		//Add + Next
+		cTokenList.add(pToken);
+		//
+		s = m.suffix().str();
+	}
+	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	Text::PrintLine("TOTAAL(sec) : " + to_string(duration) );
+	return;
+	//Tijdelijk hier returnen;
 
 	int rowNr = 1;
 	int colNr = 1;
@@ -172,28 +100,12 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	bool isFunctionCall = false;
 
 
-	std::clock_t startS;
-	double durationS;
-	startS = std::clock();
-
 	while (regex_search(s, m, e))
 	{
-		std::clock_t start;
-		double duration;
-		start = std::clock();
-
-
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
 		currentToken = getToken(part);
-
-
-		/*duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-		if (duration != 0)
-		{
-			Text::PrintLine("GET_TOKEN(sec) : " + to_string(duration) + " bij token: " + to_string(currentToken));
-		}*/
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
@@ -244,9 +156,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		s = m.suffix().str();
 	}
-
-	durationS = (std::clock() - startS) / (double)CLOCKS_PER_SEC;
-	Text::PrintLine("END(sec) : " + to_string(durationS) + " <<<<<<< ");
 
 	CheckRemainingStack();
 	checkRemainingErrors();
@@ -424,7 +333,8 @@ private:
 
 Token::iToken Tokenizer::getToken(std::string token)
 {
-	Token::iToken tokkie = regexert.find(token)->second;
+	//ErrorHandler::getInstance()->addError();
+	//Token::iToken tokkie = regexert.find(token)->second;
 	//Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
 	//return asd;
 
@@ -443,7 +353,12 @@ Token::iToken Tokenizer::getToken(std::string token)
 		}
 
 	}
+	ErrorHandler::getInstance()->addError();
+	return Token::NONE;
+}
 
+Token::iToken Tokenizer::getToken2(std::string token)
+{
 	return Token::NONE;
 }
 

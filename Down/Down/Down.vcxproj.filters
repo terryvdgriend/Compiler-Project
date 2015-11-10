@@ -280,6 +280,12 @@
     <ClInclude Include="CompileFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tokenmap.h">
+      <Filter>Header Files\Tokenizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Tokenregex.h">
+      <Filter>Header Files\Tokenizer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
