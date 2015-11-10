@@ -12,6 +12,7 @@
 
 #include "TimesCommand.h"
 #include "DivideCommand.h"
+#include "ModuloCommand.h"
 #include "PlusCommand.h"
 #include "MinusCommand.h"
 #include "PlusPlusCommand.h"

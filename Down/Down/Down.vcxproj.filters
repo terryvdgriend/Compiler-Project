@@ -250,9 +250,6 @@
     <ClInclude Include="PlusPlusCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnToValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="ShowFunctionCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
@@ -279,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="CompileFunction.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuloCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -426,9 +426,6 @@
     <ClCompile Include="PlusPlusCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="ReturnToValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="ShowFunctionCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
@@ -452,6 +449,9 @@
     </ClCompile>
     <ClCompile Include="VirtualMachine.cpp">
       <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuloCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
