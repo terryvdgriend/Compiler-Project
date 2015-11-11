@@ -12,3 +12,6 @@ __
 
  **i** is **i** minus 100
 [ printdown **i** ]
+
+**i** is 998
+[ printdown **i** ]

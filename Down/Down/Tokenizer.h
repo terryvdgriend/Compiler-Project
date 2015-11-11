@@ -16,6 +16,7 @@ private:
 	Stack stack;
 	void checkStack();
 	Token::iToken getToken(std::string token);
+	Token::iToken getToken2(std::string token);
 	bool tokenError = false;
 	void checkRemainingErrors();
 public:

@@ -15,6 +15,7 @@ CommandDictionary::CommandDictionary()
 
 	commandDictionary["$*"] = new TimesCommand();
 	commandDictionary["$/"] = new DivideCommand();
+	commandDictionary["$%"] = new ModuloCommand();
 	commandDictionary["$+"] = new PlusCommand();
 	commandDictionary["$-"] = new MinusCommand();
 	commandDictionary["$++"] = new PlusPlusCommand();
