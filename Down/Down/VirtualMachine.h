@@ -13,8 +13,8 @@ class VirtualMachine
 
 		void addIdentifer(string name);
 
-		BaseCommand* getCommandByString(string name);
-		Variable* getVariable(string parameter);
+		shared_ptr<BaseCommand> getCommandByString(string name);
+		shared_ptr<Variable> getVariable(string parameter);
 		void setVariable(string name, string value);
 		vector<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
@@ -31,7 +31,7 @@ class VirtualMachine
 		string returnValue;
 		bool runsVeryNaz;
 
-		map<string, BaseCommand*> commandDictionary;
+		map<string, shared_ptr<BaseCommand>> commandDictionary;
 		map<string, Variable> variableDictionary;
 		map<string, string> functionParamters;
 

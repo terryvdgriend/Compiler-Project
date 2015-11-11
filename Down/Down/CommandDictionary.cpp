@@ -4,30 +4,31 @@
 
 CommandDictionary::CommandDictionary()
 {
-	commandDictionary["$="] = new EqualsCommand();
+	commandDictionary["$="]							= shared_ptr<BaseCommand>(new EqualsCommand());
 
-	commandDictionary["$<"] = new SmallerThanCommand();
-	commandDictionary["$<="] = new SmallerEqualsToCommand();
-	commandDictionary["$=="] = new EqualsToCommand();
-	commandDictionary["$!="] = new NotEqualsToCommand();
-	commandDictionary["$>="] = new GreaterEqualsToCommand();
-	commandDictionary["$>"] = new GreaterThanCommand();
+	commandDictionary["$<"]							= shared_ptr<BaseCommand>(new SmallerThanCommand());
+	commandDictionary["$<="]						= shared_ptr<BaseCommand>(new SmallerEqualsToCommand());
+	commandDictionary["$=="]						= shared_ptr<BaseCommand>(new EqualsToCommand());
+	commandDictionary["$!="]						= shared_ptr<BaseCommand>(new NotEqualsToCommand());
+	commandDictionary["$>="]						= shared_ptr<BaseCommand>(new GreaterEqualsToCommand());
+	commandDictionary["$>"]							= shared_ptr<BaseCommand>(new GreaterThanCommand());
 
-	commandDictionary["$*"] = new TimesCommand();
-	commandDictionary["$/"] = new DivideCommand();
-	commandDictionary["$%"] = new ModuloCommand();
-	commandDictionary["$+"] = new PlusCommand();
-	commandDictionary["$-"] = new MinusCommand();
-	commandDictionary["$++"] = new PlusPlusCommand();
-	commandDictionary["$--"] = new MinusMinusCommand();
-	commandDictionary["$FUNC"] = new ShowFunctionCommand();
+	commandDictionary["$*"]							= shared_ptr<BaseCommand>(new TimesCommand());
+	commandDictionary["$/"]							= shared_ptr<BaseCommand>(new DivideCommand());
+	commandDictionary["$%"]							= shared_ptr<BaseCommand>(new ModuloCommand());
+	commandDictionary["$+"]							= shared_ptr<BaseCommand>(new PlusCommand());
+	commandDictionary["$-"]							= shared_ptr<BaseCommand>(new MinusCommand());
+	commandDictionary["$++"]						= shared_ptr<BaseCommand>(new PlusPlusCommand());
+	commandDictionary["$--"]						= shared_ptr<BaseCommand>(new MinusMinusCommand());
 
-	commandDictionary["IdentifierToReturnValue"] = new IdentifierToReturnValueCommand();
-	commandDictionary["ConstantToReturnValue"] = new ConstantToReturnValueCommand();
-	commandDictionary["getFromReturnValue"] = new GetFromValueCommand();
+	commandDictionary["IdentifierToReturnValue"]	= shared_ptr<BaseCommand>(new IdentifierToReturnValueCommand());
+	commandDictionary["ConstantToReturnValue"]		= shared_ptr<BaseCommand>(new ConstantToReturnValueCommand());
+	commandDictionary["getFromReturnValue"]			= shared_ptr<BaseCommand>(new GetFromValueCommand());
+
+	commandDictionary["$FUNC"]						= shared_ptr<BaseCommand>(new ShowFunctionCommand());
 }
 
-map<string, BaseCommand*> CommandDictionary::getMap()
+map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()
 {
 	return commandDictionary;
 }

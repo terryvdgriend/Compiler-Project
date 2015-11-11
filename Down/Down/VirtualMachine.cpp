@@ -5,6 +5,10 @@
 
 VirtualMachine::VirtualMachine()
 {
+	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+	flag |= _CRTDBG_LEAK_CHECK_DF;
+	_CrtSetDbgFlag(flag);
+
 	commandDictionary = CommandDictionary().getMap();
 	runsVeryNaz = true;
 }
@@ -20,11 +24,11 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
 		if (actionNode)
 		{
-			string name = (*actionNode).getContentArrayNonConstant()[0];
-			(*commandDictionary[name]).execute(*this, (*actionNode).getContentArrayNonConstant());
+			string name = actionNode->getContentArrayNonConstant()[0];
+			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
 		}
-		(*currentNode).accept(*visitor);
-		currentNode = (*visitor).nextNode;
+		currentNode->accept(*visitor);
+		currentNode = visitor->nextNode;
 	}
 }
 
@@ -36,18 +40,18 @@ void VirtualMachine::addIdentifer(string name)
 	}
 }
 
-BaseCommand* VirtualMachine::getCommandByString(string key)
+shared_ptr<BaseCommand> VirtualMachine::getCommandByString(string key)
 {
-	return commandDictionary[key];
+	return shared_ptr<BaseCommand>(commandDictionary[key]);
 }
 
-Variable* VirtualMachine::getVariable(string key)
+shared_ptr<Variable> VirtualMachine::getVariable(string key)
 {
 	map<string, Variable>::iterator it = variableDictionary.find(key);
 
 	if (hasValueInVariableDictionary(it))
 	{
-		return &it->second;
+		return shared_ptr<Variable>(&it->second);
 	}
 
 	return nullptr;
