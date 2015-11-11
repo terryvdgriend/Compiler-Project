@@ -18,8 +18,8 @@
 #include "DoNothingNode.h"
 
 bool IDEstuff(int argc, const char * argv[], std::string &code);
-LinkedList RunTokenizer(std::string code, bool print);
-LinkedActionList RunCompiler(LinkedList* lToken, bool print);
+LinkedList* RunTokenizer(std::string code, bool print);
+LinkedActionList* RunCompiler(LinkedList* lToken, bool print);
 void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
@@ -31,12 +31,12 @@ int main(int argc, const char * argv[])
 
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = RunTokenizer(code, false);
+	LinkedList cTokenList = *RunTokenizer(code, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = RunCompiler(&cTokenList, false);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
@@ -49,29 +49,29 @@ int main(int argc, const char * argv[])
 	return 0;
 }
 
-LinkedList RunTokenizer(std::string code, bool print)
+LinkedList* RunTokenizer(std::string code, bool print)
 {
 	//=========TOKENIZER==============
-	LinkedList cTokenList{};
+	LinkedList* cTokenList{ new LinkedList() };
 	Tokenizer tnzr{ Tokenizer() };
-	tnzr.createTokenList(cTokenList, code);
+	tnzr.createTokenList(*cTokenList, code);
 	if (print)
-		tnzr.printTokenList(cTokenList);
+		tnzr.printTokenList(*cTokenList);
 
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		std::cerr << ErrorHandler::getInstance()->asJson();
 	return cTokenList;
 }
 
-LinkedActionList RunCompiler(LinkedList* lToken, bool print)
+LinkedActionList* RunCompiler(LinkedList* lToken, bool print)
 {
 	//=========COMPILER==============
-	LinkedActionList cRunList{ LinkedActionList() };
-	cRunList.add(new DoNothingNode());
+	LinkedActionList* cRunList{ new LinkedActionList() };
+	cRunList->add(new DoNothingNode());
 	Compute compute{ Compute() };
-	compute.ComputeCompile(lToken, &cRunList);
+	compute.ComputeCompile(lToken, cRunList);
 	if (print)
-		cRunList.printList();
+		cRunList->printList();
 
 	return cRunList;
 }
