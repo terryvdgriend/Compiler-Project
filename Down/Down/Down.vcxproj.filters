@@ -166,9 +166,6 @@
     <ClInclude Include="NodeVisitor.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ConditionalJumpNode.h">
-      <Filter>Header Files\Compiler\Nodes</Filter>
-    </ClInclude>
     <ClInclude Include="DoNothingNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
@@ -277,17 +274,26 @@
     <ClInclude Include="CommandDictionary.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ModuloCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Tokenmap.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
     <ClInclude Include="Tokenregex.h">
       <Filter>Header Files\Tokenizer</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileSwitch.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionalJumpNode.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchNode.hpp">
+      <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -461,6 +467,9 @@
     </ClCompile>
     <ClCompile Include="ModuloCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileSwitch.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

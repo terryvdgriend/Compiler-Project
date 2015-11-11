@@ -110,6 +110,7 @@
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="CompilerHeader.h" />
     <ClInclude Include="CompileSingleStatement.h" />
+    <ClInclude Include="CompileSwitch.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="SmallerEqualsToCommand.h" />
     <ClInclude Include="SmallerThanCommand.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SwitchNode.hpp" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
@@ -174,6 +176,7 @@
     <ClCompile Include="CompilePlusMinus.cpp" />
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="CompileSingleStatement.cpp" />
+    <ClCompile Include="CompileSwitch.cpp" />
     <ClCompile Include="CompileTimesDivideModulo.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
