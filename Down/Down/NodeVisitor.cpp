@@ -47,3 +47,8 @@ void NodeVisitor::visit(JumpGoToNode& node)
 {
 	nextNode = node.getJumpToNode();
 }
+
+void NodeVisitor::visit(SwitchNode<class T>& node)
+{
+	nextNode = node.getNext();
+}
