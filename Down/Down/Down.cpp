@@ -25,18 +25,18 @@ void RunVM(LinkedActionList lToken);
 int main(int argc, const char * argv[])
 {
 	string code = "";
-
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, code))
 		return 0;
 
+
 	//=========TOKENIZER==============
-	LinkedList cTokenList = RunTokenizer(code, true);
+	LinkedList cTokenList = RunTokenizer(code, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = RunCompiler(&cTokenList, true);
+	LinkedActionList cRunList = RunCompiler(&cTokenList, false);
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		return 0;
 
@@ -63,7 +63,7 @@ LinkedList RunTokenizer(std::string code, bool print)
 	return cTokenList;
 }
 
-LinkedActionList RunCompiler(LinkedList* lToken,bool print)
+LinkedActionList RunCompiler(LinkedList* lToken, bool print)
 {
 	//=========COMPILER==============
 	LinkedActionList cRunList{ LinkedActionList() };
@@ -81,7 +81,7 @@ void RunVM(LinkedActionList cRunList)
 	//=========VM==============
 	VirtualMachine vm{ VirtualMachine() };
 	vm.execute(cRunList);
-	
+
 
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 		std::cerr << ErrorHandler::getInstance()->asJson();
@@ -95,10 +95,18 @@ void RunVM(LinkedActionList cRunList)
 //Return success
 bool IDEstuff(int argc, const char * argv[], std::string &code)
 {
+	if (argc <= 1 || argc >= 5)//andere opties hebben we nog niet
+	{
+		// Als je hier komt, ben je waarschijnlijk(?) aan het debuggen
+		// Dus voor de EZPZ wat fun code.
+		code = FileStreamer{}.readerFromResource("custom");
+		return true;
+	}
+
 	string option = argv[1];
 	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
 
-	if (argc == 3) 
+	if (argc == 3)
 	{
 		string value = argv[2];
 		if (option == "-f") {
@@ -112,17 +120,17 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 		else
 			return false;
 	}
-	else if (argc == 2) 
+	else if (argc == 2)
 	{
-		if (option == "getTokens") 
+		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
-		else 
+		else
 			return false;
 	}
-	else 
+	else
 		return false;
-	
-	
+
+
 	cout << outz;
 	return false;
 }

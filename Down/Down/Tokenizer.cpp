@@ -4,123 +4,39 @@
 #include "LinkedList.h"
 #include <iostream>
 #include <regex>
+#include "Tokenmap.h"
+#include "Tokenregex.h"
 
 // Dit mag weg bij release (TODO) 
 #include <cstdio>
-#include <ctime>
-// ..
+// 
+// -------------- IDEE -----------------
+//x: 2 lijst, regex lijst, mappert lijst
+//1: eerst zoeken mappert.find()
+//2: als dit niks vindt, dan stap 3
+//3: regexert.find()
+//4 als dit niks find, invalid token
+
+//-> Dit lijkt mij het snelst omdat: mappert sneller vind (direct op key) en de reg lijst word kleiner
+// Ander probleem, los van het iteratie probleem. De lange regex die wij hebben kan fatal zijn bij veel tekst, die moet korter
+
+//--------------- IDEE 2 --------------
+// geen regex, wel mappert
+//1: Zoek in map, geen result dan stap 2
+//2: if else statements: if(X == "**X**") blabla else if ( X == "### whatever") uitpluizen wat het is (if else if etc)
+
+// ---------------IDEE 3 --------------
+// had ik die maar...
+
 
 
 Tokenizer::Tokenizer()
 {
+	//const map<string, Token::iToken> TokenMap::tm = TokenMap::get();
+	//mappert =  TokenMap::get();
 	//
-	mappert["\n"] = Token::NEWLINE;
-	// 
-	mappert["secret"] = Token::PRIVATE;
-	mappert["#### if"] = Token::IF;
-	mappert["#### else"] = Token::ELSE;
-	mappert["#### else if"] = Token::ELIF;
-	mappert["#### for"] = Token::FOR;
-	mappert["#### foreach"] = Token::FOREACH;
-	mappert["#### while"] = Token::WHILE;
-	mappert["#### do"] = Token::DO;
-	mappert["#### switch"] = Token::SWITCH;
-	mappert["---"] = Token::FUNCTION_OPEN;
-	mappert["___"] = Token::FUNCTION_CLOSE;
-	mappert["("] = Token::CONDITION_OPEN;
-	mappert[")"] = Token::CONDITION_CLOSE;
-	mappert["--"] = Token::BODY_OPEN;
-	mappert["__"] = Token::BODY_CLOSED;
-	mappert["{"] = Token::ARRAY_OPEN;
-	mappert["}"] = Token::ARRAY_CLOSED;
-	mappert[":"] = Token::ASSIGNMENT;
-	mappert["["] = Token::FUNCTION_DECLARE_OPEN;
-	mappert["]"] = Token::FUNCTION_DECLARE_CLOSE;
-	//
-	mappert["is"] = Token::EQUALS;
-	mappert["like"] = Token::EQUALS_TO;
-	mappert["smaller than"] = Token::LESS_THAN;
-	mappert["larger than"] = Token::LARGER_THAN;
-	mappert["in"] = Token::IN;
-	//
-	mappert["_getal_"] = Token::NUMBER;
-	mappert["_tekst_"] = Token::TEXT;
-	mappert["_fact_"] = Token::BOOL;
-	mappert["_variable_"] = Token::IDENTIFIER;
-	mappert[","] = Token::SEPARATOR;
-	mappert["_declaration_"] = Token::DECLARATION;
-	mappert["_function_"] = Token::FUNCTION;
-	mappert["_class_"] = Token::CLASS;
-	mappert["_namespace_"] = Token::NAMESPACE;
-	mappert["_comment_"] = Token::COMMENT;
-	mappert["_switch-default_"] = Token::SWITCH_DEFAULT;
-	mappert["_switch-case_"] = Token::SWITCH_CASE;
-	//
-	mappert["plus"] = Token::PLUS;
-	mappert["increased"] = Token::PLUSPLUS;
-	mappert["minus"] = Token::MINUS;
-	mappert["decreased"] = Token::MINUSMINUS;
-	mappert["divide"] = Token::DIVIDE;
-	mappert["multiply"] = Token::TIMES;
-	mappert["modulo"] = Token::MODULO;
-
-	mappert["and gives"] = Token::RETURNVALUE;
-	mappert["gets"] = Token::START_PARAMETERS;
-	mappert[","] = Token::AND_PARA;
-	mappert["_function-use_"] = Token::FUNCTIONUSE;
-	mappert["_coming-params_"] = Token::COMINGPARAMETER;
-	//
-	//mappert["\\*\\*.+\\*\\*"] = Token::IDENTIFIER;
-
-
-	regexert[std::string("\\d")] = Token::NUMBER;
-	regexert[std::string("^\".*?\"$")] = Token::TEXT;
-	regexert[std::string("(true|false)")] = Token::BOOL;
-	regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER;
-	regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION;
-	regexert[std::string("^(### (\\w*)$)")] = Token::FUNCTION;
-	regexert[std::string("^(## (\\w*))$")] = Token::CLASS;
-	regexert[std::string("^(# (\\w*))$")] = Token::NAMESPACE;
-	regexert[std::string("^>.*\n")] = Token::COMMENT;
-	regexert[std::string("\n")] = Token::NEWLINE;
-	regexert[std::string("secret")] = Token::PRIVATE;
-	regexert[std::string("^#### if$")] = Token::IF;
-	regexert[std::string("^#### switch$")] = Token::SWITCH;
-	regexert[std::string("^#### else$")] = Token::ELSE;
-	regexert[std::string("^#### else if$")] = Token::ELIF;
-	regexert[std::string("^#### for$")] = Token::FOR;
-	regexert[std::string("^#### foreach$")] = Token::FOREACH;
-	regexert[std::string("^#### while$")] = Token::WHILE;
-	regexert[std::string("^#### do$")] = Token::DO;
-	regexert[std::string("^:$")] = Token::ASSIGNMENT;
-	regexert[std::string("^---$")] = Token::FUNCTION_OPEN;
-	regexert[std::string("^___$")] = Token::FUNCTION_CLOSE;
-	regexert[std::string("^\\[$")] = Token::FUNCTION_DECLARE_OPEN;
-	regexert[std::string("^\\]$")] = Token::FUNCTION_DECLARE_CLOSE;
-	regexert[std::string("^\\{$")] = Token::ARRAY_OPEN;
-	regexert[std::string("^\\}$")] = Token::ARRAY_CLOSED;
-	regexert[std::string("\\(")] = Token::CONDITION_OPEN;
-	regexert[std::string("\\)")] = Token::CONDITION_CLOSE;
-	regexert[std::string("^--$")] = Token::BODY_OPEN;
-	regexert[std::string("^__$")] = Token::BODY_CLOSED;
-	regexert[std::string("is")] = Token::EQUALS;
-	regexert[std::string("like")] = Token::EQUALS_TO;
-	regexert[std::string("larger than")] = Token::LARGER_THAN;
-	regexert[std::string("smaller than")] = Token::LESS_THAN;
-	regexert[std::string("in")] = Token::IN;
-	regexert[std::string("plus")] = Token::PLUS;
-	regexert[std::string("increased")] = Token::PLUSPLUS;
-	regexert[std::string("minus")] = Token::MINUS;
-	regexert[std::string("decreased")] = Token::MINUSMINUS;
-	regexert[std::string("divide")] = Token::DIVIDE;
-	regexert[std::string("^multiplied by|multiply$")] = Token::TIMES;
-	regexert[std::string("modulo")] = Token::MODULO;
-	regexert[std::string("^and gives$")] = Token::RETURNVALUE;
-	regexert[std::string("^gets$")] = Token::START_PARAMETERS;
-	regexert[std::string("^with$")] = Token::COMINGPARAMETER;
-	regexert[std::string("^,")] = Token::AND_PARA;
-	regexert[std::string("^default$")] = Token::SWITCH_DEFAULT;
-	regexert[std::string("^case$")] = Token::SWITCH_CASE;
+	mappert =  TokenMap::tm;
+	regexert = TokenRegex::tr;
 
 
 }
@@ -139,32 +55,58 @@ std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
 void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	//
-	//std::clock_t start;
-	//double duration;
-	//start = std::clock();
-	//
-
 	Token  *pToken{};
 	string s(codefromfile);
 	smatch m;
+	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
 	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
-	regex se("\\*\\*.+\\*\\*");
+	
 
+	/*
+	Text::PrintLine("========== BEGIN 1000 rgls = 2 sec. ====================");
+	std::clock_t start;
+	std::clock_t start2;
+	double duration;
+	start = std::clock();
+
+	while (regex_search(s, m, e))
+	{
+		//
+		pToken = new Token;
+		Token::iToken currentToken = Token::ANY;
+		string part = m[0];
+		currentToken = this->getToken2(part);
+		//
+		pToken->setText((part));
+		pToken->setLevel(1);
+		pToken->setPositie(1);
+		pToken->setPositieInList(1);
+		pToken->setRegelnummer(1);
+		pToken->setEnum(currentToken);
+		pToken->setPartner(nullptr);
+
+		//Add + Next
+		cTokenList.add(pToken);
+		//
+		s = m.suffix().str();
+	}
+	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	Text::PrintLine("TOTAAL(sec) : " + to_string(duration) );
+	return;
+	//Tijdelijk hier returnen;*/
 
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
 	int pInt = 0;
 	bool isFunctionCall = false;
+
+
 	while (regex_search(s, m, e))
 	{
-		
-
-
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-
 		currentToken = getToken(part);
 
 		// Geen token, dus add error
@@ -215,14 +157,9 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		CheckStack(*pToken, lvl);
 
 		s = m.suffix().str();
-
-		
-		
 	}
-	//duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	//std::cout << "TIJD(sec): " << duration << " (1000 Regels == 2 sec)\n";
+
 	CheckRemainingStack();
-	//
 	checkRemainingErrors();
 }
 
@@ -375,10 +312,41 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 	}
 };
 
-Token::iToken Tokenizer::getToken(std::string token){
+struct check_x
+{
 	typedef std::map<std::string, Token::iToken>::iterator it_type;
-	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) {
+	typedef const std::pair<std::string, Token::iToken>& it_type2;
+
+	
+	check_x(const std::string token) : _token(token) {}
+	bool operator()(it_type2 v) const
+	{
 		smatch m;
+		regex e(v.first);
+		regex_search(_token, m, e);
+		if (m.size() != 0)
+		{
+			return true;// v->second;
+		}
+	}
+private:
+	std::string _token;
+};
+
+Token::iToken Tokenizer::getToken(std::string token)
+{
+	//ErrorHandler::getInstance()->addError();
+	//Token::iToken tokkie = regexert.find(token)->second;
+	//Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
+	//return asd;
+
+	// Boven en onder doen het zelfde op dezelfde snelheid.. (uiteraard)
+
+	smatch m;
+	typedef std::map<std::string, Token::iToken>::iterator it_type;
+	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
+	{
+		
 		regex e(iterator->first);
 		regex_search(token, m, e);
 		if (m.size() != 0)
@@ -387,16 +355,21 @@ Token::iToken Tokenizer::getToken(std::string token){
 		}
 
 	}
+	ErrorHandler::getInstance()->addError();
+	return Token::NONE;
+}
 
+Token::iToken Tokenizer::getToken2(std::string token)
+{
 	return Token::NONE;
 }
 
 std::string Tokenizer::getKeywordsAsJson()
 {
 	std::string JSON = "[";
-	int size = (int) mappert.size();
+	int size = (int)mappert.size();
 	int i = 0;
-	for (std::map<std::string,Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
+	for (std::map<std::string, Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
 	{
 		if ((*it).second == Token::NEWLINE)
 		{
@@ -405,7 +378,7 @@ std::string Tokenizer::getKeywordsAsJson()
 		}
 		JSON += "{\"keyword\":\"" + (*it).first + "\"}";
 
-		if (i < size -1)
+		if (i < size - 1)
 			JSON += ",";
 		i++;
 	}

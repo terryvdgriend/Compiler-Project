@@ -89,6 +89,9 @@
     <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="custom.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -279,6 +282,12 @@
     </ClInclude>
     <ClInclude Include="ModuloCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
+	</ClInclude>
+    <ClInclude Include="Tokenmap.h">
+      <Filter>Header Files\Tokenizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Tokenregex.h">
+      <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
