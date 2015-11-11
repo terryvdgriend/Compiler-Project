@@ -61,6 +61,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
 	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
 	
+
+	/*
 	Text::PrintLine("========== BEGIN 1000 rgls = 2 sec. ====================");
 	std::clock_t start;
 	std::clock_t start2;
@@ -91,7 +93,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 	Text::PrintLine("TOTAAL(sec) : " + to_string(duration) );
 	return;
-	//Tijdelijk hier returnen;
+	//Tijdelijk hier returnen;*/
 
 	int rowNr = 1;
 	int colNr = 1;
