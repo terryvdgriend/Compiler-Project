@@ -250,9 +250,6 @@
     <ClInclude Include="PlusPlusCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnToValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="ShowFunctionCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
@@ -424,9 +421,6 @@
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="PlusPlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ReturnToValueCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="ShowFunctionCommand.cpp">

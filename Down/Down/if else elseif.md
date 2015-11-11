@@ -1,17 +1,17 @@
 **i** is 4
 #### if ( **i** like 1 ) 
 --
-[ printdown "lol" ]
+[ printdown "1" ]
 __
 #### else if ( **i** like 2 ) 
 --
-[ printdown "drol" ]
+[ printdown "2" ]
 __
 #### else if ( **i** like 3 ) 
 --
-[ printdown "trol" ]
+[ printdown "3" ]
 __
 #### else
 --
-[ printdown "kak" ]
+[ printdown "overig" ]
 __
