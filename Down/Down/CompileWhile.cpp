@@ -68,7 +68,6 @@ void CompileWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				delete condition;
 			}
 			else{
-				bodyNode = _body->add(new DoNothingNode());
 				Token* prev = current->previous;
 				while (prev->getEnum() != Token::BODY_OPEN){
 					prev = prev->previous;

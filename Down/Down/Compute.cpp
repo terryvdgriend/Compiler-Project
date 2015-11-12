@@ -11,11 +11,6 @@ Compute::Compute()
 LinkedActionList* Compute::ComputeCompile(LinkedList* lToken, LinkedActionList* lRun){
 	CheckNewCompile(lToken, lRun, lToken->first);
 	
-	//Laten staan voor de apple gebruikert
-	#ifdef _WIN32
-	_CrtDumpMemoryLeaks();
-	#endif
-	
 	return lRun;
 }
 

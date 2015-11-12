@@ -10,6 +10,14 @@ ErrorHandler* ErrorHandler::getInstance()
     return handler;
 }
 
+void ErrorHandler::addError()
+{
+	Error::location t = Error::tokenizer;
+	std::string s = "Not Defined Error";
+	Error erre = Error{s,t};
+	errors.push_back(erre);
+}
+
 void ErrorHandler::addError(Error::location t, std::string s)
 {
     Error err = Error{ s, t };
