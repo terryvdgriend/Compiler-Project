@@ -1,5 +1,5 @@
-
- **i** is -12
+ **i** is 1
+ **i** is **i** plus -11
 [ printdown **i** ]
 
 
