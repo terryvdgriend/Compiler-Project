@@ -17,4 +17,5 @@ private:
 	ActionNode* bodyNode;
 	void ConnectLists();
 	void ConnectListsWithElse();
+	std::map<LinkedActionList*, LinkedActionList*> _conditionBodyMap;
 };

@@ -61,7 +61,6 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 		}
 		else if (expectation.Level >= whileLevel){
 			if (_body->Count() == 0){
-				bodyNode = _body->add(new DoNothingNode());
 				Token* prev = current->previous;
 				while (prev->getEnum() != Token::BODY_OPEN){
 					prev = prev->previous;
