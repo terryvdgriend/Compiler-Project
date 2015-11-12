@@ -22,7 +22,7 @@ struct TokenMap{
 		mappert[std::string("[")] = Token::FUNCTION_DECLARE_OPEN;
 		mappert[std::string("]")] = Token::FUNCTION_DECLARE_CLOSE;
 		mappert[std::string("{")] = Token::ARRAY_OPEN;
-		mappert[std::string("}")] = Token::ARRAY_CLOSED;
+		mappert[std::string("}")] = Token::ARRAY_CLOSE;
 		mappert[std::string("(")] = Token::CONDITION_OPEN;
 		mappert[std::string(")")] = Token::CONDITION_CLOSE;
 		mappert[std::string("--")] = Token::BODY_OPEN;
