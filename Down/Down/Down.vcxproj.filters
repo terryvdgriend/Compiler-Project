@@ -280,6 +280,9 @@
     <ClInclude Include="CompileFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ModuloCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+	</ClInclude>
     <ClInclude Include="Tokenmap.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
@@ -455,6 +458,9 @@
     </ClCompile>
     <ClCompile Include="VirtualMachine.cpp">
       <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuloCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

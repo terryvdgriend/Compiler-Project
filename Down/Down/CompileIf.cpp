@@ -18,13 +18,42 @@ CompileIf::CompileIf()
 }
 
 void CompileIf::ConnectLists(){
-    ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-    _compiledStatement->add(_condition);
-    _compiledStatement->add(conditionalJumpNode);
-    _compiledStatement->add(_body);
-    _compiledStatement->add(new DoNothingNode());
-    conditionalJumpNode->setOnTrue(_body->getFirst());
-    conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
+	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
+	std::list<JumpGoToNode*> jumpmap;
+	for (auto p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
+	{
+		if (p != _conditionBodyMap.begin())
+			conditionalJumpNode->setOnFalse(p->first->getFirst());
+		conditionalJumpNode = new ConditionalJumpNode();
+		_compiledStatement->add(p->first);
+		_compiledStatement->add(conditionalJumpNode);
+		_compiledStatement->add(p->second);
+		if (_conditionBodyMap.size() > 1 || _bodyElse->Count() > 0){
+			JumpGoToNode* jumpNode = new JumpGoToNode();
+			_compiledStatement->add(jumpNode);
+			jumpmap.push_back(jumpNode);
+		}
+		_compiledStatement->add(new DoNothingNode);
+		conditionalJumpNode->setOnTrue(p->second->getFirst());
+	}
+
+	if (_bodyElse->Count() > 0){
+		DoNothingNode* secondBodyStart = new DoNothingNode();
+		_compiledStatement->add(secondBodyStart);
+		_compiledStatement->add(_bodyElse);
+		_compiledStatement->add(new DoNothingNode);
+		conditionalJumpNode->setOnFalse(secondBodyStart);
+	}		
+	else{
+		conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
+	}
+	if (jumpmap.size() > 0){
+		for (auto p : jumpmap){
+			p->setJumpToNode(_compiledStatement->getLast());
+		}
+	}
+	
+	
 }
 
 void CompileIf::ConnectListsWithElse(){
@@ -60,7 +89,11 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	for (TokenExpectation expectation : expected)
 	{
 		while (current->getEnum() == Token::NEWLINE){
-			current = current->next;
+			if (current->next != nullptr){
+				current = current->next;
+			}
+			else
+				break;
 		}
 		if (expectation.Level == whileLevel){
 			if (current == nullptr){
@@ -84,7 +117,6 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				delete condition;
 			}
 			else{
-				bodyNode = _body->add(new DoNothingNode());
 				Token* prev = current->previous;
 				while (prev->getEnum() != Token::BODY_OPEN){
 					prev = prev->previous;
@@ -105,18 +137,32 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 		}
 	}
+	_conditionBodyMap[_condition] = _body;
 	if (current != nullptr){
 		//Check if there is an else if-statement 
 		while (current->getEnum() == Token::NEWLINE){
-			current = current->next;
+			if (current->next != nullptr){
+				current = current->next;
+			}
+			else
+				break;
 		}
 		while (current->getEnum() == Token::ELIF)
 		{
 			CompileElseIf* compileElseIf = new CompileElseIf;
-			compileElseIf->Compile(cTokenList, *current, end, *_body, *_body->getLast());
+			LinkedActionList* newBody = new LinkedActionList();
+			newBody->add(new DoNothingNode());
+			compileElseIf->Compile(cTokenList, *current, end, *newBody, *newBody->getLast(), _conditionBodyMap);
 			if (current->next != nullptr){
 				current = current->next;
 			}
+		}
+		while (current->getEnum() == Token::NEWLINE){
+			if (current->next != nullptr){
+				current = current->next;
+			}
+			else
+				break;
 		}
 		//Check if there is an else-statement 
 		if (current->getEnum() == Token::ELSE)
@@ -170,7 +216,7 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				}
 			}
 			//Build list with else
-			ConnectListsWithElse();
+			ConnectLists();
 		}
 		else {
 			//Build list without else

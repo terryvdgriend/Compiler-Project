@@ -77,7 +77,7 @@ LinkedActionList::~LinkedActionList()
 	while (iter != nullptr){
 		ActionNode* current = iter;
 		iter = iter->getNext();
-		delete current;
+		//delete current;
 	}
 }
 
