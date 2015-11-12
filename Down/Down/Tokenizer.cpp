@@ -10,35 +10,11 @@
 // Dit mag weg bij release (TODO) 
 #include <cstdio>
 // 
-// -------------- IDEE -----------------
-//x: 2 lijst, regex lijst, mappert lijst
-//1: eerst zoeken mappert.find()
-//2: als dit niks vindt, dan stap 3
-//3: regexert.find()
-//4 als dit niks find, invalid token
-
-//-> Dit lijkt mij het snelst omdat: mappert sneller vind (direct op key) en de reg lijst word kleiner
-// Ander probleem, los van het iteratie probleem. De lange regex die wij hebben kan fatal zijn bij veel tekst, die moet korter
-
-//--------------- IDEE 2 --------------
-// geen regex, wel mappert
-//1: Zoek in map, geen result dan stap 2
-//2: if else statements: if(X == "**X**") blabla else if ( X == "### whatever") uitpluizen wat het is (if else if etc)
-
-// ---------------IDEE 3 --------------
-// had ik die maar...
-
-
 
 Tokenizer::Tokenizer()
 {
-	//const map<string, Token::iToken> TokenMap::tm = TokenMap::get();
-	//mappert =  TokenMap::get();
-	//
 	mappert =  TokenMap::tm;
 	regexert = TokenRegex::tr;
-
-
 }
 
 std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
@@ -59,7 +35,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	string s(codefromfile);
 	smatch m;
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
-	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
+	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d\\.?\\d*|\\w+|\\S+|\n)");
 	
 	int rowNr = 1;
 	int colNr = 1;
@@ -78,7 +54,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
-			ErrorHandler::getInstance()->addError(Error{ "Token not found :(", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			ErrorHandler::getInstance()->addError(Error{ "Token not found &#9785;", "unknown.MD", rowNr, colNr, Error::errorType::error });
 
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
@@ -306,7 +282,6 @@ Token::iToken Tokenizer::getToken(std::string token)
 		}
 
 	}
-	ErrorHandler::getInstance()->addError();
 	return Token::NONE;
 }
 
