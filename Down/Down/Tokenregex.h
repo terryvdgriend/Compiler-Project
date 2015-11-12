@@ -4,7 +4,7 @@ struct TokenRegex{
 	{
 		map<string, Token::iToken> regexert;
 		//
-		regexert[std::string("\\d")] = Token::NUMBER; //Regex
+		regexert[std::string("^-?\\d\.?\\d*$")] = Token::NUMBER; //Regex
 		regexert[std::string("^\".*?\"$")] = Token::TEXT; // Regex
 		regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER; //Regex
 		regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION; // Regex
