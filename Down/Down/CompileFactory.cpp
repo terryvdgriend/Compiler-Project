@@ -9,6 +9,7 @@ CompileFactory::CompileFactory()
 	mappert[Token::DO] = new CompileDoWhile();
 	mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileFunction();
 	mappert[Token::IDENTIFIER] = new CompileEquals();
+	mappert[Token::ARRAY_OPEN] = new CompileArray();
 	mappert[Token::NEWLINE] = nullptr;
 }
 
