@@ -12,11 +12,8 @@ private:
 	std::map<string, Token::iToken> mappert;
 	std::map<string, Token::iToken> regexert;
 	std::map<string, Token::iToken> Regex;
-	std::list<string> errnoez;
 	Stack stack;
-	void checkStack();
 	Token::iToken getToken(std::string token);
-	Token::iToken getToken2(std::string token);
 	bool tokenError = false;
 	void checkRemainingErrors();
 public:
@@ -28,8 +25,7 @@ public:
 	void CheckBrackets(Token& token, int& lvl);
 	void CheckRemainingStack();
 	bool GetTokenError() { return tokenError; };
-	Token::iToken getEnumByString(string name, bool &isDone);
-	std::list<string> getErrors(){ return errnoez; };
+
 	std::string getKeywordsAsJson();
 	std::string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();

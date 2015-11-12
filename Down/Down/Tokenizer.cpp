@@ -61,40 +61,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
 	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
 	
-
-	/*
-	Text::PrintLine("========== BEGIN 1000 rgls = 2 sec. ====================");
-	std::clock_t start;
-	std::clock_t start2;
-	double duration;
-	start = std::clock();
-
-	while (regex_search(s, m, e))
-	{
-		//
-		pToken = new Token;
-		Token::iToken currentToken = Token::ANY;
-		string part = m[0];
-		currentToken = this->getToken2(part);
-		//
-		pToken->setText((part));
-		pToken->setLevel(1);
-		pToken->setPositie(1);
-		pToken->setPositieInList(1);
-		pToken->setRegelnummer(1);
-		pToken->setEnum(currentToken);
-		pToken->setPartner(nullptr);
-
-		//Add + Next
-		cTokenList.add(pToken);
-		//
-		s = m.suffix().str();
-	}
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	Text::PrintLine("TOTAAL(sec) : " + to_string(duration) );
-	return;
-	//Tijdelijk hier returnen;*/
-
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
@@ -107,7 +73,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-		currentToken = getToken(part);
+		//currentToken = getToken(part);
+		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
@@ -314,26 +281,6 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 	}
 };
 
-struct check_x
-{
-	typedef std::map<std::string, Token::iToken>::iterator it_type;
-	typedef const std::pair<std::string, Token::iToken>& it_type2;
-
-	
-	check_x(const std::string token) : _token(token) {}
-	bool operator()(it_type2 v) const
-	{
-		smatch m;
-		regex e(v.first);
-		regex_search(_token, m, e);
-		if (m.size() != 0)
-		{
-			return true;// v->second;
-		}
-	}
-private:
-	std::string _token;
-};
 
 Token::iToken Tokenizer::getToken(std::string token)
 {
@@ -358,11 +305,6 @@ Token::iToken Tokenizer::getToken(std::string token)
 
 	}
 	ErrorHandler::getInstance()->addError();
-	return Token::NONE;
-}
-
-Token::iToken Tokenizer::getToken2(std::string token)
-{
 	return Token::NONE;
 }
 

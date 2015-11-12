@@ -1,4 +1,3 @@
-
 **i** is 1
 [ printdown **i** ]
 #### while ( **i** smaller than 5 )
