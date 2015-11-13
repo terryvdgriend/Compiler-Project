@@ -23,6 +23,10 @@ public:
 		IDENTIFIER, // VARB **i**
 		NUMBER, // 1-2-3-4
 		TEXT, // "txt" 
+		FACT,
+		TYPE_NUMBER,
+		TYPE_TEXT,
+		TYPE_FACT,
 		CONDITION_OPEN,  // ( -> simuleren?
 		CONDITION_CLOSE, // ) -> simuleren?
 		FUNCTION_OPEN,  // ( -> simuleren?
@@ -73,6 +77,7 @@ public:
 
 public:
 	virtual void    setText(std::string txt){ Text = txt; };
+	virtual void    setValue(std::string val) { Value = val; };
 	virtual void    setEnum(iToken itoken){ type = itoken; };
 	virtual void    setPartner(Token* partner){ Partner = partner; };
 	virtual void    setPositieInList(int txt){ PositieInList = txt; };
@@ -83,6 +88,7 @@ public:
 
 public:
 	std::string     getText() { return Text; };
+	std::string     getValue() { return Value; };
 	iToken          getEnum(){ return type; };
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
@@ -96,6 +102,7 @@ public:
 
 private:
 	std::string     Text;
+	std::string		Value; //bv: iToken is TYPE_GETAL, dan kan value 5 zijn, of "henk"
 	iToken          type;
 	Token*			Partner;
 	int PositieInList;

@@ -63,6 +63,21 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		if (currentToken == Token::FUNCTION_DECLARE_OPEN)
 			isFunctionCall = true;
 
+		if (currentToken == Token::TYPE_NUMBER)
+		{
+			smatch m2;
+			std::string lookahead = m.suffix().str();
+			regex_search(lookahead, m2, e);
+			string partX = m2[0];
+			Token::iToken lookaheadToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
+			pToken->setValue("de look ahead, alleen als deze een valide ding is");
+			//TODO: niet vergeten als de lookahead een waarde is deze te verwijderen.
+			// Het volgende kan fout gaan:
+			//-Waarde met zelfde naam is al eerder aangemaakt
+			//-Waarde is nog niet eerder aangemaakt, kies type: _getal_ , _bla_ 
+			//-lookahead is geen IDENTIFIER
+			TypeSafe();
+		}
 		//New Lines
 		if (currentToken == Token::NEWLINE)
 		{
@@ -104,6 +119,11 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 	CheckRemainingStack();
 	checkRemainingErrors();
+}
+
+void Tokenizer::TypeSafe()
+{
+
 }
 
 void Tokenizer::checkRemainingErrors()
@@ -261,18 +281,10 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 
 Token::iToken Tokenizer::getToken(std::string token)
 {
-	//ErrorHandler::getInstance()->addError();
-	//Token::iToken tokkie = regexert.find(token)->second;
-	//Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
-	//return asd;
-
-	// Boven en onder doen het zelfde op dezelfde snelheid.. (uiteraard)
-
 	smatch m;
 	typedef std::map<std::string, Token::iToken>::iterator it_type;
 	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
 	{
-		
 		regex e(iterator->first);
 		regex_search(token, m, e);
 		if (m.size() != 0)

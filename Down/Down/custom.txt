@@ -1,3 +1,7 @@
+_number_ **x** is 5
+
+_number_ **x** is 6
+
  **i** is 1
  **i** is **i** plus -11
 [ printdown **i** ]
