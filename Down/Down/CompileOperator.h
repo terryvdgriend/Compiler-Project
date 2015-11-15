@@ -2,7 +2,7 @@
 #include "Compiler.h"
 #include "CompileNextLevel.h"
 
-class CompileOperator : public	Compiler
+class CompileOperator : public Compiler
 {
 protected:
 	Compiler *pNextLevel;
