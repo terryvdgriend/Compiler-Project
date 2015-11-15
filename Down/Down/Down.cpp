@@ -20,10 +20,12 @@
 bool IDEstuff(int argc, const char * argv[], std::string &code);
 LinkedList* RunTokenizer(std::string code, bool print);
 LinkedActionList* RunCompiler(LinkedList* lToken, bool print);
+bool Errors();
 void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
 {
+	//std::cerr << "WHUT?!";
 	string code = "";
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, code))
@@ -32,18 +34,19 @@ int main(int argc, const char * argv[])
 
 	//=========TOKENIZER==============
 	LinkedList cTokenList = *RunTokenizer(code, false);
-	if (!ErrorHandler::getInstance()->getErrors().empty())
+	if (Errors())
 		return 0;
 
 	//=========COMPILER==============
 	LinkedActionList cRunList = *RunCompiler(&cTokenList, false);
-	if (!ErrorHandler::getInstance()->getErrors().empty())
+	if (Errors())
 		return 0;
 
 	//=========VM==============
 	RunVM(cRunList);
-	if (!ErrorHandler::getInstance()->getErrors().empty())
-		std::cerr << ErrorHandler::getInstance()->asJson();
+	if (Errors())
+		return 0;
+	
 
 
 	return 0;
@@ -58,9 +61,17 @@ LinkedList* RunTokenizer(std::string code, bool print)
 	if (print)
 		tnzr.printTokenList(*cTokenList);
 
-	if (!ErrorHandler::getInstance()->getErrors().empty())
-		std::cerr << ErrorHandler::getInstance()->asJson();
 	return cTokenList;
+}
+
+bool Errors()
+{
+	if (!ErrorHandler::getInstance()->getErrors().empty())
+	{
+		std::cerr << ErrorHandler::getInstance()->asJson();
+		return true;
+	}
+	return false;
 }
 
 LinkedActionList* RunCompiler(LinkedList* lToken, bool print)

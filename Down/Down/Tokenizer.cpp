@@ -10,35 +10,11 @@
 // Dit mag weg bij release (TODO) 
 #include <cstdio>
 // 
-// -------------- IDEE -----------------
-//x: 2 lijst, regex lijst, mappert lijst
-//1: eerst zoeken mappert.find()
-//2: als dit niks vindt, dan stap 3
-//3: regexert.find()
-//4 als dit niks find, invalid token
-
-//-> Dit lijkt mij het snelst omdat: mappert sneller vind (direct op key) en de reg lijst word kleiner
-// Ander probleem, los van het iteratie probleem. De lange regex die wij hebben kan fatal zijn bij veel tekst, die moet korter
-
-//--------------- IDEE 2 --------------
-// geen regex, wel mappert
-//1: Zoek in map, geen result dan stap 2
-//2: if else statements: if(X == "**X**") blabla else if ( X == "### whatever") uitpluizen wat het is (if else if etc)
-
-// ---------------IDEE 3 --------------
-// had ik die maar...
-
-
 
 Tokenizer::Tokenizer()
 {
-	//const map<string, Token::iToken> TokenMap::tm = TokenMap::get();
-	//mappert =  TokenMap::get();
-	//
 	mappert =  TokenMap::tm;
 	regexert = TokenRegex::tr;
-
-
 }
 
 std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
@@ -59,42 +35,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	string s(codefromfile);
 	smatch m;
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
-	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
+	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d\\.?\\d*|\\w+|\\S+|\n)");
 	
-
-	/*
-	Text::PrintLine("========== BEGIN 1000 rgls = 2 sec. ====================");
-	std::clock_t start;
-	std::clock_t start2;
-	double duration;
-	start = std::clock();
-
-	while (regex_search(s, m, e))
-	{
-		//
-		pToken = new Token;
-		Token::iToken currentToken = Token::ANY;
-		string part = m[0];
-		currentToken = this->getToken2(part);
-		//
-		pToken->setText((part));
-		pToken->setLevel(1);
-		pToken->setPositie(1);
-		pToken->setPositieInList(1);
-		pToken->setRegelnummer(1);
-		pToken->setEnum(currentToken);
-		pToken->setPartner(nullptr);
-
-		//Add + Next
-		cTokenList.add(pToken);
-		//
-		s = m.suffix().str();
-	}
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	Text::PrintLine("TOTAAL(sec) : " + to_string(duration) );
-	return;
-	//Tijdelijk hier returnen;*/
-
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
@@ -107,11 +49,12 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken = new Token;
 		Token::iToken currentToken;
 		string part = m[0];
-		currentToken = getToken(part);
+		//currentToken = getToken(part);
+		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
-			ErrorHandler::getInstance()->addError(Error{ "Token not found :(", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			ErrorHandler::getInstance()->addError(Error{ "Token not found &#9785;", "unknown.MD", rowNr, colNr, Error::errorType::error });
 
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
@@ -282,11 +225,11 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 
 void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN)
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN )
 	{
 		this->stack.push(&token);
 	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE)
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE )
 	{
 		if (this->stack.size() > 0)
 		{
@@ -302,6 +245,7 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
 				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
+				(token.getEnum() == Token::ARRAY_CLOSE && this->stack.top()->getEnum() == Token::ARRAY_OPEN) ||
 				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
 				token.setLevel(lvl);
@@ -314,26 +258,6 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 	}
 };
 
-struct check_x
-{
-	typedef std::map<std::string, Token::iToken>::iterator it_type;
-	typedef const std::pair<std::string, Token::iToken>& it_type2;
-
-	
-	check_x(const std::string token) : _token(token) {}
-	bool operator()(it_type2 v) const
-	{
-		smatch m;
-		regex e(v.first);
-		regex_search(_token, m, e);
-		if (m.size() != 0)
-		{
-			return true;// v->second;
-		}
-	}
-private:
-	std::string _token;
-};
 
 Token::iToken Tokenizer::getToken(std::string token)
 {
@@ -357,12 +281,6 @@ Token::iToken Tokenizer::getToken(std::string token)
 		}
 
 	}
-	ErrorHandler::getInstance()->addError();
-	return Token::NONE;
-}
-
-Token::iToken Tokenizer::getToken2(std::string token)
-{
 	return Token::NONE;
 }
 

@@ -1,3 +1,7 @@
+ **i** is 1
+ **i** is **i** plus -11
+[ printdown **i** ]
+
 
 **i** is 1
 [ printdown **i** ]
