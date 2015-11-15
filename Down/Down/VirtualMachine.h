@@ -13,7 +13,6 @@ class VirtualMachine
 
 		void addIdentifer(string name);
 
-		shared_ptr<BaseCommand> getCommandByString(string name);
 		shared_ptr<Variable> getVariable(string parameter);
 		void setVariable(string name, string value);
 		vector<string> getFunctionParametersByKey(string name);
@@ -23,7 +22,6 @@ class VirtualMachine
 		void setReturnValue(string value);
 		void triggerRunFailure();
 
-		bool hasValueInVariableDictionary(map<string, Variable>::iterator& it);
 		bool hasValueInFunctionParameters(string parameter);
 		bool isAnIdentifier(string name);
 		
@@ -32,8 +30,10 @@ class VirtualMachine
 		bool runsVeryNaz;
 
 		map<string, shared_ptr<BaseCommand>> commandDictionary;
-		map<string, Variable> variableDictionary;
+		map<string, shared_ptr<Variable>> variableDictionary;
 		map<string, string> functionParamters;
 
 		vector<string> identifierList;
+
+		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);
 };

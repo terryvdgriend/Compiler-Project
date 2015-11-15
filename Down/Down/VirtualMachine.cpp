@@ -5,10 +5,6 @@
 
 VirtualMachine::VirtualMachine()
 {
-	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-	flag |= _CRTDBG_LEAK_CHECK_DF;
-	_CrtSetDbgFlag(flag);
-
 	commandDictionary = CommandDictionary().getMap();
 	runsVeryNaz = true;
 }
@@ -16,12 +12,12 @@ VirtualMachine::VirtualMachine()
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
 	ActionNode* currentNode = actionList.getFirst();
-	NodeVisitor* visitor = new NodeVisitor(*this);
+	unique_ptr<NodeVisitor> visitor = make_unique<NodeVisitor>(*this);
 
 	while (currentNode != nullptr && runsVeryNaz)
 	{
-		
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+
 		if (actionNode)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
@@ -40,18 +36,13 @@ void VirtualMachine::addIdentifer(string name)
 	}
 }
 
-shared_ptr<BaseCommand> VirtualMachine::getCommandByString(string key)
-{
-	return shared_ptr<BaseCommand>(commandDictionary[key]);
-}
-
 shared_ptr<Variable> VirtualMachine::getVariable(string key)
 {
-	map<string, Variable>::iterator it = variableDictionary.find(key);
+	map<string, shared_ptr<Variable>>::iterator it = variableDictionary.find(key);
 
 	if (hasValueInVariableDictionary(it))
 	{
-		return shared_ptr<Variable>(&it->second);
+		return shared_ptr<Variable>(it->second);
 	}
 
 	return nullptr;
@@ -59,15 +50,15 @@ shared_ptr<Variable> VirtualMachine::getVariable(string key)
 
 void VirtualMachine::setVariable(string key, string value)
 {
-	map<string, Variable>::iterator it = variableDictionary.find(key);
+	map<string, shared_ptr<Variable>>::iterator it = variableDictionary.find(key);
 
 	if (hasValueInVariableDictionary(it))
 	{
-		it->second = value;
+		it->second = make_shared<Variable>(value);
 	}
 	else
 	{
-		variableDictionary.insert(make_pair(key, value));
+		variableDictionary.insert(make_pair(key, make_shared<Variable>(value)));
 	}
 }
 
@@ -123,7 +114,7 @@ void VirtualMachine::triggerRunFailure()
 	runsVeryNaz = false;
 }
 
-bool VirtualMachine::hasValueInVariableDictionary(map<string, Variable>::iterator& it)
+bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it)
 {
 	return it != variableDictionary.end();
 }

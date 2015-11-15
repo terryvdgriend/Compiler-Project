@@ -1,7 +1,5 @@
 #include "BaseCommand.h"
 
-using namespace std;
-
 class CommandDictionary
 {
 	public:

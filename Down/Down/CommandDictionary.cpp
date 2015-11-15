@@ -4,28 +4,28 @@
 
 CommandDictionary::CommandDictionary()
 {
-	commandDictionary["$="]							= shared_ptr<BaseCommand>(new EqualsCommand());
+	commandDictionary["$="]							= make_shared<EqualsCommand>();
 
-	commandDictionary["$<"]							= shared_ptr<BaseCommand>(new SmallerThanCommand());
-	commandDictionary["$<="]						= shared_ptr<BaseCommand>(new SmallerEqualsToCommand());
-	commandDictionary["$=="]						= shared_ptr<BaseCommand>(new EqualsToCommand());
-	commandDictionary["$!="]						= shared_ptr<BaseCommand>(new NotEqualsToCommand());
-	commandDictionary["$>="]						= shared_ptr<BaseCommand>(new GreaterEqualsToCommand());
-	commandDictionary["$>"]							= shared_ptr<BaseCommand>(new GreaterThanCommand());
+	commandDictionary["$<"]							= make_shared<SmallerThanCommand>();
+	commandDictionary["$<="]						= make_shared<SmallerEqualsToCommand>();
+	commandDictionary["$=="]						= make_shared<EqualsToCommand>();
+	commandDictionary["$!="]						= make_shared<NotEqualsToCommand>();
+	commandDictionary["$>="]						= make_shared<GreaterEqualsToCommand>();
+	commandDictionary["$>"]							= make_shared<GreaterThanCommand>();
 
-	commandDictionary["$*"]							= shared_ptr<BaseCommand>(new TimesCommand());
-	commandDictionary["$/"]							= shared_ptr<BaseCommand>(new DivideCommand());
-	commandDictionary["$%"]							= shared_ptr<BaseCommand>(new ModuloCommand());
-	commandDictionary["$+"]							= shared_ptr<BaseCommand>(new PlusCommand());
-	commandDictionary["$-"]							= shared_ptr<BaseCommand>(new MinusCommand());
-	commandDictionary["$++"]						= shared_ptr<BaseCommand>(new PlusPlusCommand());
-	commandDictionary["$--"]						= shared_ptr<BaseCommand>(new MinusMinusCommand());
+	commandDictionary["$*"]							= make_shared<TimesCommand>();
+	commandDictionary["$/"]							= make_shared<DivideCommand>();
+	commandDictionary["$%"]							= make_shared<ModuloCommand>();
+	commandDictionary["$+"]							= make_shared<PlusCommand>();
+	commandDictionary["$-"]							= make_shared<MinusCommand>();
+	commandDictionary["$++"]						= make_shared<PlusPlusCommand>();
+	commandDictionary["$--"]						= make_shared<MinusMinusCommand>();
 
-	commandDictionary["IdentifierToReturnValue"]	= shared_ptr<BaseCommand>(new IdentifierToReturnValueCommand());
-	commandDictionary["ConstantToReturnValue"]		= shared_ptr<BaseCommand>(new ConstantToReturnValueCommand());
-	commandDictionary["getFromReturnValue"]			= shared_ptr<BaseCommand>(new GetFromValueCommand());
+	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();
+	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
+	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
 
-	commandDictionary["$FUNC"]						= shared_ptr<BaseCommand>(new ShowFunctionCommand());
+	commandDictionary["$FUNC"]						= make_shared<ShowFunctionCommand>();
 }
 
 map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()

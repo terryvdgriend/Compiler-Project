@@ -7,6 +7,7 @@ class Variable
 		Variable(string param);
 		VariableType getType();
 		string getValue();
+
 	private:
 		string value;
 		bool is_number(const string& s);
