@@ -88,7 +88,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 			}
 		}
-		else if (currentToken == Token::NEWLINE) //New Lines
+		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{
 			colNr = 1; rowNr++;
 		}
