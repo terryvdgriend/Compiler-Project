@@ -77,7 +77,7 @@ public:
 
 public:
 	virtual void    setText(std::string txt){ Text = txt; };
-	virtual void    setValue(std::string val) { Value = val; };
+	virtual void    setSub(iToken st) { subType = st; };
 	virtual void    setEnum(iToken itoken){ type = itoken; };
 	virtual void    setPartner(Token* partner){ Partner = partner; };
 	virtual void    setPositieInList(int txt){ PositieInList = txt; };
@@ -88,7 +88,7 @@ public:
 
 public:
 	std::string     getText() { return Text; };
-	std::string     getValue() { return Value; };
+	iToken		    getSub() { return subType; };
 	iToken          getEnum(){ return type; };
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
@@ -102,7 +102,7 @@ public:
 
 private:
 	std::string     Text;
-	std::string		Value; //bv: iToken is TYPE_GETAL, dan kan value 5 zijn, of "henk"
+	iToken			subType;
 	iToken          type;
 	Token*			Partner;
 	int PositieInList;

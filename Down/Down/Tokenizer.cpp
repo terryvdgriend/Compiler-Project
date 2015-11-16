@@ -1,15 +1,12 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
+//
 #include "Format.h"
 #include "LinkedList.h"
-#include <iostream>
-#include <regex>
 #include "Tokenmap.h"
 #include "Tokenregex.h"
+//
 
-// Dit mag weg bij release (TODO) 
-#include <cstdio>
-// 
 
 Tokenizer::Tokenizer()
 {
@@ -34,13 +31,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	Token  *pToken{};
 	string s(codefromfile);
 	smatch m;
-	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
-	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d\\.?\\d*|\\w+|\\S+|\n)");
-	
+
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
-	int pInt = 0;
 	bool isFunctionCall = false;
 
 
@@ -60,35 +54,49 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			currentToken = Token::FUNCTIONUSE;
 			isFunctionCall = false;
 		}
+
 		if (currentToken == Token::FUNCTION_DECLARE_OPEN)
 			isFunctionCall = true;
-
-		if (currentToken == Token::TYPE_NUMBER)
+		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
-			smatch m2;
-			std::string lookahead = m.suffix().str();
-			regex_search(lookahead, m2, e);
-			string partX = m2[0];
-			Token::iToken lookaheadToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
-			pToken->setValue("de look ahead, alleen als deze een valide ding is");
-			//TODO: niet vergeten als de lookahead een waarde is deze te verwijderen.
-			// Het volgende kan fout gaan:
-			//-Waarde met zelfde naam is al eerder aangemaakt
-			//-Waarde is nog niet eerder aangemaakt, kies type: _getal_ , _bla_ 
-			//-lookahead is geen IDENTIFIER
-			TypeSafe();
+			std::string lookahead = lookAhead(m, s);
+			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
+			if (lookaheadToken == Token::IDENTIFIER)
+			{
+				if (std::find(Identifiers.begin(), Identifiers.end(), lookahead) != Identifiers.end())
+				{
+					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				}
+				pToken->setSub(currentToken);
+				currentToken = lookaheadToken;
+				Identifiers.push_back(lookahead);
+				//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
+				part = lookahead;
+				s = m.suffix().str();
+				regex_search(s, m, e);
+				
+			}
+			else
+			{
+				ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			}
 		}
-		//New Lines
-		if (currentToken == Token::NEWLINE)
+		else if (currentToken == Token::IDENTIFIER)
 		{
-			colNr = 1;
-			rowNr++;
+			if (!(std::find(Identifiers.begin(), Identifiers.end(), part) != Identifiers.end()))
+			{
+				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			}
 		}
-
+		else if (currentToken == Token::NEWLINE) //New Lines
+		{
+			colNr = 1; rowNr++;
+		}
+		
 		pToken->setText((part));
 		pToken->setLevel(lvl);
 		pToken->setPositie(colNr);
-		pToken->setPositieInList(pInt);
+		pToken->setPositieInList(cTokenList.size());
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
 		pToken->setPartner(nullptr);
@@ -104,7 +112,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		//++ col
 		colNr += part.size() + 1;
-		pInt++;
 
 		////Levels
 		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE)
@@ -121,10 +128,14 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	checkRemainingErrors();
 }
 
-void Tokenizer::TypeSafe()
+std::string Tokenizer::lookAhead(smatch m, std::string s)
 {
-
+	smatch m2;
+	std::string lookahead = m.suffix().str();
+	regex_search(lookahead, m2, e);
+	return m2[0];
 }
+
 
 void Tokenizer::checkRemainingErrors()
 {
