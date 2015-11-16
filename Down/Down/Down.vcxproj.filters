@@ -292,7 +292,7 @@
     <ClInclude Include="ConditionalJumpNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="SwitchNode.hpp">
+    <ClInclude Include="SwitchNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -470,6 +470,9 @@
     </ClCompile>
     <ClCompile Include="CompileSwitch.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchNode.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

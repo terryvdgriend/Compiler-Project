@@ -5,6 +5,7 @@
 #include "DoNothingNode.h"
 #include "FunctionCall.h"
 #include "JumpGoToNode.h"
+#include "SwitchNode.h"
 
 NodeVisitor::NodeVisitor(VirtualMachine& vm) : vm{ &vm }
 {
@@ -18,14 +19,21 @@ NodeVisitor::~NodeVisitor()
 
 void NodeVisitor::visit(ConditionalJumpNode& node)
 {
-	if ((*vm).getReturnValue() == "true")
-	{
-		nextNode = node.getOnTrue();
+	if ((*vm).getReturnValue() == "true" || (*vm).getReturnValue() == "false") {
+		if ((*vm).getReturnValue() == "true")
+		{
+			nextNode = node.getOnTrue();
+		}
+		else if ((*vm).getReturnValue() == "false")
+		{
+			nextNode = node.getOnFalse();
+		}
 	}
-	else if ((*vm).getReturnValue() == "false")
-	{
-		nextNode = node.getOnFalse();
+	else {
+		if ((*vm).isAnIdentifier((*vm).getReturnValue())) {
+		}
 	}
+	
 }
 
 void NodeVisitor::visit(DirectFunctionCall& node)
@@ -48,7 +56,8 @@ void NodeVisitor::visit(JumpGoToNode& node)
 	nextNode = node.getJumpToNode();
 }
 
-void NodeVisitor::visit(SwitchNode<class T>& node)
+void NodeVisitor::visit(SwitchNode& node)
 {
+	(*vm).execute(*node.switchCondition);
 	nextNode = node.getNext();
 }
