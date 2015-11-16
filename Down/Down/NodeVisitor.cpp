@@ -31,7 +31,23 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 	}
 	else {
 		if ((*vm).isAnIdentifier((*vm).getReturnValue())) {
+			string value = (*vm).getVariable((*vm).getFunctionParametersByValue((*vm).getReturnValue()).back())->getValue();
+			if (value == "true")
+			{
+				nextNode = node.getOnTrue();
+			}
+			else if (value == "false")
+			{
+				nextNode = node.getOnFalse();
+			}
+			else {
+				// throw error;
+			}
 		}
+		else {
+			// throw error;
+		}
+
 	}
 	
 }

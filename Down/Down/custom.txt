@@ -1,9 +1,14 @@
-**i** is true
-#### if ( **i** ) 
+ **f** is 1
+#### switch ( **f** )
+case ( 1 )
 --
-[ printdown "1" ]
+[ printdown "tlol" ]
 __
-#### else 
+case ( 2 )
 --
-[ printdown "overig" ]
+[ printdown "dlol" ]
+__
+default
+--
+[ printdown "lol" ]
 __ 
