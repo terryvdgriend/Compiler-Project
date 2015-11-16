@@ -48,6 +48,10 @@ struct TokenMap{
 		mappert[std::string("case")] = Token::SWITCH_CASE;
 		mappert[std::string("printdown")] = Token::PRINT;
 		//
+		mappert[std::string("_fact_")] = Token::TYPE_FACT;
+		mappert[std::string("_number_")] = Token::TYPE_NUMBER;
+		mappert[std::string("_text_")] = Token::TYPE_TEXT;
+		//
 		return mappert;
 	}
 	
