@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "EqualsToCommand.h"
+#include "CommandVisitor.h"
 
 void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -14,4 +15,8 @@ void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	{
 		vm.setReturnValue("false");
 	}
+}
+
+std::pair<string, string> EqualsToCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

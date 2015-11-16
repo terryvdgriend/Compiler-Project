@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SmallerThanCommand.h"
+#include "CommandVisitor.h"
 
 void SmallerThanCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -30,4 +31,8 @@ void SmallerThanCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	else {
 		// Exception "cannot compare different types than numbers"
 	}
+}
+
+std::pair<string, string> SmallerThanCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "TimesCommand.h"
+#include "CommandVisitor.h"
 
 void TimesCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -25,4 +26,8 @@ void TimesCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	else {
 		// Exception times heeft 2 nummers nodig
 	}
+}
+
+std::pair<string, string> TimesCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

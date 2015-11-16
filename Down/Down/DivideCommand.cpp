@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DivideCommand.h"
+#include "CommandVisitor.h"
 
 void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -30,4 +31,8 @@ void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	else {
 		// Exception delen heeft 2 nummers nodig
 	}
+}
+
+std::pair<string, string> DivideCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "NotEqualsToCommand.h"
+#include "CommandVisitor.h"
 
 void NotEqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -14,4 +15,8 @@ void NotEqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	{
 		vm.setReturnValue("false");
 	}
+}
+
+std::pair<string, string> NotEqualsToCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

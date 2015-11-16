@@ -95,6 +95,7 @@
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandList.h" />
+    <ClInclude Include="CommandVisitor.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
+    <ClCompile Include="CommandVisitor.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />

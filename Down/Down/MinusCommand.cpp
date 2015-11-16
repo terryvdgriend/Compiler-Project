@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MinusCommand.h"
+#include "CommandVisitor.h"
 
 void MinusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -25,4 +26,8 @@ void MinusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	else {
 		// Exception minus heeft 2 nummers nodig
 	}
+}
+
+std::pair<string, string> MinusCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

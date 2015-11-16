@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ModuloCommand.h"
+#include "CommandVisitor.h"
 
 void ModuloCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -28,4 +29,8 @@ void ModuloCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 		ErrorHandler::getInstance()->addError(Error{ "Cannot modulo " + variable1.getValue() + " with " + variable2.getValue(), ".md", -1, -1, Error::error });
 		vm.triggerRunFailure();
 	}
+}
+
+std::pair<string, string> ModuloCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }
