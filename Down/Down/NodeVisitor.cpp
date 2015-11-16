@@ -74,6 +74,35 @@ void NodeVisitor::visit(JumpGoToNode& node)
 
 void NodeVisitor::visit(SwitchNode& node)
 {
-	(*vm).execute(*node.switchCondition);
-	nextNode = node.getNext();
+	if (node.jumpMap.size() > 0)
+	{
+		(*vm).execute(*node.switchCondition);
+		string value;
+		if ((*vm).isAnIdentifier((*vm).getReturnValue()))
+		{
+			value = (*vm).getVariable((*vm).getFunctionParametersByValue((*vm).getReturnValue()).back())->getValue();
+		}
+		else 
+		{
+			value = (*vm).getReturnValue();
+		}
+		for (auto p = node.jumpMap.begin(); p != node.jumpMap.end(); ++p) 
+		{
+			(*vm).execute(*p->first);
+			if (value == (*vm).getReturnValue()) 
+			{
+				nextNode = p->second->getFirst();
+				return;
+			}
+		}
+		if (node.defaultNodeList->Count() > 0) {
+			nextNode = node.defaultNodeList->getFirst();
+		}
+		else {
+			nextNode = node.getNext();
+		}
+	}
+	else {
+		nextNode = node.defaultNodeList->getFirst();
+	}
 }

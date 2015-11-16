@@ -1,4 +1,4 @@
- **f** is 1
+ **f** is 3
 #### switch ( **f** )
 case ( 1 )
 --
@@ -12,3 +12,4 @@ default
 --
 [ printdown "lol" ]
 __ 
+[ printdown "tlol" ]

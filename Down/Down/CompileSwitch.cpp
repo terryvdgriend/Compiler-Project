@@ -19,42 +19,48 @@ CompileSwitch::CompileSwitch()
 void CompileSwitch::ConnectLists() {
 	_switchNode->switchCondition = _condition;
 
-	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
 	std::list<JumpGoToNode*> jumpmap;
 	_compiledStatement->add(_switchNode);
 	_compiledStatement->add(new DoNothingNode());
-	for (auto p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
-	{
-		if (p != _conditionBodyMap.begin())
-			conditionalJumpNode->setOnFalse(p->first->getFirst());
-		conditionalJumpNode = new ConditionalJumpNode();
+	if (_conditionBodyMap.size() > 0) {
+		for (auto p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
+		{
 
-		p->first->add(conditionalJumpNode);
+			if (_conditionBodyMap.size() > 1 || _bodyDefault->Count() > 0) {
+				JumpGoToNode* jumpNode = new JumpGoToNode();
+				p->second->add(jumpNode);
+				jumpmap.push_back(jumpNode);
+			}
+			_switchNode->jumpMap[p->first] = p->second;
+		}
 
-		if (_conditionBodyMap.size() > 1 || _bodyDefault->Count() > 0) {
+		if (_bodyDefault->Count() > 0) {
+			DoNothingNode* secondBodyStart = new DoNothingNode();
+			_switchNode->defaultNodeList->add(secondBodyStart);
+			_switchNode->defaultNodeList->add(_bodyDefault);
+			_switchNode->defaultNodeList->add(new DoNothingNode);
 			JumpGoToNode* jumpNode = new JumpGoToNode();
-			p->second->add(jumpNode);
+			_switchNode->defaultNodeList->add(jumpNode);
 			jumpmap.push_back(jumpNode);
 		}
-		conditionalJumpNode->setOnTrue(p->second->getFirst());
-		_switchNode->jumpMap[p->first] = p->second;
-	}
-
-	if (_bodyDefault->Count() > 0) {
-		DoNothingNode* secondBodyStart = new DoNothingNode();
-		_switchNode->defaultNodeList->add(secondBodyStart);
-		_switchNode->defaultNodeList->add(_bodyDefault);
-		_switchNode->defaultNodeList->add(new DoNothingNode);
-		conditionalJumpNode->setOnFalse(secondBodyStart);
-	}
-	else {
-		conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
-	}
-	if (jumpmap.size() > 0) {
-		for (auto p : jumpmap) {
-			p->setJumpToNode(_compiledStatement->getLast());
+		if (jumpmap.size() > 0) {
+			for (auto p : jumpmap) {
+				p->setJumpToNode(_compiledStatement->getLast());
+			}
 		}
 	}
+	else {
+		if (_bodyDefault->Count() > 0) {
+			DoNothingNode* secondBodyStart = new DoNothingNode();
+			_switchNode->defaultNodeList->add(secondBodyStart);
+			_switchNode->defaultNodeList->add(_bodyDefault);
+			
+			JumpGoToNode* jumpNode = new JumpGoToNode();
+			_switchNode->defaultNodeList->add(jumpNode);
+			jumpNode->setJumpToNode(_compiledStatement->getLast());
+		}
+	}
+	
 }
 
 void CompileSwitch::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
@@ -188,6 +194,9 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 	}
 	if (current->getEnum() == Token::SWITCH_DEFAULT) {
 		CompileDefault(cTokenList, *current, end);
+	}
+	else {
+		current = current->previous;
 	}
 	begin = *current;
 }
