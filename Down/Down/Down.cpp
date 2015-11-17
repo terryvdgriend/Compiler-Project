@@ -33,12 +33,12 @@ int main(int argc, const char * argv[])
 
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = *RunTokenizer(code, true);
+	LinkedList cTokenList = *RunTokenizer(code, false);
 	if (Errors())
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = *RunCompiler(&cTokenList, true);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, false);
 	if (Errors())
 		return 0;
 

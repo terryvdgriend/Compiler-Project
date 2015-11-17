@@ -31,7 +31,18 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 	}
 	else {
 		if ((*vm).isAnIdentifier((*vm).getReturnValue())) {
-			string value = (*vm).getVariable((*vm).getFunctionParametersByValue((*vm).getReturnValue()).back())->getValue();
+			string value;
+			if ((*vm).isAnIdentifier((*vm).getReturnValue()))
+			{
+				auto varList = (*vm).getFunctionParametersByValue((*vm).getReturnValue());
+				if (varList.size() > 0)
+					value = (*vm).getVariable(varList.back())->getValue();
+				else {
+					ErrorHandler::getInstance()->addError(Error{ "identifier not found", ".md", -1, -1, Error::error });
+					(*vm).triggerRunFailure();
+					return;
+				}
+			}
 			if (value == "true")
 			{
 				nextNode = node.getOnTrue();
@@ -41,11 +52,11 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 				nextNode = node.getOnFalse();
 			}
 			else {
-				// throw error;
+				(*vm).triggerRunFailure();
 			}
 		}
 		else {
-			// throw error;
+			(*vm).triggerRunFailure();
 		}
 
 	}
@@ -83,8 +94,11 @@ void NodeVisitor::visit(SwitchNode& node)
 			auto varList = (*vm).getFunctionParametersByValue((*vm).getReturnValue());
 			if (varList.size() > 0)
 				value = (*vm).getVariable(varList.back())->getValue();
-			else
-				value = ""; //throw error
+			else {
+				(*vm).triggerRunFailure();
+				ErrorHandler::getInstance()->addError(Error{ "identifier not found", ".md", -1, -1, Error::error });
+				return;
+			}
 		}
 		else 
 		{
@@ -100,7 +114,11 @@ void NodeVisitor::visit(SwitchNode& node)
 				if (varList.size() > 0)
 					result = (*vm).getVariable(varList.back())->getValue();
 				else
-					result = ""; //throw error
+				{
+					(*vm).triggerRunFailure();
+					ErrorHandler::getInstance()->addError(Error{ "identifier not found", ".md", -1, -1, Error::error });
+					return;
+				}
 			}
 			else
 			{

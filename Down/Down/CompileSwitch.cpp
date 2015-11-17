@@ -97,10 +97,19 @@ void CompileSwitch::Compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 		}
 		else if (expectation.Level >= whileLevel) {
 			if (_condition->Count() == 0) {
-				CompileCondition* condition = new CompileCondition();
-				_condition->add(new DoNothingNode());
-				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
-				delete condition;
+				if (current->getLevel() >= whileLevel)
+				{
+					CompileCondition* condition = new CompileCondition();
+					_condition->add(new DoNothingNode());
+					condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+					delete condition;
+				}
+				else 
+				{
+					ErrorHandler::getInstance()->addError(Error{ "an expression", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+					begin = end;
+					break;
+				}
 			}
 		}
 	}
@@ -144,7 +153,7 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 			}
 			if (expectation.Level == whileLevel) {
 				if (current == nullptr) {
-					ErrorHandler::getInstance()->addError(Error{ "if statement not completed", ".md",-1, -1, Error::error });
+					ErrorHandler::getInstance()->addError(Error{ "switch statement not completed", ".md",-1, -1, Error::error });
 					begin = end;
 					break;
 				}
@@ -154,7 +163,7 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 						break;
 					}
 					else {
-						ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+						ErrorHandler::getInstance()->addError(Error{ "an body", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 						begin = end;
 						break;
 					}
@@ -164,10 +173,17 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 			}
 			else if (expectation.Level >= whileLevel) {
 				if (caseCondition->Count() == 0) {
-					CompileCondition* condition = new CompileCondition();
-					caseCondition->add(new DoNothingNode());
-					condition->Compile(cTokenList, *current, *current->previous->getPartner(), *caseCondition, *caseCondition->getLast());
-					delete condition;
+					if (current->getLevel() > whileLevel) {
+						CompileCondition* condition = new CompileCondition();
+						caseCondition->add(new DoNothingNode());
+						condition->Compile(cTokenList, *current, *current->previous->getPartner(), *caseCondition, *caseCondition->getLast());
+						delete condition;
+					}
+					else {
+						ErrorHandler::getInstance()->addError(Error{ "an expression", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+						begin = end;
+						break;
+					}
 				}
 				else {
 					Token* prev = current->previous;
