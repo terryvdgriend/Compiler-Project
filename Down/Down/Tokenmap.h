@@ -22,7 +22,7 @@ struct TokenMap{
 		mappert[std::string("[")] = Token::FUNCTION_DECLARE_OPEN;
 		mappert[std::string("]")] = Token::FUNCTION_DECLARE_CLOSE;
 		mappert[std::string("{")] = Token::ARRAY_OPEN;
-		mappert[std::string("}")] = Token::ARRAY_CLOSED;
+		mappert[std::string("}")] = Token::ARRAY_CLOSE;
 		mappert[std::string("(")] = Token::CONDITION_OPEN;
 		mappert[std::string(")")] = Token::CONDITION_CLOSE;
 		mappert[std::string("--")] = Token::BODY_OPEN;
@@ -47,6 +47,10 @@ struct TokenMap{
 		mappert[std::string("default")] = Token::SWITCH_DEFAULT;
 		mappert[std::string("case")] = Token::SWITCH_CASE;
 		mappert[std::string("printdown")] = Token::PRINT;
+		//
+		mappert[std::string("_fact_")] = Token::TYPE_FACT;
+		mappert[std::string("_number_")] = Token::TYPE_NUMBER;
+		mappert[std::string("_text_")] = Token::TYPE_TEXT;
 		//
 		return mappert;
 	}

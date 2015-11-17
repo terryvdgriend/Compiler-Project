@@ -25,6 +25,7 @@ void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
 {
+	//std::cerr << "WHUT?!";
 	string code = "";
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, code))
@@ -60,8 +61,6 @@ LinkedList* RunTokenizer(std::string code, bool print)
 	if (print)
 		tnzr.printTokenList(*cTokenList);
 
-	if (!ErrorHandler::getInstance()->getErrors().empty())
-		std::cerr << ErrorHandler::getInstance()->asJson();
 	return cTokenList;
 }
 
@@ -70,7 +69,6 @@ bool Errors()
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		std::cerr << ErrorHandler::getInstance()->asJson();
-		cin;
 		return true;
 	}
 	return false;

@@ -17,6 +17,7 @@
 #include <map>
 #include <iostream>
 #include "ErrorHandler.h"
+#include <memory>
 
 using namespace std;
 // TODO: reference additional headers your program requires here
