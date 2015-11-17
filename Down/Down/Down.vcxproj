@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CommandVisitor.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
