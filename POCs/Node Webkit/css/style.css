@@ -47,6 +47,11 @@ a {
     text-decoration: none !important;
 }
 
+#page {
+    width: 100%;
+    height: 100%;
+}
+
 #editor{
     float:left;
     width:50%;
@@ -162,3 +167,29 @@ a {
 .showLog #log {
     display: block;
 }
+
+
+
+/****** PAGES *******/
+#settings {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+}
+
+#settings h1 {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 0;
+}
+
+#settings p {
+    color: #fff;
+    font-size: 14px;
+}
+
+
+
+
+
+

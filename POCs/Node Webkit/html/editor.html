@@ -1,0 +1,137 @@
+<script src="../js/plugins/ace/ace.js" type="text/javascript"></script>
+<script src="../js/plugins/ace/theme-twilight.js" type="text/javascript"></script>
+<script src="../js/plugins/ace/ext-language_tools.js" type="text/javascript"></script>
+
+<script>
+var editor = require("./../js/editor.js");
+
+$(function() {
+    var tabs = $("#log > div").tabs();
+    tabs.find(".ui-tabs-nav").sortable({
+        axis: "x",
+        stop: function() {
+            tabs.tabs( "refresh" );
+        }
+    });
+
+    $("#editor").resizable({
+        handles: 'e',
+        maxWidth: $(window).width() * 0.9,
+        resize: function() {
+            var windowWidth = $(window).width();
+            var thisWidth = $(this).width();
+            var markDownWidth = windowWidth - thisWidth - 20;
+            $('#markdown').width(markDownWidth);
+            global.editor.resize();
+        }
+    });
+
+    $(window).resize(function(event) {
+        $("#editor").resizable({
+            maxWidth: $(this).width() * 0.9,
+        });
+
+        var editorWidth = $('#editor').width();
+        var windowWidth = $(this).width();
+        $('#markdown').width(windowWidth - editorWidth - 20);
+        global.editor.resize();
+    });
+
+    global.editor = ace.edit("code");
+    global.editor.setTheme("ace/theme/twilight");
+    global.editor.session.setMode("ace/mode/markdown");
+    global.editor.setOptions({
+        wrap : true,
+        highlightSelectedWord: true,
+        showPrintMargin: false,
+        vScrollBarAlwaysVisible: false,
+        fontSize: "15px",
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+    
+    var autoComplete = [
+        { key: "if", value: "#### if" },
+        { key: "else", value: "#### else" },
+        { key: "else if", value: "#### else if" },
+        { key: "for", value: "#### for" },
+        { key: "foreach", value: "#### foreach" },
+        { key: "while", value: "#### while" },
+        { key: "do", value: "#### do" },
+        { key: "smaller than", value: "smaller than" },
+        { key: "larger than", value: "larger than" },
+        { key: "getal", value: "_getal_" },
+        { key: "tekst", value: "_tekst_" },
+        { key: "fact", value: "_fact_" },
+        { key: "variable", value: "_variable_" },
+        { key: "declaration", value: "_declaration_" },
+        { key: "function", value: "_function_" },
+        { key: "class", value: "_class_" },
+        { key: "namespace", value: "_namespace_" },
+        { key: "_comment_", value: "_comment_" },
+        { key: "plus", value: "plus" },
+        { key: "increased", value: "increased" },
+        { key: "minus", value: "minus" },
+        { key: "decreased", value: "decreased" },
+        { key: "divide", value: "divide" },
+        { key: "multiply", value: "multiply" },
+        { key: "modulo", value: "modulo" }
+    ];
+    
+    var downCompleter = {
+        getCompletions: function(editor, session, pos, prefix, callback) {
+            if (prefix.length === 0) { callback(null, []); return }
+            callback(null, autoComplete.map(function(ea) {
+                return {name: ea.key, value: ea.value, score: null, meta: null}
+            }));
+        }
+    }
+            
+    var langTools = ace.require("ace/ext/language_tools");
+    langTools.addCompleter(downCompleter);
+
+    global.editor.on('change', function(e) {
+        editor.reload();
+    });
+
+    $('#log a.close').on('click', function() {
+        $('body').removeClass('showLog');
+        global.editor.resize();
+    });
+
+    window.ondragover = function(e) { e.preventDefault(); return false };
+    window.ondrop = function(e) { e.preventDefault(); return false };
+    $('body').get(0).ondrop = function (e) {
+        e.preventDefault();
+        editor.loadFile(e.dataTransfer.files[0].path);
+        return false;
+    };
+
+    $('body').on('click', 'table.errors tr', function(event) {
+        event.preventDefault();
+        global.editor.gotoLine($(this).data('line'), $(this).data('column'), true);
+    });
+});
+</script>
+
+<!-- Editor -->
+<div id="editor"><textarea id="code"></textarea></div>
+<div id="markdown"></div>
+
+<!-- Log -->
+<div id="log">
+    <a href="#" class="close">[X]</a>
+    <div>
+        <ul>
+            <li><a href="#output">Output</a></li>
+            <li><a href="#errors">Errors</a></li>
+        </ul>
+        <div id="output">
+           
+        </div>
+        <div id="errors">
+            
+        </div>
+    </div>
+</div>

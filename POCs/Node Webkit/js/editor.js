@@ -26,7 +26,7 @@ exports.loadFile = function(file) {
             return console.log(err);
         } else {
             console.log("The file was loaded!");
-            global.fileName = file;
+            global.setFile(file);
         }
         exports.loadText(data);
     });

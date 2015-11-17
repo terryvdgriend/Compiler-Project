@@ -12,7 +12,7 @@ exports.initMenu = function() {
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
         	editor.loadText("");
-            global.fileName = null;
+            global.setFile(null);
         }
     }));
     fileMenu.append(new global.gui.MenuItem({
@@ -39,6 +39,17 @@ exports.initMenu = function() {
             }
         }
     }));
+    fileMenu.append(new global.gui.MenuItem({
+        label: 'Opslaan als',
+        key: "s",
+        modifiers: (process.platform === "darwin") ? "cmd shift" : "ctrl shift",
+        click: function() {
+            editor.chooseFile("#saveFileDialog", function(filename) {
+                editor.saveFile(filename);
+                global.setFile(filename);
+            });
+        }
+    }));
 
     fileMenu.append(new gui.MenuItem({ type: 'separator' }));
 
@@ -49,19 +60,17 @@ exports.initMenu = function() {
         }
     }));
 
-    var programMenu = new global.gui.Menu();
-    programMenu.append(new global.gui.MenuItem({
-        label: 'Run',
-        key: "r",
-        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
+    var settingsMenu = new global.gui.Menu();
+    settingsMenu.append(new global.gui.MenuItem({
+        label: 'Wijzigen',
         click: function() {
-            compiler.run(global.editor.getValue());
+            global.goToPage("settings");
         }
     }));
 
-    programMenu.append(new gui.MenuItem({ type: 'separator' }));
+    settingsMenu.append(new gui.MenuItem({ type: 'separator' }));
 
-    programMenu.append(new global.gui.MenuItem({
+    settingsMenu.append(new global.gui.MenuItem({
         label: 'Kies compiler',
         click: function() {
             compiler.chooseCompilerFile(function(file) {
@@ -70,10 +79,27 @@ exports.initMenu = function() {
         }
     }));
 
-    programMenu.append(new global.gui.MenuItem({
-        label: 'Reset compiler file',
+    settingsMenu.append(new global.gui.MenuItem({
+        label: 'Reset compiler',
         click: function() {
             global.compilerFile = null;
+        }
+    }));
+
+    var programMenu = new global.gui.Menu();
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Print tokenlist',
+        click: function() {
+            alert("Not implemented yet");
+        }
+    }));
+    programMenu.append(new gui.MenuItem({ type: 'separator' }));
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Run',
+        key: "r",
+        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
+        click: function() {
+            compiler.run(global.editor.getValue());
         }
     }));
 
@@ -91,6 +117,7 @@ exports.initMenu = function() {
         menubar.append(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }));
     }
 
+    menubar.append(new global.gui.MenuItem({ label: 'Instellingen', submenu: settingsMenu }));
     menubar.append(new global.gui.MenuItem({ label: 'Programma', submenu: programMenu }));
     win.menu = menubar;
 }
