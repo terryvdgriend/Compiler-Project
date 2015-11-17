@@ -1,4 +1,42 @@
+<script>
+$(function() {
+	$("button").button().click(function( event ) {
+		event.preventDefault();
+	});
+});
+</script>
+
 <div id="settings">
-    <h1>Settings</h1>
-    <p>Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla. Aenean lacinia bibendum nulla sed consectetur.</p>
+    <h1>IDE Settings</h1>
+
+	<h2>Compiler</h2>
+    <table class="settings">
+		<tr>
+			<td>
+				<strong>Compiler file</strong>
+				<span>The IDE has a built-in compiler, but you can always choose another one.</span>
+				<span>/POCs/Compiler.exe</span>
+			</td>
+			<td><button>Choose file</button> </td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Reset file</strong>
+				<span>Reset compiler to the in built-in IDE compiler.</span>
+			</td>
+			<td><button>Reset file</button> </td>
+		</tr>
+	</table>
+
+	<h2>General</h2>
+    <table class="settings">
+		<tr>
+			<td>
+				<strong>Reset settings</strong>
+				<span>Reset all settings to default.</span>
+			</td>
+			<td><button>Reset all</button> </td>
+		</tr>
+	</table>
+
 </div>

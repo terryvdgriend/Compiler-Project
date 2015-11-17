@@ -174,7 +174,7 @@ a {
 #settings {
     width: 100%;
     height: 100%;
-    padding: 15px;
+    padding: 20px;
 }
 
 #settings h1 {
@@ -183,11 +183,62 @@ a {
     margin-top: 0;
 }
 
+#settings h2 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: 22px;
+    width: 100%;
+    border-bottom: 2px solid #3e3e3e;
+}
+
 #settings p {
     color: #fff;
     font-size: 14px;
 }
 
+#settings table.settings {
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    font-family: Arial;
+    border-collapse: collapse;
+}
+
+#settings table.settings tr td {
+    padding-bottom: 12px;
+}
+
+#settings table.settings td:first-child {
+    width: 80%;
+}
+
+#settings table.settings td:last-child {
+    text-align: right;
+}
+
+#settings table.settings strong {
+    float: left;
+    clear: both;
+    font-weight: bold;
+}
+
+#settings table.settings span {
+    float: left;
+    clear: both;
+    color: #afafaf;
+    font-size: 13px;
+}
+
+#settings table.settings a {
+    color: #bbbbbb;
+    text-decoration: underline !important;
+}
+
+
+#settings input, #settings button {
+    font-family: Arial !important;
+}
 
 
 
