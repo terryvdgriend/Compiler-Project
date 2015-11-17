@@ -111,6 +111,7 @@
     <ClInclude Include="CompilerHeader.h" />
     <ClInclude Include="CompileSingleStatement.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
+    <ClInclude Include="CompileUserFunction.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="CompileSingleStatement.cpp" />
     <ClCompile Include="CompileTimesDivideModulo.cpp" />
+    <ClCompile Include="CompileUserFunction.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />

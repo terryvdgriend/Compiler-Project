@@ -135,6 +135,10 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	{
 		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
+		if (option == "getSnippets")
+			outz = Tokenizer().getKeywordsAsJson();
+		if (option == "getDingen")
+			outz = Tokenizer().getKeywordsAsJson();
 		else
 			return false;
 	}
