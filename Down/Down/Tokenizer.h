@@ -15,6 +15,7 @@ private:
 	std::map<string, Token::iToken> regexert;
 	std::map<string, Token::iToken> Regex;
 	std::vector<string> Identifiers;
+	std::vector<string> Functions;
 	Stack stack;
 	Token::iToken getToken(std::string token);
 	bool tokenError = false;

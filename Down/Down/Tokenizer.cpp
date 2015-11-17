@@ -12,6 +12,9 @@ Tokenizer::Tokenizer()
 {
 	mappert =  TokenMap::tm;
 	regexert = TokenRegex::tr;
+
+	//TEMP - later anders oplossen..
+	Functions.push_back("printdown");
 }
 
 std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
@@ -45,10 +48,13 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		string part = m[0];
 		//currentToken = getToken(part);
 		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
-
+		
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
+			currentToken = ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
+		else if (currentToken == Token::NONE)
 			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
+
 
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
@@ -79,6 +85,22 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			else
 			{
 				ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			}
+		}
+		else if (currentToken == Token::FUNCTION)
+		{
+			if ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()))
+			{
+				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			}
+			Functions.push_back(part);
+		}
+		else if (currentToken == Token::FUNCTIONUSE)
+		{
+			bool shit = (std::find(Functions.begin(), Functions.end(), part) != Functions.end());
+			if (!shit)
+			{
+				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 			}
 		}
 		else if (currentToken == Token::IDENTIFIER)

@@ -1,15 +1,13 @@
-_number_ **x** is 6
+[ printdown "test" ]
+> Functie maken
 
-> dit gaat fout  
-_number_ **x** is 7
-
-> dit gaat fout
-**niks** is 8
-
-
-> dit gaat goed
-_number_ **abc** is 9
-**abc** is 10
+---
+### Calcy 
+[ printdown "Binnen enzo" ] 
+___
 
 
-_number_ **asd** is a
+> Function aanroepen
+
+[ printdown "Buiten enzo" ]
+[ Calcy ]
