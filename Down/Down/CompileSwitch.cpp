@@ -114,6 +114,7 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 {
 	Token* current = &begin;
 	int whileLevel = begin.getLevel();
+	std::list<LinkedActionList*> conditionList;
 	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
 	expected.push_back(TokenExpectation(whileLevel, Token::SWITCH_CASE));
 	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
@@ -148,9 +149,15 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 					break;
 				}
 				if (current->getEnum() != expectation.TokenType) {
-					ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
-					begin = end;
-					break;
+					if (current->getEnum() == Token::SWITCH_CASE && expectation.TokenType == Token::BODY_OPEN) {
+						conditionList.push_back(caseCondition);
+						break;
+					}
+					else {
+						ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+						begin = end;
+						break;
+					}
 				}
 				else
 					current = current->next;
@@ -183,7 +190,19 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 				}
 			}
 		}
-		_conditionBodyMap[caseCondition] = caseBody;
+		if (caseBody->Count() > 0)
+		{
+			if (conditionList.size() > 0)
+			{
+				for (auto p : conditionList)
+				{
+					_conditionBodyMap[p] = caseBody;
+				}
+			}
+			_conditionBodyMap[caseCondition] = caseBody;
+			conditionList.clear();
+		}
+
 		while (current->getEnum() == Token::NEWLINE) {
 			if (current->next != nullptr) {
 				current = current->next;

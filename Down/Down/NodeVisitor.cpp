@@ -80,7 +80,11 @@ void NodeVisitor::visit(SwitchNode& node)
 		string value;
 		if ((*vm).isAnIdentifier((*vm).getReturnValue()))
 		{
-			value = (*vm).getVariable((*vm).getFunctionParametersByValue((*vm).getReturnValue()).back())->getValue();
+			auto varList = (*vm).getFunctionParametersByValue((*vm).getReturnValue());
+			if (varList.size() > 0)
+				value = (*vm).getVariable(varList.back())->getValue();
+			else
+				value = ""; //throw error
 		}
 		else 
 		{
@@ -89,7 +93,20 @@ void NodeVisitor::visit(SwitchNode& node)
 		for (auto p = node.jumpMap.begin(); p != node.jumpMap.end(); ++p) 
 		{
 			(*vm).execute(*p->first);
-			if (value == (*vm).getReturnValue()) 
+			string result;
+			if ((*vm).isAnIdentifier((*vm).getReturnValue()))
+			{
+				auto varList = (*vm).getFunctionParametersByValue((*vm).getReturnValue());
+				if (varList.size() > 0)
+					result = (*vm).getVariable(varList.back())->getValue();
+				else
+					result = ""; //throw error
+			}
+			else
+			{
+				result = (*vm).getReturnValue();
+			}
+			if (value == result)
 			{
 				nextNode = p->second->getFirst();
 				return;
