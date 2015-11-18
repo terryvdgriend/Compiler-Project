@@ -38,8 +38,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
-	bool isFunctionCall = false;
-
 
 	while (regex_search(s, m, e))
 	{
@@ -51,31 +49,27 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
-			currentToken = ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
-		else if (currentToken == Token::NONE)
+		//	currentToken = ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
+		//else if (currentToken == Token::NONE)
 			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
-		
 
-		if (isFunctionCall){
-			//currentToken = Token::FUNCTIONUSE;
-			isFunctionCall = false;
-		}
-
-		if (currentToken == Token::FUNCTION_DECLARE_OPEN)
-			isFunctionCall = true;
-		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
+		if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
 			std::string lookahead = lookAhead(m, s);
 			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
 			if (lookaheadToken == Token::IDENTIFIER)
 			{
+				Token::iToken testy  = mappert.find(lookahead)->second;
+				//if (testy == nullptr)
+				
 				if (std::find(Identifiers.begin(), Identifiers.end(), lookahead) != Identifiers.end())
 				{
 					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 				}
 				pToken->setSub(currentToken);
 				currentToken = lookaheadToken;
+				mappert[lookahead] = Token::FUNCTION;
 				Identifiers.push_back(lookahead);
 				//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
 				part = lookahead;
