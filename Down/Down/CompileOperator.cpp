@@ -53,9 +53,12 @@ void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedAction
 
 	saArguments[0] = sFunctionName;
 	
-	if (sFunctionName == "$FUNC"){
-		//TODO: FIX SUPER UGLY HARDCODING
+	if (sFunctionName == "$PRINTDOWN"){
 		saArguments[1] = "printdown";
+		saArguments[2] = getNextLocalVariableName(sBuffer);
+	}
+	if (sFunctionName == "$PRINTUP") {
+		saArguments[1] = "printup";
 		saArguments[2] = getNextLocalVariableName(sBuffer);
 	}
 	else{

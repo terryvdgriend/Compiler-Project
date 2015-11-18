@@ -55,9 +55,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		else if (currentToken == Token::NONE)
 			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
+		
 
 		if (isFunctionCall){
-			currentToken = Token::FUNCTIONUSE;
+			//currentToken = Token::FUNCTIONUSE;
 			isFunctionCall = false;
 		}
 
@@ -89,19 +90,19 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 		else if (currentToken == Token::FUNCTION)
 		{
-			if ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()))
+			/*if ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()))
 			{
 				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 			}
-			Functions.push_back(part);
+			Functions.push_back(part);*/
 		}
 		else if (currentToken == Token::FUNCTIONUSE)
 		{
-			bool shit = (std::find(Functions.begin(), Functions.end(), part) != Functions.end());
-			if (!shit)
-			{
-				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			}
+			//bool shit = (std::find(Functions.begin(), Functions.end(), part) != Functions.end());
+			//if (!shit)
+			//{
+				//ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			//}
 		}
 		else if (currentToken == Token::IDENTIFIER)
 		{

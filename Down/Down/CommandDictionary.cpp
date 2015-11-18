@@ -25,7 +25,8 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
 	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
 
-	commandDictionary["$FUNC"]						= make_shared<ShowFunctionCommand>();
+	commandDictionary["$PRINTDOWN"]						= make_shared<ShowFunctionCommand>();
+	commandDictionary["$PRINTUP"]					= make_shared<ShowUpFunctionCommand>();
 }
 
 map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()

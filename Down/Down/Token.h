@@ -48,6 +48,7 @@ public:
 		FOR,
 		FOREACH,
 		PRINT,
+		PRINTUP,
 		PLUSPLUS,
 		MINUSMINUS,
 		SEPARATOR,
