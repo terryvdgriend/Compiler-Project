@@ -48,7 +48,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
-			ErrorHandler::getInstance()->addError(Error{ "Token not found &#9785;", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
@@ -102,7 +102,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken->setPartner(nullptr);
 
 		//Add + Next
-		cTokenList.add(pToken);
+		if(currentToken != Token::COMMENT)
+			cTokenList.add(pToken);
 
 		//Levels
 		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN)

@@ -4,3 +4,5 @@
 #include "CompileWhile.h"
 #include "CompileFunction.h"
 #include "CompileDoWhile.h"
+#include "CompileUserFunction.h"
+#include "CompileSwitch.h"
