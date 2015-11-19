@@ -3,7 +3,7 @@
 #include "BaseCommand.h"
 #include "CommandVisitor.h"
 
-bool BaseCommand::is_undefined(Variable& var1, Variable& var2, VirtualMachine& vm) {
+bool BaseCommand::isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm) {
 
 	if (var1.getType() == VariableType::NULLTYPE || var2.getType() == VariableType::NULLTYPE) {
 
@@ -28,4 +28,13 @@ bool BaseCommand::is_undefined(Variable& var1, Variable& var2, VirtualMachine& v
 	}
 
 	return false;
+}
+
+void BaseCommand::throwTypeError(Variable& var1, Variable& var2, VirtualMachine& vm) {
+
+	CommandVisitor cmdVisitor;
+	pair<string, string> words = accept(cmdVisitor);
+
+	ErrorHandler::getInstance()->addError(Error{ "cannot " + words.first + " " + var1.getValue() + " " + words.second + " " + var2.getValue(),".md", -1, -1, Error::error });
+	vm.triggerRunFailure();
 }

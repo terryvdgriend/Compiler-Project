@@ -7,7 +7,7 @@ void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
-	if (is_undefined(variable1, variable2, vm))
+	if (isUndefined(variable1, variable2, vm))
 		return;
 
 	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER) {
@@ -20,10 +20,15 @@ void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 		}
 		else {
 			// Exception delen door 0
+			ErrorHandler::getInstance()->addError(Error{ "Divide by 0", ".md", -1, -1, Error::error });
+			vm.triggerRunFailure();
+			return;
 		}
 	}
 	else {
 		// Exception delen heeft 2 nummers nodig
+		throwTypeError(variable1, variable2, vm);
+		return;
 	}
 }
 
