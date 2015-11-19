@@ -12,9 +12,6 @@ Tokenizer::Tokenizer()
 {
 	mappert =  TokenMap::tm;
 	regexert = TokenRegex::tr;
-
-	//TEMP - later anders oplossen..
-	Functions.push_back("printdown");
 }
 
 std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
