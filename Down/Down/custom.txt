@@ -10,7 +10,6 @@ _number_ **i** is 6
 [ printdown "Binnen enzo" ] 
 ___
 
-
 > Function aanroepen
 
 [ printdown "Buiten enzo" ]

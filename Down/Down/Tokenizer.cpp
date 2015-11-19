@@ -60,17 +60,13 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
 			if (lookaheadToken == Token::IDENTIFIER)
 			{
-				Token::iToken testy  = mappert.find(lookahead)->second;
-				//if (testy == nullptr)
-				
-				if (std::find(Identifiers.begin(), Identifiers.end(), lookahead) != Identifiers.end())
+				if (mappert.count(lookahead) != 0)
 				{
 					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 				}
 				pToken->setSub(currentToken);
 				currentToken = lookaheadToken;
-				mappert[lookahead] = Token::FUNCTION;
-				Identifiers.push_back(lookahead);
+				mappert[lookahead] = Token::IDENTIFIER;
 				//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
 				part = lookahead;
 				s = m.suffix().str();
@@ -84,26 +80,17 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 		else if (currentToken == Token::FUNCTION)
 		{
-			/*if ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()))
-			{
-				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			}
-			Functions.push_back(part);*/
+			mappert[part.substr(4, part.length() - 1)] = Token::FUNCTION;
 		}
 		else if (currentToken == Token::FUNCTIONUSE)
 		{
-			//bool shit = (std::find(Functions.begin(), Functions.end(), part) != Functions.end());
-			//if (!shit)
-			//{
-				//ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			//}
+			if (mappert.count(part) != 0)
+				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 		}
 		else if (currentToken == Token::IDENTIFIER)
 		{
-			if (!(std::find(Identifiers.begin(), Identifiers.end(), part) != Identifiers.end()))
-			{
+			if (mappert.count(part) == 0)
 				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			}
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{
