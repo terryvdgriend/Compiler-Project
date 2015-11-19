@@ -16,12 +16,15 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 
 	while (currentNode != nullptr && runsVeryNaz)
 	{
-		
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
 		if (actionNode)
 		{
 			string name = (*actionNode).getContentArrayNonConstant()[0];
 			(*commandDictionary[name]).execute(*this, (*actionNode).getContentArrayNonConstant());
+		}
+		else
+		{
+			cout << "";
 		}
 		(*currentNode).accept(*visitor);
 		currentNode = (*visitor).nextNode;
@@ -70,11 +73,11 @@ void VirtualMachine::setVariable(string key, string value)
 vector<string> VirtualMachine::getFunctionParametersByKey(string key)
 {
 	vector<string> parameterList;
-	map<string, string>::iterator it = functionParamters.begin();
+	map<string, string>::iterator it = functionParameters.begin();
 
-	for (it; it != functionParamters.end(); it++)
+	for (it; it != functionParameters.end(); it++)
 	{
-		if (it->second == functionParamters[key])
+		if (it->second == functionParameters[key])
 		{
 			parameterList.push_back(it->first);
 		}
@@ -86,9 +89,9 @@ vector<string> VirtualMachine::getFunctionParametersByKey(string key)
 vector<string> VirtualMachine::getFunctionParametersByValue(string value)
 {
 	vector<string> parameterList;
-	map<string, string>::iterator it = functionParamters.begin();
+	map<string, string>::iterator it = functionParameters.begin();
 
-	for (it; it != functionParamters.end(); it++)
+	for (it; it != functionParameters.end(); it++)
 	{
 		if (it->second == value)
 		{
@@ -99,9 +102,86 @@ vector<string> VirtualMachine::getFunctionParametersByValue(string value)
 	return parameterList;
 }
 
+string VirtualMachine::getFunctionParameterValueByKey(string key)
+{
+	string parameter;
+	map<string, string>::iterator it = functionParameters.begin();
+
+	for (it; it != functionParameters.end(); it++)
+	{
+		if (it->second == functionParameters[key])
+		{
+			parameter = it->second;
+			break;
+		}
+	}
+
+	return parameter;
+}
+
+vector<Variable> VirtualMachine::addArrayToDictionary(string key, int length)
+{
+	map<string, string>::iterator iter;
+	for (iter = functionParameters.begin(); iter != functionParameters.end(); ++iter)
+	{
+		if (iter->first == key)
+		{
+			vector<Variable> temp(length);
+			variableArrayDictionary.emplace(iter->first, temp);
+			return temp;
+		}
+	}
+}
+
+vector<Variable> VirtualMachine::getVariableArray(string key)
+{
+	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);
+
+	if (hasValueInVariableArrayDictionary(it))
+	{
+		return it->second;
+	}
+}
+
+void VirtualMachine::addItemToVariableArray(string key, Variable value)
+{
+	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);
+
+	if (hasValueInVariableArrayDictionary(it))
+	{
+		for (int i = 0; i < it->second.size(); i++)
+		{
+			Variable curr = it->second.at(i);
+			if (curr.getValue() == "" && curr.getType() < 0)
+			{
+				it->second[i] = value;
+				break;
+			}
+		}
+	}
+	else
+	{
+		// Throw exception: Value not in variableArrayDictionary
+	}
+}
+
+Variable VirtualMachine::getItemFromVariableArray(string key, int index)
+{
+	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);
+
+	if (hasValueInVariableArrayDictionary(it))
+	{
+		return it->second[index];
+	}
+	else
+	{
+		// Throw exception: Value not in variableArray
+	}
+}
+
 void VirtualMachine::setFunctionParameter(string name, string value)
 {
-	functionParamters[name] = value;
+	functionParameters[name] = value;
 }
 
 string VirtualMachine::getReturnValue()
@@ -124,9 +204,14 @@ bool VirtualMachine::hasValueInVariableDictionary(map<string, Variable>::iterato
 	return it != variableDictionary.end();
 }
 
+bool VirtualMachine::hasValueInVariableArrayDictionary(map<string, vector<Variable>>::iterator& it)
+{
+	return it != variableArrayDictionary.end();
+}
+
 bool VirtualMachine::hasValueInFunctionParameters(string key)
 {
-	return functionParamters.find(key) != functionParamters.end();
+	return functionParameters.find(key) != functionParameters.end();
 }
 
 bool VirtualMachine::isAnIdentifier(string name)

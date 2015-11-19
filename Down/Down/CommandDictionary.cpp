@@ -22,6 +22,11 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$--"] = new MinusMinusCommand();
 	commandDictionary["$FUNC"] = new ShowFunctionCommand();
 
+	commandDictionary["$AddArrayToDictionary"] = new AddArrayToDictionary();
+	commandDictionary["$AddLengthToArray"] = new AddLengthToArrayCommand();
+	commandDictionary["$AddItemToArray"] = new AddItemToArrayCommand();
+	commandDictionary["$GetItemFromArray"] = new GetItemFromArrayCommand();
+
 	commandDictionary["IdentifierToReturnValue"] = new IdentifierToReturnValueCommand();
 	commandDictionary["ConstantToReturnValue"] = new ConstantToReturnValueCommand();
 	commandDictionary["getFromReturnValue"] = new GetFromValueCommand();

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CompileSingleStatement.h"
+#include "CompileArrayItem.h"
 
 #define SET_ID_TO_RT  "IdentifierToReturnValue"
 #define SET_CONST_TO_RT  "ConstantToReturnValue"
@@ -16,29 +17,37 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 			string sBuffer, saArguments[2];
 			ActionNode* beforeFunction = nullptr;
 
-			if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
+			if (next->getEnum() == Token::IDENTIFIER && next->next->getEnum() == Token::ARRAY_OPEN)
 			{
-				directFunctionCall = new DirectFunctionCall();
-				saArguments[0] = begin.getText();
-				saArguments[1] = getNextLocalVariableName(sBuffer);
-				directFunctionCall->setArraySize(2);
-				directFunctionCall->setAt(0, SET_ID_TO_RT);
-				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-				CompileCondition condition;
-				condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, *beforeFunction);
+				CompileArrayItem* arrayitem = new CompileArrayItem();
+				arrayitem->Compile(cTokenList, begin, end, listActionNodes, actionBefore);
 			}
 			else
 			{
-				saArguments[0] = SET_ID_TO_RT;
-				saArguments[1] = begin.getText();
+				if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
+				{
+					directFunctionCall = new DirectFunctionCall();
+					saArguments[0] = begin.getText();
+					saArguments[1] = getNextLocalVariableName(sBuffer);
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, SET_ID_TO_RT);
+					directFunctionCall->setAt(1, saArguments[1].c_str());
+					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-				directFunctionCall = new DirectFunctionCall;
-				directFunctionCall->setArraySize(2);
-				directFunctionCall->setAt(0, saArguments[0].c_str());
-				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+					CompileCondition condition;
+					condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, *beforeFunction);
+				}
+				else
+				{
+					saArguments[0] = SET_ID_TO_RT;
+					saArguments[1] = begin.getText();
+
+					directFunctionCall = new DirectFunctionCall;
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, saArguments[0].c_str());
+					directFunctionCall->setAt(1, saArguments[1].c_str());
+					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+				}
 			}
             
             break;

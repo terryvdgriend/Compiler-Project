@@ -92,10 +92,14 @@
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
     <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="AddArrayToDictionary.h" />
+    <ClInclude Include="AddItemToArrayCommand.h" />
+    <ClInclude Include="AddLengthToArrayCommand.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandList.h" />
     <ClInclude Include="CompileArray.h" />
+    <ClInclude Include="CompileArrayItem.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -127,6 +131,7 @@
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="GetFromValueCommand.h" />
+    <ClInclude Include="GetItemFromArrayCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
     <ClInclude Include="IdentifierToReturnValueCommand.h" />
@@ -160,8 +165,12 @@
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="AddArrayToDictionary.cpp" />
+    <ClCompile Include="AddItemToArrayCommand.cpp" />
+    <ClCompile Include="AddLengthToArrayCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CompileArray.cpp" />
+    <ClCompile Include="CompileArrayItem.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
@@ -195,6 +204,7 @@
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />
+    <ClCompile Include="GetItemFromArrayCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
     <ClCompile Include="IdentifierToReturnValueCommand.cpp" />

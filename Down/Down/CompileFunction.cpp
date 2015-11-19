@@ -9,6 +9,7 @@ CompileFunction::CompileFunction()
 {
 	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::FUNCTIONUSE] = "$FUNC";
+	tokenMap[Token::LENGTH] = "$LENGTH";
 }
 
 

@@ -64,7 +64,8 @@ public:
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
 		SWITCH,
-		ANY
+		ANY,
+		LENGTH
 	};
 
 public:
