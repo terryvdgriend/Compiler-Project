@@ -5,6 +5,7 @@ class LinkedActionList
 {
 	public:
 		LinkedActionList();
+		LinkedActionList(const LinkedActionList &other);
 		~LinkedActionList();
 		ActionNode* insertBefore(ActionNode* right, ActionNode* value);
 		ActionNode* insertLast(ActionNode* value);

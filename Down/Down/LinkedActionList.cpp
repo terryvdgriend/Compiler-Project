@@ -9,6 +9,13 @@ LinkedActionList::LinkedActionList()
 	this->last = nullptr;
 }
 
+LinkedActionList::LinkedActionList(const LinkedActionList & other)
+{
+	count = other.count;
+	first = other.first;
+	last = other.last;
+}
+
 ActionNode* LinkedActionList::add(ActionNode* value){
 	return this->insertLast(value);
 }

@@ -75,9 +75,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
 			}
 		}
-		else if (currentToken == Token::FUNCTION)
+		else if (currentToken == Token::FUNCTION_DECLARE)
 		{
-			mappert[part.substr(4, part.length() - 1)] = Token::FUNCTION;
+			mappert[part.substr(4, part.length() - 1)] = Token::FUNCTION_CALL;
+			part = part.substr(4, part.length() - 1);
 		}
 		else if (currentToken == Token::FUNCTIONUSE)
 		{

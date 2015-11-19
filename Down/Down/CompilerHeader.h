@@ -5,3 +5,4 @@
 #include "CompileFunction.h"
 #include "CompileDoWhile.h"
 #include "CompileUserFunction.h"
+#include "CompileGetFunction.h"

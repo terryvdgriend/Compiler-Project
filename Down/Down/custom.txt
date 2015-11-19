@@ -4,15 +4,15 @@ _number_ **i** is 1337
 
 ---
 ### Calcy 
-[ printdown "Calcy functie met iets leuks: " ]  
+> [ printdown "Calcy functie met iets leuks: " ]  
 _number_ **a** is 1
 _number_ **b** is 2
 _number_ **c** is **a** plus **b**
-[ printdown **c** ]
+> [ printdown **c** ]
 > [ printdown **functieVar** ]  
 ___
 
 > Function aanroepen
 
-[ printdown "Buiten enzo" ]
+> [ printdown "Buiten enzo" ]
 [ Calcy ]

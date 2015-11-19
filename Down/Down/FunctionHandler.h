@@ -1,15 +1,19 @@
 #pragma once
 #include "LinkedActionList.h"
-#include "ActionNode.h"
 
 class Function
 {
 private:
 	std::string _naam;
-	vector<LinkedActionList> _params;
-	LinkedActionList _body;
+	vector<LinkedActionList*> _params;
+	LinkedActionList* _body;
 public:
-	Function(string naam, vector<LinkedActionList> params, LinkedActionList body);
+	Function(string naam, vector<LinkedActionList*> params, LinkedActionList* body);
+	std::string getName() { return _naam; };
+	vector<LinkedActionList*> getParams() { return _params; };
+	LinkedActionList* getBody() { 
+		return new LinkedActionList(*_body);
+	};
 	~Function();
 };
 

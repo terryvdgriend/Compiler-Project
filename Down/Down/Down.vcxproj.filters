@@ -295,6 +295,9 @@
     <ClInclude Include="FunctionHandler.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CompileGetFunction.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -473,6 +476,9 @@
     </ClCompile>
     <ClCompile Include="FunctionHandler.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetFunction.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

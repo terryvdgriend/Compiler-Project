@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "FunctionHandler.h"
 
-Function::Function(string naam,vector<LinkedActionList> params, LinkedActionList body)
+Function::Function(string naam,vector<LinkedActionList*> params, LinkedActionList* body)
 {
 	_naam = naam;
 	_params = params;

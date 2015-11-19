@@ -5,15 +5,16 @@
 
 CompileUserFunction::CompileUserFunction() 
 {
-	_compiledStatement = new LinkedActionList();
-	//_condition = new LinkedActionList();
 	_body = new LinkedActionList();
-	_compiledStatement->add(new DoNothingNode());
+}
+
+void CompileUserFunction::ConnectList() {
+	Function func = Function(functionName,_params,_body);
+	FunctionHandler::getInstance()->addFunction(func);
 }
 
 void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token & end, LinkedActionList & listActionNodes, ActionNode & actionBefore)
 {
-	//begin = *begin.getPartner();
 	Token* current = &begin;
 	int Level = begin.getLevel();
 
@@ -21,7 +22,7 @@ void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token 
 	//
 	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
 	expected.push_back(TokenExpectation(Level, Token::FUNCTION_OPEN));
-	expected.push_back(TokenExpectation(Level, Token::FUNCTION));
+	expected.push_back(TokenExpectation(Level, Token::FUNCTION_DECLARE));
 	expected.push_back(TokenExpectation(Level + 1, Token::ANY));
 	expected.push_back(TokenExpectation(Level, Token::FUNCTION_CLOSE));
 	for (TokenExpectation expectation : expected)
@@ -32,6 +33,9 @@ void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token 
 		if (expectation.Level == Level) {
 			if (current->getEnum() == Token::FUNCTION_OPEN) {
 				bodyEnd = current->getPartner();
+			}
+			else if (current->getEnum() == Token::FUNCTION_DECLARE) {
+				functionName = current->getText();
 			}
 			if (current->getEnum() != expectation.TokenType) {
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
@@ -53,6 +57,7 @@ void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token 
 			}
 		}
 	}
+	ConnectList();
 	begin = *current;
 }
 void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, Token & end)
