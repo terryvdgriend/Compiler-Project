@@ -10,6 +10,7 @@ private:
 	LinkedActionList* _compiledStatement;
 	std::vector<LinkedActionList>* _params;
 	LinkedActionList* _body;
+	std::string functionName;
 public:
 	CompileUserFunction();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
