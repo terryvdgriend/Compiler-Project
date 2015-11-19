@@ -277,9 +277,6 @@
     <ClInclude Include="CommandDictionary.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ModuloCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
@@ -289,8 +286,14 @@
     <ClInclude Include="Tokenregex.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
+    <ClInclude Include="CompileFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="CompileUserFunction.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionHandler.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -467,6 +470,9 @@
     </ClCompile>
     <ClCompile Include="CompileUserFunction.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionHandler.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
