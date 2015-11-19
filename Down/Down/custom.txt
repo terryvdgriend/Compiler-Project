@@ -3,12 +3,12 @@ _number_ **i** is 1337
 > Functie maken  
 
 ---
-### Calcy with _number_ **functieVar** 
-[ printdown "Calcy functie met para: " ] 
-[ printdown **functieVar** ] 
+### Calcy 
+[ printdown "Calcy functie met para: " ]   
+> [ printdown **functieVar** ]  
 ___
 
 > Function aanroepen
 
 [ printdown "Buiten enzo" ]
-[ Calcy  1 ]
+[ Calcy ]

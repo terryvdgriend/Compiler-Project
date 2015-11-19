@@ -8,11 +8,13 @@ class CompileUserFunction :
 {
 private:
 	LinkedActionList* _compiledStatement;
-	//LinkedActionList* _condition;
+	std::vector<LinkedActionList>* _params;
 	LinkedActionList* _body;
 public:
 	CompileUserFunction();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+	void CompileParams(LinkedList & cTokenList, Token & begin, Token & end);
+	void CompileBody(LinkedList & cTokenList, Token & begin, Token & end, int Level);
 	Compiler * Create() { return new CompileUserFunction(); };
 	~CompileUserFunction();
 };
