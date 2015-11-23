@@ -95,21 +95,21 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			else
 				break;
 		}
-		if (expectation.Level == whileLevel){
+		if (expectation.getLevel() == whileLevel){
 			if (current == nullptr){
 				ErrorHandler::getInstance()->addError(Error{ "if statement not completed", ".md",-1, -1, Error::error });
 				begin = end;
 				break;
 			}
-			if (current->getEnum() != expectation.TokenType){
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+			if (current->getEnum() != expectation.getTokenType()){
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
 				begin = end;
 				break;
 			}
 			else
 				current = current->next;
 		}
-		else if (expectation.Level >= whileLevel){
+		else if (expectation.getLevel() >= whileLevel){
 			if (_condition->Count() == 0){
 				CompileCondition* condition = new CompileCondition();
 				_condition->add(new DoNothingNode());
@@ -180,21 +180,21 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				while (current->getEnum() == Token::NEWLINE){
 					current = current->next;
 				}
-				if (expectation.Level == whileLevel){
+				if (expectation.getLevel() == whileLevel){
 					if (current == nullptr){
 						ErrorHandler::getInstance()->addError(Error{ "else statement not completed", ".md", -1, -1, Error::error });
 						begin = end;
 						break;
 					}
-					if (current->getEnum() != expectation.TokenType){
-						ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+					if (current->getEnum() != expectation.getTokenType()){
+						ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
 						begin = end;
 						break;
 					}
 					else
 						current = current->next;
 				}
-				else if (expectation.Level >= whileLevel){
+				else if (expectation.getLevel() >= whileLevel){
 					bodyNode = _bodyElse->add(new DoNothingNode());
 					Token* prev = current->previous;
 					while (prev->getEnum() != Token::BODY_OPEN){

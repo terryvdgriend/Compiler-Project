@@ -30,15 +30,15 @@ void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token 
 		while (current->getEnum() == Token::NEWLINE) {
 			current = current->next;
 		}
-		if (expectation.Level == Level) {
+		if (expectation.getLevel() == Level) {
 			if (current->getEnum() == Token::FUNCTION_OPEN) {
 				bodyEnd = current->getPartner();
 			}
 			else if (current->getEnum() == Token::FUNCTION_DECLARE) {
 				functionName = current->getText();
 			}
-			if (current->getEnum() != expectation.TokenType) {
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+			if (current->getEnum() != expectation.getTokenType()) {
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
 				begin = end;
 				break;
 			}
