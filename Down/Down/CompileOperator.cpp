@@ -53,18 +53,8 @@ void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedAction
 
 	saArguments[0] = sFunctionName;
 	
-	if (sFunctionName == "$PRINTDOWN"){
-		saArguments[1] = "printdown";
-		saArguments[2] = getNextLocalVariableName(sBuffer);
-	}
-	if (sFunctionName == "$PRINTUP") {
-		saArguments[1] = "printup";
-		saArguments[2] = getNextLocalVariableName(sBuffer);
-	}
-	else{
-		saArguments[1] = getNextLocalVariableName(sBuffer);
-		saArguments[2] = getNextLocalVariableName(sBuffer);
-	}
+	saArguments[1] = getNextLocalVariableName(sBuffer);
+	saArguments[2] = getNextLocalVariableName(sBuffer);
 
 	for (int n = 0; n<maxN; n++)
 	{

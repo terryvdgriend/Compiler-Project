@@ -15,7 +15,7 @@ public:
 	std::string getParams() { return _params; };
 	bool		isUserdef() { return _userdef; };
 	LinkedActionList* getBody() { 
-		return new LinkedActionList(*_body);
+		return _body;
 	};
 	~Function();
 };

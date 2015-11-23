@@ -1,4 +1,4 @@
 
-[ printdown "henkdelul" ]
+[ printdown 1 plus 1 ]
 [ printdown 1337 ]
 [ printdown 1336 plus 1 ]

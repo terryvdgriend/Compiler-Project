@@ -1,5 +1,9 @@
 #include "stdafx.h"
 #include "CompileGetFunction.h"
+#include "DirectFunctionCall.h"
+#include "FunctionCall.h"
+
+#define szGetFromReturnValue "getFromReturnValue"
 
 
 CompileGetFunction::CompileGetFunction()
@@ -7,11 +11,20 @@ CompileGetFunction::CompileGetFunction()
 	_body = new LinkedActionList();
 	_compiledStatement = new LinkedActionList();
 	_compiledStatement->add(new DoNothingNode());
+	_functionParams = new LinkedActionList();
+	_functionCall = new LinkedActionList();
 }
 
 void CompileGetFunction::ConnectLists()
 {
-	_compiledStatement->add(_body);
+	
+	if (userdef) {
+		_compiledStatement->add(_body);
+	}
+	else {
+		_compiledStatement->add(_functionParams);
+		_compiledStatement->add(_functionCall);
+	}
 }
 
 void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token & end, LinkedActionList & listActionNodes, ActionNode & actionBefore)
@@ -33,13 +46,11 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 			if (current->getEnum() == Token::FUNCTION_CALL) {
 				for (auto p : FunctionHandler::getInstance()->getFunctions()) 
 				{
-					if (!p.isUserdef())
-					{
-						Text::Print("WHOLLA");
-					}
 					if (p.getName() == current->getText()) {
+						_name = p.getName();
 						_params = p.getParams();
 						_body = p.getBody();
+						userdef = p.isUserdef();
 						break;
 					}
 				}
@@ -53,15 +64,57 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 				current = current->next;
 		}
 	}
-	if (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE)
-		CompileParams(cTokenList, *current, end);
+	if (!userdef)
+		CompileNotUserDefined(cTokenList, *current, end);
+	else 
+		CompileUserDefined(cTokenList, *current, end);
+
 
 	ConnectLists();
 	begin = *current;
 	listActionNodes.add(_compiledStatement);
 }
 
-void CompileGetFunction::CompileParams(LinkedList & cTokenList, Token & begin, Token & end)
+void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
+{
+	Token *current = &begin;
+	std::vector<std::string> parameters;
+	_functionParams->add(new DoNothingNode());
+	while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
+		// compile condition
+		Token * seperator = current;
+		while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
+			if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE)
+				break;
+			seperator = seperator->next;
+		}
+		CompileCondition condition = CompileCondition();
+		condition.Compile(cTokenList, *current, *seperator, *_functionParams, *_functionParams->getLast());
+		/// create direct functioncall
+		std::string             sBuffer;
+		DirectFunctionCall     *pDirectFunction = nullptr;
+		std::string tempVar = getNextLocalVariableName(sBuffer);
+		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction->setArraySize(2);
+		pDirectFunction->setAt(0, szGetFromReturnValue);
+		pDirectFunction->setAt(1, tempVar.c_str());
+		_functionParams->insertBefore(_functionParams->getLast(),pDirectFunction);
+		///
+		parameters.push_back(tempVar);
+	}
+
+
+	FunctionCall* pFunction = new FunctionCall();
+	pFunction->setArraySize(parameters.size()+1);
+
+	pFunction->setAt(0, _name.c_str());
+	for (int n = 0; n < parameters.size(); n++)
+		pFunction->setAt(n+1, parameters[n].c_str());
+
+	_functionCall->insertLast(pFunction);
+}
+
+void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
 {
 	// dingen;
 }

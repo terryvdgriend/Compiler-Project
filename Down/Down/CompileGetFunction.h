@@ -10,14 +10,20 @@ class CompileGetFunction :
 private:
 	LinkedActionList* _compiledStatement;
 	std::string _params;
+	std::string _name;
 	LinkedActionList* _body;
+	LinkedActionList* _functionParams;
+	LinkedActionList* _functionCall;
+	bool userdef;
 public:
 	CompileGetFunction();
 	void ConnectLists();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void CompileParams(LinkedList& cTokenList, Token& begin, Token& end);
-
+	void CompileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
+	void CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end);
 	Compiler * Create() { return new CompileGetFunction(); };
+
+
 	~CompileGetFunction();
 };
 

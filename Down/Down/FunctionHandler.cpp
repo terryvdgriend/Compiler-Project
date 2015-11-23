@@ -32,11 +32,14 @@ FunctionHandler::FunctionHandler()
 }
 
 //Dit moet!
-FunctionHandler* FunctionHandler::handler = NULL;
+FunctionHandler* FunctionHandler::handler = nullptr;
 std::list<Function> FunctionHandler::functions = std::list<Function>();
 
 FunctionHandler* FunctionHandler::getInstance()
 {
+	if (handler == nullptr) {
+		handler = new FunctionHandler();
+	}
 	return handler;
 }
 
