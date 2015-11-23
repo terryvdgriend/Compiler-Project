@@ -31,7 +31,12 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 		}
 		if (expectation.Level == Level) {
 			if (current->getEnum() == Token::FUNCTION_CALL) {
-				for (auto p : FunctionHandler::getInstance()->getFunctions()) {
+				for (auto p : FunctionHandler::getInstance()->getFunctions()) 
+				{
+					if (!p.isUserdef())
+					{
+						Text::Print("WHOLLA");
+					}
 					if (p.getName() == current->getText()) {
 						_params = p.getParams();
 						_body = p.getBody();

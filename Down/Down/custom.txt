@@ -1,18 +1,4 @@
 
-_number_ **i** is 1337
-> Functie maken  
-
----
-### Calcy 
-> [ printdown "Calcy functie met iets leuks: " ]  
-_number_ **a** is 1
-_number_ **b** is 2
-_number_ **c** is **a** plus **b**
-> [ printdown **c** ]
-> [ printdown **functieVar** ]  
-___
-
-> Function aanroepen
-
-> [ printdown "Buiten enzo" ]
-[ Calcy ]
+[ printdown "henkdelul" ]
+[ printdown 1337 ]
+[ printdown 1336 plus 1 ]

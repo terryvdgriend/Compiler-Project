@@ -46,7 +46,7 @@ struct TokenMap{
 		mappert[std::string(",")] = Token::AND_PARA;
 		mappert[std::string("default")] = Token::SWITCH_DEFAULT;
 		mappert[std::string("case")] = Token::SWITCH_CASE;
-		mappert[std::string("printdown")] = Token::PRINT;
+		mappert[std::string("printdown")] = Token::FUNCTION_CALL;//FUNCTION_CALL / PRINT
 		mappert[std::string("printup")] = Token::PRINTUP;
 		//
 		mappert[std::string("_fact_")] = Token::TYPE_FACT;

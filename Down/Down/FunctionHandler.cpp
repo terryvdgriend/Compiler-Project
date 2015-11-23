@@ -25,8 +25,9 @@ Function::~Function()
 FunctionHandler::FunctionHandler()
 {
 	//Toevoegen van standaard functies, hier????????
-	//gebeurd op veel plekken al, en is lelijk
-	this->addFunction(Function{"printdown","s",nullptr});
+	//gebeurd op veel plekken al, en is lelijk //TODO: code cleanup op andere plekken
+	//this->addFunction(Function{"printdown","s",nullptr});//s=string
+	this->addFunction(Function{ "printdown","a",nullptr }); //a = all / any
 	this->addFunction(Function{ "printup","s",nullptr });
 }
 

@@ -13,6 +13,7 @@ public:
 	Function(string naam, std::string params, LinkedActionList* body,bool userdef);
 	std::string getName() { return _naam; };
 	std::string getParams() { return _params; };
+	bool		isUserdef() { return _userdef; };
 	LinkedActionList* getBody() { 
 		return new LinkedActionList(*_body);
 	};
