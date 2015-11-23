@@ -5,12 +5,12 @@ class Function
 {
 private:
 	std::string _naam;
-	vector<LinkedActionList*> _params;
+	std::string _params;
 	LinkedActionList* _body;
 public:
-	Function(string naam, vector<LinkedActionList*> params, LinkedActionList* body);
+	Function(string naam, std::string params, LinkedActionList* body);
 	std::string getName() { return _naam; };
-	vector<LinkedActionList*> getParams() { return _params; };
+	std::string getParams() { return _params; };
 	LinkedActionList* getBody() { 
 		return new LinkedActionList(*_body);
 	};

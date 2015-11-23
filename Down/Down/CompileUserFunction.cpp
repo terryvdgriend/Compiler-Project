@@ -63,9 +63,7 @@ void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token 
 void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, Token & end)
 {
 	Token* current = &begin;
-
-
-	//do dingen
+	
 
 
 	begin = *current;
@@ -74,7 +72,7 @@ void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, 
 void CompileUserFunction::CompileBody(LinkedList & cTokenList, Token & begin, Token & end,int Level)
 {
 	Token* current = &begin;
-
+	_body->add(new DoNothingNode());
 	while (current->getLevel() > Level) {
 		Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
 
@@ -87,8 +85,6 @@ void CompileUserFunction::CompileBody(LinkedList & cTokenList, Token & begin, To
 		}
 		delete compiledBodyPart;
 	}
-
-
 	begin = *current;
 }
 

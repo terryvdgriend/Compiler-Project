@@ -296,7 +296,7 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="CompileGetFunction.h">
-      <Filter>Header Files\Compiler</Filter>
+      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

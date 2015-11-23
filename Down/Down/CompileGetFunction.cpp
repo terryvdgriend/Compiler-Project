@@ -58,6 +58,7 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 
 void CompileGetFunction::CompileParams(LinkedList & cTokenList, Token & begin, Token & end)
 {
+	// dingen;
 }
 
 CompileGetFunction::~CompileGetFunction()

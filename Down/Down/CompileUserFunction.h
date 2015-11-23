@@ -8,7 +8,7 @@ class CompileUserFunction :
 	public Compiler
 {
 private:
-	std::vector<LinkedActionList*> _params;
+	string _params;
 	LinkedActionList* _body;
 	std::string functionName;
 public:

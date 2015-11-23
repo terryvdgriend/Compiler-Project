@@ -9,7 +9,7 @@ class CompileGetFunction :
 {
 private:
 	LinkedActionList* _compiledStatement;
-	std::vector<LinkedActionList*> _params;
+	std::string _params;
 	LinkedActionList* _body;
 public:
 	CompileGetFunction();
