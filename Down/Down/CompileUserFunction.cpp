@@ -9,7 +9,7 @@ CompileUserFunction::CompileUserFunction()
 }
 
 void CompileUserFunction::ConnectList() {
-	Function func = Function(functionName,_params,_body);
+	Function func = Function(functionName,_params,_body,true);
 	FunctionHandler::getInstance()->addFunction(func);
 }
 
@@ -47,7 +47,7 @@ void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token 
 		}
 		else {
 			//check if enum is comingparam else body;
-			if (current->getEnum() == Token::COMINGPARAMETER) {
+			if (current->getEnum() == Token::START_PARAMETERS) {
 				CompileParams(cTokenList,* current, end);
 				CompileBody(cTokenList, *current, *bodyEnd,Level);
 			}
@@ -64,7 +64,32 @@ void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, 
 {
 	Token* current = &begin;
 	
-
+	while (current->getEnum() != Token::NEWLINE)
+	{
+		if (current->getEnum() == Token::IDENTIFIER)
+		{
+			switch (current->getSub()) {
+			case Token::TYPE_NUMBER: {
+				_params += 'i';
+				break;
+			}
+			case Token::TYPE_FACT: {
+				_params += 'b';
+				break;
+			}
+			case Token::TYPE_TEXT: {
+				_params += 's';
+				break;
+			}
+			default: {
+				_params += 'a';
+				break;
+			}
+			}
+		}
+			
+		current = current->next;
+	}
 
 	begin = *current;
 }

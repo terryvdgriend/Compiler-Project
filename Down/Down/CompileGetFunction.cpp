@@ -112,10 +112,17 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		pFunction->setAt(n+1, parameters[n].c_str());
 
 	_functionCall->insertLast(pFunction);
+	begin = *current->next;
 }
 
 void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
 {
+	Token *current = &begin;
+	while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
+		current = current->next;
+	}
+
+	begin = *current;
 	// dingen;
 }
 

@@ -1,4 +1,13 @@
+[ printdown "test" ]
+> Functie maken
 
-[ printdown 1 plus 1 ]
-[ printdown 1337 ]
-[ printdown 1336 plus 1 ]
+---
+### Calcy gets _number_ **age** , _text_  **name**
+_number_ **i** is 1 plus 1
+[ printdown **i** ] 
+___
+
+
+> Function aanroepen
+
+[ printdown "Buiten enzo" ]
