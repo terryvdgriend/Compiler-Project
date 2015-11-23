@@ -7,6 +7,13 @@ Function::Function(string naam, std::string params, LinkedActionList* body)
 	_params = params;
 	_body = body;
 }
+Function::Function(string naam, std::string params, LinkedActionList * body, bool userdef)
+{
+	_naam = naam;
+	_params = params;
+	_body = body;
+	_userdef = userdef;
+}
 Function::~Function()
 {
 }
@@ -19,6 +26,8 @@ FunctionHandler::FunctionHandler()
 {
 	//Toevoegen van standaard functies, hier????????
 	//gebeurd op veel plekken al, en is lelijk
+	this->addFunction(Function{"printdown","s",nullptr});
+	this->addFunction(Function{ "printup","s",nullptr });
 }
 
 //Dit moet!

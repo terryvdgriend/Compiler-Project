@@ -7,8 +7,10 @@ private:
 	std::string _naam;
 	std::string _params;
 	LinkedActionList* _body;
+	bool _userdef = false;
 public:
 	Function(string naam, std::string params, LinkedActionList* body);
+	Function(string naam, std::string params, LinkedActionList* body,bool userdef);
 	std::string getName() { return _naam; };
 	std::string getParams() { return _params; };
 	LinkedActionList* getBody() { 
