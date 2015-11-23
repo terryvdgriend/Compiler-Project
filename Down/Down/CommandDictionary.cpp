@@ -3,6 +3,20 @@
 #include "CommandDictionary.h"
 #include "CommandList.h"
 
+ map<string, shared_ptr<BaseCommand>>  CommandDictionary::CustFunc()
+{
+	map<string, shared_ptr<BaseCommand>> asd;
+	asd["printdown"] = std::make_shared<ShowFunctionCommand>();
+	asd["printup"] = std::make_shared<ShowFunctionCommand>();
+	// LEES: 
+	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
+	// en geef dan aan welke classe hiervoor gebruikt moet worden (die overigens wel een baseCommand override)
+	
+	//asd["DOEIETS"] = std::make_shared<ShowFunctionCommand>();
+	
+	//
+	return asd;
+};
 
 CommandDictionary::CommandDictionary()
 {
@@ -27,15 +41,13 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
 	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
 
-	commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
-	commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
+	//commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
+	//commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
 	
-	//TokenMap::CustFunc();
-	//CustFunc;
-	//for (std::pair<string, shared_ptr<BaseCommand>> cf : TokenMap::CustFunc())
-	//{
-		//commandDictionary[std::string(cf.first)] = cf.second;
-	//}
+	for (std::pair<string, shared_ptr<BaseCommand>> cf : CustFunc())
+	{
+		commandDictionary[std::string(cf.first)] = cf.second;
+	}
 }
 
 map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()
