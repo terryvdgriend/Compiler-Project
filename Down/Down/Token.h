@@ -47,8 +47,8 @@ public:
 		PRIVATE,
 		FOR,
 		FOREACH,
-		PRINT,
-		PRINTUP,
+		PRINT, // TODO: mag weg nu?
+		PRINTUP, // TODO: mag weg nu?
 		PLUSPLUS,
 		MINUSMINUS,
 		SEPARATOR,
@@ -70,7 +70,7 @@ public:
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
 		SWITCH,
-		ANY
+		ANY // ALS LAATSTE ! (?)
 	};
 
 public:
