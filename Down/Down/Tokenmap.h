@@ -1,5 +1,20 @@
 #pragma once
+#include "CommandList.h"
+
+
 struct TokenMap{
+
+	static map<string, shared_ptr<BaseCommand>> CustFunc()
+	{
+		map<string, shared_ptr<BaseCommand>> commandDictionary;
+		commandDictionary["printdown"] = make_shared<ShowFunctionCommand>();
+		commandDictionary["printup"] = make_shared<ShowUpFunctionCommand>();
+		
+		//list<std::string> lFunc;
+		//lFunc.push_back("printdown");
+		return commandDictionary;
+	};
+
 	static map<string, Token::iToken> get()
 	{
 		map<string, Token::iToken> mappert;
@@ -46,13 +61,19 @@ struct TokenMap{
 		mappert[std::string(",")] = Token::AND_PARA;
 		mappert[std::string("default")] = Token::SWITCH_DEFAULT;
 		mappert[std::string("case")] = Token::SWITCH_CASE;
-		mappert[std::string("printdown")] = Token::FUNCTION_CALL;//FUNCTION_CALL / PRINT
-		mappert[std::string("printup")] = Token::FUNCTION_CALL;
 		//
 		mappert[std::string("_fact_")] = Token::TYPE_FACT;
 		mappert[std::string("_number_")] = Token::TYPE_NUMBER;
 		mappert[std::string("_text_")] = Token::TYPE_TEXT;
 		//
+		//list<string> qwert = CustFunc();
+		for (std::pair<string, shared_ptr<BaseCommand>> cf : CustFunc())
+		{
+			mappert[std::string(cf.first)] = Token::FUNCTION_CALL;
+		}
+		//mappert[std::string("printdown")] = Token::FUNCTION_CALL;//FUNCTION_CALL / PRINT
+		//mappert[std::string("printup")] = Token::FUNCTION_CALL;
+
 		return mappert;
 	}
 	
