@@ -45,21 +45,21 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 		while (current->getEnum() == Token::NEWLINE){
 			current = current->next;
 		}
-		if (expectation.Level == whileLevel){
+		if (expectation.getLevel() == whileLevel){
 			if (current == nullptr){
 				ErrorHandler::getInstance()->addError(Error{ "do while statement not completed", ".md", -1, -1, Error::error });
 				begin = end;
 				break;
 			}
-			if (current->getEnum() != expectation.TokenType){
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
+			if (current->getEnum() != expectation.getTokenType()){
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
 				begin = end;
 				break;
 			}
 			else
 				current = current->next;
 		}
-		else if (expectation.Level >= whileLevel){
+		else if (expectation.getLevel() >= whileLevel){
 			if (_body->Count() == 0){
 				Token* prev = current->previous;
 				while (prev->getEnum() != Token::BODY_OPEN){
