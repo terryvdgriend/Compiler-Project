@@ -1,6 +1,8 @@
+#pragma once
 #include "stdafx.h"
 #include "CommandDictionary.h"
 #include "CommandList.h"
+
 
 CommandDictionary::CommandDictionary()
 {
@@ -27,6 +29,13 @@ CommandDictionary::CommandDictionary()
 
 	commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
 	commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
+	
+	//TokenMap::CustFunc();
+	//CustFunc;
+	//for (std::pair<string, shared_ptr<BaseCommand>> cf : TokenMap::CustFunc())
+	//{
+		//commandDictionary[std::string(cf.first)] = cf.second;
+	//}
 }
 
 map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()
