@@ -12,6 +12,7 @@ private:
 	std::string _params;
 	std::string _name;
 	LinkedActionList* _body;
+	LinkedActionList* _parameters;
 	LinkedActionList* _functionParams;
 	LinkedActionList* _functionCall;
 	bool userdef;
