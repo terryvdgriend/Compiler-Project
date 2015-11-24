@@ -3,7 +3,7 @@
 
 struct TokenExpectation
 {
-private:
+public:
 	int Level;
 	Token::iToken TokenType;
 public:

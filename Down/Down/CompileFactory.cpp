@@ -11,6 +11,7 @@ CompileFactory::CompileFactory()
 	mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileGetFunction();//Bestaande functie
 	mappert[Token::FUNCTION_OPEN] = new CompileUserFunction(); // aangemaakte functie
 	mappert[Token::IDENTIFIER] = new CompileEquals();
+	mappert[Token::SWITCH] = new CompileSwitch();
 	mappert[Token::NEWLINE] = nullptr;
 }
 

@@ -95,6 +95,7 @@
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandList.h" />
+    <ClInclude Include="CommandVisitor.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="CompilerHeader.h" />
     <ClInclude Include="CompileSingleStatement.h" />
+    <ClInclude Include="CompileSwitch.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
     <ClInclude Include="CompileUserFunction.h" />
     <ClInclude Include="CompileWhile.h" />
@@ -147,6 +149,7 @@
     <ClInclude Include="SmallerEqualsToCommand.h" />
     <ClInclude Include="SmallerThanCommand.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SwitchNode.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
@@ -162,7 +165,9 @@
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
+    <ClCompile Include="CommandVisitor.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
@@ -178,6 +183,7 @@
     <ClCompile Include="CompilePlusMinus.cpp" />
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="CompileSingleStatement.cpp" />
+    <ClCompile Include="CompileSwitch.cpp" />
     <ClCompile Include="CompileTimesDivideModulo.cpp" />
     <ClCompile Include="CompileUserFunction.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
@@ -219,6 +225,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwitchNode.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TimesCommand.cpp" />
     <ClCompile Include="Token.cpp" />

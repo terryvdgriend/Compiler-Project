@@ -2,6 +2,7 @@
 #include "ShowFunctionCommand.h"
 #include <iostream>
 #include <algorithm>
+#include "CommandVisitor.h"
 
 void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -16,6 +17,7 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters
 	cout << val << endl;
 }
 
+
 void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
 	Variable variable2 = *vm.getVariable(parameters.at(1));
@@ -27,4 +29,7 @@ void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& paramete
 
 	val.erase(remove(val.begin(), val.end(), '\"'), val.end());
 	cout << "UP: " + val << endl;
+
+//std::pair<string, string> ShowFunctionCommand::accept(CommandVisitor& commandVisitor) {
+//	return commandVisitor.visit(*this);
 }
