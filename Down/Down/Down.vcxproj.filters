@@ -282,12 +282,18 @@
     </ClInclude>
     <ClInclude Include="ModuloCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Tokenmap.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
     <ClInclude Include="Tokenregex.h">
       <Filter>Header Files\Tokenizer</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFor.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUnary.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -462,9 +468,18 @@
     <ClCompile Include="ModuloCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="CompileFor.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUnary.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="if else elseif.md">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="for.txt">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
