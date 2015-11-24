@@ -1,16 +1,18 @@
 #include "stdafx.h"
 #include "FunctionHandler.h"
 
-Function::Function(string naam, std::string params, LinkedActionList* body)
+Function::Function(string naam, std::string params, LinkedList* body, std::vector<Token*> paramTokens)
 {
 	_naam = naam;
 	_params = params;
+	_paramTokens = paramTokens;
 	_body = body;
 }
-Function::Function(string naam, std::string params, LinkedActionList * body, bool userdef)
+Function::Function(string naam, std::string params, LinkedList * body, std::vector<Token*> paramTokes, bool userdef)
 {
 	_naam = naam;
 	_params = params;
+	_paramTokens = paramTokes;
 	_body = body;
 	_userdef = userdef;
 }
@@ -27,8 +29,8 @@ FunctionHandler::FunctionHandler()
 	//Toevoegen van standaard functies, hier????????
 	//gebeurd op veel plekken al, en is lelijk //TODO: code cleanup op andere plekken
 	//this->addFunction(Function{"printdown","s",nullptr});//s=string
-	this->addFunction(Function{ "printdown","a",nullptr }); //a = all / any
-	this->addFunction(Function{ "printup","s",nullptr });
+	this->addFunction(Function{ "printdown","a",nullptr,{} }); //a = all / any
+	this->addFunction(Function{ "printup","s",nullptr,{} });
 }
 
 //Dit moet!

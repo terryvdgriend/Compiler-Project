@@ -75,6 +75,7 @@ public:
 
 public:
 	Token();
+	Token(const Token& other);
 	~Token();
 
 public:

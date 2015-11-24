@@ -6,15 +6,17 @@ class Function
 private:
 	std::string _naam;
 	std::string _params;
-	LinkedActionList* _body;
+	std::vector<Token*> _paramTokens;
+	LinkedList* _body;
 	bool _userdef = false;
 public:
-	Function(string naam, std::string params, LinkedActionList* body);
-	Function(string naam, std::string params, LinkedActionList* body,bool userdef);
+	Function(string naam, string params, LinkedList* body, std::vector<Token*> paramTokens);
+	Function(string naam, string params, LinkedList* body, std::vector<Token*> paramTokens, bool userdef);
 	std::string getName() { return _naam; };
 	std::string getParams() { return _params; };
+	std::vector<Token*> getParamTokens() { return _paramTokens; };
 	bool		isUserdef() { return _userdef; };
-	LinkedActionList* getBody() { 
+	LinkedList* getBody() {
 		return _body;
 	};
 	~Function();

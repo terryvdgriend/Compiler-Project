@@ -44,7 +44,7 @@ int main(int argc, const char * argv[])
 
 	//=========VM==============
 	RunVM(cRunList);
-	if (Errors())
+ 	if (Errors())
 		return 0;
 	
 

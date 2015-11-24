@@ -5,11 +5,11 @@
 
 CompileUserFunction::CompileUserFunction() 
 {
-	_body = new LinkedActionList();
+	_body = new LinkedList();
 }
 
 void CompileUserFunction::ConnectList() {
-	Function func = Function(functionName,_params,_body,true);
+	Function func = Function(functionName,_params,_body,_paramTokens,true);
 	FunctionHandler::getInstance()->addFunction(func);
 }
 
@@ -86,6 +86,7 @@ void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, 
 				break;
 			}
 			}
+			_paramTokens.push_back(new Token(*current));
 		}
 			
 		current = current->next;
@@ -96,20 +97,12 @@ void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, 
 
 void CompileUserFunction::CompileBody(LinkedList & cTokenList, Token & begin, Token & end,int Level)
 {
-	Token* current = &begin;
-	_body->add(new DoNothingNode());
-	while (current->getLevel() > Level) {
-		Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+	Token* current = &(begin);
 
-		if (compiledBodyPart != nullptr) {
-			compiledBodyPart->Compile(cTokenList, *current, end, *_body, *_body->getLast());
-		}
-		else
-		{
-			current = current->next;
-		}
-		delete compiledBodyPart;
-	}
+	do {
+		_body->add(new Token(*current));
+		current = current->next;
+	} while (current != &end);
 	begin = *current;
 }
 

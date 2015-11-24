@@ -9,6 +9,7 @@
 ___
 
 
+_number_ **y** is 1
 > Function aanroepen
-[ Calcy 1 , "dingen" ]
+[ Calcy **y** , "dingen" ]
 [ printdown "Buiten enzo" ]

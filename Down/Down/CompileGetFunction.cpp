@@ -2,12 +2,14 @@
 #include "CompileGetFunction.h"
 #include "DirectFunctionCall.h"
 #include "FunctionCall.h"
+#include "CompileFactory.h"
 
 #define szGetFromReturnValue "getFromReturnValue"
 
 
 CompileGetFunction::CompileGetFunction()
 {
+	_bodyTokens = new LinkedList();
 	_body = new LinkedActionList();
 	_compiledStatement = new LinkedActionList();
 	_compiledStatement->add(new DoNothingNode());
@@ -52,7 +54,8 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 					if (p.getName() == current->getText()) {
 						_name = p.getName();
 						_params = p.getParams();
-						_body = p.getBody();
+						_paramTokens = p.getParamTokens();
+						_bodyTokens = p.getBody();
 						userdef = p.isUserdef();
 						break;
 					}
@@ -121,39 +124,93 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
 {
 	Token *current = &begin;
-	std::vector<std::vector<Token*>> paramList;
+	std::vector<LinkedList*> paramList;
+	int count = 0;
 	if (_params.size() > 0) {
 		_parameters->add(new DoNothingNode());
-		std::vector<Token*> param;
-		while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
+		LinkedList* param = new LinkedList();
+		do {
 			if (current->getEnum() != Token::AND_PARA)
-				param.push_back(current);
+				param->add(new Token(*current));
 			else {
+				param->last->next = nullptr;
+				param->first->previous = nullptr;
+				ConnectParams(_paramTokens.at(count), *param);
 				paramList.push_back(param);
-				param = {};
+				param = new LinkedList();
+				count++;
 			}
 			current = current->next;
-		}
-		paramList.push_back(param);
+			if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) {
+				param->last->next = nullptr;
+				param->first->previous = nullptr;
+				ConnectParams(_paramTokens.at(count), *param);
+				paramList.push_back(param);
+				param = new LinkedList();
+				
+			}
+
+		} while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE && count < _params.size());
 	}
+
+
 
 	for (auto p : paramList) {
-		CompileCondition condition = CompileCondition();
-		condition.Compile(cTokenList, *p.front(),* p.back(),* _parameters, *_parameters->getLast());
-		std::string             sBuffer;
-		DirectFunctionCall     *pDirectFunction = nullptr;
-		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
-		pDirectFunction->setArraySize(2);
-		pDirectFunction->setAt(0, szGetFromReturnValue);
-		pDirectFunction->setAt(1, tempVar.c_str());
-		_parameters->insertBefore(_parameters->getLast(), pDirectFunction);
+		CompileEquals condition = CompileEquals();
+		condition.Compile(*p, *p->first,*p->last,* _parameters, *_parameters->getLast());
 	}
+	Token* currentBody = _bodyTokens->first;
+	_body->add(new DoNothingNode());
+	while (currentBody != nullptr) {
+		Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
 
+		if (compiledBodyPart != nullptr) {
+			compiledBodyPart->Compile(*_bodyTokens, *currentBody, *_bodyTokens->last, *_body, *_body->getLast());
+		}
+		else
+		{
+			currentBody = currentBody->next;
+		}
+		delete compiledBodyPart;
+	}
 
 
 	begin = *current;
 	// dingen;
+}
+
+void CompileGetFunction::ConnectParams(Token * param,LinkedList &paramlist)
+{
+	Token* connectToken = new Token();
+	connectToken->setEnum(Token::EQUALS);
+	connectToken->setLevel(param->getLevel());
+	connectToken->setPositie(-1);
+	connectToken->setPositieInList(-1);
+	connectToken->setRegelnummer(-1);
+	connectToken->setText("=");
+	LinkedList* templist = new LinkedList();
+	templist->add(param);
+	templist->add(connectToken);
+	Token* temp = paramlist.first;
+	while (temp != nullptr) {
+		templist->add(temp);
+		temp = temp->next;
+	}
+	connectToken = new Token();
+	connectToken->setEnum(Token::NEWLINE);
+	connectToken->setLevel(param->getLevel());
+	connectToken->setPositie(-1);
+	connectToken->setPositieInList(-1);
+	connectToken->setRegelnummer(-1);
+	connectToken->setText("\n");
+	templist->add(connectToken);
+	
+	temp = templist->first;
+	paramlist = *new LinkedList();
+	while (temp != nullptr) {
+		paramlist.add(temp);
+		temp = temp->next;
+	}
 }
 
 CompileGetFunction::~CompileGetFunction()

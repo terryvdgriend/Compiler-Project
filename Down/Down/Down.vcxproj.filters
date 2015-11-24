@@ -387,9 +387,6 @@
     <ClCompile Include="DirectFunctionCall.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionCall.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileDoWhile.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
@@ -479,6 +476,9 @@
     </ClCompile>
     <ClCompile Include="CompileGetFunction.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionCall.cpp">
+      <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
