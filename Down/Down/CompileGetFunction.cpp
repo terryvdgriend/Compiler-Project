@@ -13,12 +13,15 @@ CompileGetFunction::CompileGetFunction()
 	_compiledStatement->add(new DoNothingNode());
 	_functionParams = new LinkedActionList();
 	_functionCall = new LinkedActionList();
+	_parameters = new LinkedActionList();
 }
 
 void CompileGetFunction::ConnectLists()
 {
 	
 	if (userdef) {
+		if (_parameters->Count() > 0)
+			_compiledStatement->add(_parameters);
 		_compiledStatement->add(_body);
 	}
 	else {
@@ -118,9 +121,36 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
 {
 	Token *current = &begin;
-	while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
-		current = current->next;
+	std::vector<std::vector<Token*>> paramList;
+	if (_params.size() > 0) {
+		_parameters->add(new DoNothingNode());
+		std::vector<Token*> param;
+		while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
+			if (current->getEnum() != Token::AND_PARA)
+				param.push_back(current);
+			else {
+				paramList.push_back(param);
+				param = {};
+			}
+			current = current->next;
+		}
+		paramList.push_back(param);
 	}
+
+	for (auto p : paramList) {
+		CompileCondition condition = CompileCondition();
+		condition.Compile(cTokenList, *p.front(),* p.back(),* _parameters, *_parameters->getLast());
+		std::string             sBuffer;
+		DirectFunctionCall     *pDirectFunction = nullptr;
+		std::string tempVar = getNextLocalVariableName(sBuffer);
+		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction->setArraySize(2);
+		pDirectFunction->setAt(0, szGetFromReturnValue);
+		pDirectFunction->setAt(1, tempVar.c_str());
+		_parameters->insertBefore(_parameters->getLast(), pDirectFunction);
+	}
+
+
 
 	begin = *current;
 	// dingen;
