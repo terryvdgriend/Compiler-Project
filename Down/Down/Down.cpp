@@ -38,7 +38,7 @@ int main(int argc, const char * argv[])
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = *RunCompiler(&cTokenList, false);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, true);
 	if (Errors())
 		return 0;
 

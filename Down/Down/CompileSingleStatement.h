@@ -3,6 +3,7 @@
 #include "DirectFunctionCall.h"
 #include "FunctionCall.h"
 #include "CompileCondition.h"
+#include "CompileGetFunction.h"
 
 class CompileSingleStatement : public Compiler
 {

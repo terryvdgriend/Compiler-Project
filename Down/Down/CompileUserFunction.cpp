@@ -6,10 +6,11 @@
 CompileUserFunction::CompileUserFunction() 
 {
 	_body = new LinkedList();
+	_returnToken = nullptr;
 }
 
 void CompileUserFunction::ConnectList() {
-	Function func = Function(functionName,_params,_body,_paramTokens,true);
+	Function func = Function(functionName,_params,_body,_paramTokens,_returnToken,true);
 	FunctionHandler::getInstance()->addFunction(func);
 }
 
@@ -68,25 +69,31 @@ void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, 
 	{
 		if (current->getEnum() == Token::IDENTIFIER)
 		{
-			switch (current->getSub()) {
-			case Token::TYPE_NUMBER: {
-				_params += 'i';
-				break;
+			if (current->previous != nullptr && current->previous->getEnum() == Token::RETURNVALUE) {
+				_returnToken = new Token(*current);
 			}
-			case Token::TYPE_FACT: {
-				_params += 'b';
-				break;
+			else {
+				switch (current->getSub()) {
+					case Token::TYPE_NUMBER: {
+						_params += 'i';
+						break;
+					}
+					case Token::TYPE_FACT: {
+						_params += 'b';
+						break;
+					}
+					case Token::TYPE_TEXT: {
+						_params += 's';
+						break;
+					}
+					default: {
+						_params += 'a';
+						break;
+					}
+				}
+				_paramTokens.push_back(new Token(*current));
 			}
-			case Token::TYPE_TEXT: {
-				_params += 's';
-				break;
-			}
-			default: {
-				_params += 'a';
-				break;
-			}
-			}
-			_paramTokens.push_back(new Token(*current));
+			
 		}
 			
 		current = current->next;

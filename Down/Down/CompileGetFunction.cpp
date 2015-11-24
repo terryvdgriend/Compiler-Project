@@ -5,6 +5,7 @@
 #include "CompileFactory.h"
 
 #define szGetFromReturnValue "getFromReturnValue"
+#define SET_ID_TO_RT  "IdentifierToReturnValue"
 
 
 CompileGetFunction::CompileGetFunction()
@@ -56,6 +57,7 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 						_params = p.getParams();
 						_paramTokens = p.getParamTokens();
 						_bodyTokens = p.getBody();
+						_returnToken = p.getReturn();
 						userdef = p.isUserdef();
 						break;
 					}
@@ -159,6 +161,22 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		CompileEquals condition = CompileEquals();
 		condition.Compile(*p, *p->first,*p->last,* _parameters, *_parameters->getLast());
 	}
+	if (_returnToken) {
+		LinkedActionList* rValue = new LinkedActionList();
+		CompileCondition con = CompileCondition();
+		con.Compile(cTokenList, *_returnToken, *_returnToken, *rValue, *rValue->getLast());
+
+		std::string             sBuffer;
+		DirectFunctionCall     *pDirectFunction = nullptr;
+		std::string tempVar = getNextLocalVariableName(sBuffer);
+		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction->setArraySize(2);
+		pDirectFunction->setAt(0, szGetFromReturnValue);
+		pDirectFunction->setAt(1, tempVar.c_str());
+		rValue->insertBefore(rValue->getLast(), pDirectFunction);
+		_body->add(rValue);
+	}
+
 	Token* currentBody = _bodyTokens->first;
 	_body->add(new DoNothingNode());
 	while (currentBody != nullptr) {
@@ -174,6 +192,22 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		delete compiledBodyPart;
 	}
 
+	if (_returnToken) {
+		std::string             sBuffer;
+		DirectFunctionCall     *pDirectFunction = nullptr;
+		std::string tempVar = getNextLocalVariableName(sBuffer);
+		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction->setArraySize(2);
+		pDirectFunction->setAt(0, szGetFromReturnValue);
+		pDirectFunction->setAt(1, tempVar.c_str());
+
+		DirectFunctionCall *directFunctionCall = new DirectFunctionCall();
+		directFunctionCall->setArraySize(2);
+		directFunctionCall->setAt(0, SET_ID_TO_RT);
+		directFunctionCall->setAt(1, _returnToken->getText().c_str());
+		_body->insertBefore(_body->getLast(), directFunctionCall);
+		_body->insertBefore(_body->getLast(), pDirectFunction);
+	}
 
 	begin = *current;
 	// dingen;
