@@ -286,20 +286,20 @@
     <ClInclude Include="Tokenregex.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
-    <ClInclude Include="CompileUserFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileSwitch.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUserFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="ConditionalJumpNode.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="SwitchNode.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

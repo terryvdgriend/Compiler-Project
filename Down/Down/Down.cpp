@@ -74,15 +74,16 @@ bool Errors()
 	return false;
 }
 
-LinkedActionList* RunCompiler(LinkedList* lToken, bool print)
+shared_ptr<LinkedActionList> RunCompiler(LinkedList* lToken, bool print)
 {
 	//=========COMPILER==============
-	LinkedActionList* cRunList{ new LinkedActionList() };
-	cRunList->add(new DoNothingNode());
-	Compute compute{ Compute() };
-	compute.ComputeCompile(lToken, cRunList);
+	unique_ptr<Compute> compute = make_unique<Compute>();
+	shared_ptr<LinkedActionList> cRunList = compute.computeCompile(lToken);
+	
 	if (print)
+	{
 		cRunList->printList();
+	}
 
 	return cRunList;
 }
