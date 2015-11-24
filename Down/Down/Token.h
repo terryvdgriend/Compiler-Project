@@ -23,6 +23,10 @@ public:
 		IDENTIFIER, // VARB **i**
 		NUMBER, // 1-2-3-4
 		TEXT, // "txt" 
+		FACT,
+		TYPE_NUMBER,
+		TYPE_TEXT,
+		TYPE_FACT,
 		CONDITION_OPEN,  // ( -> simuleren?
 		CONDITION_CLOSE, // ) -> simuleren?
 		FUNCTION_OPEN,  // ( -> simuleren?
@@ -43,13 +47,15 @@ public:
 		PRIVATE,
 		FOR,
 		FOREACH,
-		PRINT,
+		PRINT, // TODO: mag weg nu?
+		PRINTUP, // TODO: mag weg nu?
 		PLUSPLUS,
 		MINUSMINUS,
 		SEPARATOR,
 		DECLARATION,
 		IN,
-		FUNCTION,
+		FUNCTION_CALL,
+		FUNCTION_DECLARE,
 		NAMESPACE,
 		COMMENT,
 		ASSIGNMENT,
@@ -64,17 +70,19 @@ public:
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
 		SWITCH,
-		ANY,
+		ANY, // ALS LAATSTE ! (?)
 		LENGTH,
 		ARRAYIDENTIFIER
 	};
 
 public:
 	Token();
+	Token(const Token& other);
 	~Token();
 
 public:
 	virtual void    setText(std::string txt){ Text = txt; };
+	virtual void    setSub(iToken st) { subType = st; };
 	virtual void    setEnum(iToken itoken){ type = itoken; };
 	virtual void    setPartner(Token* partner){ Partner = partner; };
 	virtual void    setPositieInList(int txt){ PositieInList = txt; };
@@ -85,6 +93,7 @@ public:
 
 public:
 	std::string     getText() { return Text; };
+	iToken		    getSub() { return subType; };
 	iToken          getEnum(){ return type; };
 	Token*			getPartner()   { return Partner; };
 	int				getLevel() { return Level; };
@@ -98,6 +107,7 @@ public:
 
 private:
 	std::string     Text;
+	iToken			subType;
 	iToken          type;
 	Token*			Partner;
 	int PositieInList;

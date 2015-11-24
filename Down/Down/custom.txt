@@ -1,20 +1,19 @@
-{ 10 } **array** is { 1, 2, 3, 4, 5 }
+_number_{ 10 } **array** is { 1, 2, 3, 4, 5 }
 
-**i** is 1
-[ printdown **i** ]
-#### while ( **i** smaller than 5 )
---
- **i** is **i** plus 1 
-[ printdown **i** ]
-__
- **i** is **i** plus 7 
- **i** is **i** divide 2
-[ printdown **i** ]
+_number_ **temp** is **array** { 0 }
 
- **i** is **i** minus 100
-[ printdown **i** ]
+[ printdown "test" ]
+> Functie maken
 
-**i** is 998
-[ printdown **i** ]
+---
+### Calcy gets _number_ **x** , _text_  **name**
+**x** is **x** plus 1
+[ printdown **x** ] 
+[ printdown **name** ] 
+___
 
-**temp** is **array** { 0 }
+_number_ **y** is 1
+> Function aanroepen
+[ Calcy **y** , "dingen" ]
+[ printdown "Buiten enzo" ]
+

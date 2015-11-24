@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AddItemToArrayCommand.h"
+#include "CommandVisitor.h"
 
 void AddItemToArrayCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -7,4 +8,8 @@ void AddItemToArrayCommand::execute(VirtualMachine& vm, vector<string>& paramete
 	Variable var = *vm.getVariable(parameters.at(2));
 
 	vm.addItemToVariableArray(parameters.at(1), var);
+}
+
+pair<string, string> AddItemToArrayCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

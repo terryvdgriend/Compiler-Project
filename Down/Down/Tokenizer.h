@@ -3,7 +3,9 @@
 #include "LinkedList.h"
 #include <list>
 #include <stack>
-
+#include <iostream>
+#include <regex>
+//
 class Tokenizer
 {
 public:
@@ -16,6 +18,9 @@ private:
 	Token::iToken getToken(std::string token);
 	bool tokenError = false;
 	void checkRemainingErrors();
+	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
+	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d\\.?\\d*|\"(.*?)\"|\\w+|\\S+|\n)" };
+	std::string lookAhead(smatch m, std::string s);
 public:
 	Tokenizer();
 	void createTokenList(LinkedList& cTokenList, string codefromfile);

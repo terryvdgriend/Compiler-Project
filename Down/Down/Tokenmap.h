@@ -1,5 +1,7 @@
 #pragma once
+#include "CommandDictionary.h"
 struct TokenMap{
+
 	static map<string, Token::iToken> get()
 	{
 		map<string, Token::iToken> mappert;
@@ -46,8 +48,16 @@ struct TokenMap{
 		mappert[std::string(",")] = Token::AND_PARA;
 		mappert[std::string("default")] = Token::SWITCH_DEFAULT;
 		mappert[std::string("case")] = Token::SWITCH_CASE;
-		mappert[std::string("printdown")] = Token::PRINT;
 		//
+		mappert[std::string("_fact_")] = Token::TYPE_FACT;
+		mappert[std::string("_number_")] = Token::TYPE_NUMBER;
+		mappert[std::string("_text_")] = Token::TYPE_TEXT;
+		//
+
+		for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+		{
+			mappert[std::string(cf.first)] = Token::FUNCTION_CALL;
+		}
 		return mappert;
 	}
 	

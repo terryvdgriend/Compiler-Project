@@ -1,7 +1,8 @@
 #include "stdafx.h"
-#include "AddArrayToDictionary.h"
+#include "AddArrayToDictionaryCommand.h"
+#include "CommandVisitor.h"
 
-void AddArrayToDictionary::execute(VirtualMachine& vm, vector<string>& parameters)
+void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
 	if (vm.getReturnValue() != "")
 	{
@@ -22,4 +23,8 @@ void AddArrayToDictionary::execute(VirtualMachine& vm, vector<string>& parameter
 			}
 		}
 	}
+}
+
+pair<string, string> AddArrayToDictionaryCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

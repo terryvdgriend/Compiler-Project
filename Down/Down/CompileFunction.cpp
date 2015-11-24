@@ -10,6 +10,8 @@ CompileFunction::CompileFunction()
 	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::FUNCTIONUSE] = "$FUNC";
 	tokenMap[Token::LENGTH] = "$LENGTH";
+	tokenMap[Token::PRINT] = "$PRINTDOWN";
+	tokenMap[Token::PRINTUP] = "$PRINTUP";
 }
 
 

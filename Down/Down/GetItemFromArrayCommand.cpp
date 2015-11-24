@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GetItemFromArrayCommand.h"
+#include "CommandVisitor.h"
 
 void GetItemFromArrayCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -31,7 +32,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, vector<string>& parame
 
 	if (varArray.size() > 0)
 	{
-		Variable* variable1 = vm.getVariable(parameters.at(2));
+		shared_ptr<Variable> variable1 = vm.getVariable(parameters.at(2));
 		vm.setReturnValue(varArray.at(atoi(variable1->getValue().c_str())).getValue());
 	}
 	else
@@ -40,3 +41,6 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, vector<string>& parame
 	}
 }
 
+pair<string, string> GetItemFromArrayCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
+}

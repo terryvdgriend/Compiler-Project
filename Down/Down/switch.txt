@@ -1,13 +1,14 @@
+ **f** is 1
 #### switch ( **f** )
-case ( true )
+case ( 1 )
 --
-[ Write with **text** : "schapen" ]
+[ printdown "tlol" ]
 __
-case ( false )
+case ( 2 )
 --
-[ Write with **text** : "Kippen" ]
+[ printdown "dlol" ]
 __
 default
 --
-[ Write with **text** : "niks" ]
-__
+[ printdown "lol" ]
+__ 

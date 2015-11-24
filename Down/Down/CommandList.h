@@ -24,7 +24,7 @@
 
 #include "ShowFunctionCommand.h"
 
-#include "AddArrayToDictionary.h"
+#include "AddArrayToDictionaryCommand.h"
 #include "AddLengthToArrayCommand.h"
 #include "AddItemToArrayCommand.h"
 #include "GetItemFromArrayCommand.h"

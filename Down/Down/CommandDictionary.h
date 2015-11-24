@@ -1,13 +1,16 @@
+#pragma once
 #include "BaseCommand.h"
 
-using namespace std;
+
 
 class CommandDictionary
 {
+
 	public:
 		CommandDictionary();
-		map<string, BaseCommand*> getMap();
-
+		map<string, shared_ptr<BaseCommand>> getMap();
+		static map<string, shared_ptr<BaseCommand>> CustFunc();
 	private:
-		map<string, BaseCommand*> commandDictionary;
+		map<string, shared_ptr<BaseCommand>> commandDictionary;
 };
+
