@@ -17,6 +17,11 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters
 	cout << val << endl;
 }
 
+pair<string, string> ShowFunctionCommand::accept(CommandVisitor & cmdVisitor)
+{
+	return pair<string, string>();
+}
+
 
 void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -32,4 +37,9 @@ void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& paramete
 
 //std::pair<string, string> ShowFunctionCommand::accept(CommandVisitor& commandVisitor) {
 //	return commandVisitor.visit(*this);
+}
+
+pair<string, string> ShowUpFunctionCommand::accept(CommandVisitor & cmdVisitor)
+{
+	return pair<string, string>();
 }
