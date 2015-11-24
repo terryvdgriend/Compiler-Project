@@ -35,8 +35,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
-	bool isFunctionCall = false;
-
 
 	while (regex_search(s, m, e))
 	{
@@ -45,31 +43,27 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		string part = m[0];
 		//currentToken = getToken(part);
 		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
-
+		
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
+		//	currentToken = ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
+		//else if (currentToken == Token::NONE)
 			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
-		if (isFunctionCall){
-			currentToken = Token::FUNCTIONUSE;
-			isFunctionCall = false;
-		}
 
-		if (currentToken == Token::FUNCTION_DECLARE_OPEN)
-			isFunctionCall = true;
-		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
+		if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
 			std::string lookahead = lookAhead(m, s);
 			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
 			if (lookaheadToken == Token::IDENTIFIER)
 			{
-				if (std::find(Identifiers.begin(), Identifiers.end(), lookahead) != Identifiers.end())
+				if (mappert.count(lookahead) != 0)
 				{
 					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 				}
 				pToken->setSub(currentToken);
 				currentToken = lookaheadToken;
-				Identifiers.push_back(lookahead);
+				mappert[lookahead] = Token::IDENTIFIER;
 				//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
 				part = lookahead;
 				s = m.suffix().str();
@@ -81,12 +75,29 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
 			}
 		}
+		else if (currentToken == Token::NUMBER) {
+			pToken->setSub(Token::TYPE_NUMBER);
+		}
+		else if (currentToken == Token::TEXT) {
+			pToken->setSub(Token::TYPE_TEXT);
+		}
+		else if (currentToken == Token::FACT){
+			pToken->setSub(Token::TYPE_FACT);
+		}
+		else if (currentToken == Token::FUNCTION_DECLARE)
+		{
+			mappert[part.substr(4, part.length() - 1)] = Token::FUNCTION_CALL;
+			part = part.substr(4, part.length() - 1);
+		}
+		else if (currentToken == Token::FUNCTIONUSE)
+		{
+			if (mappert.count(part) != 0)
+				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+		}
 		else if (currentToken == Token::IDENTIFIER)
 		{
-			if (!(std::find(Identifiers.begin(), Identifiers.end(), part) != Identifiers.end()))
-			{
+			if (mappert.count(part) == 0)
 				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			}
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{

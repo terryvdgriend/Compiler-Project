@@ -47,13 +47,15 @@ public:
 		PRIVATE,
 		FOR,
 		FOREACH,
-		PRINT,
+		PRINT, // TODO: mag weg nu?
+		PRINTUP, // TODO: mag weg nu?
 		PLUSPLUS,
 		MINUSMINUS,
 		SEPARATOR,
 		DECLARATION,
 		IN,
-		FUNCTION,
+		FUNCTION_CALL,
+		FUNCTION_DECLARE,
 		NAMESPACE,
 		COMMENT,
 		ASSIGNMENT,
@@ -68,11 +70,12 @@ public:
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
 		SWITCH,
-		ANY
+		ANY // ALS LAATSTE ! (?)
 	};
 
 public:
 	Token();
+	Token(const Token& other);
 	~Token();
 
 public:

@@ -8,7 +8,7 @@ struct TokenRegex{
 		regexert[std::string("^\"(.*?)\"$")] = Token::TEXT; // Regex
 		regexert[std::string("^\\*\\*(\\w*)?\\*\\*$")] = Token::IDENTIFIER; //Regex
 		regexert[std::string("^(__(\\w*)__)$")] = Token::DECLARATION; // Regex
-		regexert[std::string("^(### (\\w*)$)")] = Token::FUNCTION; //Regex
+		regexert[std::string("^(### (\\w*)$)")] = Token::FUNCTION_DECLARE; //Regex
 		regexert[std::string("^(## (\\w*))$")] = Token::CLASS; //Regex
 		regexert[std::string("^(# (\\w*))$")] = Token::NAMESPACE; //Regex
 		regexert[std::string("^>.*\n")] = Token::COMMENT; //Regex

@@ -6,7 +6,7 @@
 
 void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
-	Variable variable2 = *vm.getVariable(parameters.at(2));
+	Variable variable2 = *vm.getVariable(parameters.at(1));
 	string val = "";
 
 	if (variable2.getType() != VariableType::NULLTYPE) {
@@ -17,6 +17,29 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters
 	cout << val << endl;
 }
 
-std::pair<string, string> ShowFunctionCommand::accept(CommandVisitor& commandVisitor) {
-	return commandVisitor.visit(*this);
+pair<string, string> ShowFunctionCommand::accept(CommandVisitor & cmdVisitor)
+{
+	return pair<string, string>();
+}
+
+
+void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+{
+	Variable variable2 = *vm.getVariable(parameters.at(1));
+	string val = "";
+
+	if (variable2.getType() != VariableType::NULLTYPE) {
+		val += variable2.getValue();
+	}
+
+	val.erase(remove(val.begin(), val.end(), '\"'), val.end());
+	cout << "UP: " + val << endl;
+
+//std::pair<string, string> ShowFunctionCommand::accept(CommandVisitor& commandVisitor) {
+//	return commandVisitor.visit(*this);
+}
+
+pair<string, string> ShowUpFunctionCommand::accept(CommandVisitor & cmdVisitor)
+{
+	return pair<string, string>();
 }
