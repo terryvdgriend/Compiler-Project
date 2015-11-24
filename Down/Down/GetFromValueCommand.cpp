@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GetFromValueCommand.h"
 #include <vector>
+#include "CommandVisitor.h"
 
 void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -34,4 +35,8 @@ void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters
 			vm.setVariable(parameters[1], rValue);
 		}
 	}
+}
+
+std::pair<string, string> GetFromValueCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }
