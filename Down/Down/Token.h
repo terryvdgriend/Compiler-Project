@@ -65,7 +65,8 @@ public:
 		SWITCH_DEFAULT,
 		SWITCH,
 		ANY,
-		LENGTH
+		LENGTH,
+		ARRAYIDENTIFIER
 	};
 
 public:

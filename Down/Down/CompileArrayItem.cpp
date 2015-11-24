@@ -30,7 +30,7 @@ void CompileArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end,
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
 	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
-	expected.push_back(TokenExpectation(arrayLevel - 1, Token::IDENTIFIER));
+	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
 	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
 	expected.push_back(TokenExpectation(arrayLevel + 1, Token::NUMBER));
 	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
@@ -81,37 +81,6 @@ void CompileArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end,
 
 				currArrayItemTempVar = getCurrentLocalVariableName();
 			}
-
-			current = current->next;
-		}
-		else if (expectation.Level <= arrayLevel)
-		{
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_ID_TO_RT);
-			directFunctionCall->setAt(1, current->getText().c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-			directFunctionCall = new DirectFunctionCall;
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-			currArrayItemTempVar = getCurrentLocalVariableName();
-
-			string saArguments[3];
-			saArguments[0] = "$AddArrayToDictionary";
-			saArguments[1] = currArrayItemTempVar;
-			saArguments[2] = getCurrentLocalVariableName();
-
-			FunctionCall* pFunction = new FunctionCall();
-			pFunction->setArraySize(3);
-			for (int n = 0; n < 3; n++)
-			{
-				pFunction->setAt(n, saArguments[n].c_str());
-			}
-			listActionNodes.insertBefore(&actionBefore, pFunction);
 
 			current = current->next;
 		}

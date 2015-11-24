@@ -1,7 +1,5 @@
 { 10 } **array** is { 1, 2, 3, 4, 5 }
 
-**temp** is **array** { 0 }
-
 **i** is 1
 [ printdown **i** ]
 #### while ( **i** smaller than 5 )
@@ -18,3 +16,5 @@ __
 
 **i** is 998
 [ printdown **i** ]
+
+**temp** is **array** { 0 }

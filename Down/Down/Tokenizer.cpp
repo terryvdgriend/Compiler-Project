@@ -37,8 +37,6 @@ Tokenizer::Tokenizer()
 	//
 	mappert =  TokenMap::tm;
 	regexert = TokenRegex::tr;
-
-
 }
 
 std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
@@ -297,14 +295,12 @@ Token::iToken Tokenizer::getToken(std::string token)
 	typedef std::map<std::string, Token::iToken>::iterator it_type;
 	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
 	{
-		
 		regex e(iterator->first);
 		regex_search(token, m, e);
 		if (m.size() != 0)
 		{
 			return iterator->second;
 		}
-
 	}
 	ErrorHandler::getInstance()->addError();
 	return Token::NONE;
