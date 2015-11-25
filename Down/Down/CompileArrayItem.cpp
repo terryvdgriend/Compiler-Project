@@ -131,8 +131,8 @@ void CompileArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end,
 			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
 			saArguments[0] = "$=";
-			saArguments[1] = currArrayItemTempVar;
-			for (int i = 0; i < 3; i++) { saArguments[2] = getPreviousLocalVariableName(sBuffer); }
+			for (int i = 0; i < 3; i++) { saArguments[1] = getPreviousLocalVariableName(sBuffer); }
+			saArguments[2] = currArrayItemTempVar;
 
 			pFunction = new FunctionCall();
 			pFunction->setArraySize(3);

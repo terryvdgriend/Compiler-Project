@@ -37,14 +37,14 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$++"]						= make_shared<PlusPlusCommand>();
 	commandDictionary["$--"]						= make_shared<MinusMinusCommand>();
 
-	commandDictionary["$AddArrayToDictionary"] = make_shared<AddArrayToDictionaryCommand>();
-	commandDictionary["$AddLengthToArray"] = make_shared<AddLengthToArrayCommand>();
-	commandDictionary["$AddItemToArray"] = make_shared<AddItemToArrayCommand>();
-	commandDictionary["$GetItemFromArray"] = make_shared<GetItemFromArrayCommand>();
+	commandDictionary["$AddArrayToDictionary"]		= make_shared<AddArrayToDictionaryCommand>();
+	commandDictionary["$AddLengthToArray"]			= make_shared<AddLengthToArrayCommand>();
+	commandDictionary["$AddItemToArray"]			= make_shared<AddItemToArrayCommand>();
+	commandDictionary["$GetItemFromArray"]			= make_shared<GetItemFromArrayCommand>();
 
-	commandDictionary["IdentifierToReturnValue"] = make_shared<IdentifierToReturnValueCommand>();
-	commandDictionary["ConstantToReturnValue"] = make_shared<ConstantToReturnValueCommand>();
-	commandDictionary["getFromReturnValue"] = make_shared<GetFromValueCommand>();
+	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();
+	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
+	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
 
 	//commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
 	//commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();

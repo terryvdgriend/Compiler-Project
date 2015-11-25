@@ -12,5 +12,6 @@ public:
 
 private:
 	string currArrayTempVar;
+	string prevArrayTempVar;
 };
 
