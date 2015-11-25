@@ -13,7 +13,7 @@ Compiler::~Compiler()
 {
 }*/
 
-string Compiler::getNextLocalVariableName(std::string& sBuffer)
+string Compiler::getNextLocalVariableName(string& sBuffer)
 {
 	static int nValue = 0;
 	stringstream   sStream;
@@ -27,12 +27,11 @@ string Compiler::getNextLocalVariableName(std::string& sBuffer)
 	return sBuffer;
 }
 
-string Compiler::getPreviousLocalVariableName(std::string& sBuffer)
+string Compiler::getPreviousLocalVariableName(string& sBuffer)
 {
-	static int nValue = nValueCount;
 	stringstream   sStream;
 
-	sStream << "$" << --nValue;
+	sStream << "$" << --nValueCount;
 
 	sBuffer = sStream.str();
 

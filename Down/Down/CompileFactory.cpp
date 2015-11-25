@@ -20,7 +20,12 @@ Compiler * CompileFactory::CreateCompileStatement(Token& tknzr)
 {
 	std::map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr.getEnum());
 	if (it != mappert.end()){
-		if (it->second != nullptr){
+		if (it->second != nullptr) {
+			if (tknzr.getSub() == Token::TYPE_NUMBER_ARRAY || tknzr.getSub() == Token::TYPE_TEXT_ARRAY || tknzr.getSub() == Token::TYPE_FACT_ARRAY)
+			{
+				// 'Create' an compile statement of the array
+				return CompileArrayItem().Create();
+			}
 			return it->second->Create(); // Create is een copy maken
 		}
 		return nullptr;

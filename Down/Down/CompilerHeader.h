@@ -5,6 +5,7 @@
 #include "CompileFunction.h"
 #include "CompileDoWhile.h"
 #include "CompileArray.h"
+#include "CompileArrayItem.h"
 #include "CompileUserFunction.h"
 #include "CompileGetFunction.h"
 #include "CompileCondition.h"

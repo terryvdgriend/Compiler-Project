@@ -27,6 +27,9 @@ public:
 		TYPE_NUMBER,
 		TYPE_TEXT,
 		TYPE_FACT,
+		TYPE_NUMBER_ARRAY,
+		TYPE_TEXT_ARRAY,
+		TYPE_FACT_ARRAY,
 		CONDITION_OPEN,  // ( -> simuleren?
 		CONDITION_CLOSE, // ) -> simuleren?
 		FUNCTION_OPEN,  // ( -> simuleren?

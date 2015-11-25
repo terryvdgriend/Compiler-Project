@@ -9,18 +9,21 @@
 class Tokenizer
 {
 public:
-	typedef std::stack<Token*>   Stack;
+	typedef stack<Token*>   Stack;
 private: 
-	std::map<string, Token::iToken> mappert;
-	std::map<string, Token::iToken> regexert;
-	std::map<string, Token::iToken> Regex;
+	map<string, Token::iToken> mappert;
+	map<string, Token::iToken> regexert;
+	map<string, Token::iToken> Regex;
 	Stack stack;
-	Token::iToken getToken(std::string token);
+	Token::iToken getToken(string token);
 	bool tokenError = false;
 	void checkRemainingErrors();
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
 	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d\\.?\\d*|\"(.*?)\"|\\w+|\\S+|\n)" };
-	std::string lookAhead(smatch m, std::string s);
+	string lookAhead(smatch m, string s);
+
+	void lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iToken& currentToken, string& part, int rowNr, int colNr, bool arrayOpen);
+	Token::iToken tempToken;
 public:
 	Tokenizer();
 	void createTokenList(LinkedList& cTokenList, string codefromfile);
@@ -31,8 +34,8 @@ public:
 	void CheckRemainingStack();
 	bool GetTokenError() { return tokenError; };
 
-	std::string getKeywordsAsJson();
-	std::string getKeyByValueMappert(Token::iToken tkn);
+	string getKeywordsAsJson();
+	string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();
 };
 

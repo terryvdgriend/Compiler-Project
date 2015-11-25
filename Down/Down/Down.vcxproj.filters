@@ -240,9 +240,6 @@
     <ClCompile Include="FunctionHandler.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Down.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
@@ -264,6 +261,7 @@
     <ClCompile Include="AddArrayToDictionaryCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="Down.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

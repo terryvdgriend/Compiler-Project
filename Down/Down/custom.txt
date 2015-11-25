@@ -1,7 +1,5 @@
 _number_{ 10 } **array** is { 1, 2, 3, 4, 5 }
 
-_number_ **temp** is **array** { 0 }
-
 [ printdown "test" ]
 > Functie maken
 
@@ -17,3 +15,4 @@ _number_ **y** is 1
 [ Calcy **y** , "dingen" ]
 [ printdown "Buiten enzo" ]
 
+_number_ **temp** is **array** { 0 }
