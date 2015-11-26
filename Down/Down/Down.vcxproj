@@ -88,6 +88,7 @@
     <Text Include="switch.txt" />
     <Text Include="custom.txt" />
     <Text Include="while.md" />
+    <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -95,15 +96,14 @@
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandList.h" />
-    <ClInclude Include="CommandVisitor.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
     <ClInclude Include="CompileElseIf.h" />
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
+    <ClInclude Include="CompileFor.h" />
     <ClInclude Include="CompileFunction.h" />
-    <ClInclude Include="CompileGetFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
     <ClInclude Include="CompileNextLevel.h" />
@@ -114,12 +114,12 @@
     <ClInclude Include="CompileSingleStatement.h" />
     <ClInclude Include="CompileSwitch.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
+    <ClInclude Include="CompileUnary.h" />
     <ClInclude Include="CompileUserFunction.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
     <ClInclude Include="ConstantToReturnValueCommand.h" />
-    <ClInclude Include="FunctionHandler.h" />
     <ClInclude Include="DirectFunctionCall.h" />
     <ClInclude Include="DivideCommand.h" />
     <ClInclude Include="DoNothingNode.h" />
@@ -165,17 +165,15 @@
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
-    <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
-    <ClCompile Include="CommandVisitor.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
     <ClCompile Include="CompileElseIf.cpp" />
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
+    <ClCompile Include="CompileFor.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
-    <ClCompile Include="CompileGetFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />
     <ClCompile Include="CompileNextLevel.cpp" />
@@ -185,12 +183,12 @@
     <ClCompile Include="CompileSingleStatement.cpp" />
     <ClCompile Include="CompileSwitch.cpp" />
     <ClCompile Include="CompileTimesDivideModulo.cpp" />
+    <ClCompile Include="CompileUnary.cpp" />
     <ClCompile Include="CompileUserFunction.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
     <ClCompile Include="ConstantToReturnValueCommand.cpp" />
-    <ClCompile Include="FunctionHandler.cpp" />
     <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DivideCommand.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />
