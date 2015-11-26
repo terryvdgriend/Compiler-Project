@@ -6,12 +6,17 @@
  **i** is **i** plus 1 
 [ printdown **i** ]
 __
- **i** is **i** plus 7 
+ **i** is **i** plus 7
  **i** is **i** divide 2
 [ printdown **i** ]
 
- **i** is **i** minus 100
+ **i** is **i** plus 1
 [ printdown **i** ]
 
-**i** is 998
+ **i** is **i** plus 2
+  **i** is **i** plus -1
 [ printdown **i** ]
+
+**i** is 999
+[ printdown **i** ]
+

@@ -1,44 +1,17 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
+//
 #include "Format.h"
 #include "LinkedList.h"
-#include <iostream>
-#include <regex>
 #include "Tokenmap.h"
 #include "Tokenregex.h"
-
-// Dit mag weg bij release (TODO) 
-#include <cstdio>
-// 
-// -------------- IDEE -----------------
-//x: 2 lijst, regex lijst, mappert lijst
-//1: eerst zoeken mappert.find()
-//2: als dit niks vindt, dan stap 3
-//3: regexert.find()
-//4 als dit niks find, invalid token
-
-//-> Dit lijkt mij het snelst omdat: mappert sneller vind (direct op key) en de reg lijst word kleiner
-// Ander probleem, los van het iteratie probleem. De lange regex die wij hebben kan fatal zijn bij veel tekst, die moet korter
-
-//--------------- IDEE 2 --------------
-// geen regex, wel mappert
-//1: Zoek in map, geen result dan stap 2
-//2: if else statements: if(X == "**X**") blabla else if ( X == "### whatever") uitpluizen wat het is (if else if etc)
-
-// ---------------IDEE 3 --------------
-// had ik die maar...
-
+//
 
 
 Tokenizer::Tokenizer()
 {
-	//const map<string, Token::iToken> TokenMap::tm = TokenMap::get();
-	//mappert =  TokenMap::get();
-	//
 	mappert =  TokenMap::tm;
 	regexert = TokenRegex::tr;
-
-
 }
 
 std::string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
@@ -58,13 +31,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	Token  *pToken{};
 	string s(codefromfile);
 	smatch m;
-	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
-	regex e("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|\\w+|\\S+|\n)");
-	
+
 	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
-	int pInt = 0;
 	bool isFunctionCall = false;
 
 
@@ -78,32 +48,62 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
-			ErrorHandler::getInstance()->addError(Error{ "Token not found :(", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
 		if (isFunctionCall){
 			currentToken = Token::FUNCTIONUSE;
 			isFunctionCall = false;
 		}
+
 		if (currentToken == Token::FUNCTION_DECLARE_OPEN)
 			isFunctionCall = true;
-
-		//New Lines
-		if (currentToken == Token::NEWLINE)
+		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
-			colNr = 1;
-			rowNr++;
+			std::string lookahead = lookAhead(m, s);
+			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
+			if (lookaheadToken == Token::IDENTIFIER)
+			{
+				if (std::find(Identifiers.begin(), Identifiers.end(), lookahead) != Identifiers.end())
+				{
+					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				}
+				pToken->setSub(currentToken);
+				currentToken = lookaheadToken;
+				Identifiers.push_back(lookahead);
+				//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
+				part = lookahead;
+				s = m.suffix().str();
+				regex_search(s, m, e);
+				
+			}
+			else
+			{
+				ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			}
 		}
-
+		else if (currentToken == Token::IDENTIFIER)
+		{
+			if (!(std::find(Identifiers.begin(), Identifiers.end(), part) != Identifiers.end()))
+			{
+				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			}
+		}
+		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
+		{
+			colNr = 1; rowNr++;
+		}
+		
 		pToken->setText((part));
 		pToken->setLevel(lvl);
 		pToken->setPositie(colNr);
-		pToken->setPositieInList(pInt);
+		pToken->setPositieInList(cTokenList.size());
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
 		pToken->setPartner(nullptr);
 
 		//Add + Next
-		cTokenList.add(pToken);
+		if(currentToken != Token::COMMENT)
+			cTokenList.add(pToken);
 
 		//Levels
 		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN)
@@ -113,7 +113,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 
 		//++ col
 		colNr += part.size() + 1;
-		pInt++;
 
 		////Levels
 		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE)
@@ -129,6 +128,15 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	CheckRemainingStack();
 	checkRemainingErrors();
 }
+
+std::string Tokenizer::lookAhead(smatch m, std::string s)
+{
+	smatch m2;
+	std::string lookahead = m.suffix().str();
+	regex_search(lookahead, m2, e);
+	return m2[0];
+}
+
 
 void Tokenizer::checkRemainingErrors()
 {
@@ -249,11 +257,11 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 
 void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN)
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN )
 	{
 		this->stack.push(&token);
 	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE)
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE )
 	{
 		if (this->stack.size() > 0)
 		{
@@ -269,6 +277,7 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
 				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
+				(token.getEnum() == Token::ARRAY_CLOSE && this->stack.top()->getEnum() == Token::ARRAY_OPEN) ||
 				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
 				token.setLevel(lvl);
@@ -284,18 +293,10 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 
 Token::iToken Tokenizer::getToken(std::string token)
 {
-	//ErrorHandler::getInstance()->addError();
-	//Token::iToken tokkie = regexert.find(token)->second;
-	//Token::iToken  asd = std::find_if(regexert.begin(), regexert.end(), check_x(token))->second;
-	//return asd;
-
-	// Boven en onder doen het zelfde op dezelfde snelheid.. (uiteraard)
-
 	smatch m;
 	typedef std::map<std::string, Token::iToken>::iterator it_type;
 	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
 	{
-		
 		regex e(iterator->first);
 		regex_search(token, m, e);
 		if (m.size() != 0)
@@ -304,7 +305,6 @@ Token::iToken Tokenizer::getToken(std::string token)
 		}
 
 	}
-	ErrorHandler::getInstance()->addError();
 	return Token::NONE;
 }
 

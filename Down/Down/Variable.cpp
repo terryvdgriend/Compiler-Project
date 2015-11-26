@@ -20,6 +20,7 @@ Variable::Variable(string param)
 	{
 		type = VariableType::TEXT;
 	}
+	
 }
 
 VariableType Variable::getType() 
@@ -35,13 +36,23 @@ string Variable::getValue()
 bool Variable::is_number(const string& s)
 {
 	string::const_iterator it = s.begin();
-
-	while (it != s.end() && isdigit(*it))
-	{
+	bool decimalPoint = false;
+	int minSize = 0;
+	if (s.size()>0 && (s[0] == '-' || s[0] == '+')) {
+		it++;
+		minSize++;
+	}
+	while (it != s.end()) {
+		if (*it == '.') {
+			if (!decimalPoint) decimalPoint = true;
+			else break;
+		}
+		else if (!isdigit(*it) && ((*it != 'f') || it + 1 != s.end() || !decimalPoint)) {
+			break;
+		}
 		++it;
 	}
-
-	return !s.empty() && it == s.end();
+	return s.size()>minSize && it == s.end();
 }
 
 bool Variable::is_bool(const string& s)
