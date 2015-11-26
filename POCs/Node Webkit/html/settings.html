@@ -1,42 +1,85 @@
-<script>
-$(function() {
-	$("button").button().click(function( event ) {
-		event.preventDefault();
-	});
-});
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Down IDE</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../js/plugins/jquery-ui/jquery-ui.css" />
+    <script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../js/plugins/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
 
-<div id="settings">
-    <h1>IDE Settings</h1>
+    <script type="text/javascript">
+		var compiler = require("./../js/compiler.js");
 
-	<h2>Compiler</h2>
-    <table class="settings">
-		<tr>
-			<td>
-				<strong>Compiler file</strong>
-				<span>The IDE has a built-in compiler, but you can always choose another one.</span>
-				<span>/POCs/Compiler.exe</span>
-			</td>
-			<td><button>Choose file</button> </td>
-		</tr>
-		<tr>
-			<td>
-				<strong>Reset file</strong>
-				<span>Reset compiler to the in built-in IDE compiler.</span>
-			</td>
-			<td><button>Reset file</button> </td>
-		</tr>
-	</table>
+        $(function() {
+        	$("button").button();
 
-	<h2>General</h2>
-    <table class="settings">
-		<tr>
-			<td>
-				<strong>Reset settings</strong>
-				<span>Reset all settings to default.</span>
-			</td>
-			<td><button>Reset all</button> </td>
-		</tr>
-	</table>
+        	$("button#chooseCompiler").button().click(function( event ) {
+				event.preventDefault();
+				compiler.chooseCompilerFile(function(file) {
+	                global.compilerFile = file;
+	            });
+			});
 
-</div>
+			$("button#resetCompiler").button().click(function( event ) {
+				event.preventDefault();
+				resetCompilerFile();
+			});
+
+			$("button#resetAll").button().click(function( event ) {
+				event.preventDefault();
+				resetAll();
+			});
+        });
+
+        function resetCompilerFile() {
+        	global.compilerFile = null;
+        }
+
+        function resetAll() {
+        	resetCompilerFile();
+        }
+	</script>
+</head>
+<body>
+ 	<!-- Dialogs  -->
+    <input style="display:none;" id="chooseCompilerFile" type="file" />
+   
+    <div id="page">
+		<div id="settings">
+		    <h1>IDE Settings</h1>
+
+			<h2>Compiler</h2>
+		    <table class="settings">
+				<tr>
+					<td>
+						<strong>Compiler file</strong>
+						<span>The IDE has a built-in compiler, but you can always choose another one.</span>
+						<span>/POCs/Compiler.exe</span>
+					</td>
+					<td><button id="chooseCompiler">Choose file</button> </td>
+				</tr>
+				<tr>
+					<td>
+						<strong>Reset file</strong>
+						<span>Reset compiler to the in built-in IDE compiler.</span>
+					</td>
+					<td><button id="resetCompiler">Reset file</button> </td>
+				</tr>
+			</table>
+
+			<h2>General</h2>
+		    <table class="settings">
+				<tr>
+					<td>
+						<strong>Reset settings</strong>
+						<span>Reset all settings to default.</span>
+					</td>
+					<td><button id="resetAll">Reset all</button> </td>
+				</tr>
+			</table>
+
+		</div>
+    </div>
+</body>
+</html>

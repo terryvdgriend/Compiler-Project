@@ -4,7 +4,7 @@
 	"main": "./html/index.html",
 	"window": {
 		"title": "Down IDE",
-		"toolbar": true,
+		"toolbar": false,
 		"show": true,
 		"icon": "./img/icon.png",
 		"min_width": 960,
@@ -12,8 +12,8 @@
 		"width": 960,
   		"height": 600,
 		"position": "center"
-		},
-		"dependencies": {
-			"marked": "^0.3.3"
-		}
+	},
+	"dependencies": {
+		"marked": "^0.3.3"
 	}
+}

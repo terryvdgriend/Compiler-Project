@@ -7,7 +7,7 @@ exports.initMenu = function() {
     var compiler = require("./../js/compiler.js");
 
     fileMenu.append(new global.gui.MenuItem({
-        label: 'Nieuw',
+        label: 'New File',
         key: "n",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
@@ -16,7 +16,7 @@ exports.initMenu = function() {
         }
     }));
     fileMenu.append(new global.gui.MenuItem({
-        label: 'Openen',
+        label: 'Open...',
         key: "o",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
@@ -26,7 +26,7 @@ exports.initMenu = function() {
         }
     }));
     fileMenu.append(new global.gui.MenuItem({
-        label: 'Opslaan',
+        label: 'Save',
         key: "s",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
@@ -40,7 +40,7 @@ exports.initMenu = function() {
         }
     }));
     fileMenu.append(new global.gui.MenuItem({
-        label: 'Opslaan als',
+        label: 'Save as...',
         key: "s",
         modifiers: (process.platform === "darwin") ? "cmd shift" : "ctrl shift",
         click: function() {
@@ -54,7 +54,7 @@ exports.initMenu = function() {
     fileMenu.append(new gui.MenuItem({ type: 'separator' }));
 
     fileMenu.append(new global.gui.MenuItem({
-        label: 'Afsluiten',
+        label: 'Quit',
         click: function() {
             global.gui.App.quit();
         }
@@ -62,27 +62,18 @@ exports.initMenu = function() {
 
     var settingsMenu = new global.gui.Menu();
     settingsMenu.append(new global.gui.MenuItem({
-        label: 'Wijzigen',
+        label: 'Show settings...',
         click: function() {
-            global.goToPage("settings");
-        }
-    }));
-
-    settingsMenu.append(new gui.MenuItem({ type: 'separator' }));
-
-    settingsMenu.append(new global.gui.MenuItem({
-        label: 'Kies compiler',
-        click: function() {
-            compiler.chooseCompilerFile(function(file) {
-                global.compilerFile = file;
+            var win = global.gui.Window.open ('settings.html', {
+              position: 'center',
+              focus: true,
+              frame: true,
+              toolbar: false
             });
-        }
-    }));
 
-    settingsMenu.append(new global.gui.MenuItem({
-        label: 'Reset compiler',
-        click: function() {
-            global.compilerFile = null;
+            win.on ('loaded', function(){
+              win.title = "Settings";
+            });            
         }
     }));
 
@@ -112,12 +103,12 @@ exports.initMenu = function() {
     }
 
     if (process.platform === "darwin") {
-        menubar.insert(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }), 1);
+        menubar.insert(new global.gui.MenuItem({ label: 'File', submenu: fileMenu }), 1);
     } else {
-        menubar.append(new global.gui.MenuItem({ label: 'Bestand', submenu: fileMenu }));
+        menubar.append(new global.gui.MenuItem({ label: 'File', submenu: fileMenu }));
     }
 
-    menubar.append(new global.gui.MenuItem({ label: 'Instellingen', submenu: settingsMenu }));
-    menubar.append(new global.gui.MenuItem({ label: 'Programma', submenu: programMenu }));
+    menubar.append(new global.gui.MenuItem({ label: 'Settings', submenu: settingsMenu }));
+    menubar.append(new global.gui.MenuItem({ label: 'Program', submenu: programMenu }));
     win.menu = menubar;
 }
