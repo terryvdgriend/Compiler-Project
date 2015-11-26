@@ -32,8 +32,8 @@ FunctionHandler::FunctionHandler()
 	for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
 	{
 		this->addFunction(Function{ cf.first,"a",nullptr,{},nullptr });
-		this->addFunction(Function{ cf.first,"aa",nullptr,{},nullptr });
-		this->addFunction(Function{ cf.first,"aaa",nullptr,{},nullptr });
+		//this->addFunction(Function{ cf.first,"aa",nullptr,{},nullptr });
+		//this->addFunction(Function{ cf.first,"aaa",nullptr,{},nullptr });
 	}
 }
 

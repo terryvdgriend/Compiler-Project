@@ -22,8 +22,6 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
 			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
-			int posRetVal = commandDictionary[name]->returnValue;
-			Text::Print( string(">>> " + posRetVal ));
 			
 		}
 		currentNode->accept(*visitor);

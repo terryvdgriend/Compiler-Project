@@ -48,7 +48,7 @@ void RandomFunctionCommand::execute(VirtualMachine& vm, vector<string>& paramete
 	}
 
 	val.erase(remove(val.begin(), val.end(), '\"'), val.end());
-	this->returnValue = 666;
+	vm.setReturnValue("666");
 	cout << "para1: " + val << " para2: " + val  << " random:" << returnValue << endl;
 }
 pair<string, string> RandomFunctionCommand::accept(CommandVisitor & cmdVisitor) { return pair<string, string>(); }
