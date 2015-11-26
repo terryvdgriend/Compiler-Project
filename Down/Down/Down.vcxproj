@@ -85,6 +85,7 @@
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
     <Text Include="if.md" />
+    <Text Include="Snippets.txt" />
     <Text Include="switch.txt" />
     <Text Include="custom.txt" />
     <Text Include="while.md" />

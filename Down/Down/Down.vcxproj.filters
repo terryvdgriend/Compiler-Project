@@ -505,6 +505,9 @@
     <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Snippets.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="if else elseif.md">

@@ -44,7 +44,7 @@ int main(int argc, const char * argv[])
 		return 0;
 	
 	//string aoutz = Tokenizer().getFunctionsAsJson();
-
+	string aoutz = (FileStreamer{}).readerFromResource("Snippets");
 	return 0;
 }
 
@@ -132,7 +132,7 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
 		else if (option == "getSnippets")
-			outz = Tokenizer().getKeywordsAsJson();
+			outz = (FileStreamer{}).readerFromResource("Snippets");
 		else if (option == "getFunctions")
 			outz = Tokenizer().getFunctionsAsJson();
 		else
