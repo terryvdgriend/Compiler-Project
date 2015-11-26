@@ -34,12 +34,21 @@ void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& paramete
 
 	val.erase(remove(val.begin(), val.end(), '\"'), val.end());
 	cout << "UP: " + val << endl;
-
-//std::pair<string, string> ShowFunctionCommand::accept(CommandVisitor& commandVisitor) {
-//	return commandVisitor.visit(*this);
 }
+pair<string, string> ShowUpFunctionCommand::accept(CommandVisitor & cmdVisitor){	return pair<string, string>();}
 
-pair<string, string> ShowUpFunctionCommand::accept(CommandVisitor & cmdVisitor)
+
+void RandomFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
-	return pair<string, string>();
+	Variable variable2 = *vm.getVariable(parameters.at(1));
+	string val = "";
+
+	if (variable2.getType() != VariableType::NULLTYPE) {
+		val += variable2.getValue();
+	}
+
+	val.erase(remove(val.begin(), val.end(), '\"'), val.end());
+	vm.setReturnValue("666");
+	cout << "para1: " + val << " para2: " + val  << " random:" << returnValue << endl;
 }
+pair<string, string> RandomFunctionCommand::accept(CommandVisitor & cmdVisitor) { return pair<string, string>(); }

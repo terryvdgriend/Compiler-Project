@@ -8,6 +8,8 @@
 	map<string, shared_ptr<BaseCommand>> asd;
 	asd["printdown"] = std::make_shared<ShowFunctionCommand>();
 	asd["printup"] = std::make_shared<ShowUpFunctionCommand>();
+	asd["random"] = std::make_shared<RandomFunctionCommand>();
+
 	// LEES: 
 	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
 	// en geef dan aan welke classe hiervoor gebruikt moet worden (die overigens wel een baseCommand override)

@@ -1,7 +1,3 @@
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-
 //Laten staan voor de apple gebruikert
 #ifdef _WIN32
 #include <crtdbg.h>
@@ -38,7 +34,7 @@ int main(int argc, const char * argv[])
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = *RunCompiler(&cTokenList, false);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, true);
 	if (Errors())
 		return 0;
 
