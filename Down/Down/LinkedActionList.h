@@ -8,6 +8,7 @@ class LinkedActionList
 		LinkedActionList(const LinkedActionList &other);
 		~LinkedActionList();
 		ActionNode* insertBefore(ActionNode* right, ActionNode* value);
+		ActionNode * insertBefore(ActionNode * right, LinkedActionList * value);
 		ActionNode* insertLast(ActionNode* value);
 		ActionNode* add(ActionNode* value);
 		ActionNode* add(LinkedActionList* list);

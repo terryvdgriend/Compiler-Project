@@ -80,7 +80,9 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 
 	ConnectLists();
 	begin = *current;
-	listActionNodes.add(_compiledStatement);
+	LinkedActionList* list = &listActionNodes;
+	list->insertBefore(&actionBefore, _compiledStatement);
+	listActionNodes = *list;
 }
 
 void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
@@ -196,17 +198,12 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
-		pDirectFunction->setArraySize(2);
-		pDirectFunction->setAt(0, szGetFromReturnValue);
-		pDirectFunction->setAt(1, tempVar.c_str());
 
 		DirectFunctionCall *directFunctionCall = new DirectFunctionCall();
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
 		directFunctionCall->setAt(1, _returnToken->getText().c_str());
 		_body->insertBefore(_body->getLast(), directFunctionCall);
-		_body->insertBefore(_body->getLast(), pDirectFunction);
 	}
 
 	begin = *current;

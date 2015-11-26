@@ -1,7 +1,3 @@
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-
 //Laten staan voor de apple gebruikert
 #ifdef _WIN32
 #include <crtdbg.h>
