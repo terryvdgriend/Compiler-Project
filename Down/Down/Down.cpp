@@ -43,8 +43,7 @@ int main(int argc, const char * argv[])
  	if (Errors())
 		return 0;
 	
-	//string aoutz = Tokenizer().getFunctionsAsJson();
-	string aoutz = (FileStreamer{}).readerFromResource("Snippets");
+
 	return 0;
 }
 
