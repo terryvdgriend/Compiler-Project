@@ -100,7 +100,7 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction = new DirectFunctionCall(*current);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
