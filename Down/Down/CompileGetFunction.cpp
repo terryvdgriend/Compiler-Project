@@ -114,7 +114,12 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		if(current->getEnum() == Token::AND_PARA)
 			current = current->next;
 	}
-
+	if (parameters.size() > _params.size()) {
+		ErrorHandler::getInstance()->addError(Error{ _name +" has more parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
+	if (parameters.size()  < _params.size()) {
+		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
 
 	FunctionCall* pFunction = new FunctionCall();
 	pFunction->setArraySize(parameters.size()+1);
@@ -136,6 +141,10 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		_parameters->add(new DoNothingNode());
 		LinkedList* param = new LinkedList();
 		do {
+			if (count > _params.size()-1) {
+				ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+				break;
+			}
 			if (current->getEnum() != Token::AND_PARA)
 				param->add(new Token(*current));
 			else {
@@ -156,10 +165,11 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 				
 			}
 
-		} while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE && count < _params.size());
+		} while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE);
 	}
-
-
+	if (count < _params.size() - 1) {
+		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
 
 	for (auto p : paramList) {
 		CompileEquals condition = CompileEquals();
