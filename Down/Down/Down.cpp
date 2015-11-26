@@ -43,7 +43,7 @@ int main(int argc, const char * argv[])
  	if (Errors())
 		return 0;
 	
-
+	//string aoutz = Tokenizer().getFunctionsAsJson();
 
 	return 0;
 }
@@ -131,10 +131,10 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	{
 		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getSnippets")
+		else if (option == "getSnippets")
 			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getDingen")
-			outz = Tokenizer().getKeywordsAsJson();
+		else if (option == "getFunctions")
+			outz = Tokenizer().getFunctionsAsJson();
 		else
 			return false;
 	}
