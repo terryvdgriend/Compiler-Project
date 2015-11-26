@@ -228,6 +228,7 @@ a {
     clear: both;
     color: #afafaf;
     font-size: 13px;
+    line-height: 18px;
 }
 
 #settings table.settings a {
