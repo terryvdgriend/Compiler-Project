@@ -111,6 +111,8 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		_functionParams->insertBefore(_functionParams->getLast(),pDirectFunction);
 		///
 		parameters.push_back(tempVar);
+		if(current->getEnum() == Token::AND_PARA)
+			current = current->next;
 	}
 
 

@@ -1,4 +1,4 @@
-[ printdown "test" ]
+[ printdown "test" , "string" ]
 > Functie maken
 
 ---
