@@ -101,6 +101,7 @@
     <ClInclude Include="CompileElseIf.h" />
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
+    <ClInclude Include="CompileFor.h" />
     <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="CompileSingleStatement.h" />
     <ClInclude Include="CompileSwitch.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
+    <ClInclude Include="CompileUnary.h" />
     <ClInclude Include="CompileUserFunction.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
@@ -169,6 +171,7 @@
     <ClCompile Include="CompileElseIf.cpp" />
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
+    <ClCompile Include="CompileFor.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />
@@ -179,6 +182,7 @@
     <ClCompile Include="CompileSingleStatement.cpp" />
     <ClCompile Include="CompileSwitch.cpp" />
     <ClCompile Include="CompileTimesDivideModulo.cpp" />
+    <ClCompile Include="CompileUnary.cpp" />
     <ClCompile Include="CompileUserFunction.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />
@@ -227,6 +231,7 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="for.txt" />
     <None Include="if else elseif.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
