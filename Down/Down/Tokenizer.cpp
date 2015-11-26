@@ -320,6 +320,23 @@ Token::iToken Tokenizer::getToken(std::string token)
 	return Token::NONE;
 }
 
+std::string Tokenizer::getFunctionsAsJson()
+{
+	std::string JSON = "[";
+	int i = 0;
+	int size = CommandDictionary::CustFunc().size();
+	for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	{
+		JSON += "{\"function\":\"" + cf.first + "\"}";
+
+		if (i < size - 1)
+			JSON += ",";
+		i++;
+	}
+	JSON += "]";
+	return JSON;
+}
+
 std::string Tokenizer::getKeywordsAsJson()
 {
 	std::string JSON = "[";
