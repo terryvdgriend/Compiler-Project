@@ -11,6 +11,7 @@ private:
 	string _params;
 	LinkedList* _body;
 	std::vector<Token*>_paramTokens;
+	Token* _returnToken;
 	std::string functionName;
 public:
 	CompileUserFunction();

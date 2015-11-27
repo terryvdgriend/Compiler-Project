@@ -44,6 +44,11 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		//currentToken = getToken(part);
 		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
 
+		if (part == "**tempFact**,")
+		{
+			cout << "";
+		}
+
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
 		//	currentToken = ((find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
@@ -199,12 +204,12 @@ void Tokenizer::lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iTok
 		{
 			ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 		}
-		pToken.setSub(currentToken);
 		//currentToken = lookaheadToken;
 		mappert[lookahead] = Token::IDENTIFIER;
 		//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
 		if (arrayOpen)
 		{
+			pToken.setSub(currentToken);
 			currentToken = lookaheadToken;
 			part = lookahead;
 			s = m.suffix().str();
@@ -222,10 +227,13 @@ void Tokenizer::lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iTok
 			case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
 				break;
 		}
-		//currentToken = lookaheadToken;
-		//part = lookahead;
-		//s = m.suffix().str();
-		//regex_search(s, m, e);
+		if (arrayOpen)
+		{
+			currentToken = lookaheadToken;
+			part = lookahead;
+			s = m.suffix().str();
+			regex_search(s, m, e);
+		}
 	}
 	else
 	{
@@ -361,11 +369,11 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 
 void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN )
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN || token.getEnum() == Token::FUNCTION_DECLARE_OPEN)
 	{
 		this->stack.push(&token);
 	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE )
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE || token.getEnum() == Token::FUNCTION_DECLARE_CLOSE)
 	{
 		if (this->stack.size() > 0)
 		{
@@ -381,6 +389,7 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
 				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
+				(token.getEnum() == Token::FUNCTION_DECLARE_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_DECLARE_OPEN) ||
 				(token.getEnum() == Token::ARRAY_CLOSE && this->stack.top()->getEnum() == Token::ARRAY_OPEN) ||
 				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
@@ -409,6 +418,23 @@ Token::iToken Tokenizer::getToken(string token)
 		}
 	}
 	return Token::NONE;
+}
+
+string Tokenizer::getFunctionsAsJson()
+{
+	string JSON = "[";
+	int i = 0;
+	int size = CommandDictionary::CustFunc().size();
+	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	{
+		JSON += "{\"function\":\"" + cf.first + "\"}";
+
+		if (i < size - 1)
+			JSON += ",";
+		i++;
+	}
+	JSON += "]";
+	return JSON;
 }
 
 string Tokenizer::getKeywordsAsJson()

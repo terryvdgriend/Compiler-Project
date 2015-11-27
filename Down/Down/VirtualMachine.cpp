@@ -22,6 +22,7 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
 			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
+			
 		}
 		//(*currentNode).accept(*visitor);
 		//currentNode = (*visitor).nextNode;

@@ -1,7 +1,3 @@
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-
 //Laten staan voor de apple gebruikert
 #ifdef _WIN32
 #include <crtdbg.h>
@@ -47,7 +43,6 @@ int main(int argc, const char * argv[])
  	if (Errors())
 		return 0;
 	
-
 
 	return 0;
 }
@@ -135,10 +130,10 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	{
 		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getSnippets")
-			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getDingen")
-			outz = Tokenizer().getKeywordsAsJson();
+		else if (option == "getSnippets")
+			outz = (FileStreamer{}).readerFromResource("Snippets");
+		else if (option == "getFunctions")
+			outz = Tokenizer().getFunctionsAsJson();
 		else
 			return false;
 	}

@@ -35,6 +35,7 @@ public:
 	bool GetTokenError() { return tokenError; };
 
 	string getKeywordsAsJson();
+	string getFunctionsAsJson();
 	string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();
 };

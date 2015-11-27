@@ -3,14 +3,13 @@
 
 void FunctionCall::show()
 {
-	if (getContentArray().size() > 2)
+	std::string function;
+	for (size_t i = 0; i < getContentArray().size(); i++)
 	{
-		std::cout << "Function: " << getContentArray()[0] << " " << getContentArray()[1] << " " << getContentArray()[2] << " \n";
+		function += getContentArray()[i] + " ";
 	}
-	else
-	{
-		std::cout << "Function: " << getContentArray()[0] << " " << getContentArray()[1] << " " << " \n";
-	}
+
+	std::cout << "Function: " << function << " \n";
 }
 
 void FunctionCall::action()

@@ -12,6 +12,7 @@ private:
 	std::string _params;
 	std::string _name;
 	LinkedActionList* _body;
+	Token* _returnToken;
 	LinkedList* _bodyTokens;
 	std::vector<Token*> _paramTokens;
 	LinkedActionList* _parameters;

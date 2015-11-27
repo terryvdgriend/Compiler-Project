@@ -123,7 +123,8 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				}
 				prev = prev->getPartner();
 
-				while (current->getLevel() > arrayLevel)
+				//while (current->getLevel() > arrayLevel)
+				while (current->getEnum() != Token::ARRAY_CLOSE)
 				{
 					/*CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();*/
 					CompileCondition* compiledBodyPart = new CompileCondition();
@@ -161,7 +162,7 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 						listActionNodes.insertBefore(&actionBefore, pFunction);
 					}
 
-					current = current->next;
+					if (current->getEnum() == Token::AND_PARA) { current = current->next; }
 					
 					delete compiledBodyPart;
 				}
