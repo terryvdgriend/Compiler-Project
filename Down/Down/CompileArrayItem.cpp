@@ -51,7 +51,7 @@ void CompileArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end,
 		}
 
 		if (current == nullptr) {
-			ErrorHandler::getInstance()->addError(Error{ "making array not completed", ".md",-1, -1, Error::error });
+			ErrorHandler::getInstance()->addError(Error{ "get an item not completed", ".md",-1, -1, Error::error });
 			begin = end;
 			break;
 		}

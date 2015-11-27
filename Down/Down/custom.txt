@@ -1,5 +1,5 @@
 _fact_ **tempFact** is false
-_fact_{ 10 } **array** is { 1 like 1, **tempFact**, true }
+_fact_{ 10 } **array** is { 1 like 1, **tempFact** , true }
 
 [ printdown "test" ]
 > Functie maken

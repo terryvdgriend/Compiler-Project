@@ -58,6 +58,20 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			break;
 		}
 
+		if (arrayType != Token::NONE && current->previous->getEnum() != Token::ARRAY_OPEN && arrayType != current->previous->getEnum())
+		{
+			ErrorHandler::getInstance()->addError(Error{ "wrong type added to array", ".md",-1, -1, Error::error });
+			begin = end;
+			break;
+		}
+
+		if (andParamMissing)
+		{
+			ErrorHandler::getInstance()->addError(Error{ "comma is missing", ".md",-1, -1, Error::error });
+			begin = end;
+			break;
+		}
+
 		string sBuffer;
 
 		if (expectation.Level == arrayLevel)
@@ -107,6 +121,16 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				}
 				listActionNodes.insertBefore(&actionBefore, pFunction);
 
+				/*switch (current->getSub())
+				{
+					case Token::TYPE_NUMBER_ARRAY: arrayType = Token::TYPE_NUMBER;
+						break;
+					case Token::TYPE_TEXT_ARRAY: arrayType = Token::TYPE_TEXT;
+						break;
+					case Token::TYPE_FACT_ARRAY: arrayType = Token::TYPE_FACT;
+						break;
+				}*/
+
 				delete compiledBodyPart;
 			}
 
@@ -134,8 +158,24 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					Token* seperator = current;
 					while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::ARRAY_CLOSE) {
 						if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
-						seperator = seperator->next;
+						
+						if ((seperator->getEnum() == Token::NUMBER || seperator->getEnum() == Token::TEXT || seperator->getEnum() == Token::FACT) &&
+							(seperator->next->getEnum() == Token::LESS_THAN || seperator->next->getEnum() == Token::LARGER_THAN || seperator->next->getEnum() == Token::EQUALS_TO) ||
+							(seperator->getEnum() == Token::LESS_THAN || seperator->getEnum() == Token::LARGER_THAN || seperator->getEnum() == Token::EQUALS_TO) &&
+							(seperator->next->getEnum() == Token::NUMBER || seperator->next->getEnum() == Token::TEXT || seperator->next->getEnum() == Token::FACT) ||
+							seperator->next->getEnum() == Token::AND_PARA || seperator->next->getEnum() == Token::ARRAY_CLOSE)
+						{
+							seperator = seperator->next;
+							continue;
+						}
+
+						andParamMissing = true;
+						break;
 					}
+
+					arrayType = current->getSub();
+
+					if (andParamMissing) { break; }
 
 					compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
@@ -195,6 +235,5 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			}
 		}
 	}
-
-	begin = *current;
+	if (ErrorHandler::getInstance()->getErrors().size() <= 0) { begin = *current; }
 }

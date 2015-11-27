@@ -44,11 +44,6 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		//currentToken = getToken(part);
 		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
 
-		if (part == "**tempFact**,")
-		{
-			cout << "";
-		}
-
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
 		//	currentToken = ((find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);

@@ -13,5 +13,8 @@ public:
 private:
 	string currArrayTempVar;
 	string prevArrayTempVar;
+
+	Token::iToken arrayType;
+	bool andParamMissing;
 };
 
