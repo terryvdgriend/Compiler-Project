@@ -1,4 +1,4 @@
-_fact_{ 10 } **array** is { true, false, true }
+_fact_{ 10 } **array** is { 1 like 1, false, true }
 
 [ printdown "test" ]
 > Functie maken

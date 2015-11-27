@@ -125,11 +125,18 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 
 				while (current->getLevel() > arrayLevel)
 				{
-					CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();
+					/*CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();*/
+					CompileCondition* compiledBodyPart = new CompileCondition();
 
 					ActionNode* lastActionNode = listActionNodes.getLast()->getPrevious();
 
-					compiledBodyPart->Compile(cTokenList, *current, *prev, listActionNodes, *listActionNodes.getLast());
+					Token* seperator = current;
+					while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::ARRAY_CLOSE) {
+						if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
+						seperator = seperator->next;
+					}
+
+					compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
 					if (lastActionNode != listActionNodes.getLast()->getPrevious())
 					{

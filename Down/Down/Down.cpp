@@ -40,7 +40,7 @@ int main(int argc, const char * argv[])
 	//=========COMPILER==============
 	LinkedActionList cRunList = *RunCompiler(&cTokenList, true);
 	if (Errors())
-		//return 0;
+		return 0;
 
 	//=========VM==============
 	RunVM(cRunList);
