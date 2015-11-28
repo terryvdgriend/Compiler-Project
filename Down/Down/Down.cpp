@@ -145,13 +145,13 @@ bool IDEstuff(int argc, const char* argv[], string& code)
 		{
 			outz = Tokenizer().getKeywordsAsJson();
 		}
-		if (option == "getSnippets")
+		else if (option == "getSnippets")
 		{
-			outz = Tokenizer().getKeywordsAsJson();
+			outz = (FileStreamer{}).readerFromResource("Snippets");
 		}
-		if (option == "getDingen")
+		else if (option == "getFunctions")
 		{
-			outz = Tokenizer().getKeywordsAsJson();
+			outz = Tokenizer().getFunctionsAsJson();
 		}
 		else
 		{

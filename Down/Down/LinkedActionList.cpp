@@ -9,6 +9,13 @@ LinkedActionList::LinkedActionList()
 	this->last = nullptr;
 }
 
+LinkedActionList::LinkedActionList(const LinkedActionList & other)
+{
+	count = other.count;
+	first = other.first;
+	last = other.last;
+}
+
 ActionNode* LinkedActionList::add(ActionNode* value){
 	return this->insertLast(value);
 }
@@ -47,6 +54,44 @@ ActionNode* LinkedActionList::insertBefore(ActionNode* right, ActionNode* value)
 		}
 		return value;
 	}
+}
+
+ActionNode* LinkedActionList::insertBefore(ActionNode* right, LinkedActionList* list) {
+	ActionNode* current;
+	if (list != nullptr) {
+		if (right == nullptr) {
+			current = list->first;
+			while (current != nullptr) {
+				this->insertLast(current);
+				current = current->getNext();
+			}
+			return this->getLast();
+		}
+		else {
+			current = list->first;
+			ActionNode* value;
+			ActionNode* left;
+			while (current != nullptr) {
+				value = current;
+				current = current->getNext();
+				left = right->getPrevious();
+				count++;
+				value->setNext(right);
+				right->setPrevious(value);
+				if (left == nullptr)
+					this->first = value;
+				else {
+					left->setNext(value);
+					value->setPrevious(left);
+				}
+			}
+			return right->getPrevious();
+		}
+	}
+	else {
+		return right;
+	}
+	
 }
 
 ActionNode* LinkedActionList::insertLast(ActionNode* value){

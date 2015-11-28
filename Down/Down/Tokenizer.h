@@ -14,7 +14,6 @@ private:
 	std::map<string, Token::iToken> mappert;
 	std::map<string, Token::iToken> regexert;
 	std::map<string, Token::iToken> Regex;
-	std::vector<string> Identifiers;
 	Stack stack;
 	Token::iToken getToken(std::string token);
 	bool tokenError = false;
@@ -33,6 +32,7 @@ public:
 	bool GetTokenError() { return tokenError; };
 
 	std::string getKeywordsAsJson();
+	std::string getFunctionsAsJson();
 	std::string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();
 };

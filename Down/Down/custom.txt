@@ -1,3 +1,3 @@
-_number_ **x** is 7
+_number_ **b** is [ random 1 ]
+[ printdown **b** ]
 
-[ printdown **x** smaller than "bla" ]  
