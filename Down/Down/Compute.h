@@ -1,12 +1,10 @@
 #pragma once
-#include "Token.h"
 #include "LinkedActionList.h"
 #include "LinkedList.h"
 
 class Compute
 {
 	public:
-		Compute();
-		shared_ptr<LinkedActionList> computeCompile(LinkedList* lToken);
-		void checkNewCompile(LinkedList* lToken, shared_ptr<LinkedActionList> lRun, Token* token);
+		shared_ptr<LinkedActionList> computeCompile(LinkedList& tokenList);
+		void checkNewCompile(LinkedList& tokenList, LinkedActionList& compiledList, shared_ptr<Token> token);
 };

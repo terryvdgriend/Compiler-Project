@@ -4,31 +4,27 @@
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 
-Compute::Compute()
+shared_ptr<LinkedActionList> Compute::computeCompile(LinkedList& tokenList)
 {
-}
-
-shared_ptr<LinkedActionList> Compute::computeCompile(LinkedList* lToken)
-{
-	shared_ptr<LinkedActionList> lRun = make_shared<LinkedActionList>();
-	lRun->add(new DoNothingNode());
-	checkNewCompile(lToken, lRun, lToken->first);
+	shared_ptr<LinkedActionList> compiledList = make_shared<LinkedActionList>();
+	compiledList->add(new DoNothingNode());
+	checkNewCompile(tokenList, *compiledList, tokenList.first);
 	
-	return lRun;
+	return compiledList;
 }
 
-void Compute::checkNewCompile(LinkedList* lToken, shared_ptr<LinkedActionList> lRun, Token* token)
+void Compute::checkNewCompile(LinkedList& tokenList, LinkedActionList& compiledList, shared_ptr<Token> token)
 {
 	if (token != nullptr)
 	{
 		unique_ptr<CompileFactory> fact = make_unique<CompileFactory>();
-		Compiler* compiler = fact.CreateCompileStatement(*token);
+		unique_ptr<Compiler> compiler = fact->createCompileStatement(*token);
 
 		if (compiler != nullptr)
 		{
-			lRun->add(new DoNothingNode());
-			compiler->Compile(*lToken, *token, *lToken->last, *lRun, *lRun->getLast());
+			compiledList.add(new DoNothingNode());
+			compiler->Compile(tokenList, *token, *tokenList.last, compiledList, *compiledList.getLast());
 		}
-		CheckNewCompile(lToken, lRun, token->next);
+		checkNewCompile(tokenList, compiledList, token->next);
 	}
 }

@@ -1,17 +1,13 @@
 #pragma once
 #include "Compiler.h"
 #include "Token.h"
-#include <map>
 
 class CompileFactory
 {
-private:
-	std::map<Token::iToken,Compiler*> mappert;
-public:
-	CompileFactory();
-	
-	Compiler * CreateCompileStatement(Token& tknzr);
+	public:
+		CompileFactory();
+		Compiler* createCompileStatement(Token& tknzr);
 
-	~CompileFactory();
+	private:
+		map<Token::iToken, shared_ptr<Compiler>> mappert;
 };
-
