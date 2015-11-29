@@ -8,7 +8,7 @@ shared_ptr<LinkedActionList> Compute::computeCompile(LinkedList& tokenList)
 {
 	shared_ptr<LinkedActionList> compiledList = make_shared<LinkedActionList>();
 	compiledList->add(new DoNothingNode());
-	checkNewCompile(tokenList, *compiledList, tokenList.first);
+	checkNewCompile(tokenList, *compiledList, shared_ptr<Token>(tokenList.first));	// Cleanup
 	
 	return compiledList;
 }
@@ -23,8 +23,8 @@ void Compute::checkNewCompile(LinkedList& tokenList, LinkedActionList& compiledL
 		if (compiler != nullptr)
 		{
 			compiledList.add(new DoNothingNode());
-			compiler->Compile(tokenList, *token, *tokenList.last, compiledList, *compiledList.getLast());
+			compiler->compile(tokenList, *token, *tokenList.last, compiledList, *compiledList.getLast());
 		}
-		checkNewCompile(tokenList, compiledList, token->next);
+		checkNewCompile(tokenList, compiledList, shared_ptr<Token>(token->next)); // Cleanup
 	}
 }

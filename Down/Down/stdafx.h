@@ -19,6 +19,7 @@
 #include "ErrorHandler.h"
 #include <memory>
 #include <list>
+#include <sstream>
 
 using namespace std;
 // TODO: reference additional headers your program requires here

@@ -3,15 +3,14 @@
 #include "CompileCondition.h"
 
 
-CompileComparison::CompileComparison()
-	: CompileOperator(new CompileCondition)
+CompileComparison::CompileComparison() : CompileOperator(new CompileCondition)
 {
 	//TokenMap &tokenMap = getTokenMap();
 	//tokenMap[Token::AND] = "$&&"; //TODO deze 2 
 	//tokenMap[Token::OR] = "$||";
 }
 
-
-CompileComparison::~CompileComparison()
-{
-}
+Compiler* CompileComparison::create()
+{ 
+	return new CompileComparison(); 
+};

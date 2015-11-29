@@ -1,26 +1,24 @@
 #include "stdafx.h"
 #include "Compiler.h"
 
-#include <sstream>
-
-/*
-Compiler::Compiler()
+string Compiler::getNextLocalVariableName(string& sBuffer)
 {
-}
-
-
-Compiler::~Compiler()
-{
-}*/
-
-std::string Compiler::getNextLocalVariableName(std::string& sBuffer)
-{
-	static  int         nValue = 0;
-	std::stringstream   sStream;
+	static int nValue = 0;
+	stringstream sStream;
 
 	sStream << "$" << ++nValue;
 
 	sBuffer = sStream.str();
 
 	return sBuffer;
+}
+
+shared_ptr<Token> Compiler::getCurrentToken()
+{
+	return currentToken;
+}
+
+void Compiler::setCurrentToken(Token& nextToken)
+{
+	currentToken = shared_ptr<Token>(&nextToken);
 }
