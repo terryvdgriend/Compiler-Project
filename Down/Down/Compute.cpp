@@ -15,6 +15,11 @@ shared_ptr<LinkedActionList> Compute::computeCompile(LinkedList& tokenList)
 
 void Compute::checkNewCompile(LinkedList& tokenList, LinkedActionList& compiledList, shared_ptr<Token> token)
 {
+	if (ErrorHandler::getInstance()->getErrors().size() > 0)
+	{
+		return;
+	}
+
 	if (token != nullptr)
 	{
 		unique_ptr<CompileFactory> fact = make_unique<CompileFactory>();

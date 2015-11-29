@@ -117,7 +117,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			cTokenList.add(pToken);
 
 		//Levels
-		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN)
+		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN || currentToken == Token::FUNCTION_DECLARE_OPEN)
 		{
 			lvl++;
 		}
@@ -126,13 +126,20 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		colNr += part.size() + 1;
 
 		////Levels
-		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE)
+		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE || currentToken == Token::FUNCTION_DECLARE_CLOSE)
 		{
 			lvl--;
 		}
+		// check Remaining stack
+
 
 		CheckStack(*pToken, lvl);
-
+		// cTokenlist->last == body_closed && stack.top == IF or ELSEIF && current != ELSE IF
+		if (cTokenList.last->getEnum() == Token::BODY_CLOSED) {
+			if (stack.size() > 0)
+			if ((stack.top()->getEnum() == Token::IF || stack.top()->getEnum() == Token::ELIF) && currentToken != Token::ELIF)
+				CheckRemainingStack();
+		}
 		s = m.suffix().str();
 	}
 

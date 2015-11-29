@@ -4,26 +4,27 @@
 
 CompileFactory::CompileFactory()
 {
-	mappert[Token::IF]						= new CompileIf();
-	mappert[Token::WHILE]					= new CompileWhile();
-	mappert[Token::DO]						= new CompileDoWhile();
-	//mappert[Token::FUNCTION_DECLARE_OPEN]	= new CompileFunction();		//Bestaande functie
-	mappert[Token::FUNCTION_DECLARE_OPEN]	= new CompileGetFunction();		//Bestaande functie
-	mappert[Token::FUNCTION_OPEN]			= new CompileUserFunction();	// aangemaakte functie
-	mappert[Token::IDENTIFIER]				= new CompileEquals();
-	mappert[Token::SWITCH]					= new CompileSwitch();
+	mappert[Token::IF]						= make_shared<CompileIf>();
+	mappert[Token::WHILE]					= make_shared<CompileWhile>();
+	mappert[Token::FOR]						= make_shared<CompileFor>();
+	mappert[Token::DO]						= make_shared<CompileDoWhile>();
+	//mappert[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileFunction>();		// Existing function
+	mappert[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
+	mappert[Token::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
+	mappert[Token::IDENTIFIER]				= make_shared<CompileEquals>();
+	mappert[Token::SWITCH]					= make_shared<CompileSwitch>();
 	mappert[Token::NEWLINE]					= nullptr;
 }
 
-Compiler* CompileFactory::createCompileStatement(Token& tknzr)
+shared_ptr<Compiler> CompileFactory::createCompileStatement(Token& tknzr)
 {
-	map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr.getEnum());
+	map<Token::iToken, shared_ptr<Compiler>>::iterator it = mappert.find(tknzr.getEnum());
 
 	if (it != mappert.end())
 	{
 		if (it->second != nullptr)
 		{
-			return it->second->Create(); // Create is een copy maken
+			return it->second->create(); // Create a copy
 		}
 
 		return nullptr;

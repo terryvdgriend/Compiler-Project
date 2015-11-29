@@ -114,7 +114,12 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		if(current->getEnum() == Token::AND_PARA)
 			current = current->next;
 	}
-
+	if (parameters.size() > _params.size()) {
+		ErrorHandler::getInstance()->addError(Error{ _name +" has more parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
+	if (parameters.size()  < _params.size()) {
+		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
 
 	FunctionCall* pFunction = new FunctionCall();
 	pFunction->setArraySize(parameters.size()+1);
@@ -136,11 +141,16 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		_parameters->add(new DoNothingNode());
 		LinkedList* param = new LinkedList();
 		do {
+			if (count > _params.size()-1) {
+				ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+				break;
+			}
 			if (current->getEnum() != Token::AND_PARA)
 				param->add(new Token(*current));
 			else {
 				param->last->next = nullptr;
 				param->first->previous = nullptr;
+
 				ConnectParams(_paramTokens.at(count), *param);
 				paramList.push_back(param);
 				param = new LinkedList();
@@ -156,16 +166,18 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 				
 			}
 
-		} while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE && count < _params.size());
+		} while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE);
 	}
-
-
+	if (count < _params.size() - 1) {
+		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
 
 	for (auto p : paramList) {
 		CompileEquals condition = CompileEquals();
 		condition.Compile(*p, *p->first,*p->last,* _parameters, *_parameters->getLast());
 	}
 	if (_returnToken) {
+		_returnToken = new Token(*_returnToken);
 		LinkedActionList* rValue = new LinkedActionList();
 		CompileCondition con = CompileCondition();
 		con.Compile(cTokenList, *_returnToken, *_returnToken, *rValue, *rValue->getLast());
@@ -177,17 +189,22 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
-		rValue->insertBefore(rValue->getLast(), pDirectFunction);
+		rValue->insertBefore(pDirectFunction, rValue->getLast());
 		_body->add(rValue);
 	}
-
-	Token* currentBody = _bodyTokens->first;
+	LinkedList* body = new LinkedList(*_bodyTokens);
+	ChangeVariables(*body);
+	Token* currentBody = body->first;
 	_body->add(new DoNothingNode());
 	while (currentBody != nullptr) {
+		if (currentBody->getEnum() == Token::FUNCTION_CLOSE) {
+			currentBody = currentBody->next;
+			break;
+		}
 		Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
 
 		if (compiledBodyPart != nullptr) {
-			compiledBodyPart->Compile(*_bodyTokens, *currentBody, *_bodyTokens->last, *_body, *_body->getLast());
+			compiledBodyPart->Compile(*_bodyTokens, *currentBody, *body->last, *_body, *_body->getLast());
 		}
 		else
 		{
@@ -200,7 +217,7 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-
+		ChangeVariable(*_returnToken);
 		DirectFunctionCall *directFunctionCall = new DirectFunctionCall();
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
@@ -212,17 +229,42 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 	// dingen;
 }
 
+void CompileGetFunction::ChangeVariables(LinkedList& list) {
+	Token* current = list.first;
+	while (current != nullptr) {
+		ChangeVariable(*current);
+		current = current->next;
+	}
+}
+
+void CompileGetFunction::ChangeVariable(Token & token) {
+	std::string sBuffer;
+	if (token.getEnum() == Token::IDENTIFIER) {
+		std::string localVar;
+		if (variableMap.count(token.getText()) > 0) {
+			localVar = variableMap[token.getText()];
+		}
+		else {
+			localVar = getNextLocalVariableName(sBuffer)+"_"+ token.getText();
+			variableMap[token.getText()] = localVar;
+		}
+		token.setText(localVar);
+	}	
+}
+
 void CompileGetFunction::ConnectParams(Token * param,LinkedList &paramlist)
 {
 	Token* connectToken = new Token();
+	Token * nParam = new Token(*param);
+	ChangeVariable(*nParam);
 	connectToken->setEnum(Token::EQUALS);
-	connectToken->setLevel(param->getLevel());
+	connectToken->setLevel(nParam->getLevel());
 	connectToken->setPositie(-1);
 	connectToken->setPositieInList(-1);
 	connectToken->setRegelnummer(-1);
 	connectToken->setText("=");
 	LinkedList* templist = new LinkedList();
-	templist->add(param);
+	templist->add(nParam);
 	templist->add(connectToken);
 	Token* temp = paramlist.first;
 	while (temp != nullptr) {
@@ -231,7 +273,7 @@ void CompileGetFunction::ConnectParams(Token * param,LinkedList &paramlist)
 	}
 	connectToken = new Token();
 	connectToken->setEnum(Token::NEWLINE);
-	connectToken->setLevel(param->getLevel());
+	connectToken->setLevel(nParam->getLevel());
 	connectToken->setPositie(-1);
 	connectToken->setPositieInList(-1);
 	connectToken->setRegelnummer(-1);

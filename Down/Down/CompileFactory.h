@@ -6,7 +6,7 @@ class CompileFactory
 {
 	public:
 		CompileFactory();
-		Compiler* createCompileStatement(Token& tknzr);
+		shared_ptr<Compiler> createCompileStatement(Token& tknzr);
 
 	private:
 		map<Token::iToken, shared_ptr<Compiler>> mappert;

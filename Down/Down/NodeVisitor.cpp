@@ -29,6 +29,7 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 			nextNode = node.getOnFalse();
 		}
 	}
+
 	else {
 		if ((*vm).isAnIdentifier((*vm).getReturnValue())) {
 			string value;

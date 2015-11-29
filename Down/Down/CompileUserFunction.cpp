@@ -67,6 +67,11 @@ void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, 
 	
 	while (current->getEnum() != Token::NEWLINE)
 	{
+		if (current->getText() == functionName) {
+			ErrorHandler::getInstance()->addError(Error{ functionName + " Cannot call himself", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+			current = &end;
+			break;
+		}
 		if (current->getEnum() == Token::IDENTIFIER)
 		{
 			if (current->previous != nullptr && current->previous->getEnum() == Token::RETURNVALUE) {
@@ -107,9 +112,14 @@ void CompileUserFunction::CompileBody(LinkedList & cTokenList, Token & begin, To
 	Token* current = &(begin);
 
 	do {
+		if (current->getText() == functionName) {
+			ErrorHandler::getInstance()->addError(Error{ functionName + " Cannot call himself", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+			current = &end;
+			break;
+		}
 		_body->add(new Token(*current));
 		current = current->next;
-	} while (current != &end);
+	} while (current->getEnum() != end.getEnum());
 	begin = *current;
 }
 
