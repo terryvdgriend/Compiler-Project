@@ -26,7 +26,7 @@ void CompileSwitch::ConnectLists() {
 		for (auto p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
 		{
 
-			if (_conditionBodyMap.size() > 1 || _bodyDefault->Count() > 0) {
+			if (_conditionBodyMap.size() > 0 || _bodyDefault->Count() > 0) {
 				JumpGoToNode* jumpNode = new JumpGoToNode();
 				p->second->add(jumpNode);
 				jumpmap.push_back(jumpNode);

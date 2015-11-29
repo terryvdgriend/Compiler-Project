@@ -117,6 +117,7 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 			else{
 				Token* prev = current->previous;
+				_body->add(new DoNothingNode());
 				while (prev->getEnum() != Token::BODY_OPEN){
 					prev = prev->previous;
 				}
