@@ -115,7 +115,7 @@ void CompileSwitch::Compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 	}
 	CompileCase(cTokenList, *current, end);
 	ConnectLists();
-	listActionNodes.add(_compiledStatement);
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
 	begin = *current;
 }
 

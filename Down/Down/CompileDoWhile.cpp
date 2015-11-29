@@ -86,7 +86,7 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 		}
 	}
 	ConnectLists();
-	listActionNodes.add(_compiledStatement);
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
 	begin = *current;
 }
 

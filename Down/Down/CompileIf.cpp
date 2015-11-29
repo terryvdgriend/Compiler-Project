@@ -36,7 +36,6 @@ void CompileIf::ConnectLists(){
 		_compiledStatement->add(new DoNothingNode);
 		conditionalJumpNode->setOnTrue(p->second->getFirst());
 	}
-
 	if (_bodyElse->Count() > 0){
 		DoNothingNode* secondBodyStart = new DoNothingNode();
 		_compiledStatement->add(secondBodyStart);
@@ -230,7 +229,8 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 	}
 
 
-	listActionNodes.add(_compiledStatement);
+//	listActionNodes.add(_compiledStatement);
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
 	begin = *current;
 }
 

@@ -20,6 +20,7 @@ Token::Token(const Token & other)
 
 
 
+
 void Token::Print(std::map<string, Token::iToken>& map)
 {
 	int space = 20;
@@ -38,6 +39,45 @@ void Token::Print(std::map<string, Token::iToken>& map)
 	//
 	Text::PrintLine("");
 
+}
+
+bool Token::operator!=(const Token & other)const
+{
+	if ((this->Text != other.Text) ||
+		(this->Level != other.Level) ||
+		(this->Positie != other.Positie) ||
+		(this->PositieInList != other.PositieInList) ||
+		(this->type != other.type) ||
+		(this->subType != other.subType)||
+		(this->Regelnummer != other.Regelnummer))
+		return true;
+	return false;
+}
+
+bool Token::operator!=(Token * other)
+{
+	if ((this->Text != other->Text) ||
+		(this->Level != other->Level) ||
+		(this->Positie != other->Positie) ||
+		(this->PositieInList != other->PositieInList) ||
+		(this->type != other->type) ||
+		(this->subType != other->subType) ||
+		(this->Regelnummer != other->Regelnummer))
+		return true;
+	return false;
+}
+
+bool Token::compare(Token* first, Token * other)
+{
+	if ((first->Text == other->Text) &&
+		(first->Level == other->Level) &&
+		(first->Positie == other->Positie) &&
+		(first->PositieInList == other->PositieInList) &&
+		(first->type == other->type) &&
+		(first->subType == other->subType) &&
+		(first->Regelnummer == other->Regelnummer))
+		return true;
+	return false;
 }
 
 std::string Token::getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token){

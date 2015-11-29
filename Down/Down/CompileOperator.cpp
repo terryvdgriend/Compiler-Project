@@ -20,7 +20,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 
 	nextLevel.begin = &begin;
 
-	while (current != nullptr && current != &end)
+	while (current != nullptr && *current != end)
 	{
 		if (current->getEnum() == Token::NEWLINE)
 			break;
