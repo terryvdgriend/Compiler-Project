@@ -136,6 +136,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		CheckStack(*pToken, lvl);
 		// cTokenlist->last == body_closed && stack.top == IF or ELSEIF && current != ELSE IF
 		if (cTokenList.last->getEnum() == Token::BODY_CLOSED) {
+			if (stack.size() > 0)
 			if ((stack.top()->getEnum() == Token::IF || stack.top()->getEnum() == Token::ELIF) && currentToken != Token::ELIF)
 				CheckRemainingStack();
 		}

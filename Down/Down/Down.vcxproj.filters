@@ -246,14 +246,26 @@
     <ClCompile Include="LinkedActionList.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CompileFor.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetFunction.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUnary.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionHandler.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Down.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CompileUnary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileFor.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="CommandVisitor.cpp">
+      <Filter>Source Files\VM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,11 +473,20 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CompileUnary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CompileFor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUnary.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitor.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionHandler.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -496,7 +517,15 @@
     <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="while.txt" />
+    <Text Include="for.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Snippets.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="if else elseif.md">
