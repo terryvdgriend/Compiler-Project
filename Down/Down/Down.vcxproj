@@ -85,6 +85,7 @@
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
     <Text Include="if.md" />
+    <Text Include="Snippets.txt" />
     <Text Include="switch.txt" />
     <Text Include="custom.txt" />
     <Text Include="while.md" />
@@ -96,6 +97,7 @@
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandList.h" />
+    <ClInclude Include="CommandVisitor.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -104,6 +106,7 @@
     <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFor.h" />
     <ClInclude Include="CompileFunction.h" />
+    <ClInclude Include="CompileGetFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
     <ClInclude Include="CompileNextLevel.h" />
@@ -120,6 +123,7 @@
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
     <ClInclude Include="ConstantToReturnValueCommand.h" />
+    <ClInclude Include="FunctionHandler.h" />
     <ClInclude Include="DirectFunctionCall.h" />
     <ClInclude Include="DivideCommand.h" />
     <ClInclude Include="DoNothingNode.h" />
@@ -165,7 +169,9 @@
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
+    <ClCompile Include="CommandVisitor.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
@@ -174,6 +180,7 @@
     <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFor.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
+    <ClCompile Include="CompileGetFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />
     <ClCompile Include="CompileNextLevel.cpp" />
@@ -189,6 +196,7 @@
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
     <ClCompile Include="ConstantToReturnValueCommand.cpp" />
+    <ClCompile Include="FunctionHandler.cpp" />
     <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DivideCommand.cpp" />
     <ClCompile Include="DoNothingNode.cpp" />

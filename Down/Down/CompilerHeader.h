@@ -6,4 +6,7 @@
 #include "CompileDoWhile.h"
 #include "CompileFor.h"
 #include "CompileUserFunction.h"
+#include "CompileGetFunction.h"
+#include "CompileCondition.h"
+#include "CompileOperator.h"
 #include "CompileSwitch.h"
