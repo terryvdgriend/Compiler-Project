@@ -32,6 +32,7 @@ public:
 	bool GetTokenError() { return tokenError; };
 
 	std::string getKeywordsAsJson();
+	std::string getFunctionsAsJson();
 	std::string getKeyByValueMappert(Token::iToken tkn);
 	~Tokenizer();
 };

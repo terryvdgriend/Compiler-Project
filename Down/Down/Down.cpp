@@ -42,7 +42,7 @@ int main(int argc, const char * argv[])
 	RunVM(cRunList);
  	if (Errors())
 		return 0;
-
+	
 	return 0;
 }
 
@@ -129,10 +129,10 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	{
 		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getSnippets")
-			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getDingen")
-			outz = Tokenizer().getKeywordsAsJson();
+		else if (option == "getSnippets")
+			outz = (FileStreamer{}).readerFromResource("Snippets");
+		else if (option == "getFunctions")
+			outz = Tokenizer().getFunctionsAsJson();
 		else
 			return false;
 	}

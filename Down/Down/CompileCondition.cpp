@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CompileCondition.h"
-#include "CompilePlusMinus.h"
+#include "CompileUnary.h"
 
-CompileCondition::CompileCondition(): CompileOperator(new CompilePlusMinus)
+CompileCondition::CompileCondition(): CompileOperator(new CompileUnary)
 {
 	TokenMap &tokenMap = getTokenMap();
 	tokenMap[Token::LARGER_THAN] = "$>";
