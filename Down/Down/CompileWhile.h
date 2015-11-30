@@ -3,15 +3,17 @@
 
 class CompileWhile : public Compiler
 {
-private:
-	LinkedActionList* _compiledStatement;
-	LinkedActionList* _condition;
-	LinkedActionList* _body;
-	ActionNode* bodyNode;
-public:
-	CompileWhile();
-	void ConnectLists();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileWhile(); };
-	~CompileWhile();
+	public:
+		CompileWhile();
+
+		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		shared_ptr<Compiler> create();
+
+	private:
+		shared_ptr<LinkedActionList> _compiledStatement;
+		shared_ptr<LinkedActionList> _condition;
+		shared_ptr<LinkedActionList> _body;
+		shared_ptr<ActionNode> bodyNode;
+
+		void connectLists();
 };

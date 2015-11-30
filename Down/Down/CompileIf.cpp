@@ -19,7 +19,7 @@ CompileIf::CompileIf()
 
 void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
-	//Check if all the tokens are correct
+	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
 	int whileLevel = begin.getLevel();
 
@@ -78,7 +78,6 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 			else 
 			{
-				unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 				shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 				_body->add(make_shared<DoNothingNode>());
 
@@ -187,7 +186,6 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				}
 				else if (expectation->getLevel() >= whileLevel) 
 				{
-					unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 					shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 					bodyNode = _bodyElse->add(make_shared<DoNothingNode>());
 

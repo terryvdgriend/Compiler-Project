@@ -17,7 +17,8 @@ CompileSwitch::CompileSwitch()
 
 void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
-	shared_ptr<Token> current = make_shared<Token>(begin); // Todo fix tokenizer, will throw error soon
+	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+	shared_ptr<Token> current = make_shared<Token>(begin);
 	int whileLevel = begin.getLevel();
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
@@ -95,7 +96,7 @@ shared_ptr<Compiler> CompileSwitch::create()
 
 void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end)
 {
-	// Check if all the tokens are correct
+	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
 	int whileLevel = begin.getLevel();
 	unique_ptr<list<shared_ptr<LinkedActionList>>> conditionList = make_unique<list<shared_ptr<LinkedActionList>>>();
@@ -191,7 +192,6 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 				}
 				else 
 				{
-					unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 					shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 
 					while (previous->getEnum() != Token::BODY_OPEN)
@@ -256,7 +256,7 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 
 void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& end)
 {
-	// Check if all the tokens are correct
+	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
 	int whileLevel = begin.getLevel();
 
@@ -304,7 +304,6 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 		}
 		else if (expectation->Level >= whileLevel)
 		{
-			unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 			shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 
 			while (previous->getEnum() != Token::BODY_OPEN)

@@ -91,6 +91,33 @@
     <Filter Include="Source Files\Compiler\Compile\Conditionals">
       <UniqueIdentifier>{757b3b44-4cbe-4fa7-9956-6a9213432ca2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utils\Collections">
+      <UniqueIdentifier>{c9bb2210-200a-4edb-ac6a-feb2508f8cc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Collections">
+      <UniqueIdentifier>{54b84eb0-2dfc-4e3d-bb16-7df853f1866d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\FunctionHandling">
+      <UniqueIdentifier>{c3b2f88c-0dad-496b-a672-37d1b03cec79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\ErrorHandling">
+      <UniqueIdentifier>{81638d99-10f0-4eb7-8cf0-09b322df649f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\FunctionHandling">
+      <UniqueIdentifier>{444d4a4f-7a30-4706-910d-3a0fa836eaf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\ErrorHandling">
+      <UniqueIdentifier>{08bce204-95a6-4b77-bd94-1a302aa28891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Visitors">
+      <UniqueIdentifier>{f197e2f3-aff4-44fc-ae3f-4fe879ee0881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Miscellaneous">
+      <UniqueIdentifier>{23522b46-ae3a-4172-8b76-96abf8a53a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\Miscellaneous">
+      <UniqueIdentifier>{1c0bc99f-84d7-4dd3-a81c-2224b5dc2912}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -192,41 +219,14 @@
     <ClCompile Include="Token.cpp">
       <Filter>Source Files\Tokenizer</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Format.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="FileStreamer.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="ErrorHandler.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Error.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="ConstantToReturnValueCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="NodeVisitor.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkedActionList.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="FunctionHandler.cpp">
-      <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Down.cpp">
       <Filter>Source Files</Filter>
@@ -279,9 +279,6 @@
     <ClCompile Include="CompileGetFunction.cpp">
       <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
     </ClCompile>
-    <ClCompile Include="CompileLValue.cpp">
-      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
-    </ClCompile>
     <ClCompile Include="CompileNextLevel.cpp">
       <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
     </ClCompile>
@@ -290,6 +287,36 @@
     </ClCompile>
     <ClCompile Include="CompileUserFunction.cpp">
       <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="Error.cpp">
+      <Filter>Source Files\Utils\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorHandler.cpp">
+      <Filter>Source Files\Utils\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedActionList.cpp">
+      <Filter>Source Files\Utils\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Source Files\Utils\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionHandler.cpp">
+      <Filter>Source Files\Utils\FunctionHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeVisitor.cpp">
+      <Filter>Source Files\Utils\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\Utils\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="Format.cpp">
+      <Filter>Source Files\Utils\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStreamer.cpp">
+      <Filter>Source Files\Utils\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="Function.cpp">
+      <Filter>Source Files\Utils\FunctionHandling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,24 +422,6 @@
     <ClInclude Include="SwitchNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedActionList.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="LinkedList.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Error.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ErrorHandler.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="FileStreamer.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Format.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Token.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
@@ -440,14 +449,8 @@
     <ClInclude Include="NodeVisitor.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="CommandVisitor.h">
       <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="FunctionHandler.h">
-      <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="CompileComparison.h">
       <Filter>Header Files\Compiler\Compile\Operators</Filter>
@@ -494,9 +497,6 @@
     <ClInclude Include="CompileNextLevel.h">
       <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
     </ClInclude>
-    <ClInclude Include="CompileLValue.h">
-      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
-    </ClInclude>
     <ClInclude Include="CompileUnary.h">
       <Filter>Header Files\Compiler\Compile\Operators</Filter>
     </ClInclude>
@@ -511,6 +511,33 @@
     </ClInclude>
     <ClInclude Include="Compiler.h">
       <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="Error.h">
+      <Filter>Header Files\Utils\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandler.h">
+      <Filter>Header Files\Utils\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedActionList.h">
+      <Filter>Header Files\Utils\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files\Utils\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionHandler.h">
+      <Filter>Header Files\Utils\FunctionHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="Format.h">
+      <Filter>Header Files\Utils\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="FileStreamer.h">
+      <Filter>Header Files\Utils\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\Utils\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>Header Files\Utils\FunctionHandling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

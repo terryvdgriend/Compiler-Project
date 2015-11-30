@@ -1,18 +1,19 @@
 #pragma once
 #include "Token.h"
+
 class LinkedList
 {
-public:
-	LinkedList();
-	LinkedList(LinkedList & other);
-	~LinkedList();
-	void add(Token* value);
-	void insertLast(Token* value);
-	int size() { return count; };
-	Token* first;
-	Token* last;
-private:
+	public:
+		LinkedList();
+		LinkedList(LinkedList & other);
+		~LinkedList();
 
-	int count;
+		void add(Token* value);
+		void insertLast(Token* value);
+		int size() { return count; };
+		Token* first;
+		Token* last;
+	private:
+
+		int count;
 };
-

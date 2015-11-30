@@ -22,7 +22,7 @@ void CompileElseIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 
 void CompileElseIf::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore, map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& _conditionBodyMap)
 {
-	// Check if all the tokens are correct
+	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
 	int whileLevel = begin.getLevel();
 
@@ -74,7 +74,6 @@ void CompileElseIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 			}
 			else
 			{
-				unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 				shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 				bodyNode = _body->add(make_shared<DoNothingNode>());
 

@@ -1,100 +1,116 @@
 #include "stdafx.h"
 #include "CompileDoWhile.h"
 #include "CompileCondition.h"
-#include "ConditionalJumpNode.h"
-#include "JumpGoToNode.h"
-#include "DoNothingNode.h"
 #include "CompileFactory.h"
+#include "ConditionalJumpNode.h"
+#include "DoNothingNode.h"
+#include "JumpGoToNode.h"
 #include "TokenExpectation.h"
-
 
 CompileDoWhile::CompileDoWhile()
 {
-	_compiledStatement = new LinkedActionList();
-	_condition = new LinkedActionList();
-	_body = new LinkedActionList();
-	_compiledStatement->add(new DoNothingNode());
-}
-
-void CompileDoWhile::ConnectLists(){
-	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	_compiledStatement->add(_body);
-	_compiledStatement->add(_condition);
-	_compiledStatement->add(conditionalJumpNode);
-	_compiledStatement->add(new DoNothingNode());
-	conditionalJumpNode->setOnTrue(_body->getFirst());
-	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
+	_compiledStatement	= make_shared<LinkedActionList>();
+	_condition			= make_shared<LinkedActionList>();
+	_body				= make_shared<LinkedActionList>();
+	_compiledStatement->add(make_shared<DoNothingNode>());
 }
 
 void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
-	Token* current = &begin;
+	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+	shared_ptr<Token> current = make_shared<Token>(begin);
 	int whileLevel = begin.getLevel();
-	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_back(TokenExpectation(whileLevel, Token::DO));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
-	expected.push_back(TokenExpectation(whileLevel, Token::WHILE));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
 
-	for (TokenExpectation expectation : expected)
+	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
+	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::DO));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_CLOSED));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::WHILE));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_CLOSE));
+
+	for (shared_ptr<TokenExpectation> expectation : *expected)
 	{
-		while (current->getEnum() == Token::NEWLINE){
-			current = current->next;
+		while (current->getEnum() == Token::NEWLINE)
+		{
+			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
-		if (expectation.getLevel() == whileLevel){
-			if (current == nullptr){
+
+		if (expectation->getLevel() == whileLevel)
+		{
+			if (current == nullptr)
+			{
 				ErrorHandler::getInstance()->addError(Error{ "do while statement not completed", ".md", -1, -1, Error::error });
 				begin = end;
+
 				break;
 			}
-			if (current->getEnum() != expectation.getTokenType()){
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
+
+			if (current->getEnum() != expectation->getTokenType())
+			{
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->getTokenType(), current->getEnum());
 				begin = end;
+
 				break;
 			}
 			else
-				current = current->next;
+			{
+				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			}
 		}
-		else if (expectation.getLevel() >= whileLevel){
-			if (_body->Count() == 0){
-				_body->add(new DoNothingNode());
-				Token* prev = current->previous;
-				while (prev->getEnum() != Token::BODY_OPEN){
-					prev = prev->previous;
+		else if (expectation->getLevel() >= whileLevel)
+		{
+			if (_body->getCount() == 0)
+			{
+				shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				_body->add(make_shared<DoNothingNode>());
+
+				while (previous->getEnum() != Token::BODY_OPEN)
+				{
+					previous = make_shared<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
 				}
-				prev = prev->getPartner();
-				while (current->getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-					if (compiledBodyPart != nullptr){
-						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
+				previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
+
+				while (current->getLevel() > whileLevel)
+				{
+					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
+
+					if (compiledBodyPart != nullptr)
+					{
+						compiledBodyPart->compile(cTokenList, *current, *previous, *_body, *_body->getLast());
 					}
 					else
 					{
-						current = current->next;
+						current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 					}
-					delete compiledBodyPart;
 				}
 			}
-			else{
-				CompileCondition* condition = new CompileCondition();
+			else
+			{
+				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
-				delete condition;
 			}
 		}
 	}
-	ConnectLists();
-	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
+	connectLists();
+	listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), _compiledStatement);
 	begin = *current;
 }
 
-CompileDoWhile::~CompileDoWhile()
+shared_ptr<Compiler> CompileDoWhile::create()
 {
-	delete bodyNode;
-	delete _body;
-	delete _condition;
-	delete _compiledStatement;
+	return make_shared<CompileDoWhile>();
+}
+
+void CompileDoWhile::connectLists()
+{
+	shared_ptr<ConditionalJumpNode> conditionalJumpNode = make_shared<ConditionalJumpNode>();
+	_compiledStatement->add(_body);
+	_compiledStatement->add(_condition);
+	_compiledStatement->add(conditionalJumpNode);
+	_compiledStatement->add(make_shared<DoNothingNode>());
+	conditionalJumpNode->setOnTrue(_body->getFirst());
+	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 }

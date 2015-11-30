@@ -1,37 +1,35 @@
 #pragma once
 #include "Compiler.h"
-#include "TokenExpectation.h"
-#include "FunctionHandler.h"
 #include "CompilerHeader.h"
-#include <vector>
-class CompileGetFunction :
-	public Compiler
+#include "FunctionHandler.h"
+#include "TokenExpectation.h"
+
+class CompileGetFunction : public Compiler
 {
-private:
-	LinkedActionList* _compiledStatement;
-	std::string _params;
-	std::string _name;
-	LinkedActionList* _body;
-	Token* _returnToken;
-	LinkedList* _bodyTokens;
-	std::vector<Token*> _paramTokens;
-	LinkedActionList* _parameters;
-	LinkedActionList* _functionParams;
-	LinkedActionList* _functionCall;
-	std::map<string, string> variableMap;
-	bool userdef;
-public:
-	CompileGetFunction();
-	void ConnectLists();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void CompileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
-	void CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end);
-	void ChangeVariables(LinkedList & list);
-	void ChangeVariable(Token & token);
-	void ConnectParams(Token * param, LinkedList& paramlist);
-	Compiler * Create() { return new CompileGetFunction(); };
+	public:
+		CompileGetFunction();
 
+		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		void compileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
+		void compileUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
+		void changeVariables(LinkedList& list);
+		void changeVariable(Token& token);
+		void connectParams(shared_ptr<Token> param, LinkedList& paramlist);
+		shared_ptr<Compiler> create();
 
-	~CompileGetFunction();
+	private:
+		string _params;
+		string _name;
+		bool userDefined;
+		shared_ptr<vector<shared_ptr<Token>>> _paramTokens;
+		unique_ptr<map<string, string>> variableMap;
+		shared_ptr<Token> _returnToken;
+		shared_ptr<LinkedList> _bodyTokens;
+		shared_ptr<LinkedActionList> _compiledStatement;
+		shared_ptr<LinkedActionList> _body;
+		shared_ptr<LinkedActionList> _parameters;
+		shared_ptr<LinkedActionList> _functionParams;
+		shared_ptr<LinkedActionList> _functionCall;
+
+		void connectLists();
 };
-

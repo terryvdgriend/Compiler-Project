@@ -28,7 +28,7 @@ shared_ptr<LinkedActionList> SwitchNode::getDefaultNodeList()
 	return defaultNodeList;
 }
 
-shared_ptr<LinkedActionList> SwitchNode::getswitchConditionList()
+shared_ptr<LinkedActionList> SwitchNode::getSwitchConditionList()
 {
 	return switchConditionList;
 }

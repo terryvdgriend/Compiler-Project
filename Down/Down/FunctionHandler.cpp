@@ -2,64 +2,34 @@
 #include "FunctionHandler.h"
 #include "CommandDictionary.h"
 
-Function::Function(string naam, std::string params, LinkedList* body, std::vector<Token*> paramTokens, Token* returnToken)
-{
-	_naam = naam;
-	_params = params;
-	_paramTokens = paramTokens;
-	_returnToken = returnToken;
-	_body = body;
-}
-Function::Function(string naam, std::string params, LinkedList * body, std::vector<Token*> paramTokes, Token* returnToken, bool userdef)
-{
-	_naam = naam;
-	_params = params;
-	_paramTokens = paramTokes;
-	_body = body;
-	_returnToken = returnToken;
-	_userdef = userdef;
-}
-Function::~Function()
-{
-}
-
-//////////////////////////
-////////// Handler ///////
-//////////////////////////
+// Singleton prep : required!
+shared_ptr<FunctionHandler> FunctionHandler::handler = nullptr;
 
 FunctionHandler::FunctionHandler()
 {
-	for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
 	{
-		//cf.second->
-		this->addFunction(Function{ cf.first,"a",nullptr,{},nullptr });
-		//this->addFunction(Function{ cf.first,"aa",nullptr,{},nullptr });
-		//this->addFunction(Function{ cf.first,"aaa",nullptr,{},nullptr });
+		addFunction(make_shared<Function>(cf.first, "a", nullptr, nullptr, nullptr));
 	}
+	functions = shared_ptr<list<shared_ptr<Function>>>();
 }
 
-//Dit moet!
-FunctionHandler* FunctionHandler::handler = nullptr;
-std::list<Function> FunctionHandler::functions = std::list<Function>();
-
-FunctionHandler* FunctionHandler::getInstance()
+shared_ptr<FunctionHandler> FunctionHandler::getInstance()
 {
-	if (handler == nullptr) {
-		handler = new FunctionHandler();
+	if (handler == nullptr) 
+	{
+		handler = make_shared<FunctionHandler>();
 	}
+
 	return handler;
 }
 
-void FunctionHandler::addFunction(Function func)
+void FunctionHandler::addFunction(shared_ptr<Function>& funcion)
 {
-	functions.push_back(func);
+	functions->push_back(funcion);
 }
 
-std::list<Function> FunctionHandler::getFunctions()
+shared_ptr<list<shared_ptr<Function>>> FunctionHandler::getFunctions()
 {
 	return functions;
-}
-
-FunctionHandler::~FunctionHandler()
-{
 }

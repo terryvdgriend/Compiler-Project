@@ -1,8 +1,8 @@
 #pragma once
-
 #include "ActionNode.h"
 #include "VirtualMachine.h"
 #include "SwitchNode.h"
+
 class ConditionalJumpNode;
 class DirectFunctionCall;
 class DoNothingNode;
@@ -13,18 +13,16 @@ class SwitchNode;
 class NodeVisitor
 {
 	public:
-		NodeVisitor(VirtualMachine& vm);
-		~NodeVisitor();
+		NodeVisitor(VirtualMachine& virtualMachine);
+
 		virtual void visit(ConditionalJumpNode& node);
 		virtual void visit(DirectFunctionCall& node);
 		virtual void visit(DoNothingNode& node);
 		virtual void visit(FunctionCall& node);
 		virtual void visit(JumpGoToNode& node);
 		virtual void visit(SwitchNode& node);
-		ActionNode* nextNode; // make private implement the below getters and setters
-		//void getNextNode();
-		//ActionNode* setNextNode();
 
 	private:
-		VirtualMachine* vm;
+		unique_ptr<VirtualMachine> vm;
+		shared_ptr<ActionNode> nextNode;
 };

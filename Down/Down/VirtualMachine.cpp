@@ -11,21 +11,21 @@ VirtualMachine::VirtualMachine()
 
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
-	ActionNode* currentNode = actionList.getFirst();
+	shared_ptr<ActionNode> currentNode = actionList.getFirst();
 	unique_ptr<NodeVisitor> visitor = make_unique<NodeVisitor>(*this);
 
 	while (currentNode != nullptr && runsVeryNaz)
 	{
-		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode.get());
 
-		if (actionNode)
+		if (actionNode != nullptr)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
 			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
 			
 		}
 		currentNode->accept(*visitor);
-		currentNode = visitor->nextNode;
+		currentNode = visitor->getNextNode();
 	}
 }
 
