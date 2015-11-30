@@ -21,7 +21,11 @@ void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
 {	
-	//std::cerr << "WHUT?!";
+	argc = 3;
+	argv[0] = "";
+	argv[1] = "-r -t -c";
+	argv[2] = "-f fewewfw";
+	//std::cerr << "WHUT?!";*/
 	string code = "";
 	bool C = false;
 	bool T = false;
@@ -114,7 +118,7 @@ bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &
 	string option = argv[1];
 	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
 
-	if (argc == 3)
+	if (true)//argc == 3
 	{
 		string value = argv[2];
 		std::vector<std::string>  options = Text::Split(option, '-');
