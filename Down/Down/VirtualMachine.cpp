@@ -161,6 +161,28 @@ void VirtualMachine::addItemToVariableArray(string key, Variable value)
 	}
 }
 
+void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, Variable value)
+{
+	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(arrayKey);
+
+	if (hasValueInVariableArrayDictionary(it))
+	{
+		for (int i = 0; i < it->second.size(); i++)
+		{
+			if (i == atoi(key.c_str()))
+			{
+				it->second[i] = value;
+				//variableArrayDictionary.at(it->first) = it->second;
+				break;
+			}
+		}
+	}
+	else
+	{
+		// Throw exception: Value not in variableArrayDictionary
+	}
+}
+
 Variable VirtualMachine::getItemFromVariableArray(string key, int index)
 {
 	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);

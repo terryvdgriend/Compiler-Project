@@ -28,25 +28,21 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 	int arrayLevel = begin.getLevel();
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
-	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
-	expected.push_back(TokenExpectation(arrayLevel + 1, Token::NUMBER));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
-	expected.push_back(TokenExpectation(arrayLevel, Token::EQUALS));
+	if (!fromArray)
+	{
+		expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
+		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
+		expected.push_back(TokenExpectation(arrayLevel + 1, Token::NUMBER));
+		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
+		expected.push_back(TokenExpectation(arrayLevel, Token::EQUALS));
+		expected.push_back(TokenExpectation(arrayLevel, Token::ANY));
+	}
+	else
+	{
+		expected.push_back(TokenExpectation(arrayLevel, Token::ANY));
+	}
 
 	Token* temp = &begin;
-
-	while (temp->next != nullptr)
-	{
-		if (temp->getEnum() == Token::IDENTIFIER && (temp->getSub() == Token::TYPE_NUMBER_ARRAY || temp->getSub() == Token::TYPE_TEXT_ARRAY || temp->getSub() == Token::TYPE_FACT_ARRAY))
-		{
-			if (temp->getSub() == Token::TYPE_NUMBER_ARRAY) { expected.push_back(TokenExpectation(arrayLevel, Token::NUMBER)); }
-			else if (temp->getSub() == Token::TYPE_TEXT_ARRAY) { expected.push_back(TokenExpectation(arrayLevel, Token::TEXT)); }
-			else if (temp->getSub() == Token::TYPE_FACT_ARRAY) { expected.push_back(TokenExpectation(arrayLevel, Token::FACT)); }
-			break;
-		}
-		temp = temp->next;
-	}
 
 	for (TokenExpectation expectation : expected)
 	{
@@ -72,13 +68,82 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 		if (expectation.Level == arrayLevel)
 		{
-			if (current->getEnum() != expectation.TokenType) {
+			if (expectation.getTokenType() != Token::ANY && current->getEnum() != expectation.TokenType) {
 				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
 				begin = end;
 				break;
 			}
 
-			if (current->getEnum() == Token::IDENTIFIER)
+			if (expectation.getTokenType() == Token::ANY)
+			{
+				CompileCondition* compiledBodyPart = new CompileCondition();
+
+				Token* seperator = current;
+				while (seperator->getEnum() == Token::NEWLINE) {
+					if (seperator->getEnum() != Token::NEWLINE) { break; }
+					seperator = seperator->next;
+				}
+
+				string tempPreviousLocalVariable, tempCurrentLocalVariable;
+
+				if (fromArray)
+				{
+					DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, SET_CONST_TO_RT);
+					directFunctionCall->setAt(1, to_string(getFromArrayLength()).c_str());
+					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+
+					tempPreviousLocalVariable = getPreviousLocalVariableName(sBuffer);
+
+					directFunctionCall = new DirectFunctionCall;
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, SET_GET_FROM_RT);
+					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+
+					tempCurrentLocalVariable = getCurrentLocalVariableName();
+				}
+
+				compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
+
+				if (!fromArray) { tempPreviousLocalVariable = getPreviousLocalVariableName(sBuffer); }
+
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+				directFunctionCall->setArraySize(2);
+				directFunctionCall->setAt(0, SET_GET_FROM_RT);
+				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+
+				if (fromArray) { tempCurrentLocalVariable = getCurrentLocalVariableName(); }
+
+				string saArguments[4];
+
+				if (fromArray)
+				{
+					string curr = getCurrentLocalVariableName();
+					saArguments[0] = "$AddItemToArrayAt";
+					saArguments[1] = currArray;
+					saArguments[2] = getPreviousLocalVariableName(sBuffer);
+					saArguments[3] = curr;
+				}
+				else
+				{
+					saArguments[0] = "$AddItemToArrayAt";
+					saArguments[1] = tempPreviousLocalVariable;
+					saArguments[2] = currArrayTempVar;
+					saArguments[3] = getCurrentLocalVariableName();
+				}
+
+				FunctionCall* pFunction = new FunctionCall();
+				pFunction->setArraySize(4);
+				for (int n = 0; n < 4; n++)
+				{
+					pFunction->setAt(n, saArguments[n].c_str());
+				}
+				listActionNodes.insertBefore(&actionBefore, pFunction);
+			}
+			else if (current->getEnum() == Token::IDENTIFIER)
 			{
 				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
 				directFunctionCall->setArraySize(2);
@@ -94,38 +159,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 				currArrayTempVar = getCurrentLocalVariableName();
 			}
-			else if (current->getEnum() == Token::NUMBER || current->getEnum() == Token::TEXT || current->getEnum() == Token::FACT)
-			{
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
-				directFunctionCall->setArraySize(2);
-				directFunctionCall->setAt(0, SET_CONST_TO_RT);
-				directFunctionCall->setAt(1, current->getText().c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-				directFunctionCall = new DirectFunctionCall;
-				directFunctionCall->setArraySize(2);
-				directFunctionCall->setAt(0, SET_GET_FROM_RT);
-				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-				string saArguments[4];
-
-				string tempCurrentLocalVariable = getCurrentLocalVariableName();
-
-				saArguments[0] = "$AddItemToArrayAt";
-				saArguments[1] = currArrayTempVar;
-				saArguments[2] = getPreviousLocalVariableName(sBuffer);
-				saArguments[3] = tempCurrentLocalVariable;
-
-				FunctionCall* pFunction = new FunctionCall();
-				pFunction->setArraySize(4);
-				for (int n = 0; n < 4; n++)
-				{
-					pFunction->setAt(n, saArguments[n].c_str());
-				}
-				listActionNodes.insertBefore(&actionBefore, pFunction);
-			}
-
+			currArrayTempVar = getCurrentLocalVariableName();
 			current = current->next;
 		}
 		else if (expectation.Level >= arrayLevel)

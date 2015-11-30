@@ -18,6 +18,7 @@ class VirtualMachine
 		vector<Variable> addArrayToDictionary(string key, int length);
 		vector<Variable> getVariableArray(string key);
 		void addItemToVariableArray(string key, Variable value);
+		void addItemToVariableArrayAt(string arrayKey, string key, Variable value);
 		Variable getItemFromVariableArray(string key, int index);
 		vector<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);

@@ -1,5 +1,10 @@
-_fact_ **tempFact** is false
-_fact_{ 10 } **array** is { 1 like 1, **tempFact** , true }
+_text_ **tempFact** is "second"
+_text_{ 10 } **array** is { "first", **tempFact**  "third" }
+> _text_{ 10 } **array** 
+> **array** { 0 } is "third"
+> **array** { 1 } is **tempFact**
+> **array** { 2 } is "first"
+
 
 [ printdown "test" ]
 > Functie maken
@@ -16,10 +21,10 @@ _number_ **y** is 1
 [ Calcy **y** , "dingen" ]
 [ printdown "Buiten enzo" ]
 
-**array** { 0 } is false
+_text_ **temp** is **array** { 0 }
+[ printdown "temp = " plus **temp** ]
 
-_fact_ **temp** is **array** { 0 }
-[ printdown **temp** ]
+**array** { 0 } is "fifth" 
 
-_fact_ **temp2** is **array** { 1 }
-[ printdown **temp2** ]
+_text_ **temp2** is **array** { 0 }
+[ printdown "temp2 = " plus **temp2** ]

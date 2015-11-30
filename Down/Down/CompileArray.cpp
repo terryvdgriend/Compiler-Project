@@ -33,10 +33,13 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 	expected.push_back(TokenExpectation(arrayLevel + 1, Token::NUMBER));
 	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
 	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
-	expected.push_back(TokenExpectation(arrayLevel, Token::EQUALS));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
-	expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
+	if (current->next->next->next->next->getEnum() == Token::EQUALS)
+	{
+		expected.push_back(TokenExpectation(arrayLevel, Token::EQUALS));
+		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
+		expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
+		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
+	}
 
 	for (TokenExpectation expectation : expected)
 	{
@@ -84,18 +87,6 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 
 			if (current->getEnum() == Token::IDENTIFIER)
 			{
-				switch (current->getSub())
-				{
-					case Token::TYPE_NUMBER_ARRAY: arrayType = Token::TYPE_NUMBER;
-						break;
-					case Token::TYPE_TEXT_ARRAY: arrayType = Token::TYPE_TEXT;
-						break;
-					case Token::TYPE_FACT_ARRAY: arrayType = Token::TYPE_FACT;
-						break;
-					default:
-						break;
-				}
-
 				CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();
 				compiledBodyPart->Compile(cTokenList, *current, *current->next, listActionNodes, *listActionNodes.getLast());
 
@@ -149,11 +140,9 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				}
 				prev = prev->getPartner();
 
-				//while (current->getLevel() > arrayLevel)
 				while (current->getEnum() != Token::ARRAY_CLOSE)
 				{
-					/*CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();*/
-					CompileCondition* compiledBodyPart = new CompileCondition();
+					CompileAddArrayItem* compiledBodyPart = new CompileAddArrayItem();
 
 					ActionNode* lastActionNode = listActionNodes.getLast()->getPrevious();
 
@@ -161,52 +150,14 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::ARRAY_CLOSE) {
 						if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
 						
-						if ((seperator->getEnum() == Token::NUMBER || seperator->getEnum() == Token::TEXT || seperator->getEnum() == Token::FACT) &&
-							(seperator->next->getEnum() == Token::LESS_THAN || seperator->next->getEnum() == Token::LARGER_THAN || seperator->next->getEnum() == Token::EQUALS_TO) ||
-							(seperator->getEnum() == Token::LESS_THAN || seperator->getEnum() == Token::LARGER_THAN || seperator->getEnum() == Token::EQUALS_TO) &&
-							(seperator->next->getEnum() == Token::NUMBER || seperator->next->getEnum() == Token::TEXT || seperator->next->getEnum() == Token::FACT) ||
-							seperator->next->getEnum() == Token::AND_PARA || seperator->next->getEnum() == Token::ARRAY_CLOSE)
-						{
-							seperator = seperator->next;
-							continue;
-						}
-
-						andParamMissing = true;
-						break;
+						seperator = seperator->next;
 					}
 
-					if (current->getSub() != arrayType && current->getEnum() != Token::IDENTIFIER &&
-						current->previous->getEnum() != Token::EQUALS_TO && current->next->getEnum() != Token::EQUALS_TO)
-					{
-						wrongTypeParam = true;
-					}
-
-					if (andParamMissing) { break; }
+					compiledBodyPart->setFromArray(true);
+					compiledBodyPart->setFromArrayLength(filledLength++);
+					compiledBodyPart->setCurrentArray(currArrayTempVar);
 
 					compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
-
-					if (lastActionNode != listActionNodes.getLast()->getPrevious())
-					{
-						DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
-						directFunctionCall->setArraySize(2);
-						directFunctionCall->setAt(0, SET_GET_FROM_RT);
-						directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-						listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-						string saArguments[3];
-
-						saArguments[0] = "$AddItemToArray";
-						saArguments[1] = currArrayTempVar;
-						saArguments[2] = getCurrentLocalVariableName();
-
-						FunctionCall* pFunction = new FunctionCall();
-						pFunction->setArraySize(3);
-						for (int n = 0; n < 3; n++)
-						{
-							pFunction->setAt(n, saArguments[n].c_str());
-						}
-						listActionNodes.insertBefore(&actionBefore, pFunction);
-					}
 
 					if (current->getEnum() == Token::AND_PARA) { current = current->next; }
 					

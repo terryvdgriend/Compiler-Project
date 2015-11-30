@@ -102,10 +102,9 @@
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandList.h" />
+    <ClInclude Include="CommandVisitor.h" />
     <ClInclude Include="CompileAddArrayItem.h" />
     <ClInclude Include="CompileArray.h" />
-    <ClInclude Include="CompileGetArrayItem.h" />
-    <ClInclude Include="CommandVisitor.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -114,6 +113,7 @@
     <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFor.h" />
     <ClInclude Include="CompileFunction.h" />
+    <ClInclude Include="CompileGetArrayItem.h" />
     <ClInclude Include="CompileGetFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileLValue.h" />
@@ -182,12 +182,11 @@
     <ClCompile Include="AddItemToArrayAtCommand.cpp" />
     <ClCompile Include="AddItemToArrayCommand.cpp" />
     <ClCompile Include="AddLengthToArrayCommand.cpp" />
-    <ClCompile Include="CompileAddArrayItem.cpp" />
-    <ClCompile Include="CompileArray.cpp" />
-    <ClCompile Include="CompileGetArrayItem.cpp" />
     <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CommandVisitor.cpp" />
+    <ClCompile Include="CompileAddArrayItem.cpp" />
+    <ClCompile Include="CompileArray.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
@@ -196,6 +195,7 @@
     <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFor.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
+    <ClCompile Include="CompileGetArrayItem.cpp" />
     <ClCompile Include="CompileGetFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileLValue.cpp" />

@@ -29,7 +29,7 @@ int main(int argc, const char * argv[])
 
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = *RunTokenizer(code, true);
+	LinkedList cTokenList = *RunTokenizer(code, false);
 	if (Errors())
 		return 0;
 

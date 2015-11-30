@@ -17,5 +17,7 @@ private:
 	Token::iToken arrayType;
 	bool andParamMissing;
 	bool wrongTypeParam;
+
+	int filledLength;
 };
 
