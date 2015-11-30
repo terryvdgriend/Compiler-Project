@@ -21,18 +21,19 @@ void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
 {	
-	argc = 3;
+	/*argc = 3;
 	argv[0] = "";
 	argv[1] = "-r -t -c";
-	argv[2] = "-f fewewfw";
+	argv[2] = "dit is code ofzo / path naar code";
 	//std::cerr << "WHUT?!";*/
 	string code = "";
 	bool C = false;
 	bool T = false;
+	
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, code,T,C))
 		return 0;
-
+	
 
 	//=========TOKENIZER==============
 	LinkedList cTokenList = *RunTokenizer(code, T);
@@ -117,43 +118,44 @@ bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &
 
 	string option = argv[1];
 	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
+	bool cont = true;
 
-	if (true)//argc == 3
-	{
-		string value = argv[2];
-		std::vector<std::string>  options = Text::Split(option, '-');
-		for (std::vector<std::string>::iterator it = options.begin(); it != options.end(); ++it)
+		string value = argv[argc - 1]; //laatste arg = textfile path
+		int i = 0;
+
+		while (i != (argc))
 		{
-			string opt = Text::trim(*it);
-			/* std::cout << *it; ... */
-			if (opt == "r") {
+			string opt = argv[i];
+			
+			if (opt == "-r") {
 				// File
 				FileStreamer fs{};
 				code = fs.readerFromPath(value);
+				Text::PrintLine("Code in file: " + code);
 			}
-			if (opt == "t")//Print tokens
+			if (opt == "-t")//Print tokens
 				T = true;
-			if (opt == "c")//Print runlist
+			if (opt == "-c")//Print runlist
 				C = true;
+			if (opt == "getTokens") {
+				outz = Tokenizer().getKeywordsAsJson();
+				cont = false;
+			}
+			if (opt == "getSnippets") {
+				outz = (FileStreamer{}).readerFromResource("Snippets");
+				cont = false;
+			}
+			if (opt == "getFunctions") {
+				outz = Tokenizer().getFunctionsAsJson();
+				cont = false;
+			}
+			i++;
 		}
-		return true;
-	}
-	else if (argc == 2)
-	{
-		if (option == "getTokens")
-			outz = Tokenizer().getKeywordsAsJson();
-		else if (option == "getSnippets")
-			outz = (FileStreamer{}).readerFromResource("Snippets");
-		else if (option == "getFunctions")
-			outz = Tokenizer().getFunctionsAsJson();
-		else
-			return false;
-	}
-	else
-		return false;
+		
+		
 
-
-	cout << outz;
-	return false;
+	if(!cont)
+		cout << outz;
+	return cont;
 }
 
