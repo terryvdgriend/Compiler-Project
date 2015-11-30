@@ -137,6 +137,10 @@ vector<Variable> VirtualMachine::getVariableArray(string key)
 	{
 		return it->second;
 	}
+	else
+	{
+		ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
+	}
 }
 
 void VirtualMachine::addItemToVariableArray(string key, Variable value)
@@ -157,7 +161,7 @@ void VirtualMachine::addItemToVariableArray(string key, Variable value)
 	}
 	else
 	{
-		// Throw exception: Value not in variableArrayDictionary
+		ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
 	}
 }
 
@@ -172,14 +176,13 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, Varia
 			if (i == atoi(key.c_str()))
 			{
 				it->second[i] = value;
-				//variableArrayDictionary.at(it->first) = it->second;
 				break;
 			}
 		}
 	}
 	else
 	{
-		// Throw exception: Value not in variableArrayDictionary
+		ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
 	}
 }
 
@@ -193,7 +196,7 @@ Variable VirtualMachine::getItemFromVariableArray(string key, int index)
 	}
 	else
 	{
-		// Throw exception: Value not in variableArray
+		ErrorHandler::getInstance()->addError(Error{ "you want to get an item from an array which doesn't exist", ".md",-1, -1, Error::error });
 	}
 }
 

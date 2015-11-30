@@ -37,7 +37,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, vector<string>& parame
 	}
 	else
 	{
-		// Throw Exception
+		ErrorHandler::getInstance()->addError(Error{ "the array is still empty", ".md", -1, -1, Error::error });
 	}
 }
 

@@ -56,21 +56,21 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 		}
 
 		if (current == nullptr) {
-			ErrorHandler::getInstance()->addError(Error{ "making array not completed", ".md",-1, -1, Error::error });
+			ErrorHandler::getInstance()->addError(Error{ "making array not completed", ".md", -1, -1, Error::error });
 			begin = end;
 			break;
 		}
 
 		if (wrongTypeParam)
 		{
-			ErrorHandler::getInstance()->addError(Error{ "wrong type added to array", ".md",-1, -1, Error::error });
+			ErrorHandler::getInstance()->addError(Error{ "wrong type added to array", ".md", -1, -1, Error::error });
 			begin = end;
 			break;
 		}
 
 		if (andParamMissing)
 		{
-			ErrorHandler::getInstance()->addError(Error{ "comma is missing", ".md",-1, -1, Error::error });
+			ErrorHandler::getInstance()->addError(Error{ "comma is missing", ".md", -1, -1, Error::error });
 			begin = end;
 			break;
 		}

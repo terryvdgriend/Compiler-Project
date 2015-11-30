@@ -21,6 +21,10 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, vector<string>& pa
 					vm.addItemToVariableArray(parameters.at(1), var);
 				}
 			}
+			else
+			{
+				ErrorHandler::getInstance()->addError(Error{ "the array is empty", ".md", -1, -1, Error::error });
+			}
 		}
 	}
 }
