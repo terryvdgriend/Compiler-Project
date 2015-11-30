@@ -25,35 +25,31 @@
 				compiler.chooseCompilerFile($("#chooseCompilerFile"), function(file) {
 	                global.settings.compilerFile = file;
 	                $('#path').text(file);
-	                saveSettings();
+					global.saveSettings();
 	            });
 			});
 
 			$("button#resetCompiler").button().click(function( event ) {
 				event.preventDefault();
 				resetCompilerFile();
-				saveSettings();
+				global.saveSettings();
 			});
 
 			$("button#resetAll").button().click(function( event ) {
 				event.preventDefault();
 				resetAll();
-				saveSettings();
+				global.saveSettings();
 			});
 
 			$("select#theme").on("change", function() {
 				var value = $(this).val();
 				global.settings.theme = value;
 				global.editor.setTheme("ace/theme/" + value);
-				saveSettings();
+				global.saveSettings();
 			});
 
 			$("select#theme option[value=" + global.settings.theme + "]").attr('selected', 'selected');			
         });
-
-        function saveSettings() {
-        	localStorage.settings = JSON.stringify(global.settings);
-        }
 
         function resetCompilerFile() {
         	global.settings.compilerFile = null;

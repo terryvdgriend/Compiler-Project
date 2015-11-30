@@ -80,10 +80,23 @@ exports.initMenu = function() {
     var programMenu = new global.gui.Menu();
     programMenu.append(new global.gui.MenuItem({
         label: 'Print tokenlist',
+        type: 'checkbox',
+        checked: global.settings.printTokenList,
         click: function() {
-            alert("Not implemented yet");
+            global.settings.printTokenList = this.checked;
+            global.saveSettings();
         }
     }));
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Print compilerlist',
+        type: 'checkbox',
+        checked: global.settings.printCompilerList,
+        click: function() {
+            global.settings.printCompilerList = this.checked;
+            global.saveSettings();
+        }
+    }));
+
     programMenu.append(new gui.MenuItem({ type: 'separator' }));
     programMenu.append(new global.gui.MenuItem({
         label: 'Run',
