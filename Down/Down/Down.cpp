@@ -108,7 +108,8 @@ void RunVM(LinkedActionList cRunList)
 //Return: false -> stop na deze functie (voor dingen zoals getTokens)
 bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &C)
 {
-	if (argc <= 1 || argc >= 5)//andere opties hebben we nog niet
+	//Text::PrintLine("COUTNERT:  " + argc);
+	if (argc == 1)//andere opties hebben we nog niet
 	{
 		// Als je hier komt, ben je waarschijnlijk(?) aan het debuggen
 		// Dus voor de EZPZ wat fun code.
@@ -116,37 +117,41 @@ bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &
 		return true;
 	}
 
-	string option = argv[1];
-	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
+	//string option = argv[1];
+	string outz = "No valid option or arg: " + to_string(argc) + "\n";
 	bool cont = true;
 
 		string value = argv[argc - 1]; //laatste arg = textfile path
 		int i = 0;
-
+		
 		while (i != (argc))
 		{
 			string opt = argv[i];
-			
+			//Text::PrintLine("Wazdeze:  " + opt);
 			if (opt == "-r") {
 				// File
 				FileStreamer fs{};
 				code = fs.readerFromPath(value);
-				Text::PrintLine("Code in file: " + code);
+				
 			}
 			if (opt == "-t")//Print tokens
+			{
 				T = true;
+			}
 			if (opt == "-c")//Print runlist
+			{
 				C = true;
+			}
 			if (opt == "getTokens") {
-				outz = Tokenizer().getKeywordsAsJson();
+				outz += Tokenizer().getKeywordsAsJson();
 				cont = false;
 			}
 			if (opt == "getSnippets") {
-				outz = (FileStreamer{}).readerFromResource("Snippets");
+				outz += (FileStreamer{}).readerFromResource("Snippets");
 				cont = false;
 			}
 			if (opt == "getFunctions") {
-				outz = Tokenizer().getFunctionsAsJson();
+				outz += Tokenizer().getFunctionsAsJson();
 				cont = false;
 			}
 			i++;
@@ -154,8 +159,10 @@ bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &
 		
 		
 
-	if(!cont)
-		cout << outz;
+		if (!cont)
+		{
+			cout << outz;
+		}
 	return cont;
 }
 
