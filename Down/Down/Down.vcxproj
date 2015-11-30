@@ -81,13 +81,16 @@
   <ItemGroup>
     <Text Include="calc.txt" />
     <Text Include="condition.txt" />
+    <Text Include="for.txt" />
     <Text Include="func.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
     <Text Include="if.md" />
+    <Text Include="Snippets.txt" />
     <Text Include="switch.txt" />
     <Text Include="custom.txt" />
     <Text Include="while.md" />
+    <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -102,6 +105,7 @@
     <ClInclude Include="CompileElseIf.h" />
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
+    <ClInclude Include="CompileFor.h" />
     <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileGetFunction.h" />
     <ClInclude Include="CompileIf.h" />
@@ -114,6 +118,7 @@
     <ClInclude Include="CompileSingleStatement.h" />
     <ClInclude Include="CompileSwitch.h" />
     <ClInclude Include="CompileTimesDivideModulo.h" />
+    <ClInclude Include="CompileUnary.h" />
     <ClInclude Include="CompileUserFunction.h" />
     <ClInclude Include="CompileWhile.h" />
     <ClInclude Include="Compute.h" />
@@ -174,6 +179,7 @@
     <ClCompile Include="CompileElseIf.cpp" />
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
+    <ClCompile Include="CompileFor.cpp" />
     <ClCompile Include="CompileFunction.cpp" />
     <ClCompile Include="CompileGetFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
@@ -185,6 +191,7 @@
     <ClCompile Include="CompileSingleStatement.cpp" />
     <ClCompile Include="CompileSwitch.cpp" />
     <ClCompile Include="CompileTimesDivideModulo.cpp" />
+    <ClCompile Include="CompileUnary.cpp" />
     <ClCompile Include="CompileUserFunction.cpp" />
     <ClCompile Include="CompileWhile.cpp" />
     <ClCompile Include="Compute.cpp" />

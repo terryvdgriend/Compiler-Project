@@ -6,6 +6,7 @@ CompileFactory::CompileFactory()
 {
 	mappert[Token::IF] = new CompileIf();
 	mappert[Token::WHILE] = new CompileWhile();
+	mappert[Token::FOR] = new CompileFor();
 	mappert[Token::DO] = new CompileDoWhile();
 	//mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileFunction();//Bestaande functie
 	mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileGetFunction();//Bestaande functie

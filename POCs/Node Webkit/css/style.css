@@ -1,0 +1,251 @@
+* {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.ui-widget{
+    font-size:14px !important;
+}
+
+.ui-tabs {
+    padding:0 !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 12px 8px !important;
+    overflow-y: scroll;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    padding: 0.15em 1em !important;
+}
+
+#log li a {
+    cursor: pointer;
+    bottom: 0 !important;
+}
+
+p {
+    line-height: 20px;
+}
+
+*:focus {
+    outline:0;
+}
+
+html, body{
+    height:100%;
+    background: #262626;
+    font-family:Arial;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+#page {
+    width: 100%;
+    height: 100%;
+}
+
+#editor{
+    float:left;
+    width:50%;
+    height:100%;
+    padding:0;
+    margin:0;
+    border: 0;
+    border-right: 1px solid #535353;
+    background: #2e2e2e;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#editor textarea {
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    font-size: 16px;
+    color: #fff;
+    background: none;
+    padding:8px 0 0 8px;
+    margin: 0;
+    resize:none;
+    width:100%;
+    height:100%;
+    position: absolute;
+}
+
+#editor > .ace_editor {
+    margin: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#editor .ace_active-line {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#markdown {
+    float:right;
+    width:50%;
+    height:100%;
+    overflow-y:scroll;
+    padding:8px 8px 0 8px;
+    color: #fff;
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    font-size: 16px;
+}
+
+#markdown *:first-child {
+    margin-top: 0;
+}
+
+#log {
+    display: none;
+    width: 100%;
+    height: 30%;
+    float: left;
+    border-top: 1px solid #535353;
+    background: #262626;
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    color: #fff;
+    /*padding:8px 8px 0 8px;*/
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+}
+
+#log table.errors {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+#log table.errors tr {
+    cursor: pointer;
+}
+
+#log table.errors tr:hover {
+    background: rgba(255, 255, 255, 0.065);
+}
+
+#log table.errors td {
+    margin: 0;
+    padding: 0;
+    height: 25px;
+    line-height: 25px !important;
+    vertical-align:middle;
+}
+
+#log table.errors td a {
+    color: #fff;
+    text-decoration: underline !important;
+}
+
+#log div {
+    width: 100%;
+    height: 100%;
+}
+
+#log a.close, #log a.save  {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+    z-index: 99999;
+}
+
+#log a.save {
+    right: 35px;
+}
+
+.showLog #editor, .showLog #markdown {
+    height: 70%;
+}
+
+.showLog #log {
+    display: block;
+}
+
+
+
+/****** PAGES *******/
+#settings {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+#settings h1 {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 0;
+}
+
+#settings h2 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: 22px;
+    width: 100%;
+    border-bottom: 2px solid #3e3e3e;
+}
+
+#settings p {
+    color: #fff;
+    font-size: 14px;
+}
+
+#settings table.settings {
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    font-family: Arial;
+    border-collapse: collapse;
+}
+
+#settings table.settings tr td {
+    padding-bottom: 12px;
+}
+
+#settings table.settings td:first-child {
+    width: 80%;
+}
+
+#settings table.settings td:last-child {
+    text-align: right;
+}
+
+#settings table.settings strong {
+    float: left;
+    clear: both;
+    font-weight: bold;
+}
+
+#settings table.settings span {
+    float: left;
+    clear: both;
+    color: #afafaf;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+#settings table.settings a {
+    color: #bbbbbb;
+    text-decoration: underline !important;
+}
+
+
+#settings input, #settings button {
+    font-family: Arial !important;
+}
+
+
+
+
+

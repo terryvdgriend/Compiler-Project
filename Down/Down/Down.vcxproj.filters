@@ -93,9 +93,6 @@
     <ClCompile Include="CompileFunction.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileGetFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileIf.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
@@ -155,9 +152,6 @@
     </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="DivideCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
@@ -237,20 +231,11 @@
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionHandler.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Down.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="ConstantToReturnValueCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandVisitor.cpp">
-      <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Utils</Filter>
@@ -260,6 +245,27 @@
     </ClCompile>
     <ClCompile Include="LinkedActionList.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileFor.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetFunction.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUnary.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionHandler.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Down.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandVisitor.cpp">
+      <Filter>Source Files\VM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -291,9 +297,6 @@
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileGetFunction.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileIf.h">
@@ -340,9 +343,6 @@
     </ClInclude>
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandVisitor.h">
-      <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="BaseCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
@@ -443,9 +443,6 @@
     <ClInclude Include="Format.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionHandler.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Token.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
@@ -476,6 +473,21 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CompileFor.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUnary.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitor.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionHandler.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="calc.txt">
@@ -503,6 +515,15 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="while.md">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="for.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Snippets.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

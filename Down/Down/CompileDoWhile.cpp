@@ -61,6 +61,7 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 		}
 		else if (expectation.getLevel() >= whileLevel){
 			if (_body->Count() == 0){
+				_body->add(new DoNothingNode());
 				Token* prev = current->previous;
 				while (prev->getEnum() != Token::BODY_OPEN){
 					prev = prev->previous;
@@ -86,7 +87,7 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 		}
 	}
 	ConnectLists();
-	listActionNodes.add(_compiledStatement);
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
 	begin = *current;
 }
 

@@ -117,7 +117,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			cTokenList.add(pToken);
 
 		//Levels
-		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN)
+		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN || currentToken == Token::FUNCTION_DECLARE_OPEN)
 		{
 			lvl++;
 		}
@@ -126,13 +126,20 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		colNr += part.size() + 1;
 
 		////Levels
-		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE)
+		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE || currentToken == Token::FUNCTION_DECLARE_CLOSE)
 		{
 			lvl--;
 		}
+		// check Remaining stack
+
 
 		CheckStack(*pToken, lvl);
-
+		// cTokenlist->last == body_closed && stack.top == IF or ELSEIF && current != ELSE IF
+		if (cTokenList.last->getEnum() == Token::BODY_CLOSED) {
+			if (stack.size() > 0)
+			if ((stack.top()->getEnum() == Token::IF || stack.top()->getEnum() == Token::ELIF) && currentToken != Token::ELIF)
+				CheckRemainingStack();
+		}
 		s = m.suffix().str();
 	}
 
@@ -268,11 +275,11 @@ void Tokenizer::CheckCondition(Token& token, int &lvl){
 
 void Tokenizer::CheckBrackets(Token& token, int &lvl)
 {
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN )
+	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN || token.getEnum() == Token::FUNCTION_DECLARE_OPEN)
 	{
 		this->stack.push(&token);
 	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE )
+	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE || token.getEnum() == Token::FUNCTION_DECLARE_CLOSE)
 	{
 		if (this->stack.size() > 0)
 		{
@@ -288,6 +295,7 @@ void Tokenizer::CheckBrackets(Token& token, int &lvl)
 			}
 			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
 				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
+				(token.getEnum() == Token::FUNCTION_DECLARE_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_DECLARE_OPEN) ||
 				(token.getEnum() == Token::ARRAY_CLOSE && this->stack.top()->getEnum() == Token::ARRAY_OPEN) ||
 				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
 			{
@@ -317,6 +325,23 @@ Token::iToken Tokenizer::getToken(std::string token)
 
 	}
 	return Token::NONE;
+}
+
+std::string Tokenizer::getFunctionsAsJson()
+{
+	std::string JSON = "[";
+	int i = 0;
+	int size = CommandDictionary::CustFunc().size();
+	for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	{
+		JSON += "{\"function\":\"" + cf.first + "\"}";
+
+		if (i < size - 1)
+			JSON += ",";
+		i++;
+	}
+	JSON += "]";
+	return JSON;
 }
 
 std::string Tokenizer::getKeywordsAsJson()

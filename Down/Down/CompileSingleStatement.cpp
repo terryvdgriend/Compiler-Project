@@ -51,6 +51,13 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 			condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, actionBefore);
             break;
 		}
+		case Token::FUNCTION_DECLARE_OPEN:
+		{
+			Token* next = &begin;
+			CompileGetFunction function;
+			function.Compile(cTokenList, *next, *next->getPartner()->getPartner()->getPartner(), listActionNodes, actionBefore);
+			break;
+		}
 		case Token::NUMBER:
 		case Token::TEXT:
 		case Token::BOOL:

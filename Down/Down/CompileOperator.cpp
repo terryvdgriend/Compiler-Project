@@ -20,7 +20,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 
 	nextLevel.begin = &begin;
 
-	while (current != nullptr && current != &end)
+	while (current != nullptr && *current != end)
 	{
 		if (current->getEnum() == Token::NEWLINE)
 			break;
@@ -33,8 +33,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 			fillRunList(iFind->second, listActionNodes, before, &beforeArray, *current);
 			fillNextLevelList(&beforeArray, *current, nextLevel, nextLevelList);
 		}
-		else
-			current = current->next;
+		current = current->next;
 	}
 
 	insertLastNextLevel(end, before, nextLevel, nextLevelList);
@@ -82,10 +81,8 @@ void CompileOperator::fillNextLevelList(std::vector<ActionNode*>* beforeArray, T
 
 	nextLevelList.push_back(nextLevel);
 
-	current = *current.next;
-
 	nextLevel.before = beforeArray->at(1);
-	nextLevel.begin = &current;
+	nextLevel.begin = current.next;
 }
 
 void CompileOperator::insertLastNextLevel(Token& end, ActionNode& before, CompileNextLevel& nextLevel, CompileNextLevelList& nextLevelList)

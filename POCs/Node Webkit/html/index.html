@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Down IDE</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../js/plugins/jquery-ui/jquery-ui.css" />
+    <script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../js/plugins/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+
+    <script type="text/javascript">
+		init();
+
+        $(function() {
+            global.goToPage("editor");
+        });
+	</script>
+</head>
+<body>
+    <!-- Dialogs  -->
+    <input style="display:none;" id="openFileDialog" type="file" accept=".md" />
+    <input style="display:none;" id="saveFileDialog" type="file" accept=".md" nwsaveas />
+    <input style="display:none;" id="saveOutputDialog" type="file" accept=".html" nwsaveas />
+
+    <div id="page">
+        
+    </div>
+</body>
+</html>

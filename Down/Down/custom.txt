@@ -1,15 +1,31 @@
-[ printdown "test" ]
-> Functie maken
-
 ---
-### Calcy gets _number_ **x** , _text_  **name**
-**x** is **x** plus 1
+### Calcy gets _number_ **x** , _text_  **name** and gives _number_ **result**
+**result** is **x**
 [ printdown **x** ] 
+#### for ( _number_ **i** is 1 , **i** smaller than 5 , **i** increased )
+--
+[ printdown **i** ]
+#### while ( **x** smaller than 3 )
+--
+#### if ( **x** like 2 )
+--
+#### switch ( **x** )
+case ( 2 )
+--
+[ printdown 15 ]
+__
+[ printdown 20 ]
+__
 [ printdown **name** ] 
+**x** is **x** plus 1
+__
+__
+[ printdown **name** plus **x** ]
 ___
 
 
 _number_ **y** is 1
 > Function aanroepen
-[ Calcy **y** , "dingen" ]
-[ printdown "Buiten enzo" ]
+_number_ **b** is [ Calcy **y** , "first" ]
+**b** is [ Calcy **b** , "first" ]
+[ printdown **b** ]

@@ -1,0 +1,140 @@
+<script src="../js/plugins/ace/ace.js" type="text/javascript"></script>
+<script src="../js/plugins/ace/theme-twilight.js" type="text/javascript"></script>
+<script src="../js/plugins/ace/ext-language_tools.js" type="text/javascript"></script>
+
+<script>
+var editor = require("./../js/editor.js");
+var compiler = require("./../js/compiler.js");
+
+$(function() {
+
+    var tabs = $("#log > div").tabs();
+    tabs.find(".ui-tabs-nav").sortable({
+        axis: "x",
+        stop: function() {
+            tabs.tabs( "refresh" );
+        }
+    });
+
+    $("#editor").resizable({
+        handles: 'e',
+        maxWidth: $(window).width() * 0.9,
+        resize: function() {
+            var windowWidth = $(window).width();
+            var thisWidth = $(this).width();
+            var markDownWidth = windowWidth - thisWidth - 20;
+            $('#markdown').width(markDownWidth);
+            global.editor.resize();
+        }
+    });
+
+    $(window).resize(function(event) {
+        $("#editor").resizable({
+            maxWidth: $(this).width() * 0.9,
+        });
+
+        var editorWidth = $('#editor').width();
+        var windowWidth = $(this).width();
+        $('#markdown').width(windowWidth - editorWidth - 20);
+        global.editor.resize();
+    });
+
+    global.editor = ace.edit("code");
+    global.editor.setTheme("ace/theme/twilight");
+    global.editor.session.setMode("ace/mode/down");
+    global.editor.setOptions({
+        wrap : true,
+        highlightSelectedWord: true,
+        showPrintMargin: false,
+        vScrollBarAlwaysVisible: false,
+        fontSize: "15px",
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+    
+    compiler.getTokenList(function(list) {
+        var newList = [];
+
+        for (var i in list) {
+            var token = list[i];
+            newList.push({"key": token.keyword, "value": token.keyword});
+        }
+
+        var downCompleter = {
+            getCompletions: function(editor, session, pos, prefix, callback) {
+                if (prefix.length === 0) { callback(null, []); return }
+                callback(null, newList.map(function(ea) {
+                    return {name: ea.key, value: ea.value, score: null, meta: null}
+                }));
+            }
+        }
+
+        var langTools = ace.require("ace/ext/language_tools");
+        langTools.addCompleter(downCompleter);
+    });
+
+    global.editor.on('change', function(e) {
+        editor.reload();
+    });
+
+    $('#log a.close').on('click', function() {
+        $('body').removeClass('showLog');
+        global.editor.resize();
+    });
+
+    window.ondragover = function(e) { e.preventDefault(); return false };
+    window.ondrop = function(e) { e.preventDefault(); return false };
+    $('body').get(0).ondrop = function (e) {
+        e.preventDacefault();
+        editor.loadFile(e.dataTransfer.files[0].path);
+        return false;
+    };
+
+    $('body').on('click', 'table.errors tr', function(event) {
+        event.preventDefault();
+        global.editor.gotoLine($(this).data('line'), $(this).data('column'), true);
+    });
+
+    $('#log a.save').on('click', function() {
+        editor.chooseFile("#saveOutputDialog", function(filename) {
+            var fs = require('fs');
+            var output = $("#output").html();
+            var errors = $("#errors").html();
+            var css = '<style>* { font-family: "Consolas", "Menlo Regular", sans-serif; } </style>';
+            var html = css + "<h3>Errors:</h3>" + errors + "<hr><h3>Output:</h3>" + output;
+
+            fs.writeFile(filename, html, function(err) {
+                if (err) {
+                    console.log(err);
+                    alert("Could not save file to: " + filename);
+                } else {
+                    alert("File saved to: " + filename);
+                }
+            });
+        });
+    });
+});
+</script>
+
+<!-- Editor -->
+<div id="editor"><textarea id="code"></textarea></div>
+<div id="markdown"></div>
+
+<!-- Log -->
+<div id="log">
+    <a href="#" class="close">[X]</a>
+    <a href="#" class="save">[Save]</a>
+    <div>
+        <ul>
+            <li><a href="#output">Output</a></li>
+            <li><a href="#errors">Errors</a></li>
+        </ul>
+        <div id="output">
+           
+        </div>
+        <div id="errors">
+            
+        </div>
+    </div>
+</div>
