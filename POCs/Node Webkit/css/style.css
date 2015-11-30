@@ -150,7 +150,7 @@ a {
     height: 100%;
 }
 
-#log a.close {
+#log a.close, #log a.save  {
     position: absolute;
     right: 7px;
     top: 7px;
@@ -158,6 +158,10 @@ a {
     color: #FFF;
     font-weight: bold;
     z-index: 99999;
+}
+
+#log a.save {
+    right: 35px;
 }
 
 .showLog #editor, .showLog #markdown {

@@ -95,6 +95,25 @@ $(function() {
         event.preventDefault();
         global.editor.gotoLine($(this).data('line'), $(this).data('column'), true);
     });
+
+    $('#log a.save').on('click', function() {
+        editor.chooseFile("#saveOutputDialog", function(filename) {
+            var fs = require('fs');
+            var output = $("#output").html();
+            var errors = $("#errors").html();
+            var css = '<style>* { font-family: "Consolas", "Menlo Regular", sans-serif; } </style>';
+            var html = css + "<h3>Errors:</h3>" + errors + "<hr><h3>Output:</h3>" + output;
+
+            fs.writeFile(filename, html, function(err) {
+                if (err) {
+                    console.log(err);
+                    alert("Could not save file to: " + filename);
+                } else {
+                    alert("File saved to: " + filename);
+                }
+            });
+        });
+    });
 });
 </script>
 
@@ -105,6 +124,7 @@ $(function() {
 <!-- Log -->
 <div id="log">
     <a href="#" class="close">[X]</a>
+    <a href="#" class="save">[Save]</a>
     <div>
         <ul>
             <li><a href="#output">Output</a></li>
