@@ -36,7 +36,18 @@ exports.run = function(code) {
 		} else {
 			var spawn = require('child_process').spawn;
 			var compilerFilePath = exports.getCompilerFile();
-			var cmd = spawn(compilerFilePath, ['-f', tempFile]);
+			var arguments = ["-r"];
+
+			if (global.settings.printTokenList) {
+				arguments.push("-t");
+			}
+
+			if (global.settings.printCompilerList) {
+				arguments.push("-c");
+			}
+
+			arguments.push(tempFile);
+			var cmd = spawn(compilerFilePath, arguments);
 
 			var errorOccurred = false;
 
