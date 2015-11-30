@@ -13,7 +13,7 @@
 #include "Format.h"
 #include "DoNothingNode.h"
 
-bool IDEstuff(int argc, const char * argv[], std::string &code);
+bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T, bool &C);
 LinkedList* RunTokenizer(std::string code, bool print);
 LinkedActionList* RunCompiler(LinkedList* lToken, bool print);
 bool Errors();
@@ -21,20 +21,24 @@ void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
 {
+	
+	
 	//std::cerr << "WHUT?!";
 	string code = "";
+	bool C = false;
+	bool T = false;
 	//==========IDE=============
-	if (!IDEstuff(argc, argv, code))
+	if (!IDEstuff(argc, argv, code,T,C))
 		return 0;
 
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = *RunTokenizer(code, false);
+	LinkedList cTokenList = *RunTokenizer(code, T);
 	if (Errors())
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = *RunCompiler(&cTokenList, true);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, C);
 	if (Errors())
 		return 0;
 
@@ -97,8 +101,9 @@ void RunVM(LinkedActionList cRunList)
 
 
 
-//Return success
-bool IDEstuff(int argc, const char * argv[], std::string &code)
+//Return: true -> ga verder met rest van code (meeste gevallen)
+//Return: false -> stop na deze functie (voor dingen zoals getTokens)
+bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &C)
 {
 	if (argc <= 1 || argc >= 5)//andere opties hebben we nog niet
 	{
@@ -114,16 +119,21 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	if (argc == 3)
 	{
 		string value = argv[2];
-		if (option == "-f") {
-			// File
-			FileStreamer fs{};
-			code = fs.readerFromPath(value);
-			return true;
+		std::vector<std::string>  vals  = Text::Split(value, '-');
+		for (std::vector<std::string>::iterator it = vals.begin(); it != vals.end(); ++it)
+		{
+			/* std::cout << *it; ... */
+			if (option == "r") {
+				// File
+				FileStreamer fs{};
+				code = fs.readerFromPath(value);
+			}
+			if (option == "t")//Print tokens
+				T = true;
+			if (option == "c")//Print runlist
+				C = true;
 		}
-		else if (option == "-c")
-			code = value; // Code
-		else
-			return false;
+		return true;
 	}
 	else if (argc == 2)
 	{
@@ -143,5 +153,4 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	cout << outz;
 	return false;
 }
-
 
