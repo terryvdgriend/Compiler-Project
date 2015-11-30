@@ -7,6 +7,7 @@
 #include "CompileArray.h"
 #include "CompileGetArrayItem.h"
 #include "CompileAddArrayItem.h"
+#include "CompileFor.h"
 #include "CompileUserFunction.h"
 #include "CompileGetFunction.h"
 #include "CompileCondition.h"

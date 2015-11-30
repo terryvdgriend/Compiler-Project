@@ -4,6 +4,7 @@ class LinkedList
 {
 public:
 	LinkedList();
+	LinkedList(LinkedList & other);
 	~LinkedList();
 	void add(Token* value);
 	void insertLast(Token* value);

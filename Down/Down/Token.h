@@ -90,7 +90,9 @@ public:
 	virtual void    setRegelnummer(int txt){ Regelnummer = txt; };
 	virtual void    setPositie(int txt){ Positie = txt; };
 	virtual void    setLevel(int txt){ Level = txt; };
-
+	virtual bool	operator!=(const Token& other)const;
+	virtual bool	operator!=( Token* other);
+	static bool compare(Token* first, Token* other);
 
 public:
 	std::string     getText() { return Text; };

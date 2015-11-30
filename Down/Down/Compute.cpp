@@ -15,6 +15,8 @@ LinkedActionList* Compute::ComputeCompile(LinkedList* lToken, LinkedActionList* 
 }
 
 void Compute::CheckNewCompile(LinkedList* lToken, LinkedActionList* lRun, Token* token){
+	if (ErrorHandler::getInstance()->getErrors().size() > 0)
+		return;
 	if (token != nullptr){
 		CompileFactory fact { CompileFactory() };
 
