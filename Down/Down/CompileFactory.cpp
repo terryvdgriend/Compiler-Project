@@ -23,8 +23,8 @@ Compiler * CompileFactory::CreateCompileStatement(Token& tknzr)
 		if (it->second != nullptr) {
 			if (tknzr.getSub() == Token::TYPE_NUMBER_ARRAY || tknzr.getSub() == Token::TYPE_TEXT_ARRAY || tknzr.getSub() == Token::TYPE_FACT_ARRAY)
 			{
-				// 'Create' an compile statement of the array
-				return CompileArrayItem().Create();
+				if (tknzr.previous->getEnum() == Token::NEWLINE && tknzr.next->getEnum() == Token::ARRAY_OPEN) { return CompileAddArrayItem().Create(); }
+				else { return CompileGetArrayItem().Create(); }
 			}
 			return it->second->Create(); // Create is een copy maken
 		}

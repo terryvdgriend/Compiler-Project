@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "CompileArrayItem.h"
+#include "CompileGetArrayItem.h"
 
 #include "CompileEquals.h"
 
@@ -15,15 +15,15 @@
 #define SET_CONST_TO_RT "ConstantToReturnValue"
 #define SET_GET_FROM_RT "getFromReturnValue"
 
-CompileArrayItem::CompileArrayItem()
+CompileGetArrayItem::CompileGetArrayItem()
 {
 }
 
-CompileArrayItem::~CompileArrayItem()
+CompileGetArrayItem::~CompileGetArrayItem()
 {
 }
 
-void CompileArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 	Token* current = &begin;
 	int arrayLevel = begin.getLevel();

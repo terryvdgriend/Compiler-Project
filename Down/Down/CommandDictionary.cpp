@@ -42,6 +42,7 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$AddArrayToDictionary"]		= make_shared<AddArrayToDictionaryCommand>();
 	commandDictionary["$AddLengthToArray"]			= make_shared<AddLengthToArrayCommand>();
 	commandDictionary["$AddItemToArray"]			= make_shared<AddItemToArrayCommand>();
+	commandDictionary["$AddItemToArrayAt"]			= make_shared<AddItemToArrayAtCommand>();
 	commandDictionary["$GetItemFromArray"]			= make_shared<GetItemFromArrayCommand>();
 
 	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();

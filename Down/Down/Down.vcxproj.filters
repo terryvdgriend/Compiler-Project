@@ -256,6 +256,15 @@
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="Down.cpp" />
+    <ClCompile Include="CompileAddArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="AddItemToArrayAtCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -471,13 +480,19 @@
     <ClInclude Include="CompileFunction.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompileArrayItem.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="GetItemFromArrayCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="AddArrayToDictionaryCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileAddArrayItem.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetArrayItem.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="AddItemToArrayAtCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
   </ItemGroup>
@@ -661,9 +676,6 @@
     </ClCompile>
     <ClCompile Include="AddLengthToArrayCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileArrayItem.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="GetItemFromArrayCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>

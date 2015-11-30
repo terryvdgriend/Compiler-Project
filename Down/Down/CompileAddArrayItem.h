@@ -2,20 +2,14 @@
 #include "Compiler.h"
 #include "CompileNextLevel.h"
 
-class CompileArray : public Compiler
+class CompileAddArrayItem : public Compiler
 {
 public:
-	CompileArray();
-	~CompileArray();
+	CompileAddArrayItem();
+	~CompileAddArrayItem();
 	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileArray(); };
+	Compiler * Create() { return new CompileAddArrayItem(); };
 
 private:
 	string currArrayTempVar;
-	string prevArrayTempVar;
-
-	Token::iToken arrayType;
-	bool andParamMissing;
-	bool wrongTypeParam;
 };
-

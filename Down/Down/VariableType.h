@@ -4,6 +4,6 @@ enum VariableType
 {
 	NUMBER,
 	TEXT,
-	BOOL,
+	FACT,
 	NULLTYPE
 };

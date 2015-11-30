@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CompileSingleStatement.h"
-#include "CompileArrayItem.h"
+#include "CompileGetArrayItem.h"
 
 #define SET_ID_TO_RT  "IdentifierToReturnValue"
 #define SET_CONST_TO_RT  "ConstantToReturnValue"
@@ -19,7 +19,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 
 			if (next->getEnum() == Token::IDENTIFIER && next->next->getEnum() == Token::ARRAY_OPEN)
 			{
-				CompileArrayItem* arrayitem = new CompileArrayItem();
+				CompileGetArrayItem* arrayitem = new CompileGetArrayItem();
 				arrayitem->Compile(cTokenList, begin, end, listActionNodes, actionBefore);
 			}
 			else
@@ -69,7 +69,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		}
 		case Token::NUMBER:
 		case Token::TEXT:
-		case Token::BOOL:
+		case Token::FACT:
 		{
 			DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
 			directFunctionCall->setArraySize(2);

@@ -50,6 +50,30 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		//else if (currentToken == Token::NONE)
 			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
+		if (cTokenList.size() > 0 && cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE && part == "\n")
+		{
+			tempToken = Token::NONE;
+		}
+
+		if (cTokenList.last != NULL && cTokenList.last->getEnum() == Token::NEWLINE && currentToken == Token::IDENTIFIER)
+		{
+			string lookahead = lookAhead(m, s);
+			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
+			if (lookaheadToken == Token::ARRAY_OPEN)
+			{
+				Token* first = cTokenList.first;
+				while (first->next != nullptr)
+				{
+					if (first->getText() == part)
+					{
+						tempToken = first->getSub();
+						break;
+					}
+					first = first->next;
+				}
+			}
+		}
+
 		if (cTokenList.last != NULL && cTokenList.last->previous != NULL && cTokenList.last->previous->getEnum() == Token::IDENTIFIER &&
 			cTokenList.last->getEnum() == Token::ARRAY_OPEN && currentToken == Token::NUMBER)
 		{
@@ -80,6 +104,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
+			tempToken = currentToken;
 			lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, true);
 			//string lookahead = lookAhead(m, s);
 			//Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
@@ -145,7 +170,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			if (tempToken != Token::NONE)
 			{
 				pToken->setSub(tempToken);
-				tempToken = Token::NONE;
+				//tempToken = Token::NONE;
 			}
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
@@ -232,7 +257,7 @@ void Tokenizer::lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iTok
 	}
 	else
 	{
-		ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
+		if (arrayOpen) ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
 	}
 }
 

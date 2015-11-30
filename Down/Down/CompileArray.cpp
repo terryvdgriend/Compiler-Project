@@ -58,7 +58,7 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			break;
 		}
 
-		if (arrayType != Token::NONE && current->previous->getEnum() != Token::ARRAY_OPEN && arrayType != current->previous->getEnum())
+		if (wrongTypeParam)
 		{
 			ErrorHandler::getInstance()->addError(Error{ "wrong type added to array", ".md",-1, -1, Error::error });
 			begin = end;
@@ -84,6 +84,18 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 
 			if (current->getEnum() == Token::IDENTIFIER)
 			{
+				switch (current->getSub())
+				{
+					case Token::TYPE_NUMBER_ARRAY: arrayType = Token::TYPE_NUMBER;
+						break;
+					case Token::TYPE_TEXT_ARRAY: arrayType = Token::TYPE_TEXT;
+						break;
+					case Token::TYPE_FACT_ARRAY: arrayType = Token::TYPE_FACT;
+						break;
+					default:
+						break;
+				}
+
 				CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();
 				compiledBodyPart->Compile(cTokenList, *current, *current->next, listActionNodes, *listActionNodes.getLast());
 
@@ -120,16 +132,6 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					pFunction->setAt(n, saArguments[n].c_str());
 				}
 				listActionNodes.insertBefore(&actionBefore, pFunction);
-
-				/*switch (current->getSub())
-				{
-					case Token::TYPE_NUMBER_ARRAY: arrayType = Token::TYPE_NUMBER;
-						break;
-					case Token::TYPE_TEXT_ARRAY: arrayType = Token::TYPE_TEXT;
-						break;
-					case Token::TYPE_FACT_ARRAY: arrayType = Token::TYPE_FACT;
-						break;
-				}*/
 
 				delete compiledBodyPart;
 			}
@@ -173,7 +175,11 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 						break;
 					}
 
-					arrayType = current->getSub();
+					if (current->getSub() != arrayType && current->getEnum() != Token::IDENTIFIER &&
+						current->previous->getEnum() != Token::EQUALS_TO && current->next->getEnum() != Token::EQUALS_TO)
+					{
+						wrongTypeParam = true;
+					}
 
 					if (andParamMissing) { break; }
 
@@ -228,7 +234,6 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
 				current = current->next;

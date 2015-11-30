@@ -6,8 +6,8 @@ struct TokenMap{
 	{
 		map<string, Token::iToken> mappert;
 		//
-		mappert[std::string("false")] = Token::BOOL;
-		mappert[std::string("true")] = Token::BOOL;
+		mappert[std::string("false")] = Token::FACT;
+		mappert[std::string("true")] = Token::FACT;
 		mappert[std::string("\n")] = Token::NEWLINE;
 		mappert[std::string("secret")] = Token::PRIVATE;
 		mappert[std::string("#### if")] = Token::IF;

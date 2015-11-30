@@ -45,7 +45,6 @@ public:
 		EQUALS_TO, // LIKE
 		AND_PARA, // , (comma)
 		CLASS,
-		BOOL,
 		MODULO,
 		PRIVATE,
 		FOR,
@@ -73,9 +72,8 @@ public:
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
 		SWITCH,
-		ANY, // ALS LAATSTE ! (?)
 		LENGTH,
-		ARRAYIDENTIFIER
+		ANY // ALS LAATSTE ! (?)
 	};
 
 public:
