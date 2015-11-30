@@ -20,9 +20,7 @@ bool Errors();
 void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
-{
-	
-	
+{	
 	//std::cerr << "WHUT?!";
 	string code = "";
 	bool C = false;
@@ -119,18 +117,19 @@ bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &
 	if (argc == 3)
 	{
 		string value = argv[2];
-		std::vector<std::string>  vals  = Text::Split(value, '-');
-		for (std::vector<std::string>::iterator it = vals.begin(); it != vals.end(); ++it)
+		std::vector<std::string>  options = Text::Split(option, '-');
+		for (std::vector<std::string>::iterator it = options.begin(); it != options.end(); ++it)
 		{
+			string opt = Text::trim(*it);
 			/* std::cout << *it; ... */
-			if (option == "r") {
+			if (opt == "r") {
 				// File
 				FileStreamer fs{};
 				code = fs.readerFromPath(value);
 			}
-			if (option == "t")//Print tokens
+			if (opt == "t")//Print tokens
 				T = true;
-			if (option == "c")//Print runlist
+			if (opt == "c")//Print runlist
 				C = true;
 		}
 		return true;
