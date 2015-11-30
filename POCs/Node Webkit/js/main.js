@@ -40,8 +40,15 @@ function init()
 	global.$(global.window.document).ready(function(){
 		var menu = require("./../js/menu.js");		
         menu.initMenu();
-
+        
         global.setFile(null);
-        global.compilerFile = null;
+        global.settings = JSON.parse(localStorage.settings);
+        
+        if(global.settings == null) {
+            global.settings = {};
+            global.settings.theme = "twilight";
+            global.settings.compilerFile = null;
+            localStorage.settings = global.settings;
+        }        
     });
 }

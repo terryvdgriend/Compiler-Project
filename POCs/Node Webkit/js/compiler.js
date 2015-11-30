@@ -2,18 +2,17 @@ exports.getCompilerFile = function() {
 	var windowsCompiler = "Compiler-Windows.exe";
 	var osxCompiler = "Compiler-OSX"
 
-	// Do custom compiler defined
 	compilerFilePath = "compiler\\" + windowsCompiler;
 	if (process.platform === "darwin") {
 		compilerFilePath = "./compiler/" + osxCompiler;
 	}
 
 	// Custom compiler defined
-	if(global.compilerFile != null) {
+	if(global.settings.compilerFile != null) {
 		if (process.platform === "darwin") {
-			compilerFilePath = global.compilerFile.replace(/ /g,"\\ ");
+			compilerFilePath = global.settings.compilerFile.replace(/ /g,"\\ ");
 		} else {
-			compilerFilePath = global.compilerFile
+			compilerFilePath = global.settings.compilerFile
 		}
 	}
 
@@ -114,8 +113,7 @@ exports.getTokenList = function(callback) {
 	});
 };
 
-exports.chooseCompilerFile = function(callback) {
-	var input = $("#chooseCompilerFile");
+exports.chooseCompilerFile = function(input, callback) {
 	input.on("change", function(e) {
 		val = $(this).val();
 		if(val != "") {
