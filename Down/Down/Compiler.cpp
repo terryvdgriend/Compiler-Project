@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Compiler.h"
 
+Compiler::Compiler()
+{
+	currentToken = nullptr;
+}
+
 string Compiler::getNextLocalVariableName(string& sBuffer)
 {
 	static int nValue = 0;
@@ -18,7 +23,7 @@ shared_ptr<Token> Compiler::getCurrentToken()
 	return currentToken;
 }
 
-void Compiler::setCurrentToken(Token& nextToken)
+void Compiler::setCurrentToken(shared_ptr<Token>& nextToken)
 {
-	currentToken = shared_ptr<Token>(&nextToken);
+	currentToken = nextToken;
 }

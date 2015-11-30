@@ -67,63 +67,39 @@
     <Filter Include="Source Files\VM\Variable">
       <UniqueIdentifier>{e583ce7c-bde8-4370-ab1b-f57e59881246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Operators">
+      <UniqueIdentifier>{8e9a7ed4-309d-4d4d-952b-2ae76284fadb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Conditionals">
+      <UniqueIdentifier>{286148c8-8ae1-4c8f-8d02-a31278eba163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Loops">
+      <UniqueIdentifier>{82e20298-c8ff-43c2-b84d-50ad1676193a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Miscellaneous">
+      <UniqueIdentifier>{0eae324b-5f1a-4662-babd-37de1223ff6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Miscellaneous">
+      <UniqueIdentifier>{b84d6c18-5f76-41b1-a5a8-79ae0225ebda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Operators">
+      <UniqueIdentifier>{4babbc38-2f80-434f-bff7-629f62bc8f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Loops">
+      <UniqueIdentifier>{0351de0f-03f1-45ce-8cfa-aef8be99b410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Conditionals">
+      <UniqueIdentifier>{757b3b44-4cbe-4fa7-9956-6a9213432ca2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CompileComparison.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileCondition.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileDoWhile.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileElseIf.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileEquals.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileFactory.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileIf.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileLValue.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileNextLevel.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileOperator.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompilePlusMinus.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="Compiler.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileSingleStatement.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileSwitch.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileTimesDivideModulo.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileUserFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileWhile.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="Compute.cpp">
@@ -246,15 +222,6 @@
     <ClCompile Include="LinkedActionList.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="CompileFor.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileGetFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileUnary.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
@@ -267,6 +234,63 @@
     <ClCompile Include="CommandVisitor.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
+    <ClCompile Include="CompileDoWhile.cpp">
+      <Filter>Source Files\Compiler\Compile\Loops</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileFor.cpp">
+      <Filter>Source Files\Compiler\Compile\Loops</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileWhile.cpp">
+      <Filter>Source Files\Compiler\Compile\Loops</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileComparison.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileCondition.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileFunction.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileEquals.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileOperator.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilePlusMinus.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileTimesDivideModulo.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUnary.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileElseIf.cpp">
+      <Filter>Source Files\Compiler\Compile\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileIf.cpp">
+      <Filter>Source Files\Compiler\Compile\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileSwitch.cpp">
+      <Filter>Source Files\Compiler\Compile\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetFunction.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileLValue.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileNextLevel.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileSingleStatement.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUserFunction.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -278,68 +302,14 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompileComparison.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileCondition.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileDoWhile.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileElseIf.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileEquals.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="CompileFactory.h">
       <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileIf.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileLValue.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileNextLevel.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileOperator.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompilePlusMinus.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="Compiler.h">
-      <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="CompilerHeader.h">
-      <Filter>Header Files\Compiler</Filter>
     </ClInclude>
     <ClInclude Include="CommandList.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="CommandDictionary.h">
       <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileSingleStatement.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileSwitch.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileTimesDivideModulo.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileUserFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileWhile.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
@@ -473,20 +443,74 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CompileFor.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileGetFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileUnary.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="CommandVisitor.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="FunctionHandler.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileComparison.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileCondition.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileDoWhile.h">
+      <Filter>Header Files\Compiler\Compile\Loops</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFor.h">
+      <Filter>Header Files\Compiler\Compile\Loops</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileWhile.h">
+      <Filter>Header Files\Compiler\Compile\Loops</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileElseIf.h">
+      <Filter>Header Files\Compiler\Compile\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileIf.h">
+      <Filter>Header Files\Compiler\Compile\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileSwitch.h">
+      <Filter>Header Files\Compiler\Compile\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilePlusMinus.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileOperator.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileEquals.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFunction.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetFunction.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileNextLevel.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileLValue.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUnary.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileSingleStatement.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUserFunction.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilerHeader.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

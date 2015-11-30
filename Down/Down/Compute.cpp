@@ -22,8 +22,8 @@ void Compute::checkNewCompile(LinkedList& tokenList, LinkedActionList& compiledL
 
 	if (token != nullptr)
 	{
-		unique_ptr<CompileFactory> fact = make_unique<CompileFactory>();
-		unique_ptr<Compiler> compiler = fact->createCompileStatement(*token);
+		unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+		shared_ptr<Compiler> compiler = factory->createCompileStatement(*token);
 
 		if (compiler != nullptr)
 		{

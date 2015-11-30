@@ -3,7 +3,7 @@
 
 void DoNothingNode::show()
 {
-	cout << "Do nothing. \n";
+	cout << "Do Nothing." << endl;
 }
 
 void DoNothingNode::action()

@@ -1,23 +1,23 @@
 #pragma once
 #include "Compiler.h"
 #include "SwitchNode.h"
-class CompileSwitch:
-	public Compiler
-{
-private:
-	LinkedActionList* _compiledStatement;
-	LinkedActionList* _condition;
-	LinkedActionList* _bodyDefault;
-	SwitchNode* _switchNode;
-	std::map<LinkedActionList*, LinkedActionList*> _conditionBodyMap;
-private:
-	void CompileCase(LinkedList & cTokenList, Token & begin, Token & end);
-public:
-	CompileSwitch();
-	void CompileDefault(LinkedList & cTokenList, Token & begin, Token & end);
-	~CompileSwitch();
-	void ConnectLists();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileSwitch(); };
-};
 
+class CompileSwitch : public Compiler
+{
+	public:
+		CompileSwitch();
+
+		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		shared_ptr<Compiler> create();
+
+	private:
+		shared_ptr<LinkedActionList> _compiledStatement;
+		shared_ptr<LinkedActionList> _condition;
+		shared_ptr<LinkedActionList> _bodyDefault;
+		shared_ptr<SwitchNode> _switchNode;
+		shared_ptr<map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>> _conditionBodyMap;
+
+		void compileCase(LinkedList& cTokenList, Token& begin, Token& end);
+		void compileDefault(LinkedList& cTokenList, Token& begin, Token& end);
+		void connectLists();
+};

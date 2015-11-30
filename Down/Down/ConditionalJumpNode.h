@@ -4,15 +4,16 @@
 class ConditionalJumpNode :	public ActionNode
 {
 	public:
-		void setOnTrue(ActionNode* value){ nextOnTrue = value; };
-		void setOnFalse(ActionNode* value){ nextOnFalse = value; };
-		ActionNode* getOnTrue(){ return nextOnTrue; };
-		ActionNode* getOnFalse(){ return nextOnFalse; };
 		void show();
 		void action();
 		void accept(NodeVisitor& visitor);
 
+		shared_ptr<ActionNode> getOnTrue();
+		void setOnTrue(shared_ptr<ActionNode> value);
+		shared_ptr<ActionNode> getOnFalse();
+		void setOnFalse(shared_ptr<ActionNode> value);
+		
 	private:
-		ActionNode* nextOnTrue;
-		ActionNode* nextOnFalse;
+		shared_ptr<ActionNode> nextOnTrue;
+		shared_ptr<ActionNode> nextOnFalse;
 };

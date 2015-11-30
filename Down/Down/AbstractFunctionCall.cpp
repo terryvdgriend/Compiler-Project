@@ -11,14 +11,12 @@ void AbstractFunctionCall::setAt(unsigned nPosition, const char* szText)
 	m_sContentArray[nPosition] = szText;
 }
 
-const AbstractFunctionCall::contentArray&
-
-AbstractFunctionCall::getContentArray() const
+vector<string>& AbstractFunctionCall::getContentArrayNonConstant()
 {
 	return m_sContentArray;
 }
 
-vector<string>& AbstractFunctionCall::getContentArrayNonConstant()
+const AbstractFunctionCall::contentArray& AbstractFunctionCall::getContentArray() const
 {
 	return m_sContentArray;
 }

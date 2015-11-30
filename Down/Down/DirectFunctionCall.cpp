@@ -3,7 +3,7 @@
 
 void DirectFunctionCall::show()
 {
-	cout << "Direct function call: " << getContentArray()[0] << " - " << getContentArray()[1] << " \n";
+	cout << "Direct Function Call: " << getContentArray()[0] << " - " << getContentArray()[1] << endl;
 }
 
 void DirectFunctionCall::action()
