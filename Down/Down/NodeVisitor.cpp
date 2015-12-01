@@ -166,10 +166,5 @@ void NodeVisitor::visit(SwitchNode& node)
 
 shared_ptr<ActionNode> NodeVisitor::getNextNode()
 {
-	return shared_ptr<ActionNode>();
-}
-
-void NodeVisitor::setNextNode()
-{
-
+	return nextNode;
 }

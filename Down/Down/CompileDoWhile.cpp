@@ -89,7 +89,7 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 			else
 			{
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
-				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+				condition->compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 			}
 		}
 	}

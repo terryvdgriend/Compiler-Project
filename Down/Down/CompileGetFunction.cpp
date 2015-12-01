@@ -148,7 +148,7 @@ void CompileGetFunction::compileNotUserDefined(LinkedList& cTokenList, Token& be
 	pFunction->setArraySize(parameters->size()+1);
 	pFunction->setAt(0, _name.c_str());
 
-	for (int n = 0; n < parameters->size(); n++)
+	for (int n = 0; (size_t)n < parameters->size(); n++)
 	{
 		pFunction->setAt(n + 1, (*parameters)[n].c_str());
 	}
@@ -170,7 +170,7 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 
 		do 
 		{
-			if (count > _params.size() - 1) 
+			if ((size_t)count > _params.size() - 1)
 			{
 				ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(), current->getPositie(), Error::error });
 
@@ -205,7 +205,7 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 		while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE);
 	}
 
-	if (count < _params.size() - 1) 
+	if ((size_t)count < _params.size() - 1) 
 	{
 		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(), current->getPositie(), Error::error });
 	}

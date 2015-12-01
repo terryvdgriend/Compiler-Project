@@ -70,7 +70,7 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 				{
 					shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 					_condition->add(make_shared<DoNothingNode>());
-					condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+					condition->compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 				}
 				else 
 				{
@@ -179,7 +179,7 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 					{
 						shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 						caseCondition->add(make_shared<DoNothingNode>());
-						condition->Compile(cTokenList, *current, *current->previous->getPartner(), *caseCondition, *caseCondition->getLast());
+						condition->compile(cTokenList, *current, *current->previous->getPartner(), *caseCondition, *caseCondition->getLast());
 					}
 					else 
 					{

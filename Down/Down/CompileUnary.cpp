@@ -2,13 +2,13 @@
 #include "CompileUnary.h"
 #include "CompilePlusMinus.h"
 
-CompileUnary::CompileUnary() : CompileOperator(new CompilePlusMinus)
+CompileUnary::CompileUnary() : CompileOperator(make_shared<CompilePlusMinus>())
 {
-	TokenMap &tokenMap = getTokenMap();
-	tokenMap[Token::PLUSPLUS] = "$++";
-	tokenMap[Token::MINUSMINUS] = "$--";
+	(*tokenMap)[Token::PLUSPLUS]	= "$++";
+	(*tokenMap)[Token::MINUSMINUS]	= "$--";
 }
 
-CompileUnary::~CompileUnary()
+shared_ptr<Compiler> CompileUnary::create()
 {
+	return make_shared<CompileUnary>();
 }

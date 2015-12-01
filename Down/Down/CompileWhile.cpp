@@ -65,7 +65,7 @@ void CompileWhile::compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			{
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				_condition->add(make_shared<DoNothingNode>());
-				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+				condition->compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 			}
 			else
 			{

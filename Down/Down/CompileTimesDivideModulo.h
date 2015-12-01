@@ -5,6 +5,6 @@ class CompileTimesDivideModulo : public CompileOperator
 {
 	public:
 		CompileTimesDivideModulo();
-		Compiler * Create() { return new CompileTimesDivideModulo(); };
-		~CompileTimesDivideModulo();
+
+		shared_ptr<Compiler> create();
 };

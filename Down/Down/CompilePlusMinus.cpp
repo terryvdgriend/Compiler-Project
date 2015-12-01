@@ -2,13 +2,13 @@
 #include "CompilePlusMinus.h"
 #include "CompileTimesDivideModulo.h"
 
-CompilePlusMinus::CompilePlusMinus() : CompileOperator(new CompileTimesDivideModulo)
+CompilePlusMinus::CompilePlusMinus() : CompileOperator(make_shared<CompileTimesDivideModulo>())
 {
-	TokenMap &tokenMap = getTokenMap();
-	tokenMap[Token::PLUS] = "$+";
-	tokenMap[Token::MINUS] = "$-";
+	(*tokenMap)[Token::PLUS]	= "$+";
+	(*tokenMap)[Token::MINUS]	= "$-";
 }
 
-CompilePlusMinus::~CompilePlusMinus()
+shared_ptr<Compiler> CompilePlusMinus::create()
 {
+	return make_shared<CompilePlusMinus>();
 }

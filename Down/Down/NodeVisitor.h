@@ -1,7 +1,6 @@
 #pragma once
 #include "ActionNode.h"
 #include "VirtualMachine.h"
-#include "SwitchNode.h"
 
 class ConditionalJumpNode;
 class DirectFunctionCall;
@@ -21,6 +20,8 @@ class NodeVisitor
 		virtual void visit(FunctionCall& node);
 		virtual void visit(JumpGoToNode& node);
 		virtual void visit(SwitchNode& node);
+
+		shared_ptr<ActionNode> getNextNode();
 
 	private:
 		unique_ptr<VirtualMachine> vm;

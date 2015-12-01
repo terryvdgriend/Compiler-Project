@@ -1,18 +1,14 @@
 #include "stdafx.h"
 #include "CompileFunction.h"
-
-
 #include "CompileCondition.h"
 
-CompileFunction::CompileFunction()
-	: CompileOperator(new CompileCondition)
+CompileFunction::CompileFunction() : CompileOperator(make_shared<CompileCondition>())
 {
-	TokenMap &tokenMap = getTokenMap();
-	tokenMap[Token::PRINT] = "$PRINTDOWN";
-	tokenMap[Token::PRINTUP] = "$PRINTUP";
+	(*tokenMap)[Token::PRINT]	= "$PRINTDOWN";
+	(*tokenMap)[Token::PRINTUP] = "$PRINTUP";
 }
 
-
-CompileFunction::~CompileFunction()
+shared_ptr<Compiler> CompileFunction::create()
 {
+	return make_shared<CompileFunction>();
 }

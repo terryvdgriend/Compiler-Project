@@ -111,7 +111,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				_condition->add(make_shared<DoNothingNode>());
-				condition->Compile(cTokenList, *current, *next, *_condition, *_condition->getLast());
+				condition->compile(cTokenList, *current, *next, *_condition, *_condition->getLast());
 			}
 			else if (_increment->getCount() == 0)
 			{

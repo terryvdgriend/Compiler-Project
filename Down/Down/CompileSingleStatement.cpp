@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "CompileCondition.h"
 #include "CompileSingleStatement.h"
 #include "CompileGetFunction.h"
 #include "DirectFunctionCall.h"

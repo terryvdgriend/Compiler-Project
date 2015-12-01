@@ -2,15 +2,12 @@
 #include "CompileEquals.h"
 #include "CompileCondition.h"
 
-CompileEquals::CompileEquals()
-	: CompileOperator(new CompileCondition)
+CompileEquals::CompileEquals() : CompileOperator(make_shared<CompileCondition>())
 {
-	TokenMap &tokenMap = getTokenMap();
-	tokenMap[Token::EQUALS] = "$=";
+	(*tokenMap)[Token::EQUALS] = "$=";
 }
 
-
-CompileEquals::~CompileEquals()
+shared_ptr<Compiler> CompileEquals::create()
 {
-
+	return make_shared<CompileEquals>();
 }
