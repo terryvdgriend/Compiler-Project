@@ -13,13 +13,13 @@
 #include "Format.h"
 #include "DoNothingNode.h"
 
-bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T, bool &C);
+bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C);
 LinkedList* RunTokenizer(std::string code, bool print);
 LinkedActionList* RunCompiler(LinkedList* lToken, bool print);
 bool Errors();
 void RunVM(LinkedActionList lToken);
 
-int main(int argc, const char * argv[])
+int main(int argc,  char * argv[])
 {
 	/*argc = 3;
 	argv[0] = "";
@@ -106,7 +106,7 @@ void RunVM(LinkedActionList cRunList)
 
 //Return: true -> ga verder met rest van code (meeste gevallen)
 //Return: false -> stop na deze functie (voor dingen zoals getTokens)
-bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T, bool &C)
+bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C)
 {
 	//Text::PrintLine("COUTNERT:  " + argc);
 	if (argc == 1)//andere opties hebben we nog niet

@@ -24,8 +24,8 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 	{
 		if (current->getEnum() == Token::NEWLINE)
 			break;
-		if (current->getPartner() != nullptr)
-			current = current->getPartner();
+		//if (current->getPartner() != nullptr)
+			//current = current->getPartner();
 
 		iFind = tokenMap.find(current->getEnum());
 		if (iFind != tokenMap.end())

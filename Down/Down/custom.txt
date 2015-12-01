@@ -1,31 +1,24 @@
+> Functie fibo
 ---
-### Calcy gets _number_ **x** , _text_  **name** and gives _number_ **result**
-**result** is **x**
-[ printdown **x** ] 
-#### for ( _number_ **i** is 1 , **i** smaller than 5 , **i** increased )
+### Fibo gets _number_ **x** , _text_  **dingen** and gives _number_ **result**
+
+[ printdown **dingen** ] 
+
+_number_ **a** is 1
+_number_ **b** is 1
+_number_ **c** is 1
+
+#### for ( _number_ **i** is 0 , **i** smaller than 10 , **i** is **i** plus 1   )
 --
-[ printdown **i** ]
-#### while ( **x** smaller than 3 )
---
-#### if ( **x** like 2 )
---
-#### switch ( **x** )
-case ( 2 )
---
-[ printdown 15 ]
+[ printdown "Loop: " plus **c** ]
+**c** is **a** plus **b**
+**a** is **b**
+**b** is **c**
 __
-[ printdown 20 ]
-__
-[ printdown **name** ] 
-**x** is **x** plus 1
-__
-__
-[ printdown **name** plus **x** ]
+
+**result** is **c**
 ___
 
-
-_number_ **y** is 1
-> Function aanroepen
-_number_ **b** is [ Calcy **y** , "first" ]
-**b** is [ Calcy **b** , "first" ]
-[ printdown **b** ]
+> Functie aanroepen
+_number_ **retVal** is [ Fibo **b** , "Omdat het kan" ]
+[ printdown "Return value: " plus **retVal** ]
