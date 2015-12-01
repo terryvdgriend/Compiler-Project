@@ -79,16 +79,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="calc.txt" />
-    <Text Include="condition.txt" />
-    <Text Include="for.txt" />
-    <Text Include="func.txt" />
-    <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
-    <Text Include="ReadMe.txt" />
-    <Text Include="if.md" />
     <Text Include="Snippets.txt" />
-    <Text Include="switch.txt" />
     <Text Include="custom.txt" />
+    <Text Include="Switch.md" />
     <Text Include="while.md" />
     <Text Include="while.txt" />
   </ItemGroup>
@@ -241,7 +234,8 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="if else elseif.md" />
+    <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
+    <None Include="..\..\..\..\..\Desktop\IWouldType500Lines.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
