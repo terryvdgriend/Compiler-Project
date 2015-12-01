@@ -20,7 +20,7 @@ bool Errors();
 void RunVM(LinkedActionList lToken);
 
 int main(int argc, const char * argv[])
-{	
+{
 	/*argc = 3;
 	argv[0] = "";
 	argv[1] = "-r -t -c";
@@ -29,11 +29,11 @@ int main(int argc, const char * argv[])
 	string code = "";
 	bool C = false;
 	bool T = false;
-	
+
 	//==========IDE=============
-	if (!IDEstuff(argc, argv, code,T,C))
+	if (!IDEstuff(argc, argv, code, T, C))
 		return 0;
-	
+
 
 	//=========TOKENIZER==============
 	LinkedList cTokenList = *RunTokenizer(code, T);
@@ -47,9 +47,9 @@ int main(int argc, const char * argv[])
 
 	//=========VM==============
 	RunVM(cRunList);
- 	if (Errors())
+	if (Errors())
 		return 0;
-	
+
 	return 0;
 }
 
@@ -106,7 +106,7 @@ void RunVM(LinkedActionList cRunList)
 
 //Return: true -> ga verder met rest van code (meeste gevallen)
 //Return: false -> stop na deze functie (voor dingen zoals getTokens)
-bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &C)
+bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T, bool &C)
 {
 	//Text::PrintLine("COUTNERT:  " + argc);
 	if (argc == 1)//andere opties hebben we nog niet
@@ -118,51 +118,58 @@ bool IDEstuff(int argc, const char * argv[], std::string &code, bool &T , bool &
 	}
 
 	//string option = argv[1];
-	string outz = "No valid option or arg: " + to_string(argc) + "\n";
+	string outz = "No valid args\n";
 	bool cont = true;
 
-		string value = argv[argc - 1]; //laatste arg = textfile path
-		int i = 0;
-		
-		while (i != (argc))
-		{
-			string opt = argv[i];
-			//Text::PrintLine("Wazdeze:  " + opt);
-			if (opt == "-r") {
-				// File
-				FileStreamer fs{};
-				code = fs.readerFromPath(value);
-				
-			}
-			if (opt == "-t")//Print tokens
-			{
-				T = true;
-			}
-			if (opt == "-c")//Print runlist
-			{
-				C = true;
-			}
-			if (opt == "getTokens") {
-				outz += Tokenizer().getKeywordsAsJson();
-				cont = false;
-			}
-			if (opt == "getSnippets") {
-				outz += (FileStreamer{}).readerFromResource("Snippets");
-				cont = false;
-			}
-			if (opt == "getFunctions") {
-				outz += Tokenizer().getFunctionsAsJson();
-				cont = false;
-			}
-			i++;
-		}
-		
-		
+	string value = argv[argc - 1]; //laatste arg = textfile path
+	int i = 0;
 
-		if (!cont)
-		{
-			cout << outz;
+	while (i != (argc))
+	{
+		string opt = argv[i];
+		//Text::PrintLine("Wazdeze:  " + opt);
+		if (opt == "-r") {
+			// File
+			FileStreamer fs{};
+			code = fs.readerFromPath(value);
+
 		}
+		if (opt == "-t")//Print tokens
+		{
+			T = true;
+		}
+		if (opt == "-c")//Print runlist
+		{
+			C = true;
+		}
+		if (opt == "getTokens") {
+			outz = Tokenizer().getKeywordsAsJson();
+			cont = false;
+		}
+		if (opt == "getSnippets") {
+			outz = (FileStreamer{}).readerFromResource("Snippets");
+			cont = false;
+		}
+		if (opt == "getFunctions") {
+			outz = Tokenizer().getFunctionsAsJson();
+			cont = false;
+		}
+		if (opt == "getAll")
+		{
+			outz = Tokenizer().getFunctionsAsJson();
+			outz += Tokenizer().getKeywordsAsJson();
+			outz += (FileStreamer{}).readerFromResource("Snippets");
+			return false;
+		}
+		i++;
+	}
+
+
+
+	if (!cont)
+	{
+		cout << outz;
+	}
 	return cont;
 }
 
