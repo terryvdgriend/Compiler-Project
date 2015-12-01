@@ -21,7 +21,7 @@ private:
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
         
     // (#+ (?:else if|else|if|case|while|do|foreach|for|\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\d.?\d*|"(.*?)"|\w+|\*\*\S*?\*\*|^-{0,3}$|^[\(\)\[\]]$|[\S|\n])
-	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\\n)|(smaller|larger) than|-?\\d.?\\d*|\"(.*?)\"|\\w+|\\*\\*\\S*?\\*\\*|^-{0,3}$|^[\\(\\)\\[\\]]$|[\\S|\\n])" };
+	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d.?\\d*|\"(.*?)\"|\\w+|\\*\\*\\S*?\\*\\*|^-{0,3}$|^[\\(\\)\\[\\]]$|[\\S|\\n])" };
 	std::string lookAhead(smatch m, std::string s);
 public:
 	Tokenizer();
