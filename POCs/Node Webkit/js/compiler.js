@@ -91,7 +91,7 @@ exports.run = function(code) {
 					return {
 						row: error.line-1,
 						column: error.column,
-						text: error.description,
+						text: error.description.replace("&#9785;", ":("),
 						type: (error.errorType) ? error.errorType.toLowerCase() : "error"
 					}
 				}));
