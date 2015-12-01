@@ -29,7 +29,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	//
 	Token  *pToken{};
-	string s( "\n" + codefromfile);
+	string s( codefromfile);// "\n" 
 	smatch m;
 
 	int rowNr = 1;

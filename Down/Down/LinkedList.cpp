@@ -11,6 +11,9 @@ LinkedList::LinkedList()
 }
 
 LinkedList::LinkedList(LinkedList &other) {
+	first = nullptr;
+	last = nullptr;
+	count = 0;
 	std::vector<Token*> partners;
 	Token* current = other.first;
 	while (current != nullptr) {
