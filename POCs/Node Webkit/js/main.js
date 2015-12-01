@@ -43,7 +43,10 @@ function init()
 
 	global.$(global.window.document).ready(function(){        
         global.setFile(null);
-        global.settings = JSON.parse(localStorage.settings);
+
+        if(localStorage.settings != null) {
+            global.settings = JSON.parse(localStorage.settings);
+        }
         
         if(global.settings == null) {
             global.settings = {};
