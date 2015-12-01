@@ -6,6 +6,7 @@ class CompileFactory
 {
 	public:
 		CompileFactory();
+
 		shared_ptr<Compiler> createCompileStatement(Token& tknzr);
 
 	private:

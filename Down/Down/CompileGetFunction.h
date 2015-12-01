@@ -1,8 +1,5 @@
 #pragma once
 #include "Compiler.h"
-#include "CompilerHeader.h"
-#include "FunctionHandler.h"
-#include "TokenExpectation.h"
 
 class CompileGetFunction : public Compiler
 {
@@ -10,11 +7,6 @@ class CompileGetFunction : public Compiler
 		CompileGetFunction();
 
 		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-		void compileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
-		void compileUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
-		void changeVariables(LinkedList& list);
-		void changeVariable(Token& token);
-		void connectParams(shared_ptr<Token> param, LinkedList& paramlist);
 		shared_ptr<Compiler> create();
 
 	private:
@@ -30,6 +22,12 @@ class CompileGetFunction : public Compiler
 		shared_ptr<LinkedActionList> _parameters;
 		shared_ptr<LinkedActionList> _functionParams;
 		shared_ptr<LinkedActionList> _functionCall;
+
+		void compileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
+		void compileUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
+		void changeVariables(LinkedList& list);
+		void changeVariable(Token& token);
+		void connectParams(shared_ptr<Token> param, LinkedList& paramlist);
 
 		void connectLists();
 };

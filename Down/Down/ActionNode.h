@@ -8,8 +8,8 @@ class ActionNode
 		ActionNode();
 
 		shared_ptr<ActionNode> getNext();
-		shared_ptr<ActionNode> getPrevious();
 		shared_ptr<ActionNode> setNext(shared_ptr<ActionNode> value);
+		shared_ptr<ActionNode> getPrevious();
 		shared_ptr<ActionNode> setPrevious(shared_ptr<ActionNode> value);
 
 		virtual void show() = 0;

@@ -2,7 +2,6 @@
 #include "CompileComparison.h"
 #include "CompileCondition.h"
 
-
 CompileComparison::CompileComparison() : CompileOperator(new CompileCondition)
 {
 	//TokenMap &tokenMap = getTokenMap();
@@ -10,7 +9,7 @@ CompileComparison::CompileComparison() : CompileOperator(new CompileCondition)
 	//tokenMap[Token::OR] = "$||";
 }
 
-Compiler* CompileComparison::create()
+shared_ptr<Compiler> CompileComparison::create()
 { 
-	return new CompileComparison(); 
+	return make_shared<CompileComparison>(); 
 };

@@ -2,7 +2,6 @@
 #include "CompileFor.h"
 #include "CompileCondition.h"
 #include "CompileFactory.h"
-#include "CompilePlusMinus.h"
 #include "ConditionalJumpNode.h"
 #include "DoNothingNode.h"
 #include "JumpGoToNode.h"
@@ -22,20 +21,20 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
-	int whileLevel = begin.getLevel();
+	int level = begin.getLevel();
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::FOR));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::AND_PARA));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::AND_PARA));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_CLOSE));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_CLOSED));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::FOR));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
 	shared_ptr<Token> conClose = nullptr;
 
@@ -46,7 +45,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 
-		if (expectation->Level == whileLevel)
+		if (expectation->Level == level)
 		{
 			if (current == nullptr)
 			{
@@ -73,7 +72,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				current = make_shared<Token>(current->next);
 			}
 		}
-		else if (expectation->Level >= whileLevel)
+		else if (expectation->Level >= level)
 		{
 			if (current->getEnum() == expectation->TokenType && current->getEnum() == Token::AND_PARA) 
 			{
@@ -138,7 +137,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				previous = make_shared<Token>(previous->getPartner());
 
-				while (current->getLevel() > whileLevel) 
+				while (current->getLevel() > level)
 				{
 					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
 

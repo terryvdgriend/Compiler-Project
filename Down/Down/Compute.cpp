@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "Compute.h"
 #include "Compiler.h"
-#include "DoNothingNode.h"
 #include "CompileFactory.h"
+#include "DoNothingNode.h"
 
 shared_ptr<LinkedActionList> Compute::computeCompile(LinkedList& tokenList)
 {
 	shared_ptr<LinkedActionList> compiledList = make_shared<LinkedActionList>();
-	compiledList->add(new DoNothingNode());
-	checkNewCompile(tokenList, *compiledList, shared_ptr<Token>(tokenList.first));	// Cleanup
+	compiledList->add(make_shared<DoNothingNode>());
+	checkNewCompile(tokenList, *compiledList, make_shared<Token>(tokenList.first));
 	
 	return compiledList;
 }
@@ -27,9 +27,9 @@ void Compute::checkNewCompile(LinkedList& tokenList, LinkedActionList& compiledL
 
 		if (compiler != nullptr)
 		{
-			compiledList.add(new DoNothingNode());
+			compiledList.add(make_shared<DoNothingNode>());
 			compiler->compile(tokenList, *token, *tokenList.last, compiledList, *compiledList.getLast());
 		}
-		checkNewCompile(tokenList, compiledList, shared_ptr<Token>(token->next)); // Cleanup
+		checkNewCompile(tokenList, compiledList, make_shared<Token>(token->next));
 	}
 }

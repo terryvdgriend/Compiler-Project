@@ -2,7 +2,6 @@
 #include "CompileSwitch.h"
 #include "CompileCondition.h"
 #include "CompileFactory.h"
-#include "ConditionalJumpNode.h"
 #include "DoNothingNode.h"
 #include "JumpGotoNode.h"
 #include "TokenExpectation.h"
@@ -19,13 +18,13 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
-	int whileLevel = begin.getLevel();
+	int level = begin.getLevel();
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::SWITCH));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_CLOSE));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::SWITCH));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
 
 	for (shared_ptr<TokenExpectation> expectation : *expected)
 	{
@@ -41,7 +40,7 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 			}
 		}
 
-		if (expectation->Level == whileLevel) 
+		if (expectation->Level == level)
 		{
 			if (current == nullptr) 
 			{
@@ -63,11 +62,11 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
-		else if (expectation->Level >= whileLevel) 
+		else if (expectation->Level >= level)
 		{
 			if (_condition->getCount() == 0) 
 			{
-				if (current->getLevel() >= whileLevel)
+				if (current->getLevel() >= level)
 				{
 					shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 					_condition->add(make_shared<DoNothingNode>());
@@ -98,17 +97,17 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
-	int whileLevel = begin.getLevel();
+	int level = begin.getLevel();
 	unique_ptr<list<shared_ptr<LinkedActionList>>> conditionList = make_unique<list<shared_ptr<LinkedActionList>>>();
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::SWITCH_CASE));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_CLOSE));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_CLOSED));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::SWITCH_CASE));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
 	while (current->getEnum() == Token::NEWLINE) 
 	{
@@ -141,7 +140,7 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 				}
 			}
 
-			if (expectation->Level == whileLevel) 
+			if (expectation->Level == level)
 			{
 				if (current == nullptr) 
 				{
@@ -172,11 +171,11 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 					current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 				}
 			}
-			else if (expectation->Level >= whileLevel) 
+			else if (expectation->Level >= level)
 			{
 				if (caseCondition->getCount() == 0) 
 				{
-					if (current->getLevel() > whileLevel) 
+					if (current->getLevel() > level)
 					{
 						shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 						caseCondition->add(make_shared<DoNothingNode>());
@@ -200,7 +199,7 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 					}
 					previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
-					while (current->getLevel() > whileLevel) 
+					while (current->getLevel() > level)
 					{
 						shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
 
@@ -258,13 +257,13 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
-	int whileLevel = begin.getLevel();
+	int level = begin.getLevel();
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::SWITCH_DEFAULT));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_CLOSED));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::SWITCH_DEFAULT));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
 	for (shared_ptr<TokenExpectation> expectation : *expected)
 	{
@@ -280,7 +279,7 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 			}
 		}
 
-		if (expectation->Level == whileLevel)
+		if (expectation->Level == level)
 		{
 			if (current == nullptr)
 			{
@@ -302,7 +301,7 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
-		else if (expectation->Level >= whileLevel)
+		else if (expectation->Level >= level)
 		{
 			shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 
@@ -312,7 +311,7 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 			}
 			previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
-			while (current->getLevel() > whileLevel)
+			while (current->getLevel() > level)
 			{
 				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
 

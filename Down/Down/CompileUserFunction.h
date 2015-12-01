@@ -1,25 +1,22 @@
 #pragma once
-#include "CompileOperator.h"
-#include "DoNothingNode.h"
-#include "TokenExpectation.h"
-#include "FunctionHandler.h"
+#include "Compiler.h"
 
-class CompileUserFunction :
-	public Compiler
+class CompileUserFunction : public Compiler
 {
-private:
-	string _params;
-	LinkedList* _body;
-	std::vector<Token*>_paramTokens;
-	Token* _returnToken;
-	std::string functionName;
-public:
-	CompileUserFunction();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void CompileParams(LinkedList & cTokenList, Token & begin, Token & end);
-	void CompileBody(LinkedList & cTokenList, Token & begin, Token & end, int Level);
-	void ConnectList();
-	Compiler * Create() { return new CompileUserFunction(); };
-	~CompileUserFunction();
-};
+	public:
+		CompileUserFunction();
 
+		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		shared_ptr<Compiler> create();
+
+	private:
+		string _params;
+		string functionName;
+		shared_ptr<LinkedList> _body;
+		unique_ptr<vector<shared_ptr<Token>>> _paramTokens;
+		shared_ptr<Token> _returnToken;
+
+		void compileParams(LinkedList& cTokenList, Token& begin, Token& end);
+		void compileBody(LinkedList& cTokenList, Token& begin, Token& end, int Level);
+		void connectList();
+};

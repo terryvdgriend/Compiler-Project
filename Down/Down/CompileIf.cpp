@@ -21,16 +21,16 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = make_shared<Token>(begin);
-	int whileLevel = begin.getLevel();
+	int level = begin.getLevel();
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::IF));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::CONDITION_CLOSE));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_CLOSED));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::IF));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
 	for (shared_ptr<TokenExpectation> expectation : *expected)
 	{
@@ -46,7 +46,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 		}
 
-		if (expectation->getLevel() == whileLevel) 
+		if (expectation->getLevel() == level)
 		{
 			if (current == nullptr) 
 			{
@@ -68,7 +68,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
-		else if (expectation->getLevel() >= whileLevel) 
+		else if (expectation->getLevel() >= level)
 		{
 			if (_condition->getCount() == 0) 
 			{
@@ -87,7 +87,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				}
 				previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
-				while (current->getLevel() > whileLevel) 
+				while (current->getLevel() > level)
 				{
 					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
 
@@ -148,12 +148,12 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 		//Check if there is an else-statement 
 		if (current->getEnum() == Token::ELSE)
 		{
-			int whileLevel = begin.getLevel();
+			int level = begin.getLevel();
 			unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-			expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::ELSE));
-			expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_OPEN));
-			expected->push_back(make_shared<TokenExpectation>(whileLevel + 1, Token::ANY));
-			expected->push_back(make_shared<TokenExpectation>(whileLevel, Token::BODY_CLOSED));
+			expected->push_back(make_shared<TokenExpectation>(level, Token::ELSE));
+			expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+			expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+			expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
 			for (shared_ptr<TokenExpectation> expectation : *expected)	
 			{
@@ -162,7 +162,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 					current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 				}
 
-				if (expectation->getLevel() == whileLevel) 
+				if (expectation->getLevel() == level)
 				{
 					if (current == nullptr) 
 					{
@@ -184,7 +184,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 						current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 					}
 				}
-				else if (expectation->getLevel() >= whileLevel) 
+				else if (expectation->getLevel() >= level)
 				{
 					shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 					bodyNode = _bodyElse->add(make_shared<DoNothingNode>());
@@ -195,7 +195,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 					}
 					previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
-					while (current->getLevel() > whileLevel) 
+					while (current->getLevel() > level)
 					{
 						shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
 

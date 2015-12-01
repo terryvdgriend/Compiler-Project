@@ -8,7 +8,6 @@ CompileFactory::CompileFactory()
 	mappert[Token::WHILE]					= make_shared<CompileWhile>();
 	mappert[Token::FOR]						= make_shared<CompileFor>();
 	mappert[Token::DO]						= make_shared<CompileDoWhile>();
-	//mappert[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileFunction>();		// Existing function
 	mappert[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
 	mappert[Token::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
 	mappert[Token::IDENTIFIER]				= make_shared<CompileEquals>();
@@ -16,9 +15,9 @@ CompileFactory::CompileFactory()
 	mappert[Token::NEWLINE]					= nullptr;
 }
 
-shared_ptr<Compiler> CompileFactory::createCompileStatement(Token& tknzr)
+shared_ptr<Compiler> CompileFactory::createCompileStatement(Token& token)
 {
-	map<Token::iToken, shared_ptr<Compiler>>::iterator it = mappert.find(tknzr.getEnum());
+	map<Token::iToken, shared_ptr<Compiler>>::iterator it = mappert.find(token.getEnum());
 
 	if (it != mappert.end())
 	{
@@ -29,7 +28,7 @@ shared_ptr<Compiler> CompileFactory::createCompileStatement(Token& tknzr)
 
 		return nullptr;
 	}
-	ErrorHandler::getInstance()->addError("Incorrect syntax (CompileFactory): " + tknzr.getText(), &tknzr);
+	ErrorHandler::getInstance()->addError("Incorrect syntax (CompileFactory): " + token.getText(), &token);
 
 	return nullptr;
 }

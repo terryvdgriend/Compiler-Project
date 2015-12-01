@@ -1,7 +1,6 @@
 #pragma once
-#include "ActionNode.h"
-#include "LinkedActionList.h"
 #include "NodeVisitor.h"
+#include "LinkedActionList.h"
 
 class SwitchNode : public ActionNode
 {

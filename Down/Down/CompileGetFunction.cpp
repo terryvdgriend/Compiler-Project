@@ -1,11 +1,16 @@
 #include "stdafx.h"
 #include "CompileGetFunction.h"
+#include "CompileCondition.h"
+#include "CompileEquals.h"
 #include "CompileFactory.h"
 #include "DirectFunctionCall.h"
+#include "DoNothingNode.h"
 #include "FunctionCall.h"
+#include "FunctionHandler.h"
+#include "TokenExpectation.h"
 
 #define szGetFromReturnValue "getFromReturnValue"
-#define SET_ID_TO_RT  "IdentifierToReturnValue"
+#define SET_ID_TO_RT "IdentifierToReturnValue"
 
 CompileGetFunction::CompileGetFunction()
 {
@@ -24,12 +29,12 @@ CompileGetFunction::CompileGetFunction()
 void CompileGetFunction::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
 	shared_ptr<Token> current = make_shared<Token>(begin);
-	int Level = begin.getLevel();
+	int level = begin.getLevel();
 	shared_ptr<Token> bodyEnd = nullptr;
 
 	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(Level, Token::FUNCTION_DECLARE_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(Level, Token::FUNCTION_CALL));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_DECLARE_OPEN));
+	expected->push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_CALL));
 
 	for (shared_ptr<TokenExpectation> expectation : *expected)
 	{
@@ -38,7 +43,7 @@ void CompileGetFunction::compile(LinkedList& cTokenList, Token& begin, Token& en
 			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 
-		if (expectation->getLevel() == Level) 
+		if (expectation->getLevel() == level)
 		{
 			if (current->getEnum() == Token::FUNCTION_CALL) 
 			{
@@ -82,9 +87,14 @@ void CompileGetFunction::compile(LinkedList& cTokenList, Token& begin, Token& en
 	}
 	connectLists();
 	begin = *current;
-	LinkedActionList* list = &listActionNodes;
+	shared_ptr<LinkedActionList> list = make_shared<LinkedActionList>(listActionNodes);
 	list->insertBefore(make_shared<ActionNode>(actionBefore), _compiledStatement);
 	listActionNodes = *list;
+}
+
+shared_ptr<Compiler> CompileGetFunction::create()
+{
+	return make_shared<CompileGetFunction>();
 }
 
 void CompileGetFunction::compileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end)
@@ -107,7 +117,7 @@ void CompileGetFunction::compileNotUserDefined(LinkedList& cTokenList, Token& be
 			seperator = make_shared<Token>(seperator->next); // Todo fix tokenizer, will throw error soon
 		}
 		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
-		condition->Compile(cTokenList, *current, *seperator, *_functionParams, *_functionParams->getLast());
+		condition->compile(cTokenList, *current, *seperator, *_functionParams, *_functionParams->getLast());
 
 		// Create direct functioncall
 		string sBuffer;
@@ -124,6 +134,7 @@ void CompileGetFunction::compileNotUserDefined(LinkedList& cTokenList, Token& be
 			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 	}
+
 	if (parameters->size() > _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(), current->getPositie(), Error::error });
@@ -159,7 +170,7 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 
 		do 
 		{
-			if (count > _params.size()-1) 
+			if (count > _params.size() - 1) 
 			{
 				ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(), current->getPositie(), Error::error });
 
@@ -196,7 +207,7 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 
 	if (count < _params.size() - 1) 
 	{
-		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(), current->getPositie(), Error::error });
 	}
 
 	for (auto p : *paramList) 
@@ -295,7 +306,7 @@ void CompileGetFunction::changeVariable(Token& token)
 void CompileGetFunction::connectParams(shared_ptr<Token> param, LinkedList& paramlist)
 {
 	shared_ptr<Token> connectToken = make_shared<Token>();
-	shared_ptr<Token> nParam = make_shared<Token>(*param);
+	shared_ptr<Token> nParam = param;
 	changeVariable(*nParam);
 	connectToken->setEnum(Token::EQUALS);
 	connectToken->setLevel(nParam->getLevel());
@@ -330,11 +341,6 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, LinkedList& para
 		paramlist.add(&*temp); // Todo fix tokenizer, will throw error soon
 		temp = make_shared<Token>(temp->next); // Todo fix tokenizer, will throw error soon
 	}
-}
-
-shared_ptr<Compiler> CompileGetFunction::create()
-{
-	return make_shared<CompileGetFunction>();
 }
 
 void CompileGetFunction::connectLists()
