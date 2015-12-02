@@ -43,4 +43,11 @@ _number_ **retVal** is [ Loopy 8 ]
 
 
 
+---
+### Calcy gets _number_ **age** and gives _number_ **result** 
+**age** is **age** plus 1
+**result**is**age**
+___
+[printdown[Calcy[Calcy[Calcy 1]]]]
+_number_ **age**
 
