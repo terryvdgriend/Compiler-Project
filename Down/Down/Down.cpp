@@ -1,34 +1,28 @@
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-
-//Laten staan voor de apple gebruikert
-#ifdef _WIN32
-#include <crtdbg.h>
-#endif
-
 #include "stdafx.h"
-#include "Tokenizer.h"
 #include "Compute.h"
-#include "VirtualMachine.h"
-#include "LinkedList.h"
 #include "FileStreamer.h"
 #include "Format.h"
+#include "LinkedList.h"
+#include "Tokenizer.h"
+#include "VirtualMachine.h"
+
+//#define _CRTDBG_MAP_ALLOC
 
 int runDown(string& code, bool& printTokenList, bool& printCompiledList);
 shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList);
 shared_ptr<LinkedActionList> runCompiler(LinkedList& tokenList, bool printCompiledList);
 void runVM(LinkedActionList& cRunList);
 bool errors();
-bool ideStuff(int argc, char* argv[], string& code, bool& printTokenList, bool& printCompiledList);
+bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList);
 
-int main(int argc, char * argv[])
+int main(int argCounter, char * argv[])
 {
 	string code = "";
 	bool PRINT_TOKEN_LIST = false;
 	bool PRINT_COMPILED_LIST = false;
 
 	//==============IDE==============
-	if (!ideStuff(argc, argv, code, PRINT_TOKEN_LIST, PRINT_COMPILED_LIST))
+	if (!ideStuff(argCounter, argv, code, PRINT_TOKEN_LIST, PRINT_COMPILED_LIST))
 	{
 		return 0;
 	}
@@ -52,7 +46,7 @@ int runDown(string& code, bool& printTokenList, bool& printCompiledList)
 
 	if (errors())
 	{
-		return - 1;
+		return -1;
 	}
 
 	//==============VM===============
@@ -118,12 +112,12 @@ bool errors()
 
 // Return: true  -> Proceed with the rest of the code (most probable)
 // Return: false -> Stop after the execution of this mehod (used to get, for instane, snippets and tokens
-bool ideStuff(int argc, char* argv[], string& code, bool& printTokenList, bool& printCompiledList)
+bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList)
 {
 	unique_ptr<FileStreamer> fileStramer = make_unique<FileStreamer>();
 	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
 
-	if (argc == 1)
+	if (argCounter == 1)
 	{
 		code = fileStramer->readerFromResource("custom");
 
@@ -132,10 +126,10 @@ bool ideStuff(int argc, char* argv[], string& code, bool& printTokenList, bool& 
 	string outz = "No valid args\n";
 	bool cont = true;
 
-	string value = argv[argc - 1]; // Last argument = textfile path
+	string value = argv[argCounter - 1]; // Last argument = textfile path
 	int i = 0;
 
-	while (i != (argc))
+	while (i != (argCounter))
 	{
 		string opt = argv[i];
 

@@ -15,13 +15,13 @@ CompileUserFunction::CompileUserFunction()
 
 void CompileUserFunction::connectList() 
 {
-	shared_ptr<Function> funcion = shared_ptr<Function>(new Function(functionName, _params, _body, _paramTokens, _returnToken, true));
+	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, _paramTokens, _returnToken, true);
 	FunctionHandler::getInstance()->addFunction(funcion);
 }
 
 void CompileUserFunction::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
-	shared_ptr<Token> current = make_shared<Token>(begin);
+	shared_ptr<Token> current = shared_ptr<Token>(&begin);
 	int level = begin.getLevel();
 	shared_ptr<Token> bodyEnd = nullptr;
 
@@ -78,9 +78,10 @@ void CompileUserFunction::compile(LinkedList& cTokenList, Token& begin, Token& e
 	connectList();
 	begin = *current;
 }
+
 void CompileUserFunction::compileParams(LinkedList& cTokenList, Token& begin, Token& end)
 {
-	shared_ptr<Token> current = make_shared<Token>(begin); // Todo fix tokenizer, will throw error soon
+	shared_ptr<Token> current = shared_ptr<Token>(&begin);
 	
 	while (current->getEnum() != Token::NEWLINE)
 	{
@@ -137,7 +138,7 @@ void CompileUserFunction::compileParams(LinkedList& cTokenList, Token& begin, To
 
 void CompileUserFunction::compileBody(LinkedList& cTokenList, Token& begin, Token& end, int Level)
 {
-	shared_ptr<Token> current = make_shared<Token>(begin);
+	shared_ptr<Token> current = shared_ptr<Token>(&begin);
 
 	do 
 	{
