@@ -239,7 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
-    <None Include="..\..\..\..\..\Desktop\IWouldType500Lines.md" />
+    <None Include="SuperTest.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
