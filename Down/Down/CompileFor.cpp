@@ -95,6 +95,9 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				delete compiledBodyPart;
 
+				// If the list still is empty, fill with DoNothingNode
+				if (_declaration->Count() == 0)
+					_declaration->insertLast(new DoNothingNode());
 			}
 			else if (_condition->Count() == 0){
 				Token* next = current->next;
@@ -106,6 +109,13 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				_condition->add(new DoNothingNode());
 				condition->Compile(cTokenList, *current, *next, *_condition, *_condition->getLast());
 				delete condition;
+
+				// If condition still is empty, throw error (we need a condition)
+				if (_condition->Count() == 0) {
+					ErrorHandler::getInstance()->addError(Error{ "For statement has no condition!", ".md", current->getLineNumber(), current->getPositie(), Error::error });
+					begin = end;
+					break;
+				}
 			}
 			else if (_increment->Count() == 0){
 				// Compile the last part of the for-loop
@@ -120,6 +130,10 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 					current = current->next;
 				}
 				delete compiledBodyPart;
+
+				// If the list still is empty, fill with DoNothingNode
+				if (_increment->Count() == 0)
+					_increment->insertLast(new DoNothingNode());
 			}
 			else{
 				Token* prev = current->previous;

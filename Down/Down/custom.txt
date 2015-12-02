@@ -1,15 +1,5 @@
-_number_ **x** is 6
-
-> dit gaat fout  
-_number_ **x** is 7
-
-> dit gaat fout
-**niks** is 8
-
-
-> dit gaat goed
-_number_ **abc** is 9
-**abc** is 10
-
-
-_number_ **asd** is a
+_number_ **i** is 1
+#### for ( , **i** smaller than 5 , **i** is **i** plus 1 )
+--
+[ printdown **i** ]
+__

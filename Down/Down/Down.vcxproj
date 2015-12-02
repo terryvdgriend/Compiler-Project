@@ -81,6 +81,7 @@
   <ItemGroup>
     <Text Include="calc.txt" />
     <Text Include="condition.txt" />
+    <Text Include="for.txt" />
     <Text Include="func.txt" />
     <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
     <Text Include="ReadMe.txt" />
