@@ -513,7 +513,7 @@
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
       <Filter>Resource Files\TestScriptz</Filter>
     </None>
-    <None Include="..\..\..\..\..\Desktop\IWouldType500Lines.md">
+    <None Include="SuperTest.md">
       <Filter>Resource Files\TestScriptz</Filter>
     </None>
   </ItemGroup>
