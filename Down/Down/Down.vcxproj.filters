@@ -261,6 +261,12 @@
     <ClCompile Include="Down.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CompileUnary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileFor.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -338,11 +344,26 @@
     <ClInclude Include="CompileWhile.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
+    <ClInclude Include="CompileSwitch.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUserFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileWhile.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
     </ClInclude>
     <ClInclude Include="CommandVisitor.h">
       <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute.h">
+      <Filter>Header Files\Compiler</Filter>
     </ClInclude>
     <ClInclude Include="BaseCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
@@ -476,6 +497,12 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CompileUnary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFor.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="calc.txt">
@@ -503,6 +530,10 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="while.md">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.txt" />
+    <Text Include="for.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
