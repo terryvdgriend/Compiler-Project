@@ -2,14 +2,9 @@
 
 #include "CompileArray.h"
 
-#include "CompileEquals.h"
-
-#include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
-#include "DoNothingNode.h"
-#include "CompileFactory.h"
-#include "TokenExpectation.h"
+#include "CompilePlusMinus.h"
 #include "CompileSingleStatement.h"
+#include "TokenExpectation.h"
 
 #define SET_ID_TO_RT "IdentifierToReturnValue"
 #define SET_CONST_TO_RT "ConstantToReturnValue"
@@ -61,20 +56,6 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			break;
 		}
 
-		if (wrongTypeParam)
-		{
-			ErrorHandler::getInstance()->addError(Error{ "wrong type added to array", ".md", -1, -1, Error::error });
-			begin = end;
-			break;
-		}
-
-		if (andParamMissing)
-		{
-			ErrorHandler::getInstance()->addError(Error{ "comma is missing", ".md", -1, -1, Error::error });
-			begin = end;
-			break;
-		}
-
 		string sBuffer;
 
 		if (expectation.Level == arrayLevel)
@@ -97,12 +78,11 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
 				currArrayTempVar = getCurrentLocalVariableName();
-				prevArrayTempVar = getPreviousLocalVariableName(sBuffer);
 				string saArguments[3];
 
 				saArguments[0] = "$AddLengthToArray";
 				saArguments[1] = currArrayTempVar;
-				saArguments[2] = prevArrayTempVar;
+				saArguments[2] = getPreviousLocalVariableName(sBuffer);
 
 				FunctionCall* pFunction = new FunctionCall();
 				pFunction->setArraySize(3);
@@ -114,7 +94,6 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 
 				saArguments[0] = "$AddArrayToDictionary";
 				saArguments[1] = currArrayTempVar;
-				saArguments[2] = prevArrayTempVar;
 
 				pFunction = new FunctionCall();
 				pFunction->setArraySize(2);
@@ -168,20 +147,20 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			}
 			else
 			{
-				Token* prev = current->previous;
-				while (prev->getEnum() != Token::ARRAY_OPEN)
-				{
-					prev = prev->previous;
+				Token* seperator = current;
+				while (seperator->getEnum() != Token::ARRAY_CLOSE) {
+					if (seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
+					seperator = seperator->next;
 				}
-				prev = prev->getPartner();
+
+				Compiler* compiledBodyPart;
+
+				if (current->next->getEnum() != Token::ARRAY_CLOSE) { compiledBodyPart = new CompilePlusMinus(); }
+				else { compiledBodyPart = new CompileSingleStatement(); }
+
+				compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
 				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
-				directFunctionCall->setArraySize(2);
-				directFunctionCall->setAt(0, SET_CONST_TO_RT);
-				directFunctionCall->setAt(1, current->getText().c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-				directFunctionCall = new DirectFunctionCall;
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());

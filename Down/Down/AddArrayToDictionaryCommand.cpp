@@ -4,6 +4,14 @@
 
 void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
+	for (string & item : vm.getFunctionParametersByKey(parameters[1])) {
+		vector<Variable> tempArray = vm.getVariableArray(item);
+		if (item != parameters[1] && atoi(vm.getReturnValue().c_str()) < tempArray.size())
+		{
+			vm.setReturnValue(to_string(tempArray.size()));
+		}
+	}
+
 	if (vm.getReturnValue() != "")
 	{
 		vm.addArrayToDictionary(parameters.at(1), atoi(vm.getReturnValue().c_str()));

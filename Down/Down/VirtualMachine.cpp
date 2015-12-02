@@ -21,8 +21,11 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 		if (actionNode)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
+			if (actionNode->getContentArrayNonConstant()[1] == "**temp**")
+			{
+				cout << "";
+			}
 			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
-			
 		}
 		//(*currentNode).accept(*visitor);
 		//currentNode = (*visitor).nextNode;
@@ -137,10 +140,10 @@ vector<Variable> VirtualMachine::getVariableArray(string key)
 	{
 		return it->second;
 	}
-	else
-	{
-		ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
-	}
+	//else
+	//{
+	//	ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
+	//}
 }
 
 void VirtualMachine::addItemToVariableArray(string key, Variable value)
@@ -159,10 +162,10 @@ void VirtualMachine::addItemToVariableArray(string key, Variable value)
 			}
 		}
 	}
-	else
-	{
-		ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
-	}
+	//else
+	//{
+	//	ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
+	//}
 }
 
 void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, Variable value)
@@ -180,10 +183,10 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, Varia
 			}
 		}
 	}
-	else
-	{
-		ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
-	}
+	//else
+	//{
+	//	ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
+	//}
 }
 
 Variable VirtualMachine::getItemFromVariableArray(string key, int index)

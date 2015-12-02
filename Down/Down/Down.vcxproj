@@ -97,7 +97,6 @@
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="AddArrayToDictionaryCommand.h" />
     <ClInclude Include="AddItemToArrayAtCommand.h" />
-    <ClInclude Include="AddItemToArrayCommand.h" />
     <ClInclude Include="AddLengthToArrayCommand.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
@@ -180,7 +179,6 @@
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="AddArrayToDictionaryCommand.cpp" />
     <ClCompile Include="AddItemToArrayAtCommand.cpp" />
-    <ClCompile Include="AddItemToArrayCommand.cpp" />
     <ClCompile Include="AddLengthToArrayCommand.cpp" />
     <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />

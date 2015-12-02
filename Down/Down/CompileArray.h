@@ -14,10 +14,6 @@ private:
 	string currArrayTempVar;
 	string prevArrayTempVar;
 
-	Token::iToken arrayType;
-	bool andParamMissing;
-	bool wrongTypeParam;
-
 	int filledLength;
 };
 

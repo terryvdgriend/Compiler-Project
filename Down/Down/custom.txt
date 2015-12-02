@@ -1,9 +1,9 @@
 _text_ **tempFact** is "second"
-_text_{ 10 } **array** is { "first", **tempFact**  "third" }
-> _text_{ 10 } **array** 
-> **array** { 0 } is "third"
-> **array** { 1 } is **tempFact**
-> **array** { 2 } is "first"
+> _text_{ 10 } **array** is { "first", **tempFact**  "third" }
+_text_{ 10 } **array** 
+**array** { 0 } is "third"
+**array** { 1 } is **tempFact**
+**array** { 2 plus 1 } is "first"
 
 
 [ printdown "test" ]

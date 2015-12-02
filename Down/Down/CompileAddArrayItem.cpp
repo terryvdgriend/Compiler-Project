@@ -1,14 +1,9 @@
 #include "stdafx.h"
 #include "CompileAddArrayItem.h"
 
-#include "CompileEquals.h"
-
-#include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
-#include "DoNothingNode.h"
-#include "CompileFactory.h"
-#include "TokenExpectation.h"
+#include "CompilePlusMinus.h"
 #include "CompileSingleStatement.h"
+#include "TokenExpectation.h"
 
 #define SET_ID_TO_RT "IdentifierToReturnValue"
 #define SET_CONST_TO_RT "ConstantToReturnValue"
@@ -117,25 +112,47 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 				if (fromArray) { tempCurrentLocalVariable = getCurrentLocalVariableName(); }
 
-				string saArguments[4];
+				string tempArguments[2];
 
+				/*tempArguments[0] = "$AddLengthToArray";
+				tempArguments[1] = currArray;
+
+				FunctionCall* pFunction = new FunctionCall();
+				pFunction->setArraySize(2);
+				for (int n = 0; n < 2; n++)
+				{
+					pFunction->setAt(n, tempArguments[n].c_str());
+				}
+				listActionNodes.insertBefore(&actionBefore, pFunction);*/
+
+				tempArguments[0] = "$AddArrayToDictionary";
+				tempArguments[1] = currArray;
+
+				FunctionCall* pFunction = new FunctionCall();
+				pFunction->setArraySize(2);
+				for (int n = 0; n < 2; n++)
+				{
+					pFunction->setAt(n, tempArguments[n].c_str());
+				}
+				listActionNodes.insertBefore(&actionBefore, pFunction);
+
+				string saArguments[4];
+				saArguments[0] = "$AddItemToArrayAt";
 				if (fromArray)
 				{
 					string curr = getCurrentLocalVariableName();
-					saArguments[0] = "$AddItemToArrayAt";
 					saArguments[1] = currArray;
 					saArguments[2] = getPreviousLocalVariableName(sBuffer);
 					saArguments[3] = curr;
 				}
 				else
 				{
-					saArguments[0] = "$AddItemToArrayAt";
-					saArguments[1] = tempPreviousLocalVariable;
+					saArguments[1] = currArray;
 					saArguments[2] = currArrayTempVar;
 					saArguments[3] = getCurrentLocalVariableName();
 				}
 
-				FunctionCall* pFunction = new FunctionCall();
+				pFunction = new FunctionCall();
 				pFunction->setArraySize(4);
 				for (int n = 0; n < 4; n++)
 				{
@@ -158,32 +175,35 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
 				currArrayTempVar = getCurrentLocalVariableName();
+				currArray = getCurrentLocalVariableName();
 			}
 			currArrayTempVar = getCurrentLocalVariableName();
 			current = current->next;
 		}
 		else if (expectation.Level >= arrayLevel)
 		{
-			Token* prev = current->previous;
-			while (prev->getEnum() != Token::ARRAY_OPEN)
-			{
-				prev = prev->previous;
+			Token* seperator = current;
+			while (seperator->getEnum() != Token::ARRAY_CLOSE) {
+				if (seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
+				seperator = seperator->next;
 			}
-			prev = prev->getPartner();
+
+			Compiler* compiledBodyPart;
+
+			bool multiIndex = current->next->getEnum() != Token::ARRAY_CLOSE;
+
+			if (multiIndex) { compiledBodyPart = new CompilePlusMinus(); }
+			else { compiledBodyPart = new CompileSingleStatement(); }
+
+			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
 			DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_CONST_TO_RT);
-			directFunctionCall->setAt(1, current->getText().c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-			directFunctionCall = new DirectFunctionCall;
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-			current = current->next;
+			if (!multiIndex) { current = current->next; }
 		}
 	}
 

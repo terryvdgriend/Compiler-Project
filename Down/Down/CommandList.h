@@ -26,6 +26,5 @@
 
 #include "AddArrayToDictionaryCommand.h"
 #include "AddLengthToArrayCommand.h"
-#include "AddItemToArrayCommand.h"
 #include "AddItemToArrayAtCommand.h"
 #include "GetItemFromArrayCommand.h"
