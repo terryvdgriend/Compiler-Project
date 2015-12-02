@@ -13,7 +13,7 @@ class CompileUserFunction : public Compiler
 		string _params;
 		string functionName;
 		shared_ptr<LinkedList> _body;
-		unique_ptr<vector<shared_ptr<Token>>> _paramTokens;
+		shared_ptr<vector<shared_ptr<Token>>> _paramTokens;
 		shared_ptr<Token> _returnToken;
 
 		void compileParams(LinkedList& cTokenList, Token& begin, Token& end);

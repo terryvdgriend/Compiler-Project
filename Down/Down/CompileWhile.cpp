@@ -34,7 +34,7 @@ void CompileWhile::compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 	{
 		while (current->getEnum() == Token::NEWLINE)
 		{
-			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 
 		if (expectation->getLevel() == level)
@@ -56,7 +56,7 @@ void CompileWhile::compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			}
 			else
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
 		else if (expectation->getLevel() >= level)
@@ -70,13 +70,13 @@ void CompileWhile::compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			else
 			{
 				_body->add(make_shared<DoNothingNode>());
-				shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> previous = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 
 				while (previous->getEnum() != Token::BODY_OPEN)
 				{
-					previous = make_shared<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
+					previous = shared_ptr<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
 				}
-				previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
+				previous = shared_ptr<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
 				while (current->getLevel() > level)
 				{
@@ -88,14 +88,14 @@ void CompileWhile::compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					}
 					else
 					{
-						current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+						current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 					}
 				}
 			}
 		}
 	}
 	connectLists();
-	listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), _compiledStatement);
+	listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), _compiledStatement);
 	begin = *current;
 }
 

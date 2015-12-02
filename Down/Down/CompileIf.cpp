@@ -38,7 +38,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 		{
 			if (current->next != nullptr) 
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 			else
 			{
@@ -65,7 +65,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 			else
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
 		else if (expectation->getLevel() >= level)
@@ -78,14 +78,14 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			}
 			else 
 			{
-				shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> previous = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 				_body->add(make_shared<DoNothingNode>());
 
 				while (previous->getEnum() != Token::BODY_OPEN)
 				{
-					previous = make_shared<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
+					previous = shared_ptr<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
 				}
-				previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
+				previous = shared_ptr<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
 				while (current->getLevel() > level)
 				{
@@ -97,7 +97,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 					}
 					else
 					{
-						current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+						current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 					}
 				}
 			}
@@ -112,7 +112,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 		{
 			if (current->next != nullptr) 
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 			else
 			{
@@ -129,7 +129,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 
 			if (current->next != nullptr) 
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
 
@@ -137,7 +137,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 		{
 			if (current->next != nullptr) 
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 			else
 			{
@@ -159,7 +159,7 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 			{
 				while (current->getEnum() == Token::NEWLINE) 
 				{
-					current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+					current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 				}
 
 				if (expectation->getLevel() == level)
@@ -181,19 +181,19 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 					}
 					else
 					{
-						current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+						current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 					}
 				}
 				else if (expectation->getLevel() >= level)
 				{
-					shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+					shared_ptr<Token> previous = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 					bodyNode = _bodyElse->add(make_shared<DoNothingNode>());
 
 					while (previous->getEnum() != Token::BODY_OPEN)
 					{
-						previous = make_shared<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
+						previous = shared_ptr<Token>(previous->previous); // Todo fix tokenizer, will throw error soon
 					}
-					previous = make_shared<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
+					previous = shared_ptr<Token>(previous->getPartner()); // Todo fix tokenizer, will throw error soon
 
 					while (current->getLevel() > level)
 					{
@@ -205,23 +205,23 @@ void CompileIf::compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 						}
 						else
 						{
-							current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+							current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 						}
 					}
 				}
 			}
-			connectLists(); // Build list without else
+			connectLists(); // Build list without the else
 		}
 		else 
 		{
-			connectLists(); // Build list without else
+			connectLists(); // Build list without the else
 		}
 	}
 	else 
 	{
-		connectLists(); // Build list without else
+		connectLists(); // Build list without theelse
 	}
-	listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), _compiledStatement);
+	listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), _compiledStatement);
 	begin = *current;
 }
 
@@ -233,7 +233,7 @@ shared_ptr<Compiler> CompileIf::create()
 void CompileIf::connectLists()
 {
 	shared_ptr<ConditionalJumpNode> conditionalJumpNode = make_shared<ConditionalJumpNode>();
-	unique_ptr<list<shared_ptr<JumpGoToNode>>> jumpmap;
+	unique_ptr<list<shared_ptr<JumpGoToNode>>> jumpMap;
 
 	for (auto p = _conditionBodyMap->begin(); p != _conditionBodyMap->end(); ++p)
 	{
@@ -250,7 +250,7 @@ void CompileIf::connectLists()
 		{
 			shared_ptr<JumpGoToNode> jumpNode = make_shared<JumpGoToNode>();
 			_compiledStatement->add(jumpNode);
-			jumpmap->push_back(jumpNode);
+			jumpMap->push_back(jumpNode);
 		}
 		_compiledStatement->add(make_shared<DoNothingNode>());
 		conditionalJumpNode->setOnTrue(p->second->getFirst());
@@ -269,9 +269,9 @@ void CompileIf::connectLists()
 		conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 	}
 
-	if (jumpmap->size() > 0)
+	if (jumpMap->size() > 0)
 	{
-		for (auto p : *jumpmap)
+		for (auto p : *jumpMap)
 		{
 			p->setJumpToNode(_compiledStatement->getLast());
 		}

@@ -32,7 +32,7 @@ void CompileOperator::compile(LinkedList& tokenList, Token& begin, Token& end, L
 
 		if (current->getPartner() != nullptr)
 		{
-			current = make_shared<Token>(current->getPartner());  // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->getPartner());  // Todo fix tokenizer, will throw error soon
 		}
 		iFind = make_unique<map<Token::iToken, string>::iterator>(tokenMap->find(current->getEnum()));
 
@@ -41,7 +41,7 @@ void CompileOperator::compile(LinkedList& tokenList, Token& begin, Token& end, L
 			fillRunList((*iFind)->second, listActionNodes, before, *beforeList);
 			fillNextLevelList(*beforeList, *current, *nextLevel, nextLevelList);
 		}
-		current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 	}
 	insertLastNextLevel(end, before, *nextLevel, nextLevelList);
 	compileNextLevel(tokenList, listActionNodes, nextLevelList);
@@ -66,7 +66,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, LinkedActionList&
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
-		beforeList.push_back(listActionNodes.insertBefore(make_shared<ActionNode>(iBefore), pDirectFunction));
+		beforeList.push_back(listActionNodes.insertBefore(shared_ptr<ActionNode>(&iBefore), pDirectFunction));
 	}
 	pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(3);
@@ -75,7 +75,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, LinkedActionList&
 	{
 		pFunction->setAt(n, saArguments[n].c_str());
 	}
-	listActionNodes.insertBefore(make_shared<ActionNode>(iBefore), pFunction);
+	listActionNodes.insertBefore(shared_ptr<ActionNode>(&iBefore), pFunction);
 }
 
 void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeArray, Token& current, CompileNextLevel& nextLevel, CompileNextLevelList& nextLevelList)
@@ -89,14 +89,14 @@ void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeAr
 	nextLevelList->push_back(make_shared<CompileNextLevel>(nextLevel));
 
 	nextLevel.setBefore(beforeArray.at(1));
-	nextLevel.setBegin(make_shared<Token>(current.next)); // Todo fix tokenizer, will throw error soon
+	nextLevel.setBegin(shared_ptr<Token>(current.next)); // Todo fix tokenizer, will throw error soon
 }
 
 void CompileOperator::insertLastNextLevel(Token& end, ActionNode& before, CompileNextLevel& nextLevel, CompileNextLevelList& nextLevelList)
 {
 	if (nextLevelList->size() == 0)
 	{
-		nextLevel.setBefore(make_shared<ActionNode>(before));
+		nextLevel.setBefore(shared_ptr<ActionNode>(&before));
 	}
 	nextLevel.setEnd(make_shared<Token>(end));
 
@@ -109,7 +109,7 @@ void CompileOperator::compileNextLevel(LinkedList& tokenList, LinkedActionList& 
 
 	while (step != nextLevelList->end())
 	{
-		shared_ptr<CompileNextLevel> nextLevelList = make_shared<CompileNextLevel>(step);
+		shared_ptr<CompileNextLevel> nextLevelList =*step;
 		pNextLevel->compile(tokenList, *nextLevelList->getBegin(), *nextLevelList->getEnd(), runList, *nextLevelList->getBefore());
 		++step;
 	}

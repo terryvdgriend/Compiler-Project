@@ -6,7 +6,7 @@ class CompileDoWhile : public Compiler
 	public:
 		CompileDoWhile();
 
-		void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
 		shared_ptr<Compiler> create();
 
 	private:

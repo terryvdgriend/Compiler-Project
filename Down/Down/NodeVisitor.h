@@ -14,12 +14,12 @@ class NodeVisitor
 	public:
 		NodeVisitor(VirtualMachine& virtualMachine);
 
-		virtual void visit(ConditionalJumpNode& node);
-		virtual void visit(DirectFunctionCall& node);
-		virtual void visit(DoNothingNode& node);
-		virtual void visit(FunctionCall& node);
-		virtual void visit(JumpGoToNode& node);
-		virtual void visit(SwitchNode& node);
+		void visit(ConditionalJumpNode& node);
+		void visit(DirectFunctionCall& node);
+		void visit(DoNothingNode& node);
+		void visit(FunctionCall& node);
+		void visit(JumpGoToNode& node);
+		void visit(SwitchNode& node);
 
 		shared_ptr<ActionNode> getNextNode();
 

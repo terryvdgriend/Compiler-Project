@@ -14,7 +14,7 @@ void CompileSingleStatement::compile(LinkedList& cTokenList, Token& begin, Token
 	{
 		case Token::IDENTIFIER:
 		{
-			shared_ptr<Token> next = make_shared<Token>(begin.next); // Todo fix tokenizer, will throw error soon
+			shared_ptr<Token> next = shared_ptr<Token>(begin.next); // Todo fix tokenizer, will throw error soon
 			shared_ptr<DirectFunctionCall> directFunctionCall = nullptr;
 			string sBuffer, saArguments[2];
 			shared_ptr<ActionNode> beforeFunction = nullptr;
@@ -27,7 +27,7 @@ void CompileSingleStatement::compile(LinkedList& cTokenList, Token& begin, Token
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_ID_TO_RT);
 				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), directFunctionCall);
+				listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), directFunctionCall);
 
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				condition->compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, *beforeFunction);
@@ -41,7 +41,7 @@ void CompileSingleStatement::compile(LinkedList& cTokenList, Token& begin, Token
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, saArguments[0].c_str());
 				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), directFunctionCall);
+				listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), directFunctionCall);
 			}
             
             break;
@@ -70,7 +70,7 @@ void CompileSingleStatement::compile(LinkedList& cTokenList, Token& begin, Token
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_CONST_TO_RT);
 			directFunctionCall->setAt(1, begin.getText().c_str());
-			listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), directFunctionCall);
+			listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), directFunctionCall);
 
             break;
 		}

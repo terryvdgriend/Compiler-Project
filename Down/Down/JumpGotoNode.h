@@ -1,4 +1,5 @@
 #pragma once
+#include "ActionNode.h"
 #include "NodeVisitor.h"
 
 class JumpGoToNode : public ActionNode

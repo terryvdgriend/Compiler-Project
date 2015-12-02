@@ -40,7 +40,7 @@ void CompileGetFunction::compile(LinkedList& cTokenList, Token& begin, Token& en
 	{
 		while (current->getEnum() == Token::NEWLINE) 
 		{
-			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 
 		if (expectation->getLevel() == level)
@@ -72,7 +72,7 @@ void CompileGetFunction::compile(LinkedList& cTokenList, Token& begin, Token& en
 			}
 			else
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 			}
 		}
 	}
@@ -88,7 +88,7 @@ void CompileGetFunction::compile(LinkedList& cTokenList, Token& begin, Token& en
 	connectLists();
 	begin = *current;
 	shared_ptr<LinkedActionList> list = make_shared<LinkedActionList>(listActionNodes);
-	list->insertBefore(make_shared<ActionNode>(actionBefore), _compiledStatement);
+	list->insertBefore(shared_ptr<ActionNode>(&actionBefore), _compiledStatement);
 	listActionNodes = *list;
 }
 
@@ -114,7 +114,7 @@ void CompileGetFunction::compileNotUserDefined(LinkedList& cTokenList, Token& be
 			{
 				break;
 			}
-			seperator = make_shared<Token>(seperator->next); // Todo fix tokenizer, will throw error soon
+			seperator = shared_ptr<Token>(seperator->next); // Todo fix tokenizer, will throw error soon
 		}
 		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 		condition->compile(cTokenList, *current, *seperator, *_functionParams, *_functionParams->getLast());
@@ -131,7 +131,7 @@ void CompileGetFunction::compileNotUserDefined(LinkedList& cTokenList, Token& be
 
 		if (current->getEnum() == Token::AND_PARA)
 		{
-			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 	}
 
@@ -191,7 +191,7 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 				param = make_shared<LinkedList>();
 				count++;
 			}
-			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 
 			if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) 
 			{
@@ -234,14 +234,14 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 	}
 	shared_ptr<LinkedList> body = make_shared<LinkedList>(*_bodyTokens);
 	changeVariables(*body);
-	shared_ptr<Token> currentBody = make_shared<Token>(body->first); // Todo fix tokenizer, will throw error soon
+	shared_ptr<Token> currentBody = shared_ptr<Token>(body->first); // Todo fix tokenizer, will throw error soon
 	_body->add(make_shared<DoNothingNode>());
 
 	while (currentBody != nullptr) 
 	{
 		if (currentBody->getEnum() == Token::FUNCTION_CLOSE)
 		{
-			currentBody = make_shared<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
+			currentBody = shared_ptr<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
 
 			break;
 		}
@@ -253,7 +253,7 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 		}
 		else
 		{
-			currentBody = make_shared<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
+			currentBody = shared_ptr<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
 		}
 	}
 
@@ -273,12 +273,12 @@ void CompileGetFunction::compileUserDefined(LinkedList& cTokenList, Token& begin
 
 void CompileGetFunction::changeVariables(LinkedList& list) 
 {
-	shared_ptr<Token> current = make_shared<Token>(list.first); // Todo fix tokenizer, will throw error soon
+	shared_ptr<Token> current = shared_ptr<Token>(list.first); // Todo fix tokenizer, will throw error soon
 
 	while (current != nullptr) 
 	{
 		changeVariable(*current);
-		current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 	}
 }
 
@@ -317,12 +317,12 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, LinkedList& para
 	shared_ptr<LinkedList> templist = make_shared<LinkedList>();
 	templist->add(&*nParam); // Todo fix tokenizer, will throw error soon
 	templist->add(&*connectToken); // Todo fix tokenizer, will throw error soon
-	shared_ptr<Token> temp = make_shared<Token>(paramlist.first); // Todo fix tokenizer, will throw error soon
+	shared_ptr<Token> temp = shared_ptr<Token>(paramlist.first); // Todo fix tokenizer, will throw error soon
 
 	while (temp != nullptr) 
 	{
 		templist->add(&*temp); // Todo fix tokenizer, will throw error soon
-		temp = make_shared<Token>(temp->next); // Todo fix tokenizer, will throw error soon
+		temp = shared_ptr<Token>(temp->next); // Todo fix tokenizer, will throw error soon
 	}
 	connectToken = make_shared<Token>();
 	connectToken->setEnum(Token::NEWLINE);
@@ -333,13 +333,13 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, LinkedList& para
 	connectToken->setText("\n");
 	templist->add(&*connectToken); // Todo fix tokenizer, will throw error soon
 	
-	temp = make_shared<Token>(templist->first); // Todo fix tokenizer, will throw error soon
+	temp = shared_ptr<Token>(templist->first); // Todo fix tokenizer, will throw error soon
 	paramlist = *make_shared<LinkedList>();
 
 	while (temp != nullptr) 
 	{
 		paramlist.add(&*temp); // Todo fix tokenizer, will throw error soon
-		temp = make_shared<Token>(temp->next); // Todo fix tokenizer, will throw error soon
+		temp = shared_ptr<Token>(temp->next); // Todo fix tokenizer, will throw error soon
 	}
 }
 

@@ -42,7 +42,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 	{
 		while (current->getEnum() == Token::NEWLINE)
 		{
-			current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 		}
 
 		if (expectation->Level == level)
@@ -57,7 +57,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 
 			if (current->getEnum() == Token::CONDITION_OPEN)
 			{
-				conClose = make_shared<Token>(current->getPartner()); // Todo fix tokenizer, will throw error soon
+				conClose = shared_ptr<Token>(current->getPartner()); // Todo fix tokenizer, will throw error soon
 			}
 
 			if (current->getEnum() != expectation->TokenType)
@@ -69,25 +69,25 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 			}
 			else
 			{
-				current = make_shared<Token>(current->next);
+				current = shared_ptr<Token>(current->next);
 			}
 		}
 		else if (expectation->Level >= level)
 		{
 			if (current->getEnum() == expectation->TokenType && current->getEnum() == Token::AND_PARA) 
 			{
-				current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 
 				continue;
 			}
 
 			if (_declaration->getCount() == 0)
 			{
-				shared_ptr<Token> next = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> next = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 
 				while (next->getEnum() != Token::AND_PARA)
 				{
-					next = make_shared<Token>(next->next); // Todo fix tokenizer, will throw error soon
+					next = shared_ptr<Token>(next->next); // Todo fix tokenizer, will throw error soon
 				}
 				// Compile the first part of the for-loop
 				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
@@ -98,16 +98,16 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				else
 				{
-					current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+					current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 				}
 			}
 			else if (_condition->getCount() == 0)
 			{
-				shared_ptr<Token> next = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> next = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 
 				while (next->getEnum() != Token::AND_PARA) 
 				{
-					next = make_shared<Token>(next->next); // Todo fix tokenizer, will throw error soon
+					next = shared_ptr<Token>(next->next); // Todo fix tokenizer, will throw error soon
 				}
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				_condition->add(make_shared<DoNothingNode>());
@@ -124,18 +124,18 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				else
 				{
-					current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+					current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 				}
 			}
 			else
 			{
-				shared_ptr<Token> previous = make_shared<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> previous = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 
 				while (previous->getEnum() != Token::BODY_OPEN) 
 				{
-					previous = make_shared<Token>(previous->previous);
+					previous = shared_ptr<Token>(previous->previous);
 				}
-				previous = make_shared<Token>(previous->getPartner());
+				previous = shared_ptr<Token>(previous->getPartner());
 
 				while (current->getLevel() > level)
 				{
@@ -147,14 +147,14 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 					}
 					else
 					{
-						current = make_shared<Token>(current->next); // Todo fix tokenizer, will throw error soon
+						current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 					}
 				}
 			}
 		}
 	}
 	connectLists();
-	listActionNodes.insertBefore(make_shared<ActionNode>(actionBefore), _compiledStatement);
+	listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), _compiledStatement);
 	begin = *current;
 }
 

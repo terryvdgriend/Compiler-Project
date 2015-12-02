@@ -14,45 +14,56 @@
 #include "FileStreamer.h"
 #include "Format.h"
 
-int main(int argc, const char* argv[])
+int runDown(string& code, bool& printTokenList, bool& printCompiledList);
+shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList);
+shared_ptr<LinkedActionList> runCompiler(LinkedList& tokenList, bool printCompiledList);
+void runVM(LinkedActionList& cRunList);
+bool errors();
+bool ideStuff(int argc, char* argv[], string& code, bool& printTokenList, bool& printCompiledList);
+
+int main(int argc, char * argv[])
 {
 	string code = "";
+	bool PRINT_TOKEN_LIST = false;
+	bool PRINT_COMPILED_LIST = false;
 
 	//==============IDE==============
-	if (!IDEstuff(argc, argv, code))
+	if (!ideStuff(argc, argv, code, PRINT_TOKEN_LIST, PRINT_COMPILED_LIST))
 	{
 		return 0;
 	}
 
 	//==============DOWN=============
-	runDown(code);
-
-	return 0;
+	return runDown(code, PRINT_TOKEN_LIST, PRINT_COMPILED_LIST);;
 }
 
-void runDown(string code)
+int runDown(string& code, bool& printTokenList, bool& printCompiledList)
 {
-	const bool PRINT_TOKEN_LIST = false;
-	const bool PRINT_COMPILED_LIST = false;
-
 	//==============TOKENIZER========
-	shared_ptr<LinkedList> tokenList = runTokenizer(code, PRINT_TOKEN_LIST);
+	shared_ptr<LinkedList> tokenList = runTokenizer(code, printTokenList);
 
-	if (Errors())
+	if (errors())
 	{
-		return;
+		return -1;
 	}
 
 	//==============COMPILER=========
-	shared_ptr<LinkedActionList> compiledList = runCompiler(*tokenList, PRINT_COMPILED_LIST);
+	shared_ptr<LinkedActionList> compiledList = runCompiler(*tokenList, printCompiledList);
 
-	if (Errors())
+	if (errors())
 	{
-		return;
+		return - 1;
 	}
 
 	//==============VM===============
 	runVM(*compiledList);
+
+	if (errors())
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
 shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList)
@@ -93,7 +104,7 @@ void runVM(LinkedActionList& cRunList)
 	}
 }
 
-bool Errors()
+bool errors()
 {
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
@@ -105,64 +116,77 @@ bool Errors()
 	return false;
 }
 
-//Return success
-bool IDEstuff(int argc, const char* argv[], string& code)
+// Return: true  -> Proceed with the rest of the code (most probable)
+// Return: false -> Stop after the execution of this mehod (used to get, for instane, snippets and tokens
+bool ideStuff(int argc, char* argv[], string& code, bool& printTokenList, bool& printCompiledList)
 {
-	if (argc <= 1 || argc >= 5) // No other options defined yet
+	unique_ptr<FileStreamer> fileStramer = make_unique<FileStreamer>();
+	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
+
+	if (argc == 1)
 	{
-		// Alternative code for debugging without the IDE
-		code = FileStreamer{}.readerFromResource("custom");
+		code = fileStramer->readerFromResource("custom");
 
 		return true;
 	}
-	string option = argv[1];
-	string outz = "No valid option: " + option + " or arg: " + to_string(argc) + "\n";
+	string outz = "No valid args\n";
+	bool cont = true;
 
-	if (argc == 3)
+	string value = argv[argc - 1]; // Last argument = textfile path
+	int i = 0;
+
+	while (i != (argc))
 	{
-		string value = argv[2];
+		string opt = argv[i];
 
-		if (option == "-f") 
+		if (opt == "-r") 
 		{
-			// File
-			FileStreamer fs{};
-			code = fs.readerFromPath(value);
+			code = fileStramer->readerFromPath(value);
+		}
 
-			return true;
-		}
-		else if (option == "-c")
+		if (opt == "-t") // Print tokens
 		{
-			code = value; // Code
+			printTokenList = true;
 		}
-		else
+
+		if (opt == "-c") // Print runlist
 		{
+			printCompiledList = true;
+		}
+
+		if (opt == "getTokens") 
+		{
+			outz = tokenizer->getKeywordsAsJson();
+			cont = false;
+		}
+
+		if (opt == "getSnippets") 
+		{
+			outz = fileStramer->readerFromResource("Snippets");
+			cont = false;
+		}
+
+		if (opt == "getFunctions") 
+		{
+			outz = tokenizer->getFunctionsAsJson();
+			cont = false;
+		}
+
+		if (opt == "getAll")
+		{
+			outz = tokenizer->getFunctionsAsJson();
+			outz += tokenizer->getKeywordsAsJson();
+			outz += fileStramer->readerFromResource("Snippets");
+
 			return false;
 		}
+		i++;
 	}
-	else if (argc == 2)
-	{
-		if (option == "getTokens")
-		{
-			outz = Tokenizer().getKeywordsAsJson();
-		}
-		else if (option == "getSnippets")
-		{
-			outz = (FileStreamer{}).readerFromResource("Snippets");
-		}
-		else if (option == "getFunctions")
-		{
-			outz = Tokenizer().getFunctionsAsJson();
-		}
-		else
-		{
-			return false;
-		}
-	}
-	else
-	{
-		return false;
-	}
-	cout << outz;
 
-	return false;
+	if (!cont)
+	{
+		cout << outz;
+	}
+
+	return cont;
 }

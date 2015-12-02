@@ -18,7 +18,7 @@ shared_ptr<FunctionHandler> FunctionHandler::getInstance()
 {
 	if (handler == nullptr) 
 	{
-		handler = make_shared<FunctionHandler>();
+		handler = shared_ptr<FunctionHandler>(new FunctionHandler());
 	}
 
 	return handler;
