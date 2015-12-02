@@ -21,11 +21,7 @@ void RunVM(LinkedActionList lToken);
 
 int main(int argc,  char * argv[])
 {
-	/*argc = 3;
-	argv[0] = "";
-	argv[1] = "-r -t -c";
-	argv[2] = "dit is code ofzo / path naar code";
-	//std::cerr << "WHUT?!";*/
+	//string eoutz = Tokenizer().getKeywordsAsJson();
 	string code = "";
 	bool C = false;
 	bool T = false;
