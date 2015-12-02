@@ -55,7 +55,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		{
 			Token* next = &begin;
 			CompileGetFunction function;
-			function.Compile(cTokenList, *next, *next->getPartner()->getPartner()->getPartner(), listActionNodes, actionBefore);
+			function.Compile(cTokenList, *next, *next->getPartner(), listActionNodes, actionBefore);
 			break;
 		}
 		case Token::NUMBER:
