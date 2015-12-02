@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlusPlusCommand.h"
+#include "CommandVisitor.h"
 
 void PlusPlusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -19,5 +20,8 @@ void PlusPlusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 			vm.setVariable(item, to_string(number1));
 		}
 	}
+}
 
+std::pair<string, string> PlusPlusCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
 }

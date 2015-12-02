@@ -1,5 +1,2 @@
-_number_ **i** is 1
-#### for ( , **i** smaller than 5 , **i** is **i** plus 1 )
---
-[ printdown **i** ]
-__
+_number_ **b** is [ random 1 ]
+[ printdown **b** ]

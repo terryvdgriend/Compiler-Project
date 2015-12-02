@@ -93,6 +93,9 @@
     <ClCompile Include="CompileFunction.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
+    <ClCompile Include="CompileGetFunction.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
     <ClCompile Include="CompileIf.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
@@ -152,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="DivideCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
@@ -231,11 +237,17 @@
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="FunctionHandler.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="ConstantToReturnValueCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandVisitor.cpp">
+      <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Utils</Filter>
@@ -287,6 +299,9 @@
     <ClInclude Include="CompileFunction.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
+    <ClInclude Include="CompileGetFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="CompileIf.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
@@ -328,6 +343,24 @@
     </ClInclude>
     <ClInclude Include="CompileWhile.h">
       <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileSwitch.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUserFunction.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileWhile.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitor.h">
+      <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
@@ -429,6 +462,9 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Format.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionHandler.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Token.h">

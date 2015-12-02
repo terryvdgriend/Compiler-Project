@@ -6,6 +6,18 @@ Token::Token() : Level{ 1 }, next{ nullptr }, previous{ nullptr } //etc...
 {
 }
 
+Token::Token(const Token & other)
+{
+	Text = other.Text;
+	subType = other.subType;
+	type = other.type;
+	Partner = other.Partner;
+	PositieInList = other.PositieInList;
+	Regelnummer = other.Regelnummer;
+	Positie = other.Positie;
+	Level = other.Level;
+}
+
 
 
 void Token::Print(std::map<string, Token::iToken>& map)

@@ -1,7 +1,3 @@
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-
 //Laten staan voor de apple gebruikert
 #ifdef _WIN32
 #include <crtdbg.h>
@@ -38,16 +34,16 @@ int main(int argc, const char * argv[])
 		return 0;
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = *RunCompiler(&cTokenList, false);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, true);
 	if (Errors())
 		return 0;
 
 	//=========VM==============
 	RunVM(cRunList);
-	if (Errors())
+ 	if (Errors())
 		return 0;
 	
-
+	//string aoutz = Tokenizer().getFunctionsAsJson();
 
 	return 0;
 }
@@ -135,10 +131,10 @@ bool IDEstuff(int argc, const char * argv[], std::string &code)
 	{
 		if (option == "getTokens")
 			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getSnippets")
+		else if (option == "getSnippets")
 			outz = Tokenizer().getKeywordsAsJson();
-		if (option == "getDingen")
-			outz = Tokenizer().getKeywordsAsJson();
+		else if (option == "getFunctions")
+			outz = Tokenizer().getFunctionsAsJson();
 		else
 			return false;
 	}
