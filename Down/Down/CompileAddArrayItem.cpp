@@ -61,6 +61,11 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 		string sBuffer;
 
+		if (current->getLineNumber() > 20)
+		{
+			cout << "";
+		}
+
 		if (expectation.Level == arrayLevel)
 		{
 			if (expectation.getTokenType() != Token::ANY && current->getEnum() != expectation.TokenType) {
@@ -174,7 +179,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-				currArrayTempVar = getCurrentLocalVariableName();
+				//currArrayTempVar = getCurrentLocalVariableName();
 				currArray = getCurrentLocalVariableName();
 			}
 			currArrayTempVar = getCurrentLocalVariableName();
@@ -182,6 +187,12 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 		}
 		else if (expectation.Level >= arrayLevel)
 		{
+			if (current->getEnum() == Token::ARRAY_CLOSE) {
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, Token::NONE);
+				begin = end;
+				break;
+			}
+
 			Token* seperator = current;
 			while (seperator->getEnum() != Token::ARRAY_CLOSE) {
 				if (seperator->getEnum() == Token::ARRAY_CLOSE) { break; }

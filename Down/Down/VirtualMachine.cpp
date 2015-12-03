@@ -21,10 +21,6 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 		if (actionNode)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
-			if (actionNode->getContentArrayNonConstant()[1] == "**temp**")
-			{
-				cout << "";
-			}
 			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
 		}
 		//(*currentNode).accept(*visitor);

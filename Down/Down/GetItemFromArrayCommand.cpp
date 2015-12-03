@@ -10,9 +10,30 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, vector<string>& parame
 	{
 		string functParamByKey = vm.getFunctionParameterValueByKey(parameters.at(1));
 
+		string tempKey;
+		int tempSizePrev = 0, tempSizeCurr = 0;
+
 		for (string functParamByValue : vm.getFunctionParametersByValue(functParamByKey))
 		{
-			vector<Variable> functParam = vm.getVariableArray(functParamByValue);
+			for (Variable var : vm.getVariableArray(functParamByValue))
+			{
+				if (var.getType() != VariableType::NULLTYPE && var.getValue() != "")
+				{
+					tempSizeCurr++;
+				}
+			}
+			if (tempSizePrev < tempSizeCurr)
+			{
+				tempSizePrev = tempSizeCurr;
+				tempKey = functParamByValue;
+			}
+			tempSizeCurr = 0;
+		}
+
+		/*for (string functParamByValue : vm.getFunctionParametersByValue(functParamByKey))
+		{*/
+			vector<Variable> functParam = vm.getVariableArray(tempKey);
+			int index = 0;
 
 			if (functParam.size() > 0)
 			{
@@ -20,14 +41,15 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, vector<string>& parame
 
 				for (Variable var : functParam)
 				{
-					if (var.getValue() == "" && var.getType() < 0) break;
-					vm.addItemToVariableArray(parameters.at(1), var);
+					//if (var.getValue() == "" && var.getType() < 0) continue;
+					vm.addItemToVariableArrayAt(parameters.at(1), to_string(index), var);
+					index++;
 				}
 
 				varArray = vm.getVariableArray(parameters.at(1));
-				break;
+				//break;
 			}
-		}
+		//}
 	}
 
 	if (varArray.size() > 0)

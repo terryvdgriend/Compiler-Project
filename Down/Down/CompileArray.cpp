@@ -22,13 +22,25 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 {
 	Token* current = &begin;
 	int arrayLevel = begin.getLevel();
+	bool compiledArraySize = false;
 	
 	list<TokenExpectation> expected = list<TokenExpectation>();
 	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
-	expected.push_back(TokenExpectation(arrayLevel + 1, Token::NUMBER));
+	expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
 	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
 	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
-	if (current->next->next->next->next->getEnum() == Token::EQUALS)
+
+	bool hasEquals = false;
+	Token* seeker = current;
+	while (seeker->getEnum() != Token::NEWLINE) {
+		if (seeker->getEnum() == Token::EQUALS) {
+			hasEquals = true;
+			break;
+		}
+		seeker = seeker->next;
+	}
+
+	if (hasEquals)
 	{
 		expected.push_back(TokenExpectation(arrayLevel, Token::EQUALS));
 		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
@@ -110,7 +122,12 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 		}
 		else if (expectation.Level >= arrayLevel)
 		{
-			if (expectation.TokenType == Token::ANY)
+			if (current->getEnum() == Token::ARRAY_CLOSE) {
+				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, Token::NONE);
+				begin = end;
+				break;
+			}
+			if (compiledArraySize)
 			{
 				Token* prev = current->previous;
 				while (prev->getEnum() != Token::ARRAY_OPEN)
@@ -165,8 +182,8 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-				current = current->next;
+				compiledArraySize = true;
+				current = seperator;
 			}
 		}
 	}

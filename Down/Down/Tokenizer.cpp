@@ -21,7 +21,19 @@ string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
 		if (it->second == tkn)
 			return it->first;
 	}
-
+	for (auto it = regexert.begin(); it != regexert.end(); ++it)
+	{
+		if (it->second == tkn)
+		{
+			switch (it->second)
+			{
+				case Token::NUMBER: return "number";
+				case Token::TEXT: return "text";
+				case Token::FACT: return "fact";
+				default: return "";
+			}
+		}
+	}
 	return "";
 }
 
@@ -73,30 +85,33 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				}
 			}
 		}
-
-		if (cTokenList.last != NULL && cTokenList.last->previous != NULL && cTokenList.last->previous->getEnum() == Token::IDENTIFIER &&
-			cTokenList.last->getEnum() == Token::ARRAY_OPEN && currentToken == Token::NUMBER)
+		// (cTokenList.last != nullptr && cTokenList.last->previous != nullptr && cToken.last->previous->getEnum() == Token::ARRAY_CLOSE) || next token is Token::ARRAY_OPEN)
+		if (((cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE) || getNextToken(m, s) == Token::ARRAY_OPEN) && currentToken == Token::IDENTIFIER)
 		{
-			LinkedList& tempTokenList = LinkedList();
-			int ln = cTokenList.last->getLineNumber();
-			Token* variable = cTokenList.last;
-			Token* arrayVariable = cTokenList.last;
-
-			while (variable->getLineNumber() == ln)
-			{
-				if (variable->previous->getEnum() == Token::NEWLINE) break;
-				variable = variable->previous;
+			if (getNextToken(m, s) == Token::ARRAY_OPEN) {
+				// haal uit mappert2;
 			}
+			else {
+				int ln = cTokenList.last->getLineNumber();
+				Token* variable = cTokenList.last;
 
-			switch (variable->getSub())
-			{
-				case Token::TYPE_NUMBER: variable->setSub(Token::TYPE_NUMBER_ARRAY);
+				while (variable->getLineNumber() == ln)
+				{
+					if (variable->previous->getEnum() == Token::NEWLINE) break;
+					variable = variable->previous;
+				}
+
+				switch (variable->getSub())
+				{
+				case Token::TYPE_NUMBER: pToken->setSub(Token::TYPE_NUMBER_ARRAY);
 					break;
-				case Token::TYPE_TEXT: variable->setSub(Token::TYPE_TEXT_ARRAY);
+				case Token::TYPE_TEXT: pToken->setSub(Token::TYPE_TEXT_ARRAY);
 					break;
-				case Token::TYPE_FACT: variable->setSub(Token::TYPE_FACT_ARRAY);
+				case Token::TYPE_FACT: pToken->setSub(Token::TYPE_FACT_ARRAY);
 					break;
+				}
 			}
+			
 		}
 		else if (currentToken == Token::ARRAY_CLOSE && tempToken != Token::NONE)
 		{
@@ -276,6 +291,12 @@ string Tokenizer::lookAhead(smatch m, string s)
 	return m2[0];
 }
 
+
+Token::iToken Tokenizer::getNextToken(smatch& m, string& s) {
+	string lookahead = lookAhead(m, s);
+	Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
+	return lookaheadToken;
+}
 
 void Tokenizer::checkRemainingErrors()
 {

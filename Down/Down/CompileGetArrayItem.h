@@ -11,6 +11,7 @@ public:
 	Compiler * Create() { return new CompileGetArrayItem(); };
 
 private:
+	string currArray;
 	string currArrayItemTempVar;
 };
 
