@@ -11,6 +11,15 @@ var DownHighlightRules = function() {
    this.$rules = {
         "start" : [
             {
+                token : "comment",
+                regex : ">$",
+                next : "start"
+            }, {
+                token : "comment",
+                regex : ">",
+                next : "singleLineComment"
+            },
+            {
                 token : "keyword.operator",
                 regex: "is|plus|minus|divide|(?:smaller|larger) than|like|in|increased|decreased|multiply|multiplied by|modulo|and gives|gets|with"
             },
@@ -44,6 +53,25 @@ var DownHighlightRules = function() {
                 regex : "(#+ (?:else if|else|if|case|while|do|foreach|for)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|-?\\d\\.?\\d*|\"(.*?)\"|\n)"
             }
             */
+        ],
+        "comment" : [
+            {
+                token : "comment", // comment spanning whole line
+                regex : ".+"
+            }
+        ],
+        "singleLineComment" : [
+            {
+                token : "comment",
+                regex : /\\$/,
+                next : "singleLineComment"
+            }, {
+                token : "comment",
+                regex : /$/,
+                next : "start"
+            }, {
+                defaultToken: "comment"
+            }
         ]
     };
 };
