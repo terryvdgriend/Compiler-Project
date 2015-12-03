@@ -4,20 +4,20 @@
 
 CompileFactory::CompileFactory()
 {
-	tokenCompileDictionary[Token::IF]						= make_shared<CompileIf>();
-	tokenCompileDictionary[Token::WHILE]					= make_shared<CompileWhile>();
-	tokenCompileDictionary[Token::FOR]						= make_shared<CompileFor>();
-	tokenCompileDictionary[Token::DO]						= make_shared<CompileDoWhile>();
-	tokenCompileDictionary[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
-	tokenCompileDictionary[Token::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
-	tokenCompileDictionary[Token::IDENTIFIER]				= make_shared<CompileEquals>();
-	tokenCompileDictionary[Token::SWITCH]					= make_shared<CompileSwitch>();
-	tokenCompileDictionary[Token::NEWLINE]					= nullptr;
+	tokenCompileDictionary[IToken::IF]						= make_shared<CompileIf>();
+	tokenCompileDictionary[IToken::WHILE]					= make_shared<CompileWhile>();
+	tokenCompileDictionary[IToken::FOR]						= make_shared<CompileFor>();
+	tokenCompileDictionary[IToken::DO]						= make_shared<CompileDoWhile>();
+	tokenCompileDictionary[IToken::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
+	tokenCompileDictionary[IToken::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
+	tokenCompileDictionary[IToken::IDENTIFIER]				= make_shared<CompileEquals>();
+	tokenCompileDictionary[IToken::SWITCH]					= make_shared<CompileSwitch>();
+	tokenCompileDictionary[IToken::NEWLINE]					= nullptr;
 }
 
 shared_ptr<Compiler> CompileFactory::createCompileStatement(shared_ptr<Token>& token)
 {
-	map<Token::iToken, shared_ptr<Compiler>>::iterator it = tokenCompileDictionary.find(token->getEnum());
+	map<IToken, shared_ptr<Compiler>>::iterator it = tokenCompileDictionary.find(token->getType());
 
 	if (it != tokenCompileDictionary.end())
 	{

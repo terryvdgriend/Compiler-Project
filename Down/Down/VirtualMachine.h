@@ -8,7 +8,7 @@ class VirtualMachine
 	public:
 		VirtualMachine();
 
-		void execute(LinkedActionList& actionList);
+		void execute(shared_ptr<LinkedActionList>& actionList);
 
 		void addIdentifer(string name);
 

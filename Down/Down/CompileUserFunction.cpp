@@ -26,46 +26,46 @@ void CompileUserFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<
 	shared_ptr<Token> bodyEnd = nullptr;
 
 	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_DECLARE));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_CLOSE));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_DECLARE));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_CLOSE));
 
 	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
-		while (current->getEnum() == Token::NEWLINE) 
+		while (current->getType() == IToken::NEWLINE)
 		{
-			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = current->getNext();
 		}
 
 		if (expectation->getLevel() == level)
 		{
-			if (current->getEnum() == Token::FUNCTION_OPEN) 
+			if (current->getType() == IToken::FUNCTION_OPEN)
 			{
-				bodyEnd = shared_ptr<Token>(current->getPartner()); // Todo fix tokenizer, will throw error soon
+				bodyEnd = current->getPartner();
 			}
-			else if (current->getEnum() == Token::FUNCTION_DECLARE) 
+			else if (current->getType() == IToken::FUNCTION_DECLARE)
 			{
 				functionName = current->getText();
 			}
 
-			if (current->getEnum() != expectation->getTokenType()) 
+			if (current->getType() != expectation->getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPositie(), ErrorType::error), 
-													  expectation->getTokenType(), current->getEnum());
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
+													  expectation->getTokenType(), current->getType());
 				begin = end;
 
 				break;
 			}
 			else
 			{
-				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = current->getNext();
 			}
 		}
 		else 
 		{
 			// Check if enum is comingparam else body;
-			if (current->getEnum() == Token::START_PARAMETERS) 
+			if (current->getType() == IToken::START_PARAMETERS)
 			{
 				compileParams(tokenList, current, end);
 				compileBody(tokenList, current, bodyEnd, level);
@@ -84,40 +84,40 @@ void CompileUserFunction::compileParams(shared_ptr<LinkedList>& tokenList, share
 {
 	shared_ptr<Token> current = begin;
 	
-	while (current->getEnum() != Token::NEWLINE)
+	while (current->getType() != IToken::NEWLINE)
 	{
 		if (current->getText() == functionName) 
 		{
 			ErrorHandler::getInstance()->addError(make_shared<Error>(functionName + " Cannot call itself", ".md", current->getLineNumber(), 
-												  current->getPositie(), ErrorType::error));
+												  current->getPosition(), ErrorType::error));
 			current = end;
 
 			break;
 		}
 
-		if (current->getEnum() == Token::IDENTIFIER)
+		if (current->getType() == IToken::IDENTIFIER)
 		{
-			if (current->previous != nullptr && current->previous->getEnum() == Token::RETURNVALUE) 
+			if (current->getPrevious() != nullptr && current->getPrevious()->getType() == IToken::RETURNVALUE)
 			{
 				_returnToken = current;
 			}
 			else 
 			{
-				switch (current->getSub()) 
+				switch (current->getSubType()) 
 				{
-					case Token::TYPE_NUMBER: 
+					case IToken::TYPE_NUMBER:
 					{
 						_params += 'i';
 
 						break;
 					}
-					case Token::TYPE_FACT: 
+					case IToken::TYPE_FACT:
 					{
 						_params += 'b';
 
 						break;
 					}
-					case Token::TYPE_TEXT: 
+					case IToken::TYPE_TEXT:
 					{
 						_params += 's';
 
@@ -133,7 +133,7 @@ void CompileUserFunction::compileParams(shared_ptr<LinkedList>& tokenList, share
 				_paramTokens.push_back(current);
 			}
 		}
-		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+		current = current->getNext();
 	}
 	begin = current;
 }
@@ -147,15 +147,15 @@ void CompileUserFunction::compileBody(shared_ptr<LinkedList>& tokenList, shared_
 		if (current->getText() == functionName) 
 		{
 			ErrorHandler::getInstance()->addError(make_shared<Error>(functionName + " Cannot call itself", ".md", current->getLineNumber(), 
-												  current->getPositie(), ErrorType::error));
+												  current->getPosition(), ErrorType::error));
 			current = end;
 
 			break;
 		}
-		_body->add(new Token(*current));
-		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+		_body->add(current);
+		current = current->getNext();
 	} 
-	while (current->getEnum() != end->getEnum());
+	while (current->getType() != end->getType());
 
 	begin = current;
 }

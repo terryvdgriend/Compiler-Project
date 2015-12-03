@@ -1,104 +1,221 @@
 #include "stdafx.h"
 #include "Token.h"
 
-
-Token::Token() : Level{ 1 }, next{ nullptr }, previous{ nullptr } //etc...
+Token::Token()
 {
+	_level		= 1;
+	_next		= nullptr;
+	_previous	= nullptr;
 }
 
-Token::Token(const Token & other)
+Token::Token(const shared_ptr<Token>& other)
 {
-	Text = other.Text;
-	subType = other.subType;
-	type = other.type;
-	Partner = other.Partner;
-	PositieInList = other.PositieInList;
-	Regelnummer = other.Regelnummer;
-	Positie = other.Positie;
-	Level = other.Level;
-	next = nullptr;
-	previous = nullptr;
+	_text			= other->_text;
+	_subType		= other->_subType;
+	_type			= other->_type;
+	_partner		= other->_partner;
+	_positionInList	= other->_positionInList;
+	_lineNumber		= other->_lineNumber;
+	_position		= other->_position;
+	_level			= other->_level;
+	_next			= nullptr;
+	_previous		= nullptr;
 }
 
-
-
-
-void Token::Print(std::map<string, Token::iToken>& map)
+void Token::print(map<string, IToken>& map)
 {
 	int space = 20;
-	//
-	string spacer = std::string(space - this->Text.size(), ' ');
-	Text::print(to_string(this->PositieInList) + std::string(4, ' '));
-	Text::print(to_string(this->Regelnummer) + std::string(4, ' '));
-	Text::print(to_string(this->Positie) + std::string(4, ' '));
-	Text::print(this->Text + spacer);
-	Text::print(to_string(Level) + std::string(4, ' '));
-	Text::print(this->getStringbyEnum(map, this->getEnum()) + spacer);
+	string spacer = string(space - _text.size(), ' ');
+
+	Text::print(to_string(_positionInList) + string(4, ' '));
+	Text::print(to_string(_lineNumber) + string(4, ' '));
+	Text::print(to_string(_position)	+ string(4, ' '));
+	Text::print(_text + spacer);
+	Text::print(to_string(_level) + string(4, ' '));
+	Text::print(getStringbyEnum(map, getType()) + spacer);
+
 	if (this->getPartner() != nullptr)
-		Text::print(to_string(this->getPartner()->PositieInList) + std::string(4, ' '));
-	else
-		Text::print(spacer);
-	//
-	Text::printLine("");
-
-}
-
-bool Token::operator!=(const Token & other)const
-{
-	if ((this->Text != other.Text) ||
-		(this->Level != other.Level) ||
-		(this->Positie != other.Positie) ||
-		(this->PositieInList != other.PositieInList) ||
-		(this->type != other.type) ||
-		(this->subType != other.subType)||
-		(this->Regelnummer != other.Regelnummer))
-		return true;
-	return false;
-}
-
-bool Token::operator!=(Token * other)
-{
-	if ((this->Text != other->Text) ||
-		(this->Level != other->Level) ||
-		(this->Positie != other->Positie) ||
-		(this->PositieInList != other->PositieInList) ||
-		(this->type != other->type) ||
-		(this->subType != other->subType) ||
-		(this->Regelnummer != other->Regelnummer))
-		return true;
-	return false;
-}
-
-bool Token::compare(Token* first, Token * other)
-{
-	if ((first->Text == other->Text) &&
-		(first->Level == other->Level) &&
-		(first->Positie == other->Positie) &&
-		(first->PositieInList == other->PositieInList) &&
-		(first->type == other->type) &&
-		(first->subType == other->subType) &&
-		(first->Regelnummer == other->Regelnummer))
-		return true;
-	return false;
-}
-
-std::string Token::getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token){
-	std::map<std::string, Token::iToken>::const_iterator it;
-	for (it = map.begin(); it != map.end(); ++it){
-		//if (it != nullptr)
-		if (it->second == token)
-			return it->first;
+	{
+		Text::print(to_string(_partner->_positionInList) + string(4, ' '));
 	}
+	else
+	{
+		Text::print(spacer);
+	}
+	Text::printLine("");
+}
+
+
+void Token::addError()
+{
+	string description = "Syntax error: '" + _text + "'";
+	ErrorHandler::getInstance()->addError(make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::error));
+}
+
+bool Token::operator!=(const shared_ptr<Token>& other)const
+{
+	if ((_text != other->_text) ||
+		(_level != other->_level) ||
+		(_position != other->_position) ||
+		(_positionInList != other->_positionInList) ||
+		(_type != other->_type) ||
+		(_subType != other->_subType) ||
+		(_lineNumber != other->_lineNumber))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Token::operator!=(shared_ptr<Token> other)
+{
+	if ((_text != other->_text) ||
+		(_level != other->_level) ||
+		(_position != other->_position) ||
+		(_positionInList != other->_positionInList) ||
+		(_type != other->_type) ||
+		(_subType != other->_subType) ||
+		(_lineNumber != other->_lineNumber))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Token::compare(shared_ptr<Token> first, shared_ptr<Token> other)
+{
+	if ((first->_text == other->_text) &&
+		(first->_level == other->_level) &&
+		(first->_position == other->_position) &&
+		(first->_positionInList == other->_positionInList) &&
+		(first->_type == other->_type) &&
+		(first->_subType == other->_subType) &&
+		(first->_lineNumber == other->_lineNumber))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+string Token::getText()
+{
+	return _text;
+}
+
+void Token::setText(string text)
+{
+	_text = text;
+}
+
+IToken Token::getSubType()
+{
+	return _subType;
+}
+
+void Token::setSubType(IToken sub)
+{
+	_subType = sub;
+}
+
+IToken Token::getType()
+{
+	return _type;
+}
+
+void Token::setType(IToken type)
+{
+	_type = type;
+}
+
+shared_ptr<Token> Token::getPartner()
+{
+	return _partner;
+}
+
+void Token::setPartner(shared_ptr<Token> partner)
+{
+	_partner = partner;
+}
+
+int Token::getLevel()
+{
+	return _level;
+}
+
+void Token::setLevel(int level)
+{
+	_level = level;
+}
+
+int Token::getLineNumber()
+{
+	return _lineNumber;
+}
+
+void Token::setLineNumber(int lineNumber)
+{
+	_lineNumber = lineNumber;
+}
+
+int Token::getPosition()
+{
+	return _position;
+}
+
+void Token::setPosition(int position)
+{
+	_position = position;
+}
+
+void Token::setPositionInList(int positionInList)
+{
+	_positionInList = positionInList;
+}
+
+int Token::getScope()
+{
+	return _scope;
+}
+
+void Token::setScope(int scope)
+{
+	_scope = scope;
+}
+
+string Token::getStringbyEnum(map<string, IToken>& tokenMap, IToken token)
+{
+	map<string, IToken>::const_iterator it;
+
+	for (it = tokenMap.begin(); it != tokenMap.end(); ++it)
+	{
+		if (it->second == token)
+		{
+			return it->first;
+		}
+	}
+
 	return "UNKNOWN";
 }
 
-
-void Token::addError() 
+shared_ptr<Token> Token::getNext()
 {
-	string descr = "Syntax error: '" + this->Text + "'";
-	ErrorHandler::getInstance()->addError(make_shared<Error>(descr, "Unknown.MD", this->Regelnummer, this->Positie, ErrorType::error));
+	return _next;
 }
 
-Token::~Token()
+void Token::setNext(shared_ptr<Token> next)
 {
+	_next = next;
+}
+
+shared_ptr<Token> Token::getPrevious()
+{
+	return _previous;
+}
+
+void Token::setPrevious(shared_ptr<Token> previous)
+{
+	_previous = previous;
 }

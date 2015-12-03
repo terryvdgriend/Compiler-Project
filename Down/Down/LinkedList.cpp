@@ -1,67 +1,95 @@
 #include "stdafx.h"
 #include "LinkedList.h"
-#include <algorithm>
-
 
 LinkedList::LinkedList()
 {
-	first = nullptr;
-	last = nullptr;
-	count = 0;
+	_first	= nullptr;
+	_last	= nullptr;
+	_count	= 0;
 }
 
-LinkedList::LinkedList(LinkedList &other) {
-	first = nullptr;
-	last = nullptr;
-	count = 0;
-	std::vector<Token*> partners;
-	Token* current = other.first;
-	while (current != nullptr) {
-		Token * nToken = new Token(*current);
-		if (nToken->getPartner() != nullptr) {
+LinkedList::LinkedList(shared_ptr<LinkedList>& other) 
+{
+	_first	= nullptr;
+	_last	= nullptr;
+	_count	= 0;
+	vector<shared_ptr<Token>> partners;
+	shared_ptr<Token> current = other->getFirst();
+
+	while (current != nullptr) 
+	{
+		shared_ptr<Token> nToken = current;
+
+		if (nToken->getPartner() != nullptr) 
+		{
 			bool partnerFound = false;
-			for (auto p : partners) {
-				if (Token::compare(p,nToken->getPartner())) {
+
+			for (shared_ptr<Token> p : partners)
+			{
+				if (Token::compare(p, nToken->getPartner())) 
+				{
 					p->setPartner(nToken);
 					nToken->setPartner(p);
 					partnerFound = true;
+
 					break;
 				}
 			}
-			if (!partnerFound) {
+			if (!partnerFound) 
+			{
 				partners.push_back(nToken);
 			}
 		}
-		this->add(nToken);
-		current = current->next;
+		add(nToken);
+		current = current->getNext();
 	}
 }
 
-void LinkedList::add(Token* value){
-	LinkedList::insertLast(value);
-}
-
-void LinkedList::insertLast(Token* value){
-	if (value != nullptr){
-		count++;
-		if (first == nullptr){
-			first = last = value;
-		}
-		else{
-			last->next = value;
-			value->previous = last;
-			last = value;
-		}
-	}
-}
-
-
-LinkedList::~LinkedList()
+void LinkedList::add(shared_ptr<Token> token)
 {
-	Token* iter = this->first;
-	while (iter != nullptr){
-		Token* current = iter;
-			iter = iter->next;
-		delete current;
+	insertLast(token);
+}
+
+void LinkedList::insertLast(shared_ptr<Token> token)
+{
+	if (token != nullptr)
+	{
+		_count++;
+
+		if (_first == nullptr)
+		{
+			_first = _last = token;
+		}
+		else
+		{
+			_last->setNext(token);
+			token->setPrevious(_last);
+			_last = token;
+		}
 	}
+}
+
+int LinkedList::getSize()
+{
+	return _count;
+}
+
+shared_ptr<Token> LinkedList::getFirst()
+{
+	return _first;
+}
+
+void LinkedList::setFirst(shared_ptr<Token> first)
+{
+	_first = first;
+}
+
+shared_ptr<Token> LinkedList::getLast()
+{
+	return _last;
+}
+
+void LinkedList::setLast(shared_ptr<Token> last)
+{
+	_last = last;
 }

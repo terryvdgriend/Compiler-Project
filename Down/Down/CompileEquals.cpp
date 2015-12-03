@@ -4,7 +4,7 @@
 
 CompileEquals::CompileEquals() : CompileOperator(make_shared<CompileCondition>())
 {
-	tokenMap[Token::EQUALS] = "$=";
+	tokenMap[IToken::EQUALS] = "$=";
 }
 
 shared_ptr<Compiler> CompileEquals::create()

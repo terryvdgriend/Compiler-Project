@@ -29,22 +29,21 @@ void CompileGetFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<T
 {
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
-	shared_ptr<Token> bodyEnd = nullptr;
 
 	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_DECLARE_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::FUNCTION_CALL));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_DECLARE_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_CALL));
 
 	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
-		while (current->getEnum() == Token::NEWLINE) 
+		while (current->getType() == IToken::NEWLINE)
 		{
-			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = current->getNext();
 		}
 
 		if (expectation->getLevel() == level)
 		{
-			if (current->getEnum() == Token::FUNCTION_CALL) 
+			if (current->getType() == IToken::FUNCTION_CALL)
 			{
 				for (shared_ptr<Function> p : FunctionHandler::getInstance()->getFunctions()) 
 				{
@@ -62,17 +61,17 @@ void CompileGetFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<T
 				}
 			}
 
-			if (current->getEnum() != expectation->getTokenType()) 
+			if (current->getType() != expectation->getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPositie(), ErrorType::error), 
-													  expectation->getTokenType(), current->getEnum());
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
+													  expectation->getTokenType(), current->getType());
 				begin = end;
 
 				break;
 			}
 			else
 			{
-				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = current->getNext();
 			}
 		}
 	}
@@ -103,28 +102,27 @@ void CompileGetFunction::compileNotUserDefined(shared_ptr<LinkedList>& tokenList
 	vector<string> parameters;
 	_functionParams->add(make_shared<DoNothingNode>());
 
-	while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) 
+	while (current->getType() != IToken::FUNCTION_DECLARE_CLOSE)
 	{
 		// Compile condition
 		shared_ptr<Token> seperator = current;
-		stack<Token::iToken> stack;
+		stack<IToken> stack;
 
-		while (stack.size() >= 0 && (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::FUNCTION_DECLARE_CLOSE)) 
+		while (stack.size() >= 0 && (seperator->getType() != IToken::AND_PARA || seperator->getType() != IToken::FUNCTION_DECLARE_CLOSE))
 		{
-			if (seperator->getEnum() == Token::FUNCTION_DECLARE_OPEN)
+			if (seperator->getType() == IToken::FUNCTION_DECLARE_OPEN)
 			{
-				stack.push(seperator->getEnum());
+				stack.push(seperator->getType());
 			}
-			else if (seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) 
+			else if (seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.size() > 0)
 			{
 				stack.pop();
 			}
-			else if (stack.size() == 0 && (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE))
+			else if (stack.size() == 0 && (seperator->getType() == IToken::AND_PARA || seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE))
 			{
 				break;
 			}
-
-			seperator = shared_ptr<Token>(seperator->next);
+			seperator = seperator->getNext();
 		}
 		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 		condition->compile(tokenList, current, seperator, _functionParams, _functionParams->getLast());
@@ -139,22 +137,22 @@ void CompileGetFunction::compileNotUserDefined(shared_ptr<LinkedList>& tokenList
 		_functionParams->insertBefore(_functionParams->getLast(), pDirectFunction);
 		parameters.push_back(tempVar);
 
-		if (current->getEnum() == Token::AND_PARA)
+		if (current->getType() == IToken::AND_PARA)
 		{
-			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = current->getNext();
 		}
 	}
 
 	if (parameters.size() > _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPositie(), ErrorType::error));
+											  current->getPosition(), ErrorType::error));
 	}
 
 	if (parameters.size() < _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
-											 current->getPositie(), ErrorType::error));
+											 current->getPosition(), ErrorType::error));
 	}
 	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(parameters.size()+1);
@@ -165,7 +163,7 @@ void CompileGetFunction::compileNotUserDefined(shared_ptr<LinkedList>& tokenList
 		pFunction->setAt(n + 1, parameters[n].c_str());
 	}
 	_functionCall->insertLast(pFunction);
-	begin = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+	begin = current->getNext();
 }
 
 void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
@@ -180,15 +178,15 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 	{
 		_parameters->add(make_shared<DoNothingNode>());
 		shared_ptr<LinkedList> param = make_shared<LinkedList>();
-		stack<Token::iToken> stack;
+		stack<IToken> stack;
 
 		do 
 		{
-			if (current->getEnum() == Token::FUNCTION_DECLARE_OPEN)
+			if (current->getType() == IToken::FUNCTION_DECLARE_OPEN)
 			{
-				stack.push(current->getEnum());
+				stack.push(current->getType());
 			}
-			else if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) 
+			else if (current->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.size() > 0)
 			{
 				stack.pop();
 			}
@@ -196,51 +194,52 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 			if ((size_t)count > _params.size() - 1)
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-													  current->getPositie(), ErrorType::error));
+													  current->getPosition(), ErrorType::error));
 
 				break;
 			}
 
 			if (stack.size() >= 0) 
 			{
-				if (stack.size() == 0 && current->getEnum() == Token::AND_PARA) 
+				if (stack.size() == 0 && current->getType() == IToken::AND_PARA)
 				{
-					if (param->last != nullptr) 
+					if (param->getLast() != nullptr) 
 					{
-						param->last->next = nullptr;
-						param->first->previous = nullptr;
+						param->getLast()->setNext(nullptr);
+						param->getFirst()->setPrevious(nullptr);
 
 						connectParams(_paramTokens.at(count), param);
 						paramList.push_back(param);
 					}
-					else {
+					else 
+					{
 						ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
-															  current->getPositie(), ErrorType::error));
+															  current->getPosition(), ErrorType::error));
 					}
 					param = make_shared<LinkedList>();
 					count++;
 				}
 				else 
 				{
-					param->add(new Token(*current));
+					param->add(current);
 				}
 			}
-			current = shared_ptr<Token>(current->next);
+			current = current->getNext();
 
-			if (stack.size() == 0 && current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) 
+			if (stack.size() == 0 && current->getType() == IToken::FUNCTION_DECLARE_CLOSE)
 			{
-				if (param->last != nullptr) 
+				if (param->getLast() != nullptr) 
 				{
-					param->last->next = nullptr;
-					param->first->previous = nullptr;
+					param->getLast()->setNext(nullptr);
+					param->getFirst()->setPrevious(nullptr);
 					connectParams(_paramTokens.at(count), param);
 					paramList.push_back(param);
 				}
-				else {
+				else 
+				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
-														  current->getPositie(), ErrorType::error));
+														  current->getPosition(), ErrorType::error));
 				}
-
 				param = make_shared<LinkedList>();
 
 				break;
@@ -253,18 +252,18 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 	if (paramList.size() < _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPositie(), ErrorType::error));
+											  current->getPosition(), ErrorType::error));
 	}
 	else if (paramList.size() > _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPositie(), ErrorType::error));
+											  current->getPosition(), ErrorType::error));
 	}
 
 	for (shared_ptr<LinkedList> p : paramList) 
 	{
 		shared_ptr<CompileEquals> condition = make_shared<CompileEquals>();
-		condition->compile(p, shared_ptr<Token>(p->first), shared_ptr<Token>(p->last), _parameters, _parameters->getLast()); // Todo fix tokenizer, will throw error soon
+		condition->compile(p, p->getFirst(), p->getLast(), _parameters, _parameters->getLast());
 	}
 
 	if (_returnToken) 
@@ -285,14 +284,14 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 	}
 	shared_ptr<LinkedList> body = _bodyTokens;
 	changeVariables(body);
-	shared_ptr<Token> currentBody = shared_ptr<Token>(body->first); // Todo fix tokenizer, will throw error soon
+	shared_ptr<Token> currentBody = body->getFirst();
 	_body->add(make_shared<DoNothingNode>());
 
 	while (currentBody != nullptr) 
 	{
-		if (currentBody->getEnum() == Token::FUNCTION_CLOSE) 
+		if (currentBody->getType() == IToken::FUNCTION_CLOSE)
 		{
-			currentBody = shared_ptr<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
+			currentBody = currentBody->getNext();
 
 			break;
 		}
@@ -300,11 +299,11 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 
 		if (compiledBodyPart != nullptr) 
 		{
-			compiledBodyPart->compile(_bodyTokens, currentBody, shared_ptr<Token>(body->last), _body, _body->getLast()); // Todo fix tokenizer, will throw error soon
+			compiledBodyPart->compile(_bodyTokens, currentBody, body->getLast(), _body, _body->getLast());
 		}
 		else
 		{
-			currentBody = shared_ptr<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
+			currentBody = currentBody->getNext();
 		}
 	}
 
@@ -324,12 +323,12 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 
 void CompileGetFunction::changeVariables(shared_ptr<LinkedList>& list)
 {
-	shared_ptr<Token> current = shared_ptr<Token>(list->first); // Todo fix tokenizer, will throw error soon
+	shared_ptr<Token> current = list->getFirst();
 
 	while (current != nullptr) 
 	{
 		changeVariable(current);
-		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+		current = current->getNext();
 	}
 }
 
@@ -337,7 +336,7 @@ void CompileGetFunction::changeVariable(shared_ptr<Token>& token)
 {
 	string sBuffer;
 
-	if (token->getEnum() == Token::IDENTIFIER)
+	if (token->getType() == IToken::IDENTIFIER)
 	{
 		string localVar;
 
@@ -359,38 +358,38 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<Linke
 	shared_ptr<Token> connectToken = make_shared<Token>();
 	shared_ptr<Token> nParam = param;
 	changeVariable(nParam);
-	connectToken->setEnum(Token::EQUALS);
+	connectToken->setType(IToken::EQUALS);
 	connectToken->setLevel(nParam->getLevel());
-	connectToken->setPositie(-1);
-	connectToken->setPositieInList(-1);
-	connectToken->setRegelnummer(-1);
+	connectToken->setPosition(-1);
+	connectToken->setPositionInList(-1);
+	connectToken->setLineNumber(-1);
 	connectToken->setText("=");
 	shared_ptr<LinkedList> templist = make_shared<LinkedList>();
-	templist->add(&*nParam); // Todo fix tokenizer, will throw error soon
-	templist->add(&*connectToken); // Todo fix tokenizer, will throw error soon
-	shared_ptr<Token> temp = shared_ptr<Token>(paramlist->first); // Todo fix tokenizer, will throw error soon
+	templist->add(nParam);
+	templist->add(connectToken);
+	shared_ptr<Token> temp = paramlist->getFirst();
 
 	while (temp != nullptr) 
 	{
-		templist->add(&*temp); // Todo fix tokenizer, will throw error soon
-		temp = shared_ptr<Token>(temp->next); // Todo fix tokenizer, will throw error soon
+		templist->add(temp);
+		temp = temp->getNext();
 	}
 	connectToken = make_shared<Token>();
-	connectToken->setEnum(Token::NEWLINE);
+	connectToken->setType(IToken::NEWLINE);
 	connectToken->setLevel(nParam->getLevel());
-	connectToken->setPositie(-1);
-	connectToken->setPositieInList(-1);
-	connectToken->setRegelnummer(-1);
+	connectToken->setPosition(-1);
+	connectToken->setPositionInList(-1);
+	connectToken->setLineNumber(-1);
 	connectToken->setText("\n");
-	templist->add(&*connectToken); // Todo fix tokenizer, will throw error soon
+	templist->add(connectToken);
 	
-	temp = shared_ptr<Token>(templist->first); // Todo fix tokenizer, will throw error soon
+	temp = templist->getFirst();
 	paramlist = make_shared<LinkedList>();
 
 	while (temp != nullptr) 
 	{
-		paramlist->add(&*temp); // Todo fix tokenizer, will throw error soon
-		temp = shared_ptr<Token>(temp->next); // Todo fix tokenizer, will throw error soon
+		paramlist->add(temp);
+		temp = temp->getNext();
 	}
 }
 

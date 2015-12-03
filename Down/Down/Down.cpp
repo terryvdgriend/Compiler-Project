@@ -15,7 +15,7 @@ void runVirtualMachine(shared_ptr<LinkedActionList>& compiledList);
 bool errors();
 bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList);
 
-int main(int argCounter, char * argv[])
+int main(int argCounter, char* argv[])
 {
 	string code = "";
 	bool printTokenList = false;
@@ -64,11 +64,11 @@ shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList)
 {
 	shared_ptr<LinkedList> tokenList = make_shared<LinkedList>();
 	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
-	tokenizer->createTokenList(*tokenList, code);
+	tokenizer->createTokenList(tokenList, code);
 
 	if (printTokenList)
 	{
-		tokenizer->printTokenList(*tokenList);
+		tokenizer->printTokenList(tokenList);
 	}
 
 	return tokenList;
@@ -89,8 +89,8 @@ shared_ptr<LinkedActionList> runCompiler(shared_ptr<LinkedList>& tokenList, bool
 
 void runVirtualMachine(shared_ptr<LinkedActionList>& compiledList)
 {
-	unique_ptr<VirtualMachine> virtualMachine = make_unique<VirtualMachine>();
-	virtualMachine->execute(*compiledList);
+	shared_ptr<VirtualMachine> virtualMachine = make_shared<VirtualMachine>();
+	virtualMachine->execute(compiledList);
 
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{

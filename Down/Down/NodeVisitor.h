@@ -13,7 +13,7 @@ class SwitchNode;
 class NodeVisitor
 {
 	public:
-		NodeVisitor(VirtualMachine& virtualMachine);
+		NodeVisitor(shared_ptr<VirtualMachine>& virtualMachine);
 
 		void visit(ConditionalJumpNode& node);
 		void visit(DirectFunctionCall& node);
@@ -25,6 +25,6 @@ class NodeVisitor
 		shared_ptr<ActionNode> getNextNode();
 
 	private:
-		unique_ptr<VirtualMachine> vm;
+		shared_ptr<VirtualMachine> vm;
 		shared_ptr<ActionNode> nextNode;
 };

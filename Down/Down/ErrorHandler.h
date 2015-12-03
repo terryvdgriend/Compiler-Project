@@ -14,7 +14,7 @@ class ErrorHandler
 		void addError(string errorName, ErrorLocation errorLocation);
 		void addError(shared_ptr<Error>& error);
 		void addError(string errorName, shared_ptr<Token>& token);
-		void addError(shared_ptr<Error>& error, Token::iToken expected, Token::iToken result);
+		void addError(shared_ptr<Error>& error, IToken expected, IToken result);
     
 	private:
 		static shared_ptr<ErrorHandler> handler;

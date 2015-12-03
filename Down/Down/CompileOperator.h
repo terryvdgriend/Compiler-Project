@@ -5,10 +5,10 @@
 class CompileOperator : public Compiler
 {
 	public:
-		typedef map<Token::iToken, string> TokenMap;
+		typedef map<IToken, string> TokenMap;
 		typedef list<shared_ptr<CompileNextLevel>> CompileNextLevelList;
 
-		CompileOperator(shared_ptr<Compiler> pNextLevel);
+		CompileOperator(shared_ptr<Compiler> nextCompile);
 
 		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
 					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);

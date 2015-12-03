@@ -124,6 +124,18 @@
     <Filter Include="Source Files\VM\Visitors">
       <UniqueIdentifier>{74feabd5-a62b-45ef-864d-010c0287103f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tokenizer\Token">
+      <UniqueIdentifier>{dc6ef6b2-8c87-4e62-950d-395d41bee88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer\Utils">
+      <UniqueIdentifier>{30126ca1-e454-44ff-94e0-cc9c6744d89f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tokenizer\Token">
+      <UniqueIdentifier>{65cad6d6-b545-4d54-b04c-7b44abd3ff8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tokenizer\Utils">
+      <UniqueIdentifier>{9c90861a-1538-4383-9580-2076484a6bee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -220,9 +232,6 @@
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="Tokenizer.cpp">
-      <Filter>Source Files\Tokenizer</Filter>
-    </ClCompile>
-    <ClCompile Include="Token.cpp">
       <Filter>Source Files\Tokenizer</Filter>
     </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
@@ -323,6 +332,18 @@
     </ClCompile>
     <ClCompile Include="CommandVisitor.cpp">
       <Filter>Source Files\VM\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>Source Files\Tokenizer\Token</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenExpectation.cpp">
+      <Filter>Source Files\Tokenizer\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenMap.cpp">
+      <Filter>Source Files\Tokenizer\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenRegex.cpp">
+      <Filter>Source Files\Tokenizer\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -434,19 +455,7 @@
     <ClInclude Include="SwitchNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="Token.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
-    <ClInclude Include="TokenExpectation.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
     <ClInclude Include="Tokenizer.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
-    <ClInclude Include="Tokenmap.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
-    <ClInclude Include="Tokenregex.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
     <ClInclude Include="VariableType.h">
@@ -556,6 +565,21 @@
     </ClInclude>
     <ClInclude Include="VisitorList.h">
       <Filter>Header Files\VM\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>Header Files\Tokenizer\Token</Filter>
+    </ClInclude>
+    <ClInclude Include="IToken.h">
+      <Filter>Header Files\Tokenizer\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenRegex.h">
+      <Filter>Header Files\Tokenizer\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenMap.h">
+      <Filter>Header Files\Tokenizer\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenExpectation.h">
+      <Filter>Header Files\Tokenizer\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

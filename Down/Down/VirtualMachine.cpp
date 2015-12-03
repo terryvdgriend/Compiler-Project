@@ -10,11 +10,11 @@ VirtualMachine::VirtualMachine()
 	errorsDetected		= false;
 }
 
-void VirtualMachine::execute(LinkedActionList& actionList)
+void VirtualMachine::execute(shared_ptr<LinkedActionList>& actionList)
 {
-	unique_ptr<NodeVisitor> visitor = make_unique<NodeVisitor>(*this);
+	shared_ptr<NodeVisitor> visitor = make_shared<NodeVisitor>(*this);
 	map<string, shared_ptr<BaseCommand>> map = commandDictionary->getMap();
-	shared_ptr<ActionNode> currentNode = actionList.getFirst();
+	shared_ptr<ActionNode> currentNode = actionList->getFirst();
 
     while (currentNode != nullptr && !errorsDetected)
 	{

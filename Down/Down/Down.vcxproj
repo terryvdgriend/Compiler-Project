@@ -138,6 +138,7 @@
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
     <ClInclude Include="IdentifierToReturnValueCommand.h" />
+    <ClInclude Include="IToken.h" />
     <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
@@ -161,8 +162,8 @@
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
-    <ClInclude Include="Tokenmap.h" />
-    <ClInclude Include="Tokenregex.h" />
+    <ClInclude Include="TokenMap.h" />
+    <ClInclude Include="TokenRegex.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
     <ClInclude Include="VirtualMachine.h" />
@@ -237,7 +238,10 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TimesCommand.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TokenExpectation.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="TokenMap.cpp" />
+    <ClCompile Include="TokenRegex.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>

@@ -7,19 +7,19 @@ Variable::Variable(string param)
 
 	if (&param == nullptr || param == "") 
 	{
-		type = VariableType::NULLTYPE;
+		type = VariableType::nulltype;
 	}
 	else if (is_number(value)) 
 	{
-		type = VariableType::NUMBER;
+		type = VariableType::number;
 	}
 	else if (is_bool(value)) 
 	{
-		type = VariableType::BOOL;
+		type = VariableType::boolean;
 	}
 	else 
 	{
-		type = VariableType::TEXT;
+		type = VariableType::text;
 	}	
 }
 

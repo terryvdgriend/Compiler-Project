@@ -5,15 +5,15 @@
 
 #define szGetFromReturnValue "getFromReturnValue"
 
-CompileOperator::CompileOperator(shared_ptr<Compiler> pNextLevel)
+CompileOperator::CompileOperator(shared_ptr<Compiler> nextCompile)
 {
-	this->pNextLevel = pNextLevel;
+	pNextLevel = nextCompile;
 }
 
 void CompileOperator::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	map<Token::iToken, string>::iterator iFind;
+	map<IToken, string>::iterator iFind;
 	shared_ptr<Token> current = begin;
 	vector<shared_ptr<ActionNode>> beforeList;
 	shared_ptr<CompileNextLevel> nextLevel = make_shared<CompileNextLevel>();
@@ -23,18 +23,18 @@ void CompileOperator::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Toke
 
 	while (current != nullptr && current != end)
 	{
-		if (current->getEnum() == Token::NEWLINE)
+		if (current->getType() == IToken::NEWLINE)
 		{
 			break;
 		}
-		iFind = tokenMap.find(current->getEnum());
+		iFind = tokenMap.find(current->getType());
 
 		if (iFind != tokenMap.end())
 		{
 			fillRunList(iFind->second, listActionNodes, actionBefore, beforeList);
 			fillNextLevelList(beforeList, current, nextLevel, nextLevelList);
 		}
-		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+		current = current->getNext();
 	}
 	insertLastNextLevel(end, actionBefore, nextLevel, nextLevelList);
 	compileNextLevel(tokenList, listActionNodes, nextLevelList);
@@ -54,7 +54,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 	saArguments[1] = getNextLocalVariableName(sBuffer);
 	saArguments[2] = getNextLocalVariableName(sBuffer);
 
-	for (int n = 0; n<maxN; n++)
+	for (int n = 0; n < maxN; n++)
 	{
 		pDirectFunction = make_shared<DirectFunctionCall>();
 		pDirectFunction->setArraySize(2);
@@ -84,7 +84,7 @@ void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeAr
 	nextLevelList.push_back(nextLevel);
 
 	nextLevel->setBefore(beforeArray.at(1));
-	nextLevel->setBegin(shared_ptr<Token>(current->next)); // Todo fix tokenizer, will throw error soon
+	nextLevel->setBegin(current->getNext());
 }
 
 void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, shared_ptr<CompileNextLevel>& nextLevel, 
@@ -95,7 +95,6 @@ void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<Act
 		nextLevel->setBefore(before);
 	}
 	nextLevel->setEnd(end);
-
 	nextLevelList.push_back(nextLevel);
 }
 

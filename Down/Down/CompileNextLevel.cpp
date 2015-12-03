@@ -3,37 +3,37 @@
 
 CompileNextLevel::CompileNextLevel()
 {
-	begin	= nullptr;
-	end		= nullptr;
-	before	= nullptr;
+	_begin	= nullptr;
+	_end	= nullptr;
+	_before	= nullptr;
 }
 
 shared_ptr<Token> CompileNextLevel::getBegin()
 {
-	return begin;
+	return _begin;
 }
 
-void CompileNextLevel::setBegin(shared_ptr<Token>& value)
+void CompileNextLevel::setBegin(shared_ptr<Token>& begin)
 {
-	begin = value;
+	_begin = begin;
 }
 
 shared_ptr<Token> CompileNextLevel::getEnd()
 {
-	return end;
+	return _end;
 }
 
-void CompileNextLevel::setEnd(shared_ptr<Token>& value)
+void CompileNextLevel::setEnd(shared_ptr<Token>& end)
 {
-	end = value;
+	_end = end;
 }
 
 shared_ptr<ActionNode> CompileNextLevel::getBefore()
 {
-	return before;
+	return _before;
 }
 
-void CompileNextLevel::setBefore(shared_ptr<ActionNode>& value)
+void CompileNextLevel::setBefore(shared_ptr<ActionNode>& before)
 {
-	before = value;
+	_before = before;
 }

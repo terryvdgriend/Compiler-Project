@@ -26,27 +26,27 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 	int level = begin->getLevel();
 
 	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, Token::FOR));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::FOR));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::AND_PARA));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::AND_PARA));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSED));
 
 
 	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
-		while (current->getEnum() == Token::NEWLINE)
+		while (current->getType() == IToken::NEWLINE)
 		{
-			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = current->getNext();
 		}
 
-		if (expectation->Level == level)
+		if (expectation->getLevel() == level)
 		{
 			if (current == nullptr)
 			{
@@ -56,40 +56,40 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 				break;
 			}
 
-			if (current->getEnum() == Token::CONDITION_OPEN)
+			if (current->getType() == IToken::CONDITION_OPEN)
 			{
-				conClose = shared_ptr<Token>(current->getPartner()); // Todo fix tokenizer, will throw error soon
+				conClose = current->getPartner();
 			}
 
-			if (current->getEnum() != expectation->TokenType)
+			if (current->getType() != expectation->getTokenType())
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPositie(), ErrorType::error),
-													  expectation->TokenType, current->getEnum());
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
+													  expectation->getTokenType(), current->getType());
 				begin = end;
 
 				break;
 			}
 			else
 			{
-				current = shared_ptr<Token>(current->next);
+				current = current->getNext();
 			}
 		}
-		else if (expectation->Level >= level)
+		else if (expectation->getLevel() >= level)
 		{
-			if (current->getEnum() == expectation->TokenType && current->getEnum() == Token::AND_PARA) 
+			if (current->getType() == expectation->getTokenType() && current->getType() == IToken::AND_PARA)
 			{
-				current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				current = current->getNext();
 
 				continue;
 			}
 
 			if (_declaration->getCount() == 0)
 			{
-				shared_ptr<Token> next = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> next = current->getPrevious();
 
-				while (next->getEnum() != Token::AND_PARA)
+				while (next->getType() != IToken::AND_PARA)
 				{
-					next = shared_ptr<Token>(next->next); // Todo fix tokenizer, will throw error soon
+					next = next->getNext();
 				}
 				// Compile the first part of the for-loop
 				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
@@ -100,16 +100,16 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 				}
 				else
 				{
-					current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+					current = current->getNext();
 				}
 			}
 			else if (_condition->getCount() == 0)
 			{
-				shared_ptr<Token> next = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> next = current->getNext();
 
-				while (next->getEnum() != Token::AND_PARA) 
+				while (next->getType() != IToken::AND_PARA)
 				{
-					next = shared_ptr<Token>(next->next); // Todo fix tokenizer, will throw error soon
+					next = next->getNext();
 				}
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				_condition->add(make_shared<DoNothingNode>());
@@ -126,18 +126,18 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 				}
 				else
 				{
-					current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+					current = current->getNext();
 				}
 			}
 			else
 			{
-				shared_ptr<Token> previous = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
+				shared_ptr<Token> previous = current->getPrevious();
 
-				while (previous->getEnum() != Token::BODY_OPEN) 
+				while (previous->getType() != IToken::BODY_OPEN)
 				{
-					previous = shared_ptr<Token>(previous->previous);
+					previous = previous->getPrevious();
 				}
-				previous = shared_ptr<Token>(previous->getPartner());
+				previous = previous->getPartner();
 
 				while (current->getLevel() > level)
 				{
@@ -149,7 +149,7 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 					}
 					else
 					{
-						current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+						current = current->getNext();
 					}
 				}
 			}

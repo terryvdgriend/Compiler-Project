@@ -4,9 +4,9 @@
 
 CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(make_shared<CompileSingleStatement>())
 {
-	tokenMap[Token::TIMES]	= "$*";
-	tokenMap[Token::DIVIDE]	= "$/";
-	tokenMap[Token::MODULO]	= "$%";
+	tokenMap[IToken::TIMES]		= "$*";
+	tokenMap[IToken::DIVIDE]	= "$/";
+	tokenMap[IToken::MODULO]	= "$%";
 }
 
 shared_ptr<Compiler> CompileTimesDivideModulo::create()

@@ -12,7 +12,7 @@ void SmallerThanCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 		return;
 	}
 
-	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER) 
+	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number) 
 	{
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());

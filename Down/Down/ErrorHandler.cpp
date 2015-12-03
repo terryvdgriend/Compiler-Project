@@ -56,14 +56,12 @@ void ErrorHandler::addError()
 	ErrorLocation errorLocation = ErrorLocation::tokenizer;
 	string errorMessage = "Not Defined Error";
 	shared_ptr<Error> error = make_shared<Error>(errorMessage, errorLocation);
-
 	errors.push_back(error);
 }
 
 void ErrorHandler::addError(string errorName, ErrorLocation errorLocation)
 {
 	shared_ptr<Error> error = make_shared<Error>(errorName, errorLocation);
-
     errors.push_back(error);
 }
 
@@ -72,19 +70,17 @@ void ErrorHandler::addError(shared_ptr<Error>& error)
     errors.push_back(error);
 }
 
-void ErrorHandler::addError(shared_ptr<Error>& error, Token::iToken expected, Token::iToken result)
+void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
 {
-	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
-	string exptation = tokenizer->getKeyByValueMappert(expected);
-	string actualResult = tokenizer->getKeyByValueMappert(result);
-	error->setName("Incorrect token! Expected: '" + exptation + "' Result: '" + actualResult + "'");
-
+	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLevel(), token->getPosition(), ErrorType::error);
 	errors.push_back(error);
 }
 
-void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
+void ErrorHandler::addError(shared_ptr<Error>& error, IToken expected, IToken result)
 {
-	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLevel(), token->getPositie(), ErrorType::error);
-
+	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
+	string exptation = tokenizer->getKeyByValueTokenMap(expected);
+	string actualResult = tokenizer->getKeyByValueTokenMap(result);
+	error->setName("Incorrect token! Expected: '" + exptation + "' Result: '" + actualResult + "'");
 	errors.push_back(error);
 }

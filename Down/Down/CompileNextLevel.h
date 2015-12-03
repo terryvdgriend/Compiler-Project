@@ -8,14 +8,14 @@ class CompileNextLevel
 		CompileNextLevel();
 		
 		shared_ptr<Token> getBegin();
-		void setBegin(shared_ptr<Token>& value);
+		void setBegin(shared_ptr<Token>& begin);
 		shared_ptr<Token> getEnd();
-		void setEnd(shared_ptr<Token>& value);
+		void setEnd(shared_ptr<Token>& end);
 		shared_ptr<ActionNode> getBefore();
-		void setBefore(shared_ptr<ActionNode>& value);
+		void setBefore(shared_ptr<ActionNode>& before);
 
 	private:
-		shared_ptr<Token> begin;
-		shared_ptr<Token> end;
-		shared_ptr<ActionNode> before;
+		shared_ptr<Token> _begin;
+		shared_ptr<Token> _end;
+		shared_ptr<ActionNode> _before;
 };

@@ -1,121 +1,54 @@
 #pragma once
-#include <string>
-#include <list>
-#include <stack>
-#include <map>
 #include "Text.h"
-
-using namespace std;
+#include "IToken.h"
 
 class Token
 {
+	public:
+		Token();
+		Token(const shared_ptr<Token>& other);
 
-public:
-	enum iToken {
-		NONE = 0,
-		NEWLINE,
-		PLUS,
-		MINUS,
-		TIMES,
-		DIVIDE,
-		LESS_THAN,
-		LARGER_THAN,
-		IDENTIFIER, // VARB **i**
-		NUMBER, // 1-2-3-4
-		TEXT, // "txt" 
-		FACT,
-		TYPE_NUMBER,
-		TYPE_TEXT,
-		TYPE_FACT,
-		CONDITION_OPEN,  // ( -> simuleren?
-		CONDITION_CLOSE, // ) -> simuleren?
-		FUNCTION_OPEN,  // ( -> simuleren?
-		FUNCTION_CLOSE, // ) -> simuleren?
-		BODY_OPEN, // ____
-		BODY_CLOSED,// ____
-		DO,
-		WHILE,
-		IF,
-		ELSE,
-		ELIF,
-		EQUALS, // IS
-		EQUALS_TO, // LIKE
-		AND_PARA, // , (comma)
-		CLASS,
-		BOOL,
-		MODULO,
-		PRIVATE,
-		FOR,
-		FOREACH,
-		PRINT, // TODO: mag weg nu?
-		PRINTUP, // TODO: mag weg nu?
-		PLUSPLUS,
-		MINUSMINUS,
-		SEPARATOR,
-		DECLARATION,
-		IN,
-		FUNCTION_CALL,
-		FUNCTION_DECLARE,
-		NAMESPACE,
-		COMMENT,
-		ASSIGNMENT,
-		RETURNVALUE,
-		START_PARAMETERS,
-		FUNCTION_DECLARE_OPEN,
-		FUNCTION_DECLARE_CLOSE,
-		FUNCTIONUSE,
-		COMINGPARAMETER,
-		ARRAY_OPEN,
-		ARRAY_CLOSE,
-		SWITCH_CASE,
-		SWITCH_DEFAULT,
-		SWITCH,
-		ANY // ALS LAATSTE ! (?)
-	};
+		void print(map<string, IToken>& map);
+		void addError();
 
-public:
-	Token();
-	Token(const Token& other);
-	~Token();
+		bool operator!=(const shared_ptr<Token>& other)const;
+		bool operator!=(shared_ptr<Token> other);
+		static bool compare(shared_ptr<Token> first, shared_ptr<Token> other);
 
-public:
-	virtual void    setText(std::string txt){ Text = txt; };
-	virtual void    setSub(iToken st) { subType = st; };
-	virtual void    setEnum(iToken itoken){ type = itoken; };
-	virtual void    setPartner(Token* partner){ Partner = partner; };
-	virtual void    setPositieInList(int txt){ PositieInList = txt; };
-	virtual void    setRegelnummer(int txt){ Regelnummer = txt; };
-	virtual void    setPositie(int txt){ Positie = txt; };
-	virtual void    setLevel(int txt){ Level = txt; };
-	virtual void    setScope(int txt) { Scope = txt; };
-	virtual bool	operator!=(const Token& other)const;
-	virtual bool	operator!=( Token* other);
-	static bool compare(Token* first, Token* other);
+		string getText();
+		void setText(string text);
+		IToken getSubType();
+		void setSubType(IToken sub);
+		IToken getType();
+		void setType(IToken type);
+		shared_ptr<Token> getPartner();
+		void setPartner(shared_ptr<Token> partner);
+		int	getLevel();
+		void setLevel(int level);
+		int	getLineNumber();
+		void setLineNumber(int lineNumber);
+		int	getPosition();
+		void setPosition(int position);
+		void setPositionInList(int positionInList);
+		int	getScope();
+		void setScope(int scope);
+		string getStringbyEnum(map<string, IToken>& map, IToken token);
+		shared_ptr<Token> getNext();
+		void setNext(shared_ptr<Token> next);
+		shared_ptr<Token> getPrevious();
+		void setPrevious(shared_ptr<Token> previous);
 
-public:
-	std::string     getText() { return Text; };
-	iToken		    getSub() { return subType; };
-	iToken          getEnum(){ return type; };
-	Token*			getPartner()   { return Partner; };
-	int				getLevel() { return Level; };
-	int				getLineNumber(){ return Regelnummer; };
-	int				getPositie(){ return Positie; };
-	int				getScope() { return Scope; };
-	std::string getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token);
-	void Print(std::map<string, Token::iToken>& map);
-	void addError();
-	Token*			next;
-	Token*			previous;
+	private:
+		string _text;
+		IToken _subType;
+		IToken _type;
+		shared_ptr<Token> _partner;
+		int _positionInList;
+		int _lineNumber;
+		int _position;
+		int _level;
+		int _scope;
 
-private:
-	std::string     Text;
-	iToken			subType;
-	iToken          type;
-	Token*			Partner;
-	int PositieInList;
-	int Regelnummer;
-	int Positie;
-	int Level;
-	int Scope;
+		shared_ptr<Token> _next;
+		shared_ptr<Token> _previous;
 };
-

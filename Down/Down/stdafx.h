@@ -21,8 +21,10 @@
 #include <locale>
 #include <map>
 #include <memory>
+#include <regex>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stack>
 #include <string>
 #include <sstream>
 #include <vector>
