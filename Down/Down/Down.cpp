@@ -6,12 +6,12 @@
 #include "Tokenizer.h"
 #include "VirtualMachine.h"
 
-//#define _CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC
 
 int runDown(string& code, bool& printTokenList, bool& printCompiledList);
 shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList);
-shared_ptr<LinkedActionList> runCompiler(LinkedList& tokenList, bool printCompiledList);
-void runVM(LinkedActionList& cRunList);
+shared_ptr<LinkedActionList> runCompiler(shared_ptr<LinkedList>&, bool printCompiledList);
+void runVirtualMachine(shared_ptr<LinkedActionList>& compiledList);
 bool errors();
 bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList);
 
@@ -42,7 +42,7 @@ int runDown(string& code, bool& printTokenList, bool& printCompiledList)
 	}
 
 	//==============COMPILER=========
-	shared_ptr<LinkedActionList> compiledList = runCompiler(*tokenList, printCompiledList);
+	shared_ptr<LinkedActionList> compiledList = runCompiler(tokenList, printCompiledList);
 
 	if (errors())
 	{
@@ -50,7 +50,7 @@ int runDown(string& code, bool& printTokenList, bool& printCompiledList)
 	}
 
 	//==============VM===============
-	runVM(*compiledList);
+	runVirtualMachine(compiledList);
 
 	if (errors())
 	{
@@ -74,7 +74,7 @@ shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList)
 	return tokenList;
 }
 
-shared_ptr<LinkedActionList> runCompiler(LinkedList& tokenList, bool printCompiledList)
+shared_ptr<LinkedActionList> runCompiler(shared_ptr<LinkedList>& tokenList, bool printCompiledList)
 {
 	unique_ptr<Compute> compute = make_unique<Compute>();
 	shared_ptr<LinkedActionList> compiledList = compute->computeCompile(tokenList);
@@ -87,10 +87,10 @@ shared_ptr<LinkedActionList> runCompiler(LinkedList& tokenList, bool printCompil
 	return compiledList;
 }
 
-void runVM(LinkedActionList& cRunList)
+void runVirtualMachine(shared_ptr<LinkedActionList>& compiledList)
 {
-	unique_ptr<VirtualMachine> vm = make_unique<VirtualMachine>();
-	vm->execute(cRunList);
+	unique_ptr<VirtualMachine> virtualMachine = make_unique<VirtualMachine>();
+	virtualMachine->execute(*compiledList);
 
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
@@ -123,7 +123,7 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 
 		return true;
 	}
-	string outz = "No valid args\n";
+	string output = "No valid args\n";
 	bool cont = true;
 
 	string value = argv[argCounter - 1]; // Last argument = textfile path
@@ -150,27 +150,27 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 
 		if (opt == "getTokens") 
 		{
-			outz = tokenizer->getKeywordsAsJson();
+			output = tokenizer->getKeywordsAsJson();
 			cont = false;
 		}
 
 		if (opt == "getSnippets") 
 		{
-			outz = fileStramer->readerFromResource("Snippets");
+			output = fileStramer->readerFromResource("Snippets");
 			cont = false;
 		}
 
 		if (opt == "getFunctions") 
 		{
-			outz = tokenizer->getFunctionsAsJson();
+			output = tokenizer->getFunctionsAsJson();
 			cont = false;
 		}
 
 		if (opt == "getAll")
 		{
-			outz = tokenizer->getFunctionsAsJson();
-			outz += tokenizer->getKeywordsAsJson();
-			outz += fileStramer->readerFromResource("Snippets");
+			output = tokenizer->getFunctionsAsJson();
+			output += tokenizer->getKeywordsAsJson();
+			output += fileStramer->readerFromResource("Snippets");
 
 			return false;
 		}
@@ -179,7 +179,7 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 
 	if (!cont)
 	{
-		cout << outz;
+		cout << output;
 	}
 
 	return cont;

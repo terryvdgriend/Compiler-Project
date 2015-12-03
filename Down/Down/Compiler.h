@@ -7,7 +7,8 @@ class Compiler
 	public:
 		Compiler();
 
-		virtual void compile(LinkedList& tokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& before) = 0;
+		virtual void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+							 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore) = 0;
 		virtual shared_ptr<Compiler> create() = 0;
 
 		string getNextLocalVariableName(string& buffer);

@@ -4,8 +4,8 @@
 
 CompileComparison::CompileComparison() : CompileOperator(make_shared<CompileCondition>())
 {
-	// (*tokenMap)[Token::AND]	= "$&&";
-	// (*tokenMap)[Token::OR]	= "$||";
+	// tokenMap[Token::AND]	= "$&&";
+	// tokenMap[Token::OR]	= "$||";
 }
 
 shared_ptr<Compiler> CompileComparison::create()

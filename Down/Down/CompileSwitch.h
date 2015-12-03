@@ -7,7 +7,8 @@ class CompileSwitch : public Compiler
 	public:
 		CompileSwitch();
 
-		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 		shared_ptr<Compiler> create();
 
 	private:
@@ -15,9 +16,9 @@ class CompileSwitch : public Compiler
 		shared_ptr<LinkedActionList> _condition;
 		shared_ptr<LinkedActionList> _bodyDefault;
 		shared_ptr<SwitchNode> _switchNode;
-		shared_ptr<map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>> _conditionBodyMap;
+		map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>> _conditionBodyMap;
 
-		void compileCase(LinkedList& cTokenList, Token& begin, Token& end);
-		void compileDefault(LinkedList& cTokenList, Token& begin, Token& end);
+		void compileCase(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void compileDefault(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
 		void connectLists();
 };

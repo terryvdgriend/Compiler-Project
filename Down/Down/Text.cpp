@@ -1,22 +1,23 @@
 #include "stdafx.h"
 #include "Text.h"
 
-
-namespace Text{
-	int ReadLine()
+namespace Text
+{
+	int readLine()
 	{
 		int inputz;
-		std::cin >> inputz;
+		cin >> inputz;
+
 		return inputz;
 	}
 
-	void PrintLine(std::string text)
+	void printLine(string text)
 	{
-		std::cout << text << "\n";
+		cout << text << endl;
 	}
 
-	void Print(std::string text)
+	void print(string text)
 	{
-		std::cout << text;
+		cout << text;
 	}
 };

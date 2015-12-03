@@ -4,8 +4,8 @@
 
 CompileFunction::CompileFunction() : CompileOperator(make_shared<CompileCondition>())
 {
-	(*tokenMap)[Token::PRINT]	= "$PRINTDOWN";
-	(*tokenMap)[Token::PRINTUP] = "$PRINTUP";
+	tokenMap[Token::PRINT]	= "$PRINTDOWN";
+	tokenMap[Token::PRINTUP] = "$PRINTUP";
 }
 
 shared_ptr<Compiler> CompileFunction::create()

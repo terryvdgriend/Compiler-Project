@@ -41,7 +41,7 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 				}
 				else 
 				{
-					ErrorHandler::getInstance()->addError(Error{ "identifier not found", ".md", -1, -1, Error::error });
+					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::error));
 					vm->triggerRunFailure();
 
 					return;
@@ -90,7 +90,7 @@ void NodeVisitor::visit(JumpGoToNode& node)
 
 void NodeVisitor::visit(SwitchNode& node)
 {
-	if (node.getJumpMap()->size() > 0)
+	if (node.getJumpMap().size() > 0)
 	{
 		vm->execute(*node.getSwitchConditionList());
 		string value;
@@ -106,7 +106,7 @@ void NodeVisitor::visit(SwitchNode& node)
 			else 
 			{
 				vm->triggerRunFailure();
-				ErrorHandler::getInstance()->addError(Error{ "identifier not found", ".md", -1, -1, Error::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::error));
 
 				return;
 			}
@@ -116,7 +116,7 @@ void NodeVisitor::visit(SwitchNode& node)
 			value = vm->getReturnValue();
 		}
 
-		for (auto p = node.getJumpMap()->begin(); p != node.getJumpMap()->end(); ++p)
+		for (map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>::iterator p = node.getJumpMap().begin(); p != node.getJumpMap().end(); ++p)
 		{
 			vm->execute(*p->first);
 			string result;
@@ -132,7 +132,7 @@ void NodeVisitor::visit(SwitchNode& node)
 				else
 				{
 					vm->triggerRunFailure();
-					ErrorHandler::getInstance()->addError(Error{ "identifier not found", ".md", -1, -1, Error::error });
+					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::error));
 
 					return;
 				}

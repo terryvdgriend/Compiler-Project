@@ -9,7 +9,7 @@ class Function
 
 		string getName();
 		string getParams();
-		shared_ptr<vector<shared_ptr<Token>>> getParamTokens();
+		vector<shared_ptr<Token>>& getParamTokens();
 		shared_ptr<LinkedList> getBody();
 		shared_ptr<Token> getReturn();
 		bool isUserDefined();
@@ -17,7 +17,7 @@ class Function
 	private:
 		string _name;
 		string _params;
-		shared_ptr<vector<shared_ptr<Token>>> _paramTokens;
+		vector<shared_ptr<Token>> _paramTokens;
 		shared_ptr<LinkedList> _body;
 		shared_ptr<Token> _returnToken;
 		bool _userDefined;

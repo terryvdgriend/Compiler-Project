@@ -539,6 +539,12 @@
     <ClInclude Include="Function.h">
       <Filter>Header Files\Utils\FunctionHandling</Filter>
     </ClInclude>
+    <ClInclude Include="ErrorLocation.h">
+      <Filter>Header Files\Utils\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorType.h">
+      <Filter>Header Files\Utils\ErrorHandling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="calc.txt">

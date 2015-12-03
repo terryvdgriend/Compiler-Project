@@ -3,23 +3,6 @@
 #include "CommandDictionary.h"
 #include "CommandList.h"
 
- map<string, shared_ptr<BaseCommand>>  CommandDictionary::CustFunc()
-{
-	map<string, shared_ptr<BaseCommand>> asd;
-	asd["printdown"] = std::make_shared<ShowFunctionCommand>();
-	asd["printup"] = std::make_shared<ShowUpFunctionCommand>();
-	asd["random"] = std::make_shared<RandomFunctionCommand>();
-
-	// LEES: 
-	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
-	// en geef dan aan welke classe hiervoor gebruikt moet worden (die overigens wel een baseCommand override)
-	
-	//asd["DOEIETS"] = std::make_shared<ShowFunctionCommand>();
-	
-	//
-	return asd;
-};
-
 CommandDictionary::CommandDictionary()
 {
 	commandDictionary["$="]							= make_shared<EqualsCommand>();
@@ -42,13 +25,10 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();
 	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
 	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
-
-	//commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
-	//commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
 	
-	for (std::pair<string, shared_ptr<BaseCommand>> cf : CustFunc())
+	for (pair<string, shared_ptr<BaseCommand>> cf : getCustomFunctions())
 	{
-		commandDictionary[std::string(cf.first)] = cf.second;
+		commandDictionary[cf.first] = cf.second;
 	}
 }
 
@@ -56,3 +36,17 @@ map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()
 {
 	return commandDictionary;
 }
+
+map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
+{
+	map<string, shared_ptr<BaseCommand>> customFunctionDictionary;
+	customFunctionDictionary["printdown"]			= make_shared<ShowFunctionCommand>();
+	customFunctionDictionary["printup"]				= make_shared<ShowUpFunctionCommand>();
+	customFunctionDictionary["random"]				= make_shared<RandomFunctionCommand>();
+
+	// LEES: 
+	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
+	// en geef dan aan welke classe hiervoor gebruikt moet worden (die overigens wel een baseCommand override)
+
+	return customFunctionDictionary;
+};

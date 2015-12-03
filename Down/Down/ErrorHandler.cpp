@@ -1,82 +1,90 @@
 #include "stdafx.h"
+#include "Tokenizer.h"
 
+// Singleton prep : required!
+shared_ptr<ErrorHandler> ErrorHandler::handler = nullptr;
 
-ErrorHandler* ErrorHandler::handler = NULL;
-std::list<Error> ErrorHandler::errors = std::list<Error>();
-
-
-ErrorHandler* ErrorHandler::getInstance()
+ErrorHandler::ErrorHandler()
 {
-    return handler;
+	//
+}
+
+shared_ptr<ErrorHandler> ErrorHandler::getInstance()
+{
+	if (handler == nullptr)
+	{
+		handler = shared_ptr<ErrorHandler>(new ErrorHandler());
+	}
+
+	return handler;
+}
+
+list<shared_ptr<Error>>& ErrorHandler::getErrors()
+{
+	return errors;
+}
+
+void ErrorHandler::printErrors()
+{
+	for (list<shared_ptr<Error>>::iterator it = errors.begin(); it != errors.end(); ++it)
+	{
+		(*it)->print();
+	}
+}
+
+string ErrorHandler::asJson()
+{
+	if (errors.size() == 0)
+	{
+		return "No errors found";
+	}
+	string JSON = "[";
+
+	for (list<shared_ptr<Error>>::iterator it = errors.begin(); it != errors.end(); ++it)
+	{
+		JSON += (*it)->asJsonObject();
+		JSON += ",";
+	}
+	JSON = JSON.substr(0, JSON.size() - 1);
+	JSON += "]";
+
+	return JSON;
 }
 
 void ErrorHandler::addError()
 {
-	Error::location t = Error::tokenizer;
-	std::string s = "Not Defined Error";
-	Error erre = Error{s,t};
-	errors.push_back(erre);
+	ErrorLocation errorLocation = ErrorLocation::tokenizer;
+	string errorMessage = "Not Defined Error";
+	shared_ptr<Error> error = make_shared<Error>(errorMessage, errorLocation);
+
+	errors.push_back(error);
 }
 
-void ErrorHandler::addError(Error::location t, std::string s)
+void ErrorHandler::addError(string errorName, ErrorLocation errorLocation)
 {
-    Error err = Error{ s, t };
-    errors.push_back(err);
+	shared_ptr<Error> error = make_shared<Error>(errorName, errorLocation);
+
+    errors.push_back(error);
 }
 
-void ErrorHandler::addError(Error e)
+void ErrorHandler::addError(shared_ptr<Error>& error)
 {
-    errors.push_back(e);
+    errors.push_back(error);
 }
 
-void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken result )
+void ErrorHandler::addError(shared_ptr<Error>& error, Token::iToken expected, Token::iToken result)
 {
-	Tokenizer tokert{};
-	std::string expt =  tokert.getKeyByValueMappert(expected);
-	std::string res = tokert.getKeyByValueMappert(result);
-	e.setName("Incorrect token! Expected: '" + expt + "' Result: '" + res + "'");
-	errors.push_back(e);
+	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
+	string exptation = tokenizer->getKeyByValueMappert(expected);
+	string actualResult = tokenizer->getKeyByValueMappert(result);
+	error->setName("Incorrect token! Expected: '" + exptation + "' Result: '" + actualResult + "'");
+
+	errors.push_back(error);
 }
 
-void ErrorHandler::addError(std::string s, Token * t)
+void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
 {
-	//Tokenizer tokert{};
-	//std::string tokenstr = tokert.getKeyByValueMappert(t->getEnum());
-	errors.push_back(Error{ s, ".MD", t->getLevel(), t->getPositie(), Error::error });
-}
+	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLevel(), token->getPositie(), ErrorType::error);
 
-
-std::list<Error> ErrorHandler::getErrors()
-{
-    return errors;
-};
-
-std::string ErrorHandler::asJson()
-{
-    if (errors.size() == 0)
-        return "No errors found";
-    
-    std::string JSON = "[";
-    for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
-    {
-        JSON += (*it).asJsonObject();
-        JSON += ",";
-    }
-    
-    JSON = JSON.substr(0, JSON.size()-1);
-    
-    JSON += "]";
-    return JSON;
-};
-
-void ErrorHandler::printErrors()
-{
-    for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
-    {
-        (*it).print();
-    }
-}
-
-ErrorHandler::~ErrorHandler()
-{
+	errors.push_back(error);
 }

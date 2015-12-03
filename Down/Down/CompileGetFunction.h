@@ -6,15 +6,16 @@ class CompileGetFunction : public Compiler
 	public:
 		CompileGetFunction();
 
-		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 		shared_ptr<Compiler> create();
 
 	private:
 		string _params;
 		string _name;
 		bool userDefined;
-		shared_ptr<vector<shared_ptr<Token>>> _paramTokens;
-		unique_ptr<map<string, string>> variableMap;
+		vector<shared_ptr<Token>> _paramTokens;
+		map<string, string> variableMap;
 		shared_ptr<Token> _returnToken;
 		shared_ptr<LinkedList> _bodyTokens;
 		shared_ptr<LinkedActionList> _compiledStatement;
@@ -23,11 +24,11 @@ class CompileGetFunction : public Compiler
 		shared_ptr<LinkedActionList> _functionParams;
 		shared_ptr<LinkedActionList> _functionCall;
 
-		void compileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
-		void compileUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
-		void changeVariables(LinkedList& list);
-		void changeVariable(Token& token);
-		void connectParams(shared_ptr<Token> param, LinkedList& paramlist);
+		void compileNotUserDefined(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void compileUserDefined(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void changeVariables(shared_ptr<LinkedList>& list);
+		void changeVariable(shared_ptr<Token>& token);
+		void connectParams(shared_ptr<Token> param, shared_ptr<LinkedList>& paramlist);
 
 		void connectLists();
 };

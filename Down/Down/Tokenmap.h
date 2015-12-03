@@ -54,7 +54,7 @@ struct TokenMap{
 		mappert[std::string("_text_")] = Token::TYPE_TEXT;
 		//
 
-		for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+		for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
 		{
 			mappert[std::string(cf.first)] = Token::FUNCTION_CALL;
 		}
@@ -63,7 +63,7 @@ struct TokenMap{
 	
 	
 
-	
+
 	static const map<string, Token::iToken> tm;
 
 };

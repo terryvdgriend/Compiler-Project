@@ -123,6 +123,8 @@
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
     <ClInclude Include="ConstantToReturnValueCommand.h" />
+    <ClInclude Include="ErrorLocation.h" />
+    <ClInclude Include="ErrorType.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="FunctionHandler.h" />
     <ClInclude Include="DirectFunctionCall.h" />

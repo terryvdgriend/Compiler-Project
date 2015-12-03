@@ -14,19 +14,20 @@ CompileSwitch::CompileSwitch()
 	_switchNode			= make_shared<SwitchNode>();
 }
 
-void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileSwitch::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+							shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
-	shared_ptr<Token> current = make_shared<Token>(begin);
-	int level = begin.getLevel();
+	shared_ptr<Token> current = begin;
+	int level = begin->getLevel();
 
-	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(level, Token::SWITCH));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
+	list<shared_ptr<TokenExpectation>> expected;
+	expected.push_back(make_shared<TokenExpectation>(level, Token::SWITCH));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
 
-	for (shared_ptr<TokenExpectation> expectation : *expected)
+	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
 		while (current->getEnum() == Token::NEWLINE) 
 		{
@@ -44,7 +45,7 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 		{
 			if (current == nullptr) 
 			{
-				ErrorHandler::getInstance()->addError(Error{ "if statement not completed", ".md", -1, -1, Error::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::error));
 				begin = end;
 
 				break;
@@ -52,7 +53,8 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 
 			if (current->getEnum() != expectation->TokenType) 
 			{
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->TokenType, current->getEnum());
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPositie(), ErrorType::error), 
+													  expectation->TokenType, current->getEnum());
 				begin = end;
 
 				break;
@@ -70,11 +72,12 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 				{
 					shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 					_condition->add(make_shared<DoNothingNode>());
-					condition->compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
+					condition->compile(tokenList, current, shared_ptr<Token>(current->previous->getPartner()), _condition, _condition->getLast());
 				}
 				else 
 				{
-					ErrorHandler::getInstance()->addError(Error{ "an expression", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->TokenType, current->getEnum());
+					ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPositie(), ErrorType::error), 
+														  expectation->TokenType, current->getEnum());
 					begin = end;
 
 					break;
@@ -82,10 +85,10 @@ void CompileSwitch::compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 			}
 		}
 	}
-	compileCase(cTokenList, *current, end);
+	compileCase(tokenList, current, end);
 	connectLists();
-	listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), _compiledStatement);
-	begin = *current;
+	listActionNodes->insertBefore(actionBefore, _compiledStatement);
+	begin = current;
 }
 
 shared_ptr<Compiler> CompileSwitch::create()
@@ -93,21 +96,21 @@ shared_ptr<Compiler> CompileSwitch::create()
 	return make_shared<CompileSwitch>();
 }
 
-void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end)
+void CompileSwitch::compileCase(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
-	shared_ptr<Token> current = make_shared<Token>(begin);
-	int level = begin.getLevel();
-	unique_ptr<list<shared_ptr<LinkedActionList>>> conditionList = make_unique<list<shared_ptr<LinkedActionList>>>();
+	shared_ptr<Token> current = begin;
+	int level = begin->getLevel();
+	list<shared_ptr<LinkedActionList>> conditionList;
 
-	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(level, Token::SWITCH_CASE));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
+	list<shared_ptr<TokenExpectation>> expected;
+	expected.push_back(make_shared<TokenExpectation>(level, Token::SWITCH_CASE));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
 	while (current->getEnum() == Token::NEWLINE) 
 	{
@@ -126,7 +129,7 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 		shared_ptr<LinkedActionList> caseCondition = make_shared<LinkedActionList>();
 		shared_ptr<LinkedActionList> caseBody = make_shared<LinkedActionList>();
 
-		for (shared_ptr<TokenExpectation> expectation : *expected)
+		for (shared_ptr<TokenExpectation> expectation : expected)
 		{
 			while (current->getEnum() == Token::NEWLINE) 
 			{
@@ -144,7 +147,7 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 			{
 				if (current == nullptr) 
 				{
-					ErrorHandler::getInstance()->addError(Error{ "switch statement not completed", ".md", -1, -1, Error::error });
+					ErrorHandler::getInstance()->addError(make_shared<Error>("switch statement not completed", ".md", -1, -1, ErrorType::error));
 					begin = end;
 
 					break;
@@ -154,13 +157,14 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 				{
 					if (current->getEnum() == Token::SWITCH_CASE && expectation->TokenType == Token::BODY_OPEN) 
 					{
-						conditionList->push_back(caseCondition);
+						conditionList.push_back(caseCondition);
 
 						break;
 					}
 					else 
 					{
-						ErrorHandler::getInstance()->addError(Error{ "an body", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->TokenType, current->getEnum());
+						ErrorHandler::getInstance()->addError(make_shared<Error>("an body", ".md", current->getLevel(), current->getPositie(), ErrorType::error),
+															  expectation->TokenType, current->getEnum());
 						begin = end;
 
 						break;
@@ -179,11 +183,12 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 					{
 						shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 						caseCondition->add(make_shared<DoNothingNode>());
-						condition->compile(cTokenList, *current, *current->previous->getPartner(), *caseCondition, *caseCondition->getLast());
+						condition->compile(tokenList, current, shared_ptr<Token>(current->previous->getPartner()), caseCondition, caseCondition->getLast()); // Todo fix tokenizer, will throw error soon
 					}
 					else 
 					{
-						ErrorHandler::getInstance()->addError(Error{ "an expression", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->TokenType, current->getEnum());
+						ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPositie(), ErrorType::error),
+															  expectation->TokenType, current->getEnum());
 						begin = end;
 
 						break;
@@ -201,11 +206,11 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 
 					while (current->getLevel() > level)
 					{
-						shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
+						shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
 
 						if (compiledBodyPart != nullptr) 
 						{
-							compiledBodyPart->compile(cTokenList, *current, *previous, *caseBody, *caseBody->getLast());
+							compiledBodyPart->compile(tokenList, current, previous, caseBody, caseBody->getLast());
 						}
 						else
 						{
@@ -218,15 +223,15 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 
 		if (caseBody->getCount() > 0)
 		{
-			if (conditionList->size() > 0)
+			if (conditionList.size() > 0)
 			{
-				for (auto p : *conditionList)
+				for (shared_ptr<LinkedActionList> p : conditionList)
 				{
-					(*_conditionBodyMap)[p] = caseBody;
+					_conditionBodyMap[p] = caseBody;
 				}
 			}
-			(*_conditionBodyMap)[caseCondition] = caseBody;
-			conditionList->clear();
+			_conditionBodyMap[caseCondition] = caseBody;
+			conditionList.clear();
 		}
 
 		while (current->getEnum() == Token::NEWLINE) 
@@ -244,28 +249,28 @@ void CompileSwitch::compileCase(LinkedList& cTokenList, Token& begin, Token& end
 
 	if (current->getEnum() == Token::SWITCH_DEFAULT) 
 	{
-		compileDefault(cTokenList, *current, end);
+		compileDefault(tokenList, current, end);
 	}
 	else 
 	{
 		current = shared_ptr<Token>(current->previous); // Todo fix tokenizer, will throw error soon
 	}
-	begin = *current;
+	begin = current;
 }
 
-void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& end)
+void CompileSwitch::compileDefault(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
-	shared_ptr<Token> current = make_shared<Token>(begin);
-	int level = begin.getLevel();
+	shared_ptr<Token> current = begin;
+	int level = begin->getLevel();
 
-	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(level, Token::SWITCH_DEFAULT));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
+	list<shared_ptr<TokenExpectation>> expected;
+	expected.push_back(make_shared<TokenExpectation>(level, Token::SWITCH_DEFAULT));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
 
-	for (shared_ptr<TokenExpectation> expectation : *expected)
+	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
 		while (current->getEnum() == Token::NEWLINE)
 		{
@@ -283,7 +288,7 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(Error{ "if statement not completed", ".md", -1, -1, Error::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::error));
 				begin = end;
 
 				break;
@@ -291,7 +296,8 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 
 			if (current->getEnum() != expectation->TokenType)
 			{
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->TokenType, current->getEnum());
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPositie(), ErrorType::error),
+													  expectation->TokenType, current->getEnum());
 				begin = end;
 
 				break;
@@ -313,11 +319,11 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 
 			while (current->getLevel() > level)
 			{
-				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
+				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
 
 				if (compiledBodyPart != nullptr)
 				{
-					compiledBodyPart->compile(cTokenList, *current, *previous, *_bodyDefault, *_bodyDefault->getLast());
+					compiledBodyPart->compile(tokenList, current, previous, _bodyDefault, _bodyDefault->getLast());
 				}
 				else
 				{
@@ -326,28 +332,28 @@ void CompileSwitch::compileDefault(LinkedList& cTokenList, Token& begin, Token& 
 			}
 		}
 	}
-	begin = *current;
+	begin = current;
 }
 
 void CompileSwitch::connectLists()
 {
 	_switchNode->setSwitchConditionList(_condition);
 
-	unique_ptr<list<shared_ptr<JumpGoToNode>>> jumpMap = make_unique<list<shared_ptr<JumpGoToNode>>>();
+	list<shared_ptr<JumpGoToNode>> jumpMap;
 	_compiledStatement->add(_switchNode);
 	_compiledStatement->add(make_shared<DoNothingNode>());
 
-	if (_conditionBodyMap->size() > 0) 
+	if (_conditionBodyMap.size() > 0) 
 	{
-		for (auto p = _conditionBodyMap->begin(); p != _conditionBodyMap->end(); ++p)
+		for (auto p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
 		{
-			if (_conditionBodyMap->size() > 0 || _bodyDefault->getCount() > 0)
+			if (_conditionBodyMap.size() > 0 || _bodyDefault->getCount() > 0)
 			{
 				shared_ptr<JumpGoToNode> jumpNode = make_shared<JumpGoToNode>();
 				p->second->add(jumpNode);
-				jumpMap->push_back(jumpNode);
+				jumpMap.push_back(jumpNode);
 			}
-			(*_switchNode->getJumpMap())[p->first] = p->second;
+			_switchNode->getJumpMap()[p->first] = p->second;
 		}
 
 		if (_bodyDefault->getCount() > 0) 
@@ -359,12 +365,12 @@ void CompileSwitch::connectLists()
 
 			shared_ptr<JumpGoToNode> jumpNode = make_shared<JumpGoToNode>();
 			_switchNode->getDefaultNodeList()->add(jumpNode);
-			jumpMap->push_back(jumpNode);
+			jumpMap.push_back(jumpNode);
 		}
 
-		if (jumpMap->size() > 0)
+		if (jumpMap.size() > 0)
 		{
-			for (auto p : *jumpMap)
+			for (shared_ptr<JumpGoToNode> p : jumpMap)
 			{
 				p->setJumpToNode(_compiledStatement->getLast());
 			}

@@ -7,12 +7,9 @@
 
 // For the Apple (OSX) users
 #ifdef _WIN32
-//#include <crtdbg.h>
+#include <crtdbg.h>
 #include <tchar.h>
 #endif
-
-// Own libraries
-#include "ErrorHandler.h"
 
 // Std libraries
 #include <fstream>
@@ -27,3 +24,6 @@
 #include <vector>
 
 using namespace std;
+
+// Own libraries
+#include "ErrorHandler.h"

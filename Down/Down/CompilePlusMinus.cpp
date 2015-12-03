@@ -4,8 +4,8 @@
 
 CompilePlusMinus::CompilePlusMinus() : CompileOperator(make_shared<CompileTimesDivideModulo>())
 {
-	(*tokenMap)[Token::PLUS]	= "$+";
-	(*tokenMap)[Token::MINUS]	= "$-";
+	tokenMap[Token::PLUS]	= "$+";
+	tokenMap[Token::MINUS]	= "$-";
 }
 
 shared_ptr<Compiler> CompilePlusMinus::create()

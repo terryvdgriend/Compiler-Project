@@ -48,7 +48,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		if (currentToken == Token::NONE)
 		//	currentToken = ((std::find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
 		//else if (currentToken == Token::NONE)
-			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
+			ErrorHandler::getInstance()->addError(make_shared<Error>("Token not found &#9785; ", "unknown.MD", rowNr, colNr, ErrorType::error));
 
 
 		if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
@@ -59,7 +59,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			{
 				if (mappert.count(lookahead) != 0)
 				{
-					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::error));
 				}
 				pToken->setSub(currentToken);
 				currentToken = lookaheadToken;
@@ -72,7 +72,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			}
 			else
 			{
-				ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("Expected an identifier", "unknown.MD", rowNr, colNr, ErrorType::error));
 			}
 		}
 		else if (currentToken == Token::NUMBER) {
@@ -92,12 +92,12 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		else if (currentToken == Token::FUNCTIONUSE)
 		{
 			if (mappert.count(part) != 0)
-				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::error));
 		}
 		else if (currentToken == Token::IDENTIFIER)
 		{
 			if (mappert.count(part) == 0)
-				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::error));
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{
@@ -172,7 +172,7 @@ void Tokenizer::checkRemainingErrors()
 
 void Tokenizer::printTokenList(LinkedList& cTokenList)
 {
-	Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
+	Text::printLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
 	Token* start = cTokenList.first;
 	while (start != nullptr){
 		start->Print(this->mappert);
@@ -331,8 +331,8 @@ std::string Tokenizer::getFunctionsAsJson()
 {
 	std::string JSON = "[";
 	int i = 0;
-	int size = CommandDictionary::CustFunc().size();
-	for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	int size = CommandDictionary::getCustomFunctions().size();
+	for (std::pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
 	{
 		JSON += "{\"function\":\"" + cf.first + "\"}";
 

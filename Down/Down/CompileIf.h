@@ -6,7 +6,8 @@ class CompileIf : public Compiler
 	public:
 		CompileIf();
 
-		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
+		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 		shared_ptr<Compiler> create();
 
 	private:
@@ -15,7 +16,7 @@ class CompileIf : public Compiler
 		shared_ptr<LinkedActionList> _body;
 		shared_ptr<LinkedActionList> _bodyElse;
 		shared_ptr<ActionNode> bodyNode;
-		shared_ptr<map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>> _conditionBodyMap;
+		map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>> _conditionBodyMap;
 
 		void connectLists();
 		void connectListsWithElse();

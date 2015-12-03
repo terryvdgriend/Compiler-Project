@@ -1,10 +1,8 @@
 #pragma once
-#include <iostream>
 
-namespace Text{
-	int ReadLine();
-	void PrintLine(std::string text);
-	//void PrintLine(){ PrintLine("\n"); };
-	void Print(std::string text);
+namespace Text
+{
+	int readLine();
+	void printLine(string text);
+	void print(string text);
 };
-

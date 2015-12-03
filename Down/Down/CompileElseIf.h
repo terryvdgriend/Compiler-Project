@@ -6,8 +6,11 @@ class CompileElseIf : public Compiler
 	public:
 		CompileElseIf();
 
-		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-		void compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore, map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& _conditionBodyMap);
+		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
+		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore, 
+					 map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& _conditionBodyMap);
 		shared_ptr<Compiler> create();
 
 	private:

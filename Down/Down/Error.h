@@ -1,29 +1,26 @@
 #pragma once
+#include "ErrorLocation.h"
+#include "ErrorType.h"
 
 class Error
 {
-public:
-	enum location { tokenizer, compiler, vm };
-	enum errorType { warning, error };
-private:
-	std::string name;
-	int line{ -1 };
-	int column{ -1 };
-	location t;
-	std::string errorTypeString;
-	std::string file;
-public:
-	Error(std::string _name, location _location);
-	Error(std::string _name, std::string _file, int _line, int _column, errorType _type);
-	void print();
-	std::string asJsonObject();
+	public:
+		Error(string name, ErrorLocation location);
+		Error(string name, string file, int line, int column, ErrorType type);
 
-	// GET;SET;
-	void setName(std::string n){ name = n; };
-	void setLineColumn(int l, int c){ line = l; column = c; };
-	void setType(location tt){ t = tt; };
-	void setFile(std::string f){ file = f; };
-	//
-	~Error();
+		void print();
+		string asJsonObject();
+
+		void setName(string name); 
+		void setLineColumn(int line, int column);
+		void setLocation(ErrorLocation location);
+		void setFile(string file);
+
+	private:
+		string _name;
+		int _line;
+		int _column;
+		ErrorLocation _location;
+		string _errorTypeString;
+		string _file;
 };
-

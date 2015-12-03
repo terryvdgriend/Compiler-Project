@@ -7,11 +7,10 @@ shared_ptr<FunctionHandler> FunctionHandler::handler = nullptr;
 
 FunctionHandler::FunctionHandler()
 {
-	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
 	{
 		addFunction(make_shared<Function>(cf.first, "a", nullptr, nullptr, nullptr));
 	}
-	functions = shared_ptr<list<shared_ptr<Function>>>();
 }
 
 shared_ptr<FunctionHandler> FunctionHandler::getInstance()
@@ -24,12 +23,12 @@ shared_ptr<FunctionHandler> FunctionHandler::getInstance()
 	return handler;
 }
 
-void FunctionHandler::addFunction(shared_ptr<Function>& funcion)
+void FunctionHandler::addFunction(shared_ptr<Function> funcion)
 {
-	functions->push_back(funcion);
+	functions.push_back(funcion);
 }
 
-shared_ptr<list<shared_ptr<Function>>> FunctionHandler::getFunctions()
+list<shared_ptr<Function>>& FunctionHandler::getFunctions()
 {
 	return functions;
 }

@@ -4,22 +4,22 @@
 
 CompileFactory::CompileFactory()
 {
-	mappert[Token::IF]						= make_shared<CompileIf>();
-	mappert[Token::WHILE]					= make_shared<CompileWhile>();
-	mappert[Token::FOR]						= make_shared<CompileFor>();
-	mappert[Token::DO]						= make_shared<CompileDoWhile>();
-	mappert[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
-	mappert[Token::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
-	mappert[Token::IDENTIFIER]				= make_shared<CompileEquals>();
-	mappert[Token::SWITCH]					= make_shared<CompileSwitch>();
-	mappert[Token::NEWLINE]					= nullptr;
+	tokenCompileDictionary[Token::IF]						= make_shared<CompileIf>();
+	tokenCompileDictionary[Token::WHILE]					= make_shared<CompileWhile>();
+	tokenCompileDictionary[Token::FOR]						= make_shared<CompileFor>();
+	tokenCompileDictionary[Token::DO]						= make_shared<CompileDoWhile>();
+	tokenCompileDictionary[Token::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
+	tokenCompileDictionary[Token::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
+	tokenCompileDictionary[Token::IDENTIFIER]				= make_shared<CompileEquals>();
+	tokenCompileDictionary[Token::SWITCH]					= make_shared<CompileSwitch>();
+	tokenCompileDictionary[Token::NEWLINE]					= nullptr;
 }
 
-shared_ptr<Compiler> CompileFactory::createCompileStatement(Token& token)
+shared_ptr<Compiler> CompileFactory::createCompileStatement(shared_ptr<Token>& token)
 {
-	map<Token::iToken, shared_ptr<Compiler>>::iterator it = mappert.find(token.getEnum());
+	map<Token::iToken, shared_ptr<Compiler>>::iterator it = tokenCompileDictionary.find(token->getEnum());
 
-	if (it != mappert.end())
+	if (it != tokenCompileDictionary.end())
 	{
 		if (it->second != nullptr)
 		{
@@ -28,7 +28,7 @@ shared_ptr<Compiler> CompileFactory::createCompileStatement(Token& token)
 
 		return nullptr;
 	}
-	ErrorHandler::getInstance()->addError("Incorrect syntax (CompileFactory): " + token.getText(), &token);
+	ErrorHandler::getInstance()->addError("Incorrect syntax (CompileFactory): " + token->getText(), token);
 
 	return nullptr;
 }

@@ -17,28 +17,29 @@ CompileFor::CompileFor()
 	_compiledStatement->add(make_shared<DoNothingNode>());
 }
 
-void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+						 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
-	shared_ptr<Token> current = make_shared<Token>(begin);
-	int level = begin.getLevel();
-
-	unique_ptr<list<shared_ptr<TokenExpectation>>> expected = make_unique<list<shared_ptr<TokenExpectation>>>();
-	expected->push_back(make_shared<TokenExpectation>(level, Token::FOR));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
-	expected->push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
-	expected->push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
-
+	shared_ptr<Token> current = begin;
 	shared_ptr<Token> conClose = nullptr;
+	int level = begin->getLevel();
 
-	for (shared_ptr<TokenExpectation> expectation : *expected)
+	list<shared_ptr<TokenExpectation>> expected;
+	expected.push_back(make_shared<TokenExpectation>(level, Token::FOR));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::AND_PARA));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::CONDITION_CLOSE));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_OPEN));
+	expected.push_back(make_shared<TokenExpectation>(level + 1, Token::ANY));
+	expected.push_back(make_shared<TokenExpectation>(level, Token::BODY_CLOSED));
+
+
+	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
 		while (current->getEnum() == Token::NEWLINE)
 		{
@@ -49,7 +50,7 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(Error{ "for statement not completed", ".md", -1, -1, Error::error });
+				ErrorHandler::getInstance()->addError(make_shared<Error>("for statement not completed", ".md", -1, -1, ErrorType::error));
 				begin = end;
 
 				break;
@@ -62,7 +63,8 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 
 			if (current->getEnum() != expectation->TokenType)
 			{
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation->TokenType, current->getEnum());
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPositie(), ErrorType::error),
+													  expectation->TokenType, current->getEnum());
 				begin = end;
 
 				break;
@@ -90,11 +92,11 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 					next = shared_ptr<Token>(next->next); // Todo fix tokenizer, will throw error soon
 				}
 				// Compile the first part of the for-loop
-				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
+				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
 
 				if (compiledBodyPart != nullptr)
 				{
-					compiledBodyPart->compile(cTokenList, *current, *next, *_declaration, *_declaration->getLast());
+					compiledBodyPart->compile(tokenList, current, next, _declaration, _declaration->getLast());
 				}
 				else
 				{
@@ -111,16 +113,16 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				_condition->add(make_shared<DoNothingNode>());
-				condition->compile(cTokenList, *current, *next, *_condition, *_condition->getLast());
+				condition->compile(tokenList, current, next, _condition, _condition->getLast());
 			}
 			else if (_increment->getCount() == 0)
 			{
 				// Compile the last part of the for-loop
-				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
+				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
 
 				if (compiledBodyPart != nullptr)
 				{
-					compiledBodyPart->compile(cTokenList, *current, *conClose, *_increment, *_increment->getLast());
+					compiledBodyPart->compile(tokenList, current, conClose, _increment, _increment->getLast());
 				}
 				else
 				{
@@ -139,11 +141,11 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 
 				while (current->getLevel() > level)
 				{
-					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(*current);
+					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
 
 					if (compiledBodyPart != nullptr) 
 					{
-						compiledBodyPart->compile(cTokenList, *current, *previous, *_body, *_body->getLast());
+						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
 					}
 					else
 					{
@@ -154,8 +156,8 @@ void CompileFor::compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 		}
 	}
 	connectLists();
-	listActionNodes.insertBefore(shared_ptr<ActionNode>(&actionBefore), _compiledStatement);
-	begin = *current;
+	listActionNodes->insertBefore(actionBefore, _compiledStatement);
+	begin = current;
 }
 
 shared_ptr<Compiler> CompileFor::create()
