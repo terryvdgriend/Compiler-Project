@@ -4,8 +4,10 @@
 #include <algorithm>
 #include "CommandVisitor.h"
 
-void ShowFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void ShowFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable2 = *vm.getVariable(parameters.at(1));
 	string val = "";
 
@@ -23,8 +25,10 @@ pair<string, string> ShowFunctionCommand::accept(CommandVisitor & cmdVisitor)
 }
 
 
-void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void ShowUpFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable2 = *vm.getVariable(parameters.at(1));
 	string val = "";
 
@@ -38,8 +42,10 @@ void ShowUpFunctionCommand::execute(VirtualMachine& vm, vector<string>& paramete
 pair<string, string> ShowUpFunctionCommand::accept(CommandVisitor & cmdVisitor){	return pair<string, string>();}
 
 
-void RandomFunctionCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void RandomFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable2 = *vm.getVariable(parameters.at(1));
 	string val = "";
 

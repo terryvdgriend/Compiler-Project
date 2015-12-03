@@ -21,7 +21,7 @@ void VirtualMachine::execute(LinkedActionList& actionList)
 		if (actionNode)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
-			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
+			commandDictionary[name]->execute(*this, *actionNode);
 			
 		}
 		currentNode->accept(*visitor);
@@ -49,17 +49,20 @@ shared_ptr<Variable> VirtualMachine::getVariable(string key)
 	return nullptr;
 }
 
-void VirtualMachine::setVariable(string key, string value)
+void VirtualMachine::setVariable(string key, string value,Token::iToken token)
 {
 	map<string, shared_ptr<Variable>>::iterator it = variableDictionary.find(key);
 
 	if (hasValueInVariableDictionary(it))
 	{
 		it->second = make_shared<Variable>(value);
+		it->second.get()->setTokenType(token);
 	}
 	else
 	{
-		variableDictionary.insert(make_pair(key, make_shared<Variable>(value)));
+		auto pair = make_pair(key, make_shared<Variable>(value));
+		pair.second.get()->setTokenType(token);
+		variableDictionary.insert(pair);
 	}
 }
 
@@ -108,6 +111,16 @@ string VirtualMachine::getReturnValue()
 void VirtualMachine::setReturnValue(string value)
 {
 	returnValue = value;
+}
+
+Token::iToken VirtualMachine::getReturnToken()
+{
+	return returnToken;
+}
+
+void VirtualMachine::setReturnToken(Token::iToken value)
+{
+	returnToken = value;
 }
 
 void VirtualMachine::triggerRunFailure()

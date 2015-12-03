@@ -111,7 +111,7 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction = new DirectFunctionCall(*current);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
@@ -216,7 +216,7 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction = new DirectFunctionCall(*new Token(*_returnToken));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
@@ -249,7 +249,7 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
 		ChangeVariable(*_returnToken);
-		DirectFunctionCall *directFunctionCall = new DirectFunctionCall();
+		DirectFunctionCall *directFunctionCall = new DirectFunctionCall(*new Token(*_returnToken));
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
 		directFunctionCall->setAt(1, _returnToken->getText().c_str());

@@ -4,6 +4,6 @@
 class GreaterThanCommand : public BaseCommand
 {
 	public:
-		void execute(VirtualMachine& vm, vector<string>& parameters);
+		void execute(VirtualMachine& vm, AbstractFunctionCall& node);
 		/*virtual*/ pair<string, string> accept(class CommandVisitor &cmdVisitor);
 };

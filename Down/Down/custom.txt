@@ -1,5 +1,3 @@
-_number_ **age**
-
 ---
 ### Derpy gets _number_ **age** and gives _number_ **result** 
 **age** is **age** plus 1
@@ -15,3 +13,5 @@ ___
 
 
 **age** is [Calcy 5]
+_number_ **b** is 5
+[ printdown **b** ]

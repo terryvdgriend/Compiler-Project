@@ -30,7 +30,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 		iFind = tokenMap.find(current->getEnum());
 		if (iFind != tokenMap.end())
 		{
-			fillRunList(iFind->second, listActionNodes, before, &beforeArray);
+			fillRunList(iFind->second, listActionNodes, before, &beforeArray, *current);
 			fillNextLevelList(&beforeArray, *current, nextLevel, nextLevelList);
 		}
 		current = current->next;
@@ -42,7 +42,7 @@ void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, L
 }
 
 void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedActionList& listActionNodes, ActionNode& iBefore,
-	std::vector<ActionNode*>* beforeList)
+	std::vector<ActionNode*>* beforeList, Token& token)
 {
 	std::string             saArguments[3];
 	std::string             sBuffer;
@@ -57,7 +57,7 @@ void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedAction
 
 	for (int n = 0; n<maxN; n++)
 	{
-		pDirectFunction = new DirectFunctionCall;
+		pDirectFunction = new DirectFunctionCall(*new Token(token));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
