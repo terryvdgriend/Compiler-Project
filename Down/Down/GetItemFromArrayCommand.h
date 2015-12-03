@@ -4,7 +4,9 @@
 class GetItemFromArrayCommand : public BaseCommand
 {
 public:
-	void execute(VirtualMachine& vm, vector<string>& parameters);
 	/*virtual*/ pair<string, string> accept(class CommandVisitor &cmdVisitor);
+
+	// Inherited via BaseCommand
+	virtual void execute(VirtualMachine & vm, AbstractFunctionCall & node) override;
 };
 

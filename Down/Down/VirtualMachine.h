@@ -15,11 +15,11 @@ class VirtualMachine
 
 		shared_ptr<Variable> getVariable(string parameter);
 		void setVariable(string key, string value, Token::iToken token);
-		vector<Variable> addArrayToDictionary(string key, int length);
-		vector<Variable> getVariableArray(string key);
-		void addItemToVariableArray(string key, Variable value);
-		void addItemToVariableArrayAt(string arrayKey, string key, Variable value);
-		Variable getItemFromVariableArray(string key, int index);
+		vector<shared_ptr<Variable>> addArrayToDictionary(string key, int length);
+		vector<shared_ptr<Variable>> getVariableArray(string key);
+		void addItemToVariableArray(string key, shared_ptr<Variable> value);
+		void addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value);
+		shared_ptr<Variable> getItemFromVariableArray(string key, int index);
 		vector<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
 		string getFunctionParameterValueByKey(string key);
@@ -32,8 +32,8 @@ class VirtualMachine
 
 		void triggerRunFailure();
 
-		bool hasValueInVariableDictionary(map<string, Variable>::iterator& it);
-		bool hasValueInVariableArrayDictionary(map<string, vector<Variable>>::iterator& it);
+		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);
+		bool hasValueInVariableArrayDictionary(map<string, vector<shared_ptr<Variable>>>::iterator& it);
 
 		bool hasValueInFunctionParameters(string parameter);
 		bool isAnIdentifier(string name);
@@ -47,9 +47,7 @@ class VirtualMachine
 		map<string, shared_ptr<Variable>> variableDictionary;
 		map<string, string> functionParameters;
 
-		map<string, vector<Variable>> variableArrayDictionary;
+		map<string, vector<shared_ptr<Variable>>> variableArrayDictionary;
 
 		vector<string> identifierList;
-
-		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);
 };

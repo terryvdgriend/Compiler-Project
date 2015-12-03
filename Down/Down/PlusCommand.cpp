@@ -20,7 +20,7 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		vm.setReturnValue(to_string(number1 + number2));
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else if (variable1.getType() == VariableType::BOOL && variable2.getType() == VariableType::BOOL) {
+	else if (variable1.getType() == VariableType::FACT && variable2.getType() == VariableType::FACT) {
 		bool bool1 = (variable1.getValue() == "true") ? true : false;
 		bool bool2 = (variable2.getValue() == "true") ? true : false;
 		bool outcome = bool1 + bool2;

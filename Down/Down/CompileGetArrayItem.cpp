@@ -67,7 +67,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 			if (current->getEnum() == Token::IDENTIFIER)
 			{
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_ID_TO_RT);
 				directFunctionCall->setAt(1, current->getText().c_str());
@@ -75,7 +75,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 				currArrayItemTempVar = getCurrentLocalVariableName();
 
-				directFunctionCall = new DirectFunctionCall;
+				directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -116,7 +116,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			
 			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -150,7 +150,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			/*string temp = currArrayItemTempVar;
 			currArrayItemTempVar = getNextLocalVariableName(sBuffer);*/
 
-			directFunctionCall = new DirectFunctionCall;
+			directFunctionCall = new DirectFunctionCall(*new Token(*current));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());

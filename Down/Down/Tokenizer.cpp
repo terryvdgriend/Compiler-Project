@@ -86,12 +86,18 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			}
 		}
 		// (cTokenList.last != nullptr && cTokenList.last->previous != nullptr && cToken.last->previous->getEnum() == Token::ARRAY_CLOSE) || next token is Token::ARRAY_OPEN)
-		if (((cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE) || getNextToken(m, s) == Token::ARRAY_OPEN) && currentToken == Token::IDENTIFIER)
+		if ((cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE) && currentToken == Token::IDENTIFIER)
 		{
-			if (getNextToken(m, s) == Token::ARRAY_OPEN) {
-				// haal uit mappert2;
-			}
-			else {
+			//if (getNextToken(m, s) == Token::ARRAY_OPEN) {
+			//	part.push_back(currentScope + '0');
+			//	if (mappert.count(part) == 0)
+			//		ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			//	auto it = varTokenMap.find(part);
+			//	if (it != varTokenMap.end())
+			//		pToken->setSub(it->second);
+			//}
+			//else {
+
 				int ln = cTokenList.last->getLineNumber();
 				Token* variable = cTokenList.last;
 
@@ -101,7 +107,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 					variable = variable->previous;
 				}
 
-				switch (variable->getSub())
+				switch (variable->getEnum())
 				{
 				case Token::TYPE_NUMBER: pToken->setSub(Token::TYPE_NUMBER_ARRAY);
 					break;
@@ -110,54 +116,23 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				case Token::TYPE_FACT: pToken->setSub(Token::TYPE_FACT_ARRAY);
 					break;
 				}
-			}
-			
+			//}
+				part.push_back(currentScope + '0');
+				if (mappert.count(part) != 0)
+				{
+					ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				}
+				mappert[part] = Token::IDENTIFIER;
+				varTokenMap[part] = pToken->getSub();
 		}
-		else if (currentToken == Token::ARRAY_CLOSE && tempToken != Token::NONE)
-		{
-			lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, false);
-		}
+		//else if (currentToken == Token::ARRAY_CLOSE && tempToken != Token::NONE)
+		//{
+		//	lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, false);
+		//}
 		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
-			tempToken = currentToken;
+			//tempToken = currentToken;
 			lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, true);
-			//string lookahead = lookAhead(m, s);
-			//Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
-			//if (lookaheadToken == Token::IDENTIFIER)
-			//{
-			//	if (mappert.count(lookahead) != 0)
-			//	{
-			//		ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			//	}
-			//	pToken->setSub(currentToken);
-			//	currentToken = lookaheadToken;
-			//	mappert[lookahead] = Token::IDENTIFIER;
-			//	//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
-			//	part = lookahead;
-			//	s = m.suffix().str();
-			//	regex_search(s, m, e);
-			//	
-			//}
-			//else if (lookaheadToken == Token::ARRAY_OPEN)
-			//{
-			//	switch (currentToken)
-			//	{
-			//		case Token::TYPE_NUMBER: tempToken = Token::TYPE_NUMBER_ARRAY;
-			//			break;
-			//		case Token::TYPE_TEXT: tempToken = Token::TYPE_TEXT_ARRAY;
-			//			break;
-			//		case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
-			//			break;
-			//	}
-			//	currentToken = lookaheadToken;
-			//	part = lookahead;
-			//	s = m.suffix().str();
-			//	regex_search(s, m, e);
-			//}
-			//else
-			//{
-			//	ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			//}
 		}
 		else if (currentToken == Token::NUMBER) {
 			pToken->setSub(Token::TYPE_NUMBER);
@@ -180,13 +155,12 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 		else if (currentToken == Token::IDENTIFIER)
 		{
+			part.push_back(currentScope + '0');
 			if (mappert.count(part) == 0)
 				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			if (tempToken != Token::NONE)
-			{
-				pToken->setSub(tempToken);
-				//tempToken = Token::NONE;
-			}
+			auto it = varTokenMap.find(part);
+			if (it != varTokenMap.end())
+				pToken->setSub(it->second);
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{
@@ -242,41 +216,41 @@ void Tokenizer::lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iTok
 	Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
 	if (lookaheadToken == Token::IDENTIFIER)
 	{
+		lookahead.push_back(currentScope + '0');
 		if (mappert.count(lookahead) != 0)
 		{
 			ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 		}
-		//currentToken = lookaheadToken;
+		pToken.setSub(currentToken);
+		currentToken = lookaheadToken;
+
+		
 		mappert[lookahead] = Token::IDENTIFIER;
-		//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
-		if (arrayOpen)
-		{
-			pToken.setSub(currentToken);
-			currentToken = lookaheadToken;
-			part = lookahead;
-			s = m.suffix().str();
-			regex_search(s, m, e);
-		}
+		part = lookahead;
+		s = m.suffix().str();
+		regex_search(s, m, e);
+		varTokenMap[part] = pToken.getSub();
+
 	}
-	else if (lookaheadToken == Token::ARRAY_OPEN)
-	{
-		switch (currentToken)
-		{
-			case Token::TYPE_NUMBER: tempToken = Token::TYPE_NUMBER_ARRAY;
-				break;
-			case Token::TYPE_TEXT: tempToken = Token::TYPE_TEXT_ARRAY;
-				break;
-			case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
-				break;
-		}
-		if (arrayOpen)
-		{
-			currentToken = lookaheadToken;
-			part = lookahead;
-			s = m.suffix().str();
-			regex_search(s, m, e);
-		}
-	}
+	//else if (lookaheadToken == Token::ARRAY_OPEN)
+	//{
+	//	switch (currentToken)
+	//	{
+	//		case Token::TYPE_NUMBER: tempToken = Token::TYPE_NUMBER_ARRAY;
+	//			break;
+	//		case Token::TYPE_TEXT: tempToken = Token::TYPE_TEXT_ARRAY;
+	//			break;
+	//		case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
+	//			break;
+	//	}
+	//	if (arrayOpen)
+	//	{
+	//		currentToken = lookaheadToken;
+	//		part = lookahead;
+	//		s = m.suffix().str();
+	//		regex_search(s, m, e);
+	//	}
+	//}
 	else
 	{
 		if (arrayOpen) ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });

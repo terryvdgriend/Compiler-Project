@@ -2,10 +2,15 @@
 #include "AddArrayToDictionaryCommand.h"
 #include "CommandVisitor.h"
 
-void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+pair<string, string> AddArrayToDictionaryCommand::accept(CommandVisitor& commandVisitor) {
+	return commandVisitor.visit(*this);
+}
+
+void AddArrayToDictionaryCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
 	for (string & item : vm.getFunctionParametersByKey(parameters[1])) {
-		vector<Variable> tempArray = vm.getVariableArray(item);
+		vector<shared_ptr<Variable>> tempArray = vm.getVariableArray(item);
 		if (item != parameters[1] && atoi(vm.getReturnValue().c_str()) < tempArray.size())
 		{
 			vm.setReturnValue(to_string(tempArray.size()));
@@ -20,11 +25,11 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, vector<string>& pa
 	{
 		for (string & sItem : vm.getFunctionParametersByKey(parameters.at(1)))
 		{
-			vector<Variable> itemList = vm.getVariableArray(sItem);
+			vector<shared_ptr<Variable>> itemList = vm.getVariableArray(sItem);
 			if (itemList.size() > 0)
 			{
 				vm.addArrayToDictionary(parameters.at(1), itemList.size());
-				for (Variable var : itemList)
+				for (shared_ptr<Variable> var : itemList)
 				{
 					vm.addItemToVariableArray(parameters.at(1), var);
 				}
@@ -35,8 +40,4 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, vector<string>& pa
 			}
 		}
 	}
-}
-
-pair<string, string> AddArrayToDictionaryCommand::accept(CommandVisitor& commandVisitor) {
-	return commandVisitor.visit(*this);
 }

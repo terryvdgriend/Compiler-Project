@@ -2,31 +2,25 @@
 #include "EqualsCommand.h"
 #include "CommandVisitor.h"
 
-void EqualsCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
-
-	//if (variable1.getValue() == "" && variable1.getType() == NULLTYPE)
-	//{
-	//	variable1 = vm.getFunctionParameterValueByKey(parameters.at(1));
-	//}
-
-	if (variable2.getValue() == "" && variable2.getType() == NULLTYPE)
-	{
-		variable2 = vm.getFunctionParameterValueByKey(parameters.at(2));
-
-		Variable temp = variable1;
+	if (variable1.getTokenType() == variable2.getTokenType()) {
 		variable1 = variable2;
-		variable2 = temp;
-	}
-	
-	variable1 = variable2;
 
-    for(std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
-        vm.setVariable(item, variable1.getValue());
-    }
+		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
+			vm.setVariable(item, variable1.getValue(), variable1.getTokenType());
+		}
+	}
+	else {
+		throwTypeError(variable1, variable2, vm);
+	}
+
 }
+
 
 std::pair<string, string> EqualsCommand::accept(CommandVisitor& commandVisitor) {
 	return commandVisitor.visit(*this);

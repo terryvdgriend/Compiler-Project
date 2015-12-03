@@ -83,7 +83,7 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 				CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();
 				compiledBodyPart->Compile(cTokenList, *current, *current->next, listActionNodes, *listActionNodes.getLast());
 
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -177,7 +177,7 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 
 				compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());

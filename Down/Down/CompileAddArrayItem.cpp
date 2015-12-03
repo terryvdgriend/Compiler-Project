@@ -88,7 +88,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 				if (fromArray)
 				{
-					DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+					DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 					directFunctionCall->setArraySize(2);
 					directFunctionCall->setAt(0, SET_CONST_TO_RT);
 					directFunctionCall->setAt(1, to_string(getFromArrayLength()).c_str());
@@ -96,7 +96,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 					tempPreviousLocalVariable = getPreviousLocalVariableName(sBuffer);
 
-					directFunctionCall = new DirectFunctionCall;
+					directFunctionCall = new DirectFunctionCall(*new Token(*current));
 					directFunctionCall->setArraySize(2);
 					directFunctionCall->setAt(0, SET_GET_FROM_RT);
 					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -109,7 +109,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 				if (!fromArray) { tempPreviousLocalVariable = getPreviousLocalVariableName(sBuffer); }
 
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -167,13 +167,13 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			}
 			else if (current->getEnum() == Token::IDENTIFIER)
 			{
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_ID_TO_RT);
 				directFunctionCall->setAt(1, current->getText().c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-				directFunctionCall = new DirectFunctionCall;
+				directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -208,7 +208,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
+			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());

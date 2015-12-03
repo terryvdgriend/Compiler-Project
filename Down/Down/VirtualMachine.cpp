@@ -118,23 +118,23 @@ string VirtualMachine::getFunctionParameterValueByKey(string key)
 	return parameter;
 }
 
-vector<Variable> VirtualMachine::addArrayToDictionary(string key, int length)
+vector<shared_ptr<Variable>> VirtualMachine::addArrayToDictionary(string key, int length)
 {
 	map<string, string>::iterator iter;
 	for (iter = functionParameters.begin(); iter != functionParameters.end(); ++iter)
 	{
 		if (iter->first == key)
 		{
-			vector<Variable> temp(length);
+			vector<shared_ptr<Variable>> temp(length);
 			variableArrayDictionary.emplace(iter->first, temp);
 			return temp;
 		}
 	}
 }
 
-vector<Variable> VirtualMachine::getVariableArray(string key)
+vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
 {
-	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);
+	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(key);
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
@@ -146,16 +146,16 @@ vector<Variable> VirtualMachine::getVariableArray(string key)
 	//}
 }
 
-void VirtualMachine::addItemToVariableArray(string key, Variable value)
+void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> value)
 {
-	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);
+	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(key);
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
 		for (int i = 0; i < it->second.size(); i++)
 		{
-			Variable curr = it->second.at(i);
-			if (curr.getValue() == "" && curr.getType() < 0)
+			shared_ptr<Variable> curr = it->second.at(i);
+			if (curr->getValue() == "" && curr->getType() < 0)
 			{
 				it->second[i] = value;
 				break;
@@ -168,9 +168,9 @@ void VirtualMachine::addItemToVariableArray(string key, Variable value)
 	//}
 }
 
-void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, Variable value)
+void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value)
 {
-	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(arrayKey);
+	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(arrayKey);
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
@@ -189,9 +189,9 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, Varia
 	//}
 }
 
-Variable VirtualMachine::getItemFromVariableArray(string key, int index)
+shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int index)
 {
-	map<string, vector<Variable>>::iterator it = variableArrayDictionary.find(key);
+	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(key);
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
@@ -238,7 +238,7 @@ bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variabl
 	return it != variableDictionary.end();
 }
 
-bool VirtualMachine::hasValueInVariableArrayDictionary(map<string, vector<Variable>>::iterator& it)
+bool VirtualMachine::hasValueInVariableArrayDictionary(map<string, vector<shared_ptr<Variable>>>::iterator& it)
 {
 	return it != variableArrayDictionary.end();
 }
