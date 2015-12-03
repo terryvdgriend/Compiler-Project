@@ -13,7 +13,6 @@ CompileFor::CompileFor()
 	_compiledStatement = new LinkedActionList();
 	_declaration = new LinkedActionList();
 	_increment = new LinkedActionList();
-	//_increment->add(new DoNothingNode());
 	_condition = new LinkedActionList();
 	_body = new LinkedActionList();
 	_compiledStatement->add(new DoNothingNode());
@@ -170,7 +169,7 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 		}
 	}
 	ConnectLists();
-	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement)
 	begin = *current;
 }
 

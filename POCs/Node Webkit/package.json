@@ -1,0 +1,19 @@
+{
+	"name": "Down IDE",
+	"version": 0.1,
+	"main": "./html/index.html",
+	"window": {
+		"title": "Down IDE",
+		"toolbar": false,
+		"show": true,
+		"icon": "./img/icon.png",
+		"min_width": 960,
+		"min_height": 600,
+		"width": 960,
+  		"height": 600,
+		"position": "center"
+	},
+	"dependencies": {
+		"marked": "^0.3.3"
+	}
+}
