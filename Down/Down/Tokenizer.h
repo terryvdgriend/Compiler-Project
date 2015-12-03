@@ -16,6 +16,7 @@ private:
 	std::map<string, Token::iToken> Regex;
 	int currentScope = 0;
 	int maxScope = 0;
+	std::map<string, Token::iToken> varTokenMap;
 	Stack stack;
 	Token::iToken getToken(std::string token);
 	bool tokenError = false;

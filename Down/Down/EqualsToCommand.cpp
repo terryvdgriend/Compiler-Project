@@ -2,8 +2,10 @@
 #include "EqualsToCommand.h"
 #include "CommandVisitor.h"
 
-void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void EqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
@@ -13,10 +15,12 @@ void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	if (variable1.getValue() == variable2.getValue())
 	{
 		vm.setReturnValue("true");
+		vm.setReturnToken(variable1.getTokenType());
 	}
 	else
 	{
 		vm.setReturnValue("false");
+		vm.setReturnToken(variable1.getTokenType());
 	}
 }
 

@@ -33,6 +33,16 @@ string Variable::getValue()
 	return value;
 }
 
+void Variable::setTokenType(Token::iToken tokentype)
+{
+	this->tokenType = tokentype;
+}
+
+Token::iToken Variable::getTokenType()
+{
+	return this->tokenType;
+}
+
 bool Variable::is_number(const string& s)
 {
 	string::const_iterator it = s.begin();

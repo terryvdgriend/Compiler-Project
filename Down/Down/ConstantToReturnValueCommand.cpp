@@ -3,9 +3,12 @@
 #include "ConstantToReturnValueCommand.h"
 #include "CommandVisitor.h"
 
-void ConstantToReturnValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+
+void ConstantToReturnValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
 	vm.setReturnValue(parameters.at(1));
+	vm.setReturnToken(node.getToken()->getSub());
 }
 
 std::pair<string, string> ConstantToReturnValueCommand::accept(CommandVisitor& commandVisitor) {

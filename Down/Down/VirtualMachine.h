@@ -14,12 +14,17 @@ class VirtualMachine
 		void addIdentifer(string name);
 
 		shared_ptr<Variable> getVariable(string parameter);
-		void setVariable(string name, string value);
+		void setVariable(string key, string value, Token::iToken token);
+		//void setVariable(string name, string value);
 		vector<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
 		void setFunctionParameter(string name, string value);
 		string getReturnValue();
 		void setReturnValue(string value);
+
+		Token::iToken getReturnToken();
+		void setReturnToken(Token::iToken value);
+
 		void triggerRunFailure();
 
 		bool hasValueInFunctionParameters(string parameter);
@@ -28,6 +33,7 @@ class VirtualMachine
 	private:
 		string returnValue;
 		bool runsVeryNaz;
+		Token::iToken returnToken;
 
 		map<string, shared_ptr<BaseCommand>> commandDictionary;
 		map<string, shared_ptr<Variable>> variableDictionary;

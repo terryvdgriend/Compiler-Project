@@ -19,7 +19,7 @@ public:
 private:
 	TokenMap tokenMap;
 
-	void fillRunList(const std::string&, LinkedActionList&, ActionNode&, std::vector<ActionNode*>* beforeArray);
+	void fillRunList(const std::string&, LinkedActionList&, ActionNode&, std::vector<ActionNode*>* beforeArray, Token& token);
 	void fillNextLevelList(std::vector<ActionNode*>* beforeArray, Token&, CompileNextLevel&, CompileNextLevelList&);
 	void insertLastNextLevel(Token&, ActionNode&, CompileNextLevel&, CompileNextLevelList&);
 	void compileNextLevel(LinkedList& cTokenList, LinkedActionList& cRunList, CompileNextLevelList& cNextLevelList);
