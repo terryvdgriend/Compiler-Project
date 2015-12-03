@@ -24,6 +24,7 @@ public:
     void ErrorHandler::printErrors();
     #else
     void addError(Error::location t, std::string s);
+    void addError();
     void addError(Error e);
     void addError(std::string s , Token * t);
     void addError(Error e, Token::iToken expected, Token::iToken result);

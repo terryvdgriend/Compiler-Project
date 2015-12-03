@@ -13,7 +13,6 @@ CompileFor::CompileFor()
 	_compiledStatement = new LinkedActionList();
 	_declaration = new LinkedActionList();
 	_increment = new LinkedActionList();
-	//_increment->add(new DoNothingNode());
 	_condition = new LinkedActionList();
 	_body = new LinkedActionList();
 	_compiledStatement->add(new DoNothingNode());
@@ -83,21 +82,31 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 					next = next->next;
 				}
 
-				// Compile the first part of the for-loop
-				Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-
-				if (compiledBodyPart != nullptr){
-					compiledBodyPart->Compile(cTokenList, *current, *next, *_declaration, *_declaration->getLast());
-				}
-				else
+				// This means the declaration is empty
+				if (next->previous->getEnum() == Token::CONDITION_OPEN)
 				{
-					current = current->next;
+					ErrorHandler::getInstance()->addError(Error{ "For statement has no declaration!", ".md", current->getLineNumber(), current->getPositie(), Error::error });
+					begin = end;
+					return;
 				}
-				delete compiledBodyPart;
+				else {
+					// Compile the first part of the for-loop
 
-				// If the list still is empty, fill with DoNothingNode
-				if (_declaration->Count() == 0)
-					_declaration->insertLast(new DoNothingNode());
+					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+
+					if (compiledBodyPart != nullptr) {
+						compiledBodyPart->Compile(cTokenList, *current, *next, *_declaration, *_declaration->getLast());
+
+						// If the list still is empty, fill with DoNothingNode 
+						if (_declaration->Count() == 0)
+							_declaration->insertLast(new DoNothingNode());
+					}
+					else
+					{
+						current = current->next;
+					}
+					delete compiledBodyPart;
+				}
 			}
 			else if (_condition->Count() == 0){
 				Token* next = current->next;
@@ -120,6 +129,11 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 			else if (_increment->Count() == 0){
 				// Compile the last part of the for-loop
 				// TODO: Compile increment
+				if (current->getEnum() == Token::CONDITION_CLOSE) {
+					ErrorHandler::getInstance()->addError(Error{ "For statement has no increment!", ".md", current->getLineNumber(), current->getPositie(), Error::error });
+					begin = end;
+					return;
+				}
 				Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
 
 				if (compiledBodyPart != nullptr){
@@ -131,9 +145,6 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 				}
 				delete compiledBodyPart;
 
-				// If the list still is empty, fill with DoNothingNode
-				if (_increment->Count() == 0)
-					_increment->insertLast(new DoNothingNode());
 			}
 			else{
 				Token* prev = current->previous;
@@ -141,6 +152,7 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 					prev = prev->previous;
 				}
 				prev = prev->getPartner();
+				_body->add(new DoNothingNode());
 				while (current->getLevel() > whileLevel) {
 					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
 
@@ -157,7 +169,7 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 		}
 	}
 	ConnectLists();
-	listActionNodes.add(_compiledStatement);
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement)
 	begin = *current;
 }
 
