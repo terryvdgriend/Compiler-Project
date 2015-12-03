@@ -3,6 +3,7 @@ function init()
     global.$ = $;
     global.window = window;
     global.gui = require('nw.gui');
+    global.debug = false;
 
     global.alert = function(text) {
         alert(text);
@@ -90,10 +91,10 @@ function init()
             }
         ];
 
-        if(localStorage.settings != null && typeof localStorage.settings.version !== 'undefined' && localStorage.settings.version == global.settings.version) {
+        if(localStorage.settings != null) {
             var parsedJSON = JSON.parse(localStorage.settings);
-            if(parsedJSON != null) {
-                global.settings = JSON.parse(localStorage.settings);
+            if(parsedJSON != null && typeof parsedJSON.version !== 'undefined' && parsedJSON.version == global.settings.version) {
+                global.settings = parsedJSON;
             } else {
                 global.saveSettings();
             }
@@ -104,4 +105,18 @@ function init()
         var menu = require("./../js/menu.js");      
         menu.initMenu();      
     });
+    
+    // Debug modus
+    var option = {
+        key : "Ctrl+0",
+        active : function() {
+            global.debug = !global.debug;
+            if(global.debug) {
+                global.gui.Window.get().showDevTools();
+            }
+        }
+    };
+
+    var shortcut = new global.gui.Shortcut(option);
+    global.gui.App.registerGlobalHotKey(shortcut);
 }

@@ -68,11 +68,11 @@ exports.initMenu = function() {
               position: 'center',
               focus: true,
               frame: true,
-              toolbar: false
+              toolbar: global.debug
             });
 
             win.on ('loaded', function(){
-              win.title = "Settings";
+                win.title = "Settings";
             });            
         }
     }));
