@@ -7,6 +7,7 @@
     <script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="../js/plugins/jquery-ui/jquery-ui.js" type="text/javascript"></script>
     <script type="text/javascript" src="../js/main.js"></script>
+	<script type="text/javascript" src="../js/plugins/colorpicker/jscolor.min.js"></script>
 
     <script type="text/javascript">
 		var compiler = require("./../js/compiler.js");
@@ -55,24 +56,29 @@
 				$('table.highlighting').html("");
 				for(var i in global.settings.customStyle) {
 	           		var object = global.settings.customStyle[i];
-	           		$('table.highlighting').append('<tr><td>' + object.description + '</td><td><input value="' + object.color + '" data-type="' + object.type + '" type="text" class="color"></td></tr>');
+	           		$('table.highlighting').append('<tr><td>' + object.description + '</td><td><input value="' + object.color + '" data-type="' + object.type + '" type="text" onchange="setColorHighlightingValue(this)" class="color jscolor {required:false, hash:true, padding:0, refine:false, shadow:false, borderWidth:0, backgroundColor:\'transparent\'}"></td></tr>');
 	        	}
 
 	        	$('body').on('keyup', 'input.color', function() {
-	        		var type = $(this).data('type');
-	        		var value = $(this).val();
-	        		for(var i in global.settings.customStyle) {
-	           			var object = global.settings.customStyle[i];
-	           			if(object.type == type) {
-	           				global.settings.customStyle[i].color = value;
-	           				break;
-	           			}
-	           		}
-	           		global.saveSettings();
-	           		global.setCustomStyle();         		
+	        		setColorHighlightingValue($(this).get(0));	
 	        	});
 			}			
         });
+
+		function setColorHighlightingValue(element) {
+			var element = $(element); 
+			var type = element.data('type');
+    		var value = element.val();
+    		for(var i in global.settings.customStyle) {
+       			var object = global.settings.customStyle[i];
+       			if(object.type == type) {
+       				global.settings.customStyle[i].color = value;
+       				break;
+       			}
+       		}
+       		global.saveSettings();
+       		global.setCustomStyle();   
+		}
 
         function resetCompilerFile() {
         	global.settings.compilerFile = null;
@@ -178,7 +184,7 @@
 				</tr>
 			</table>
 
-			<h2>Code highlighting</h2>
+			<h2>Code Highlighting</h2>
 		    <table class="settings highlighting">
 			</table>
 
