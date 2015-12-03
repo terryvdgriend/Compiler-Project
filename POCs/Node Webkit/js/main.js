@@ -39,18 +39,58 @@ function init()
 
     global.saveSettings = function() {
         localStorage.settings = JSON.stringify(global.settings);
+        console.log("Settings saved:");
+        console.log(global.settings);
     }
 
 	global.$(global.window.document).ready(function(){        
         global.setFile(null);
 
         global.settings = {};
+        global.settings.version = 1.0;
         global.settings.theme = "twilight";
         global.settings.printTokenList = false;
         global.settings.printCompilerList = false;
         global.settings.compilerFile = null;
+        global.settings.customStyle = [
+            {
+                type: "constant",
+                description: "Constants",
+                color: ""
+            },
+            {
+                type: "operator",
+                description: "Operators",
+                color: ""
+            },
+            {
+                type: "variable",
+                description: "Variables",
+                color: ""
+            },
+            {
+                type: "comment",
+                description: "Comments",
+                color: ""
+            },
+            {
+                type: "type",
+                description: "Types",
+                color: ""
+            },
+            {
+                type: "control",
+                description: "Controllers",
+                color: ""
+            },
+            {
+                type: "function",
+                description: "Functions",
+                color: ""
+            }
+        ];
 
-        if(localStorage.settings != null) {
+        if(localStorage.settings != null && typeof localStorage.settings.version !== 'undefined' && localStorage.settings.version == global.settings.version) {
             var parsedJSON = JSON.parse(localStorage.settings);
             if(parsedJSON != null) {
                 global.settings = JSON.parse(localStorage.settings);

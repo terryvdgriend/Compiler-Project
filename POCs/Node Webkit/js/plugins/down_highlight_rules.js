@@ -24,8 +24,8 @@ var DownHighlightRules = function() {
                 regex: "is|plus|minus|divide|(?:smaller|larger) than|like|in|increased|decreased|multiply|multiplied by|modulo|and gives|gets|with"
             },
             {
-                token : "support.function",
-                regex : "printdown|random|printup"
+                token : "constant.function",
+                regex : "### \\w+|printdown|random|printup"
             },
             {
                 token : "constant.language",

@@ -6,6 +6,28 @@
 var editor = require("./../js/editor.js");
 var compiler = require("./../js/compiler.js");
 
+global.setCustomStyle = function() {
+    if(global.settings.customStyle != null) {
+        var customStyleString = "";
+        if(global.settings.customStyle.length > 0) {
+            customStyleString += "<style>";
+
+            for(var i in global.settings.customStyle) {
+                var object = global.settings.customStyle[i];
+                if(object.color != null && object.color != "") {
+                    customStyleString += ".ace_" + object.type + " {";
+                    customStyleString += "color: " + object.color + " !important";
+                    customStyleString += "} ";
+                }            
+            }
+
+            customStyleString += "</style>";
+        }
+
+        $('#customCSS').html(customStyleString);
+    }
+}
+
 $(function() {
 
     var tabs = $("#log > div").tabs();
@@ -115,8 +137,17 @@ $(function() {
             });
         });
     });
+
+    global.setCustomStyle();
 });
+
+global.gui.Window.get().on('focus', function() {
+    global.setCustomStyle();
+});
+
 </script>
+
+<div id="customCSS"></div>
 
 <!-- Editor -->
 <div id="editor"><textarea id="code"></textarea></div>

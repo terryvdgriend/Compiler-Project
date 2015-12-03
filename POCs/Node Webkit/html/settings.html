@@ -48,18 +48,57 @@
 				global.saveSettings();
 			});
 
-			$("select#theme option[value=" + global.settings.theme + "]").attr('selected', 'selected');			
+			$("select#theme option[value=" + global.settings.theme + "]").attr('selected', 'selected');
+
+			
+			if(global.settings.customStyle != null) {
+				$('table.highlighting').html("");
+				for(var i in global.settings.customStyle) {
+	           		var object = global.settings.customStyle[i];
+	           		$('table.highlighting').append('<tr><td>' + object.description + '</td><td><input value="' + object.color + '" data-type="' + object.type + '" type="text" class="color"></td></tr>');
+	        	}
+
+	        	$('body').on('keyup', 'input.color', function() {
+	        		var type = $(this).data('type');
+	        		var value = $(this).val();
+	        		for(var i in global.settings.customStyle) {
+	           			var object = global.settings.customStyle[i];
+	           			if(object.type == type) {
+	           				global.settings.customStyle[i].color = value;
+	           				break;
+	           			}
+	           		}
+	           		global.saveSettings();
+	           		global.setCustomStyle();         		
+	        	});
+			}			
         });
 
         function resetCompilerFile() {
         	global.settings.compilerFile = null;
+        	$('#path').text("Default compiler");
         }
 
         function resetAll() {
         	global.settings.theme = "twilight";
+        	$('#theme').val("twilight");
+
         	resetCompilerFile();
+
+        	if(global.settings.customStyle != null) {
+        		for(var i in global.settings.customStyle) {
+	       			global.settings.customStyle[i].color = "";
+	       			$('input.color').val("");
+	       		}
+        	}
         }
 	</script>
+	<style>
+		html, body {
+		  height: 100%;
+		  overflow: scroll;
+		}
+	</style>
 </head>
 <body>
  	<!-- Dialogs  -->
@@ -137,6 +176,10 @@
 						</select>
 					</td>
 				</tr>
+			</table>
+
+			<h2>Code highlighting</h2>
+		    <table class="settings highlighting">
 			</table>
 
 			<h2>General</h2>
