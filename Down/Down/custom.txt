@@ -1,3 +1,5 @@
+_number_ **age**
+
 ---
 ### Derpy gets _number_ **age** and gives _number_ **result** 
 **age** is **age** plus 1

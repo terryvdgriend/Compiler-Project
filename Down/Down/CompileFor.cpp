@@ -169,7 +169,7 @@ void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linke
 		}
 	}
 	ConnectLists();
-	listActionNodes.insertBefore(&actionBefore, _compiledStatement)
+	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
 	begin = *current;
 }
 
