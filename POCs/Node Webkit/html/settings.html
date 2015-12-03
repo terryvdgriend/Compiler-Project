@@ -14,37 +14,91 @@
         $(function() {
         	$("button").button();
 
+        	if(global.settings.compilerFile != null) {
+        		$('#path').text(global.settings.compilerFile);
+        	} else {
+        		$('#path').text("Default compiler");
+        	}
+
         	$("button#chooseCompiler").button().click(function( event ) {
 				event.preventDefault();
-				compiler.chooseCompilerFile(function(file) {
-	                global.compilerFile = file;
+				compiler.chooseCompilerFile($("#chooseCompilerFile"), function(file) {
+	                global.settings.compilerFile = file;
+	                $('#path').text(file);
+					global.saveSettings();
 	            });
 			});
 
 			$("button#resetCompiler").button().click(function( event ) {
 				event.preventDefault();
 				resetCompilerFile();
+				global.saveSettings();
 			});
 
 			$("button#resetAll").button().click(function( event ) {
 				event.preventDefault();
 				resetAll();
+				global.saveSettings();
 			});
 
 			$("select#theme").on("change", function() {
 				var value = $(this).val();
+				global.settings.theme = value;
 				global.editor.setTheme("ace/theme/" + value);
+				global.saveSettings();
 			});
+
+			$("select#theme option[value=" + global.settings.theme + "]").attr('selected', 'selected');
+
+			
+			if(global.settings.customStyle != null) {
+				$('table.highlighting').html("");
+				for(var i in global.settings.customStyle) {
+	           		var object = global.settings.customStyle[i];
+	           		$('table.highlighting').append('<tr><td>' + object.description + '</td><td><input value="' + object.color + '" data-type="' + object.type + '" type="text" class="color"></td></tr>');
+	        	}
+
+	        	$('body').on('keyup', 'input.color', function() {
+	        		var type = $(this).data('type');
+	        		var value = $(this).val();
+	        		for(var i in global.settings.customStyle) {
+	           			var object = global.settings.customStyle[i];
+	           			if(object.type == type) {
+	           				global.settings.customStyle[i].color = value;
+	           				break;
+	           			}
+	           		}
+	           		global.saveSettings();
+	           		global.setCustomStyle();         		
+	        	});
+			}			
         });
 
         function resetCompilerFile() {
-        	global.compilerFile = null;
+        	global.settings.compilerFile = null;
+        	$('#path').text("Default compiler");
         }
 
         function resetAll() {
+        	global.settings.theme = "twilight";
+        	$('#theme').val("twilight");
+
         	resetCompilerFile();
+
+        	if(global.settings.customStyle != null) {
+        		for(var i in global.settings.customStyle) {
+	       			global.settings.customStyle[i].color = "";
+	       			$('input.color').val("");
+	       		}
+        	}
         }
 	</script>
+	<style>
+		html, body {
+		  height: 100%;
+		  overflow: scroll;
+		}
+	</style>
 </head>
 <body>
  	<!-- Dialogs  -->
@@ -60,7 +114,7 @@
 					<td>
 						<strong>Compiler file</strong>
 						<span>The IDE has a built-in compiler, but you can always choose another one.</span>
-						<span>/POCs/Compiler.exe</span>
+						<span id="path">/POCs/Compiler.exe</span>
 					</td>
 					<td><button id="chooseCompiler">Choose file</button> </td>
 				</tr>
@@ -122,6 +176,10 @@
 						</select>
 					</td>
 				</tr>
+			</table>
+
+			<h2>Code highlighting</h2>
+		    <table class="settings highlighting">
 			</table>
 
 			<h2>General</h2>
