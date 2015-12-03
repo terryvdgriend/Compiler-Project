@@ -9,8 +9,4 @@ class DirectFunctionCall : public AbstractFunctionCall
 		void action();
 		void accept(NodeVisitor& visitor);
 
-		Token getToken() { return token; }
-
-	private:
-		Token token;
 };

@@ -2,8 +2,10 @@
 #include "IdentifierToReturnValueCommand.h"
 #include "CommandVisitor.h"
 
-void IdentifierToReturnValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void IdentifierToReturnValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	vm.setReturnValue(parameters.at(1));
 	vm.addIdentifer(parameters.at(1));
 }

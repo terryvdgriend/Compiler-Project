@@ -2,13 +2,14 @@
 #include "VirtualMachine.h"
 #include "ErrorHandler.h"
 #include "Error.h"
+#include "AbstractFunctionCall.h"
 
 using namespace std;
 
 class BaseCommand
 {
 public:
-	virtual void execute(VirtualMachine& vm, vector<string>& parameters) = 0;
+	virtual void execute(VirtualMachine& vm, AbstractFunctionCall& node) = 0;
 	//virtual int execute(VirtualMachine& vm, vector<string>& parameters) = 0;
 	virtual pair<string, string> accept(class CommandVisitor &cmdVisitor) = 0;
 	bool isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm);
