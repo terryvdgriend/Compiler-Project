@@ -4,8 +4,8 @@
 class Function
 {
 	public:
-		Function(string functionName, string params, shared_ptr<LinkedList> body, shared_ptr<vector<shared_ptr<Token>>> paramTokens, shared_ptr<Token> returnToken);
-		Function(string functionName, string params, shared_ptr<LinkedList> body, shared_ptr<vector<shared_ptr<Token>>> paramTokens, shared_ptr<Token> returnToken, bool userDefined);
+		Function(string functionName, string params, shared_ptr<LinkedList> body, vector<shared_ptr<Token>>& paramTokens, shared_ptr<Token> returnToken);
+		Function(string functionName, string params, shared_ptr<LinkedList> body, vector<shared_ptr<Token>>& paramTokens, shared_ptr<Token> returnToken, bool userDefined);
 
 		string getName();
 		string getParams();

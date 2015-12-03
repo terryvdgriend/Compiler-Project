@@ -14,7 +14,7 @@ CompileUserFunction::CompileUserFunction()
 
 void CompileUserFunction::connectList() 
 {
-	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, make_shared<vector<shared_ptr<Token>>>(_paramTokens), _returnToken, true);
+	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, vector<shared_ptr<Token>>{_paramTokens}, _returnToken, true);
 	FunctionHandler::getInstance()->addFunction(funcion);
 }
 

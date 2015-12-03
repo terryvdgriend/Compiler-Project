@@ -9,7 +9,7 @@ FunctionHandler::FunctionHandler()
 {
 	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
 	{
-		addFunction(make_shared<Function>(cf.first, "a", nullptr, nullptr, nullptr));
+		addFunction(make_shared<Function>(cf.first, "a", nullptr, vector<shared_ptr<Token>>{}, nullptr));
 	}
 }
 
