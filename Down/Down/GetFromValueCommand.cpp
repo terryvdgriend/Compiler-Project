@@ -3,8 +3,9 @@
 #include <vector>
 #include "CommandVisitor.h"
 
-void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
 	string rValue = vm.getReturnValue();
 
 	if (&rValue != nullptr)
@@ -19,20 +20,20 @@ void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters
 
 				if (value.size() > 0)
 				{
-					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue());
+					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue(), node.getToken()->getSub());
 				}
 				else
 				{
 					// Hier exception throwen var is undefined
 
-					vm.setVariable(parameters[1], "");
+					vm.setVariable(parameters[1], "", node.getToken()->getSub());
 				}
 				vm.setFunctionParameter(parameters[1], rValue);
 			}
 		}
 		else
 		{
-			vm.setVariable(parameters[1], rValue);
+			vm.setVariable(parameters[1], rValue, node.getToken()->getSub());
 		}
 	}
 }

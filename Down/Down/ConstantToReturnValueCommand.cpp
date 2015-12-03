@@ -3,8 +3,10 @@
 #include "ConstantToReturnValueCommand.h"
 #include "CommandVisitor.h"
 
-void ConstantToReturnValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+
+void ConstantToReturnValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
 	vm.setReturnValue(parameters.at(1));
 }
 

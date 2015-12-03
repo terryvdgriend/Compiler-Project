@@ -14,7 +14,8 @@ class VirtualMachine
 		void addIdentifer(string name);
 
 		shared_ptr<Variable> getVariable(string parameter);
-		void setVariable(string name, string value);
+		void setVariable(string key, string value, Token::iToken token);
+		//void setVariable(string name, string value);
 		vector<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
 		void setFunctionParameter(string name, string value);

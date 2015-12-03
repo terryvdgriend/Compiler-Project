@@ -2,8 +2,10 @@
 #include "GreaterEqualsToCommand.h"
 #include "CommandVisitor.h"
 
-void GreaterEqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void GreaterEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 

@@ -2,7 +2,7 @@
 #include "DirectFunctionCall.h"
 
 DirectFunctionCall::DirectFunctionCall(Token& token) {
-	this->token = token;
+	this->token = &token;
 }
 
 void DirectFunctionCall::show()
