@@ -77,7 +77,7 @@
        			}
        		}
        		global.saveSettings();
-       		global.setCustomStyle();   
+       		global.setCustomStyle();
 		}
 
         function resetCompilerFile() {
@@ -94,8 +94,11 @@
         	if(global.settings.customStyle != null) {
         		for(var i in global.settings.customStyle) {
 	       			global.settings.customStyle[i].color = "";
-	       			$('input.color').val("");
 	       		}
+
+	       		$('input.color').val("");
+	       		$('input.color').css("background-color", "white");
+	       		global.setCustomStyle();
         	}
         }
 	</script>

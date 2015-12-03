@@ -11,7 +11,8 @@ exports.reload = function(){
         smartypants: false
     });
     var resultDiv = global.$('#markdown');
-    resultDiv.html(marked(global.editor.getValue()));
+    var code = global.editor.getValue();
+    resultDiv.html(marked(code));
 };
 
 exports.loadText = function(text) {
