@@ -12,9 +12,9 @@ VirtualMachine::VirtualMachine()
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
 	ActionNode* currentNode = actionList.getFirst();
-	unique_ptr<NodeVisitor> visitor = make_unique<NodeVisitor>(*this);
+	shared_ptr<NodeVisitor> visitor = make_shared<NodeVisitor>(*this);
 
-	while (currentNode != nullptr && runsVeryNaz)
+    while (currentNode != nullptr && runsVeryNaz)
 	{
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
 

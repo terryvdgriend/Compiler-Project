@@ -87,6 +87,7 @@ public:
 	virtual void    setRegelnummer(int txt){ Regelnummer = txt; };
 	virtual void    setPositie(int txt){ Positie = txt; };
 	virtual void    setLevel(int txt){ Level = txt; };
+	virtual void    setScope(int txt) { Scope = txt; };
 	virtual bool	operator!=(const Token& other)const;
 	virtual bool	operator!=( Token* other);
 	static bool compare(Token* first, Token* other);
@@ -99,6 +100,7 @@ public:
 	int				getLevel() { return Level; };
 	int				getLineNumber(){ return Regelnummer; };
 	int				getPositie(){ return Positie; };
+	int				getScope() { return Scope; };
 	std::string getStringbyEnum(std::map<string, Token::iToken>& map, Token::iToken token);
 	void Print(std::map<string, Token::iToken>& map);
 	void addError();
@@ -114,5 +116,6 @@ private:
 	int Regelnummer;
 	int Positie;
 	int Level;
+	int Scope;
 };
 

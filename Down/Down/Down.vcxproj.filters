@@ -67,6 +67,9 @@
     <Filter Include="Source Files\VM\Variable">
       <UniqueIdentifier>{e583ce7c-bde8-4370-ab1b-f57e59881246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\TestScriptz">
+      <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -490,34 +493,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="calc.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="condition.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="custom.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="func.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="if.md">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="ReadMe.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="switch.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="while.md">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="for.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Snippets.txt">
@@ -526,10 +505,16 @@
     <Text Include="while.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Switch.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="if else elseif.md">
-      <Filter>Resource Files</Filter>
+    <None Include="..\..\..\..\..\Desktop\ForFibo.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="SuperTest.md">
+      <Filter>Resource Files\TestScriptz</Filter>
     </None>
   </ItemGroup>
 </Project>

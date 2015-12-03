@@ -16,6 +16,8 @@ Token::Token(const Token & other)
 	Regelnummer = other.Regelnummer;
 	Positie = other.Positie;
 	Level = other.Level;
+	next = nullptr;
+	previous = nullptr;
 }
 
 

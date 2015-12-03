@@ -29,7 +29,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	//
 	Token  *pToken{};
-	string s(codefromfile);
+	string s( codefromfile);// "\n" 
 	smatch m;
 
 	int rowNr = 1;
@@ -57,12 +57,14 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
 			if (lookaheadToken == Token::IDENTIFIER)
 			{
+				lookahead.push_back(currentScope + '0');
 				if (mappert.count(lookahead) != 0)
 				{
 					ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 				}
 				pToken->setSub(currentToken);
 				currentToken = lookaheadToken;
+				
 				mappert[lookahead] = Token::IDENTIFIER;
 				//skip types direct, zodat later identief geskipped word, zijn beide al gedaan
 				part = lookahead;
@@ -96,6 +98,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 		else if (currentToken == Token::IDENTIFIER)
 		{
+			part.push_back(currentScope + '0');
 			if (mappert.count(part) == 0)
 				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
 			auto it = varTokenMap.find(part);
@@ -114,6 +117,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		pToken->setRegelnummer(rowNr);
 		pToken->setEnum(currentToken);
 		pToken->setPartner(nullptr);
+		pToken->setScope(currentScope);
 
 		//Add + Next
 		if(currentToken != Token::COMMENT)
@@ -122,6 +126,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		//Levels
 		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN || currentToken == Token::FUNCTION_DECLARE_OPEN)
 		{
+			if (currentToken == Token::FUNCTION_OPEN) {
+				maxScope++;
+				currentScope = maxScope;
+			}
 			lvl++;
 		}
 
@@ -144,6 +152,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				CheckRemainingStack();
 		}
 		s = m.suffix().str();
+		if (currentToken == Token::FUNCTION_CLOSE)
+		{
+			currentScope = pToken->getPartner()->getScope();
+		}
 	}
 
 	CheckRemainingStack();
