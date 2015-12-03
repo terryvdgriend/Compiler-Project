@@ -1,8 +1,7 @@
 #pragma once
+#include "CommandDictionary.h"
 #include "LinkedActionList.h"
 #include "Variable.h"
-
-class BaseCommand;
 
 class VirtualMachine
 {
@@ -27,9 +26,9 @@ class VirtualMachine
 		
 	private:
 		string returnValue;
-		bool runsVeryNaz;
+		bool errorsDetected;
 
-		map<string, shared_ptr<BaseCommand>> commandDictionary;
+		unique_ptr<CommandDictionary> commandDictionary;
 		map<string, shared_ptr<Variable>> variableDictionary;
 		map<string, string> functionParamters;
 

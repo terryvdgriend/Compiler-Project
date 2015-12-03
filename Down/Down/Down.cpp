@@ -18,17 +18,17 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 int main(int argCounter, char * argv[])
 {
 	string code = "";
-	bool PRINT_TOKEN_LIST = false;
-	bool PRINT_COMPILED_LIST = false;
+	bool printTokenList = false;
+	bool printCompiledList = false;
 
 	//==============IDE==============
-	if (!ideStuff(argCounter, argv, code, PRINT_TOKEN_LIST, PRINT_COMPILED_LIST))
+	if (!ideStuff(argCounter, argv, code, printTokenList, printCompiledList))
 	{
 		return 0;
 	}
 
 	//==============DOWN=============
-	return runDown(code, PRINT_TOKEN_LIST, PRINT_COMPILED_LIST);;
+	return runDown(code, printTokenList, printCompiledList);;
 }
 
 int runDown(string& code, bool& printTokenList, bool& printCompiledList)

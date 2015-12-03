@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "IdentifierToReturnValueCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void IdentifierToReturnValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -8,6 +8,7 @@ void IdentifierToReturnValueCommand::execute(VirtualMachine& vm, vector<string>&
 	vm.addIdentifer(parameters.at(1));
 }
 
-std::pair<string, string> IdentifierToReturnValueCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> IdentifierToReturnValueCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

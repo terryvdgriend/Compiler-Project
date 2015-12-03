@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EqualsToCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -8,7 +8,9 @@ void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
 	if (variable1.getValue() == variable2.getValue())
 	{
@@ -20,6 +22,7 @@ void EqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	}
 }
 
-std::pair<string, string> EqualsToCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> EqualsToCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

@@ -14,6 +14,7 @@
     <ProjectGuid>{CF919B00-11EF-4191-B239-515F63FBFEFD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Down</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -21,6 +22,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -54,10 +56,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <AdditionalOptions>kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,16 +83,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="calc.txt" />
-    <Text Include="condition.txt" />
-    <Text Include="for.txt" />
-    <Text Include="func.txt" />
-    <Text Include="myCodeBringsAllTheBoysInTheYard.txt" />
-    <Text Include="ReadMe.txt" />
-    <Text Include="if.md" />
     <Text Include="Snippets.txt" />
-    <Text Include="switch.txt" />
     <Text Include="custom.txt" />
+    <Text Include="Switch.md" />
     <Text Include="while.md" />
     <Text Include="while.txt" />
   </ItemGroup>
@@ -144,6 +141,7 @@
     <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="MandatoryCommandIncludes.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
     <ClInclude Include="ModuloCommand.h" />
@@ -168,6 +166,7 @@
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
     <ClInclude Include="VirtualMachine.h" />
+    <ClInclude Include="VisitorList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
@@ -243,7 +242,8 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="if else elseif.md" />
+    <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
+    <None Include="SuperTest.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

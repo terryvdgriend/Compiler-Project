@@ -1,15 +1,13 @@
 #include "stdafx.h"
-
 #include "BaseCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 bool BaseCommand::isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm) 
 {
 	if (var1.getType() == VariableType::NULLTYPE || var2.getType() == VariableType::NULLTYPE) 
 	{
-
-		CommandVisitor cmdVisitor;
-		pair<string, string> words = accept(cmdVisitor);
+		unique_ptr<CommandVisitor> cmdVisitor = make_unique<CommandVisitor>();
+		pair<string, string> words = accept(*cmdVisitor);
 
 		if (var1.getType() == VariableType::NULLTYPE && var2.getType() == VariableType::NULLTYPE) 
 		{

@@ -27,11 +27,6 @@ void CompileOperator::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Toke
 		{
 			break;
 		}
-
-		if (current->getPartner() != nullptr)
-		{
-			current = shared_ptr<Token>(current->getPartner());  // Todo fix tokenizer, will throw error soon
-		}
 		iFind = tokenMap.find(current->getEnum());
 
 		if (iFind != tokenMap.end())

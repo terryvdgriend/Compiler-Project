@@ -3,10 +3,10 @@
 
 class CommandDictionary
 {
-
 	public:
 		CommandDictionary();
-		map<string, shared_ptr<BaseCommand>> getMap();
+
+		map<string, shared_ptr<BaseCommand>>& getMap();
 		static map<string, shared_ptr<BaseCommand>> getCustomFunctions();
 
 	private:

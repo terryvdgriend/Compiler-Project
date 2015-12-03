@@ -156,6 +156,7 @@ void CompileUserFunction::compileBody(shared_ptr<LinkedList>& tokenList, shared_
 		current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
 	} 
 	while (current->getEnum() != end->getEnum());
+
 	begin = current;
 }
 

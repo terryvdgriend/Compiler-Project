@@ -1,15 +1,12 @@
 #include "stdafx.h"
 #include "NodeVisitor.h"
-#include "ConditionalJumpNode.h"
-#include "DirectFunctionCall.h"
-#include "DoNothingNode.h"
-#include "FunctionCall.h"
-#include "JumpGoToNode.h"
-#include "SwitchNode.h"
+#include "ActionNode.h"
+#include "Variable.h"
+#include "VisitorList.h"
 
 NodeVisitor::NodeVisitor(VirtualMachine& virtualMachine)
 {
-	vm = make_unique<VirtualMachine>(virtualMachine);
+	vm = unique_ptr<VirtualMachine>(&virtualMachine);
 }
 
 void NodeVisitor::visit(ConditionalJumpNode& node)

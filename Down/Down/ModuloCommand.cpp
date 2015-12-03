@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ModuloCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void ModuloCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -20,10 +20,12 @@ void ModuloCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	else 
 	{
 		throwTypeError(variable1, variable2, vm);
+
 		return;
 	}
 }
 
-std::pair<string, string> ModuloCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> ModuloCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

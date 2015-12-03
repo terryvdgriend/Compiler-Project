@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MinusMinusCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void MinusMinusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -16,12 +16,14 @@ void MinusMinusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	{
 		int number1 = atoi(variable.getValue().c_str()) - 1;
 
-		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
+		for (string & item : vm.getFunctionParametersByKey(parameters.at(1))) 
+		{
 			vm.setVariable(item, to_string(number1));
 		}
 	}
 }
 
-std::pair<string, string> MinusMinusCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> MinusMinusCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

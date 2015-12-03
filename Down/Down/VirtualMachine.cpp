@@ -1,27 +1,29 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
-#include "CommandDictionary.h"
 #include "AbstractFunctionCall.h"
+#include "NodeVisitor.h"
+#include "Variable.h"
 
 VirtualMachine::VirtualMachine()
 {
-	commandDictionary = CommandDictionary().getMap();
-	runsVeryNaz = true;
+	commandDictionary	= make_unique<CommandDictionary>();
+	errorsDetected		= false;
 }
 
 void VirtualMachine::execute(LinkedActionList& actionList)
 {
-	shared_ptr<ActionNode> currentNode = actionList.getFirst();
 	unique_ptr<NodeVisitor> visitor = make_unique<NodeVisitor>(*this);
+	map<string, shared_ptr<BaseCommand>> map = commandDictionary->getMap();
+	shared_ptr<ActionNode> currentNode = actionList.getFirst();
 
-	while (currentNode != nullptr && runsVeryNaz)
+    while (currentNode != nullptr && !errorsDetected)
 	{
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode.get());
 
 		if (actionNode != nullptr)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
-			commandDictionary[name]->execute(*this, actionNode->getContentArrayNonConstant());
+			map[name]->execute(*this, actionNode->getContentArrayNonConstant());
 			
 		}
 		currentNode->accept(*visitor);
@@ -112,7 +114,7 @@ void VirtualMachine::setReturnValue(string value)
 
 void VirtualMachine::triggerRunFailure()
 {
-	runsVeryNaz = false;
+	errorsDetected = true;
 }
 
 bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it)

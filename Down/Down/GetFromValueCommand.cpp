@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "GetFromValueCommand.h"
-#include <vector>
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -23,8 +22,7 @@ void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters
 				}
 				else
 				{
-					// Hier exception throwen var is undefined
-
+					// Exception var undefined
 					vm.setVariable(parameters[1], "");
 				}
 				vm.setFunctionParameter(parameters[1], rValue);
@@ -37,6 +35,7 @@ void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters
 	}
 }
 
-std::pair<string, string> GetFromValueCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> GetFromValueCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

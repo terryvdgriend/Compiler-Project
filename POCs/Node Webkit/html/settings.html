@@ -1,42 +1,141 @@
-<script>
-$(function() {
-	$("button").button().click(function( event ) {
-		event.preventDefault();
-	});
-});
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Down IDE</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../js/plugins/jquery-ui/jquery-ui.css" />
+    <script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../js/plugins/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
 
-<div id="settings">
-    <h1>IDE Settings</h1>
+    <script type="text/javascript">
+		var compiler = require("./../js/compiler.js");
 
-	<h2>Compiler</h2>
-    <table class="settings">
-		<tr>
-			<td>
-				<strong>Compiler file</strong>
-				<span>The IDE has a built-in compiler, but you can always choose another one.</span>
-				<span>/POCs/Compiler.exe</span>
-			</td>
-			<td><button>Choose file</button> </td>
-		</tr>
-		<tr>
-			<td>
-				<strong>Reset file</strong>
-				<span>Reset compiler to the in built-in IDE compiler.</span>
-			</td>
-			<td><button>Reset file</button> </td>
-		</tr>
-	</table>
+        $(function() {
+        	$("button").button();
 
-	<h2>General</h2>
-    <table class="settings">
-		<tr>
-			<td>
-				<strong>Reset settings</strong>
-				<span>Reset all settings to default.</span>
-			</td>
-			<td><button>Reset all</button> </td>
-		</tr>
-	</table>
+        	$("button#chooseCompiler").button().click(function( event ) {
+				event.preventDefault();
+				compiler.chooseCompilerFile(function(file) {
+	                global.compilerFile = file;
+	            });
+			});
 
-</div>
+			$("button#resetCompiler").button().click(function( event ) {
+				event.preventDefault();
+				resetCompilerFile();
+			});
+
+			$("button#resetAll").button().click(function( event ) {
+				event.preventDefault();
+				resetAll();
+			});
+
+			$("select#theme").on("change", function() {
+				var value = $(this).val();
+				global.editor.setTheme("ace/theme/" + value);
+			});
+        });
+
+        function resetCompilerFile() {
+        	global.compilerFile = null;
+        }
+
+        function resetAll() {
+        	resetCompilerFile();
+        }
+	</script>
+</head>
+<body>
+ 	<!-- Dialogs  -->
+    <input style="display:none;" id="chooseCompilerFile" type="file" />
+   
+    <div id="page">
+		<div id="settings">
+		    <h1>IDE Settings</h1>
+
+			<h2>Compiler</h2>
+		    <table class="settings">
+				<tr>
+					<td>
+						<strong>Compiler file</strong>
+						<span>The IDE has a built-in compiler, but you can always choose another one.</span>
+						<span>/POCs/Compiler.exe</span>
+					</td>
+					<td><button id="chooseCompiler">Choose file</button> </td>
+				</tr>
+				<tr>
+					<td>
+						<strong>Reset file</strong>
+						<span>Reset compiler to the in built-in IDE compiler.</span>
+					</td>
+					<td><button id="resetCompiler">Reset file</button> </td>
+				</tr>
+			</table>
+
+			<h2>IDE Style</h2>
+		    <table class="settings">
+				<tr>
+					<td>
+						<strong>Theme</strong>
+					</td>
+					<td>
+						<select id="theme" size="1">
+							<optgroup label="Bright">
+								<option value="chrome">Chrome</option>
+								<option value="clouds">Clouds</option>
+								<option value="crimson_editor">Crimson Editor</option>
+								<option value="dawn">Dawn</option>
+								<option value="dreamweaver">Dreamweaver</option>
+								<option value="eclipse">Eclipse</option>
+								<option value="github">GitHub</option>
+								<option value="iplastic">IPlastic</option>
+								<option value="solarized_light">Solarized Light</option>
+								<option value="textmate">TextMate</option>
+								<option value="tomorrow">Tomorrow</option>
+								<option value="xcode">XCode</option>
+								<option value="kuroir">Kuroir</option>
+								<option value="katzenmilch">KatzenMilch</option>
+								<option value="sqlserver">SQL Server</option>
+							</optgroup>
+							<optgroup label="Dark">
+								<option value="ambiance">Ambiance</option>
+								<option value="chaos">Chaos</option>
+								<option value="clouds_midnight">Clouds Midnight</option>
+								<option value="cobalt">Cobalt</option>
+								<option value="idle_fingers">idle Fingers</option>
+								<option value="kr_theme">krTheme</option>
+								<option value="merbivore">Merbivore</option>
+								<option value="merbivore_soft">Merbivore Soft</option>
+								<option value="mono_industrial">Mono Industrial</option>
+								<option value="monokai">Monokai</option>
+								<option value="pastel_on_dark">Pastel on dark</option>
+								<option value="solarized_dark">Solarized Dark</option>
+								<option value="terminal">Terminal</option>
+								<option value="tomorrow_night">Tomorrow Night</option>
+								<option value="tomorrow_night_blue">Tomorrow Night Blue</option>
+								<option value="tomorrow_night_bright">Tomorrow Night Bright</option>
+								<option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
+								<option value="twilight" selected>Twilight (default)</option>
+								<option value="vibrant_ink">Vibrant Ink</option>
+							</optgroup>
+						</select>
+					</td>
+				</tr>
+			</table>
+
+			<h2>General</h2>
+		    <table class="settings">
+				<tr>
+					<td>
+						<strong>Reset settings</strong>
+						<span>Reset all settings to default.</span>
+					</td>
+					<td><button id="resetAll">Reset all</button> </td>
+				</tr>
+			</table>
+
+		</div>
+    </div>
+</body>
+</html>

@@ -107,14 +107,24 @@ void CompileGetFunction::compileNotUserDefined(shared_ptr<LinkedList>& tokenList
 	{
 		// Compile condition
 		shared_ptr<Token> seperator = current;
+		stack<Token::iToken> stack;
 
-		while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::FUNCTION_DECLARE_CLOSE) 
+		while (stack.size() >= 0 && (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::FUNCTION_DECLARE_CLOSE)) 
 		{
-			if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE)
+			if (seperator->getEnum() == Token::FUNCTION_DECLARE_OPEN)
+			{
+				stack.push(seperator->getEnum());
+			}
+			else if (seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) 
+			{
+				stack.pop();
+			}
+			else if (stack.size() == 0 && (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE))
 			{
 				break;
 			}
-			seperator = shared_ptr<Token>(seperator->next); // Todo fix tokenizer, will throw error soon
+
+			seperator = shared_ptr<Token>(seperator->next);
 		}
 		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 		condition->compile(tokenList, current, seperator, _functionParams, _functionParams->getLast());
@@ -162,6 +172,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 {
 	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
 	shared_ptr<Token> current = begin;
+	shared_ptr<Token> last = end;
 	vector<shared_ptr<LinkedList>> paramList;
 	int count = 0;
 
@@ -169,9 +180,19 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 	{
 		_parameters->add(make_shared<DoNothingNode>());
 		shared_ptr<LinkedList> param = make_shared<LinkedList>();
+		stack<Token::iToken> stack;
 
 		do 
 		{
+			if (current->getEnum() == Token::FUNCTION_DECLARE_OPEN)
+			{
+				stack.push(current->getEnum());
+			}
+			else if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) 
+			{
+				stack.pop();
+			}
+
 			if ((size_t)count > _params.size() - 1)
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
@@ -180,44 +201,70 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 				break;
 			}
 
-			if (current->getEnum() != Token::AND_PARA)
+			if (stack.size() >= 0) 
 			{
-				param->add(new Token(*current));
-			}
-			else 
-			{
-				param->last->next = nullptr;
-				param->first->previous = nullptr;
+				if (stack.size() == 0 && current->getEnum() == Token::AND_PARA) 
+				{
+					if (param->last != nullptr) 
+					{
+						param->last->next = nullptr;
+						param->first->previous = nullptr;
 
-				connectParams(_paramTokens.at(count), param);
-				paramList.push_back(param);
-				param = make_shared<LinkedList>();
-				count++;
+						connectParams(_paramTokens.at(count), param);
+						paramList.push_back(param);
+					}
+					else {
+						ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
+															  current->getPositie(), ErrorType::error));
+					}
+					param = make_shared<LinkedList>();
+					count++;
+				}
+				else 
+				{
+					param->add(new Token(*current));
+				}
 			}
-			current = shared_ptr<Token>(current->next); // Todo fix tokenizer, will throw error soon
+			current = shared_ptr<Token>(current->next);
 
-			if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) 
+			if (stack.size() == 0 && current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) 
 			{
-				param->last->next = nullptr;
-				param->first->previous = nullptr;
-				connectParams(_paramTokens.at(count), param);
-				paramList.push_back(param);
+				if (param->last != nullptr) 
+				{
+					param->last->next = nullptr;
+					param->first->previous = nullptr;
+					connectParams(_paramTokens.at(count), param);
+					paramList.push_back(param);
+				}
+				else {
+					ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
+														  current->getPositie(), ErrorType::error));
+				}
+
 				param = make_shared<LinkedList>();
+
+				break;
 			}
-		}
-		while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE);
+
+		} 
+		while (current != end);
 	}
 
-	if ((size_t)count < _params.size() - 1) 
+	if (paramList.size() < _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
+											  current->getPositie(), ErrorType::error));
+	}
+	else if (paramList.size() > _params.size()) 
+	{
+		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
 											  current->getPositie(), ErrorType::error));
 	}
 
 	for (shared_ptr<LinkedList> p : paramList) 
 	{
 		shared_ptr<CompileEquals> condition = make_shared<CompileEquals>();
-		condition->compile(p, shared_ptr<Token>(p->first), shared_ptr<Token>(p->last), _parameters, _parameters->getLast());
+		condition->compile(p, shared_ptr<Token>(p->first), shared_ptr<Token>(p->last), _parameters, _parameters->getLast()); // Todo fix tokenizer, will throw error soon
 	}
 
 	if (_returnToken) 
@@ -243,7 +290,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 
 	while (currentBody != nullptr) 
 	{
-		if (currentBody->getEnum() == Token::FUNCTION_CLOSE)
+		if (currentBody->getEnum() == Token::FUNCTION_CLOSE) 
 		{
 			currentBody = shared_ptr<Token>(currentBody->next); // Todo fix tokenizer, will throw error soon
 
@@ -253,7 +300,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 
 		if (compiledBodyPart != nullptr) 
 		{
-			compiledBodyPart->compile(_bodyTokens, currentBody, shared_ptr<Token>(body->last), _body, _body->getLast());
+			compiledBodyPart->compile(_bodyTokens, currentBody, shared_ptr<Token>(body->last), _body, _body->getLast()); // Todo fix tokenizer, will throw error soon
 		}
 		else
 		{

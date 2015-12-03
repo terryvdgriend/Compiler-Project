@@ -5,8 +5,8 @@
 class AbstractFunctionCall : public ActionNode
 {
 	public:
-		void setArraySize(size_t);
-		void setAt(unsigned, const char*);
+		void setArraySize(size_t newSize);
+		void setAt(unsigned newPosition, const char* szText);
 		vector<string>& getContentArrayNonConstant();
 
 	protected:

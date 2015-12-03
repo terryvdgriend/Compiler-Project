@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GreaterEqualsToCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void GreaterEqualsToCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {
@@ -10,9 +10,11 @@ void GreaterEqualsToCommand::execute(VirtualMachine& vm, vector<string>& paramet
 	if (isUndefined(variable1, variable2, vm))
 		return;
 
-	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER) {
+	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER)
+	{
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());
+
 		if (number1 >= number2)
 		{
 			vm.setReturnValue("true");
@@ -22,13 +24,16 @@ void GreaterEqualsToCommand::execute(VirtualMachine& vm, vector<string>& paramet
 			vm.setReturnValue("false");
 		}
 	}
-	else {
+	else 
+	{
 		// Exception "cannot compare different types than numbers"
 		throwTypeError(variable1, variable2, vm);
+
 		return;
 	}
 }
 
-std::pair<string, string> GreaterEqualsToCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> GreaterEqualsToCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

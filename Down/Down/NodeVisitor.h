@@ -1,6 +1,7 @@
 #pragma once
-#include "ActionNode.h"
 #include "VirtualMachine.h"
+
+class ActionNode;
 
 class ConditionalJumpNode;
 class DirectFunctionCall;

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DivideCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 {

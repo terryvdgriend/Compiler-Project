@@ -59,7 +59,7 @@ void CompileSingleStatement::compile(shared_ptr<LinkedList>& tokenList, shared_p
 		{
 			shared_ptr<Token> next = begin;
 			shared_ptr<CompileGetFunction> function = make_shared<CompileGetFunction>();
-			function->compile(tokenList, next, shared_ptr<Token>(next->getPartner()->getPartner()->getPartner()), listActionNodes, actionBefore);
+			function->compile(tokenList, next, shared_ptr<Token>(next->getPartner()), listActionNodes, actionBefore);
 
 			break;
 		}

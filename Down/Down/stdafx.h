@@ -12,9 +12,13 @@
 #endif
 
 // Std libraries
+#include <algorithm>
+#include <cctype>
 #include <fstream>
+#include <functional> 
 #include <iostream>
 #include <list>
+#include <locale>
 #include <map>
 #include <memory>
 #include <stdlib.h>

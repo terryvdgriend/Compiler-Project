@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 #include "CommandDictionary.h"
 #include "CommandList.h"
@@ -32,7 +31,7 @@ CommandDictionary::CommandDictionary()
 	}
 }
 
-map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()
+map<string, shared_ptr<BaseCommand>>& CommandDictionary::getMap()
 {
 	return commandDictionary;
 }
@@ -43,10 +42,13 @@ map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary["printdown"]			= make_shared<ShowFunctionCommand>();
 	customFunctionDictionary["printup"]				= make_shared<ShowUpFunctionCommand>();
 	customFunctionDictionary["random"]				= make_shared<RandomFunctionCommand>();
+	customFunctionDictionary["ditwerkt"]			= make_shared<RandomFunctionCommand>();
 
-	// LEES: 
-	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
-	// en geef dan aan welke classe hiervoor gebruikt moet worden (die overigens wel een baseCommand override)
+	/*
+		READ:
+		If you want to define your own function(s), provide a name for the function and 
+		couple a BaseCommand implementation as shown in the above function declerations.
+	*/
 
 	return customFunctionDictionary;
 };

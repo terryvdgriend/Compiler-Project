@@ -14,29 +14,34 @@ class ModuloCommand;
 class NotEqualsToCommand;
 class PlusCommand;
 class PlusPlusCommand;
-class ShowFunctionCommand;
 class SmallerEqualsToCommand;
 class SmallerThanCommand;
 class TimesCommand;
 
-class CommandVisitor {
-public: 
-	std::pair<string, string> visit(ConstantToReturnValueCommand& command);
-	std::pair<string, string> visit(DivideCommand& command);
-	std::pair<string, string> visit(EqualsCommand& command);
-	std::pair<string, string> visit(EqualsToCommand& command);
-	std::pair<string, string> visit(GetFromValueCommand& command);
-	std::pair<string, string> visit(GreaterEqualsToCommand& command);
-	std::pair<string, string> visit(GreaterThanCommand& command);
-	std::pair<string, string> visit(IdentifierToReturnValueCommand& command);
-	std::pair<string, string> visit(MinusCommand& command);
-	std::pair<string, string> visit(MinusMinusCommand& command);
-	std::pair<string, string> visit(ModuloCommand& command);
-	std::pair<string, string> visit(NotEqualsToCommand& command);
-	std::pair<string, string> visit(PlusCommand& command);
-	std::pair<string, string> visit(PlusPlusCommand& command);
-	std::pair<string, string> visit(ShowFunctionCommand& command);
-	std::pair<string, string> visit(SmallerEqualsToCommand& command);
-	std::pair<string, string> visit(SmallerThanCommand& command);
-	std::pair<string, string> visit(TimesCommand& command);
+// Library functions
+class ShowFunctionCommand;
+
+class CommandVisitor 
+{
+	public: 
+		pair<string, string> visit(ConstantToReturnValueCommand& command);
+		pair<string, string> visit(DivideCommand& command);
+		pair<string, string> visit(EqualsCommand& command);
+		pair<string, string> visit(EqualsToCommand& command);
+		pair<string, string> visit(GetFromValueCommand& command);
+		pair<string, string> visit(GreaterEqualsToCommand& command);
+		pair<string, string> visit(GreaterThanCommand& command);
+		pair<string, string> visit(IdentifierToReturnValueCommand& command);
+		pair<string, string> visit(MinusCommand& command);
+		pair<string, string> visit(MinusMinusCommand& command);
+		pair<string, string> visit(ModuloCommand& command);
+		pair<string, string> visit(NotEqualsToCommand& command);
+		pair<string, string> visit(PlusCommand& command);
+		pair<string, string> visit(PlusPlusCommand& command);
+		pair<string, string> visit(SmallerEqualsToCommand& command);
+		pair<string, string> visit(SmallerThanCommand& command);
+		pair<string, string> visit(TimesCommand& command);
+
+		// Library functions
+		pair<string, string> visit(ShowFunctionCommand& command);
 };
