@@ -68,7 +68,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				part = lookahead;
 				s = m.suffix().str();
 				regex_search(s, m, e);
-				
+				varTokenMap[part] = pToken->getSub();
 			}
 			else
 			{
@@ -98,6 +98,9 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		{
 			if (mappert.count(part) == 0)
 				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+			auto it = varTokenMap.find(part);
+			if (it != varTokenMap.end())
+				pToken->setSub(it->second);
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{

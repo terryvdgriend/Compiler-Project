@@ -21,6 +21,10 @@ class VirtualMachine
 		void setFunctionParameter(string name, string value);
 		string getReturnValue();
 		void setReturnValue(string value);
+
+		Token::iToken getReturnToken();
+		void setReturnToken(Token::iToken value);
+
 		void triggerRunFailure();
 
 		bool hasValueInFunctionParameters(string parameter);
@@ -29,6 +33,7 @@ class VirtualMachine
 	private:
 		string returnValue;
 		bool runsVeryNaz;
+		Token::iToken returnToken;
 
 		map<string, shared_ptr<BaseCommand>> commandDictionary;
 		map<string, shared_ptr<Variable>> variableDictionary;

@@ -18,7 +18,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 
 			if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
 			{
-				directFunctionCall = new DirectFunctionCall(begin);
+				directFunctionCall = new DirectFunctionCall(*new Token(begin));
 				saArguments[0] = begin.getText();
 				saArguments[1] = getNextLocalVariableName(sBuffer);
 				directFunctionCall->setArraySize(2);
@@ -34,7 +34,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 				saArguments[0] = SET_ID_TO_RT;
 				saArguments[1] = begin.getText();
 
-				directFunctionCall = new DirectFunctionCall(begin);
+				directFunctionCall = new DirectFunctionCall(*new Token(begin));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, saArguments[0].c_str());
 				directFunctionCall->setAt(1, saArguments[1].c_str());
@@ -60,9 +60,9 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 		}
 		case Token::NUMBER:
 		case Token::TEXT:
-		case Token::BOOL:
+		case Token::FACT:
 		{
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(begin);
+			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(begin));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_CONST_TO_RT);
 			directFunctionCall->setAt(1, begin.getText().c_str());

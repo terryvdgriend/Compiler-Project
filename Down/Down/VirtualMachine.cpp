@@ -113,6 +113,16 @@ void VirtualMachine::setReturnValue(string value)
 	returnValue = value;
 }
 
+Token::iToken VirtualMachine::getReturnToken()
+{
+	return returnToken;
+}
+
+void VirtualMachine::setReturnToken(Token::iToken value)
+{
+	returnToken = value;
+}
+
 void VirtualMachine::triggerRunFailure()
 {
 	runsVeryNaz = false;

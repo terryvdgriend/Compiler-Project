@@ -8,6 +8,7 @@ void ConstantToReturnValueCommand::execute(VirtualMachine& vm, AbstractFunctionC
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	vm.setReturnValue(parameters.at(1));
+	vm.setReturnToken(node.getToken()->getSub());
 }
 
 std::pair<string, string> ConstantToReturnValueCommand::accept(CommandVisitor& commandVisitor) {

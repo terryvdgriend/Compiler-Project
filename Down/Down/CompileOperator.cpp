@@ -57,7 +57,7 @@ void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedAction
 
 	for (int n = 0; n<maxN; n++)
 	{
-		pDirectFunction = new DirectFunctionCall(token);
+		pDirectFunction = new DirectFunctionCall(*new Token(token));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
