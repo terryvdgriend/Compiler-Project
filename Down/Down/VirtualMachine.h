@@ -14,7 +14,7 @@ class VirtualMachine
 		void addIdentifer(string name);
 
 		shared_ptr<Variable> getVariable(string parameter);
-		void setVariable(string name, string value);
+		void setVariable(string key, string value, Token::iToken token);
 		vector<Variable> addArrayToDictionary(string key, int length);
 		vector<Variable> getVariableArray(string key);
 		void addItemToVariableArray(string key, Variable value);
@@ -26,6 +26,10 @@ class VirtualMachine
 		void setFunctionParameter(string name, string value);
 		string getReturnValue();
 		void setReturnValue(string value);
+
+		Token::iToken getReturnToken();
+		void setReturnToken(Token::iToken value);
+
 		void triggerRunFailure();
 
 		bool hasValueInVariableDictionary(map<string, Variable>::iterator& it);
@@ -37,6 +41,7 @@ class VirtualMachine
 	private:
 		string returnValue;
 		bool runsVeryNaz;
+		Token::iToken returnToken;
 
 		map<string, shared_ptr<BaseCommand>> commandDictionary;
 		map<string, shared_ptr<Variable>> variableDictionary;

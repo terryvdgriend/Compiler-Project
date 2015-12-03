@@ -19,8 +19,8 @@ std::pair<string, string> CommandVisitor::visit(ConstantToReturnValueCommand& co
 std::pair<string, string> CommandVisitor::visit(DivideCommand& command) { 
 	return std::pair<string, string>("divide", "by");
 }
-std::pair<string, string> CommandVisitor::visit(EqualsCommand& command) {
-	return std::pair<string, string>("", "");
+std::pair<string, string> CommandVisitor::visit(EqualsCommand& command){
+	return std::pair<string, string>("assign first variable", "with");
 }
 std::pair<string, string> CommandVisitor::visit(EqualsToCommand& command) {
 	return std::pair<string, string>("compare (==)", "to");

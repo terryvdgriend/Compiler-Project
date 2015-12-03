@@ -8,10 +8,12 @@ class Variable
 		Variable(string param);
 		VariableType getType();
 		string getValue();
-
+		void setTokenType(Token::iToken tokentype);
+		Token::iToken getTokenType();
 	private:
 		string value;
 		bool is_number(const string& s);
 		VariableType type;
 		bool is_bool(const string& s);
+		Token::iToken tokenType;
 };

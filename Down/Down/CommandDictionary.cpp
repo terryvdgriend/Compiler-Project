@@ -9,6 +9,7 @@
 	asd["printdown"] = std::make_shared<ShowFunctionCommand>();
 	asd["printup"] = std::make_shared<ShowUpFunctionCommand>();
 	asd["random"] = std::make_shared<RandomFunctionCommand>();
+	asd["ditwerkt"] = std::make_shared<RandomFunctionCommand>();
 
 	// LEES: 
 	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)

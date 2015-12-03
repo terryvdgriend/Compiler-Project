@@ -93,9 +93,16 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 	while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
 		// compile condition
 		Token * seperator = current;
-		while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
-			if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE)
+		std::stack<Token::iToken> stack;
+		while (stack.size() >= 0 && (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::FUNCTION_DECLARE_CLOSE)) {
+			if (seperator->getEnum() == Token::FUNCTION_DECLARE_OPEN)
+				stack.push(seperator->getEnum());
+			else if (seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) {
+				stack.pop();
+			}
+			else if (stack.size() == 0 && (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE))
 				break;
+
 			seperator = seperator->next;
 		}
 		CompileCondition condition = CompileCondition();
@@ -104,7 +111,7 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction = new DirectFunctionCall(*current);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
@@ -135,41 +142,65 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end)
 {
 	Token *current = &begin;
+	Token *last = &end;
 	std::vector<LinkedList*> paramList;
 	int count = 0;
 	if (_params.size() > 0) {
 		_parameters->add(new DoNothingNode());
 		LinkedList* param = new LinkedList();
+		std::stack<Token::iToken> stack;
 		do {
+			if (current->getEnum() == Token::FUNCTION_DECLARE_OPEN)
+				stack.push(current->getEnum());
+			else if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) {
+				stack.pop();
+			}
 			if (count > _params.size()-1) {
 				ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
 				break;
 			}
-			if (current->getEnum() != Token::AND_PARA)
-				param->add(new Token(*current));
-			else {
-				param->last->next = nullptr;
-				param->first->previous = nullptr;
+			if (stack.size() >= 0) {
+				if (stack.size() == 0 && current->getEnum() == Token::AND_PARA) {
+					if (param->last != nullptr) {
+					param->last->next = nullptr;
+					param->first->previous = nullptr;
 
-				ConnectParams(_paramTokens.at(count), *param);
-				paramList.push_back(param);
-				param = new LinkedList();
-				count++;
+					ConnectParams(_paramTokens.at(count), *param);
+					paramList.push_back(param);
+					}
+					else {
+						ErrorHandler::getInstance()->addError(Error{ _name + " expected filling for the parameter", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+					}
+					param = new LinkedList();
+					count++;
+				}
+				else {
+					param->add(new Token(*current));
+				}
 			}
 			current = current->next;
-			if (current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) {
-				param->last->next = nullptr;
-				param->first->previous = nullptr;
-				ConnectParams(_paramTokens.at(count), *param);
-				paramList.push_back(param);
-				param = new LinkedList();
+			if (stack.size() == 0 && current->getEnum() == Token::FUNCTION_DECLARE_CLOSE) {
+				if(param->last != nullptr){
+					param->last->next = nullptr;
+					param->first->previous = nullptr;
+					ConnectParams(_paramTokens.at(count), *param);
+					paramList.push_back(param);
+				}
+				else {
+					ErrorHandler::getInstance()->addError(Error{ _name + " expected filling for the parameter", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+				}
 				
+				param = new LinkedList();
+				break;
 			}
 
-		} while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE);
+		} while (current != &end);
 	}
-	if (count < _params.size() - 1) {
+	if (paramList.size() < _params.size()) {
 		ErrorHandler::getInstance()->addError(Error{ _name + " has less parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+	}
+	else if (paramList.size() > _params.size()) {
+		ErrorHandler::getInstance()->addError(Error{ _name + " has more parameters than expected", ".md", current->getLineNumber(),current->getPositie(), Error::error });
 	}
 
 	for (auto p : paramList) {
@@ -185,7 +216,7 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		std::string             sBuffer;
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
-		pDirectFunction = new DirectFunctionCall();
+		pDirectFunction = new DirectFunctionCall(*new Token(*_returnToken));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
@@ -218,7 +249,7 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 		DirectFunctionCall     *pDirectFunction = nullptr;
 		std::string tempVar = getNextLocalVariableName(sBuffer);
 		ChangeVariable(*_returnToken);
-		DirectFunctionCall *directFunctionCall = new DirectFunctionCall();
+		DirectFunctionCall *directFunctionCall = new DirectFunctionCall(*new Token(*_returnToken));
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
 		directFunctionCall->setAt(1, _returnToken->getText().c_str());
