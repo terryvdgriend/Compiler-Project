@@ -60,10 +60,21 @@ void GetItemFromArrayCommand::execute(VirtualMachine & vm, AbstractFunctionCall 
 	if (varArray.size() > 0)
 	{
 		shared_ptr<Variable> variable1 = vm.getVariable(parameters.at(2));
-		vm.setReturnValue(varArray.at(atoi(variable1->getValue().c_str()))->getValue());
+		if (varArray.at(atoi(variable1->getValue().c_str()))) {
+			vm.setReturnValue(varArray.at(atoi(variable1->getValue().c_str()))->getValue());
+			vm.setReturnToken(varArray.at(atoi(variable1->getValue().c_str()))->getTokenType());
+		}
+		else {
+			string index = variable1->getValue().c_str();
+			ErrorHandler::getInstance()->addError(Error{ "array index "+ index +" is undefined", ".md", -1, -1, Error::error });
+			vm.triggerRunFailure();
+			return;
+		}
+
 	}
 	else
 	{
 		ErrorHandler::getInstance()->addError(Error{ "the array is still empty", ".md", -1, -1, Error::error });
+		vm.triggerRunFailure();
 	}
 }

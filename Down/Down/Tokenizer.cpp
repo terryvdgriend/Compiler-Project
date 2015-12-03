@@ -232,25 +232,22 @@ void Tokenizer::lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iTok
 		varTokenMap[part] = pToken.getSub();
 
 	}
-	//else if (lookaheadToken == Token::ARRAY_OPEN)
-	//{
-	//	switch (currentToken)
-	//	{
-	//		case Token::TYPE_NUMBER: tempToken = Token::TYPE_NUMBER_ARRAY;
-	//			break;
-	//		case Token::TYPE_TEXT: tempToken = Token::TYPE_TEXT_ARRAY;
-	//			break;
-	//		case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
-	//			break;
-	//	}
-	//	if (arrayOpen)
-	//	{
-	//		currentToken = lookaheadToken;
-	//		part = lookahead;
-	//		s = m.suffix().str();
-	//		regex_search(s, m, e);
-	//	}
-	//}
+	else if (lookaheadToken == Token::ARRAY_OPEN)
+	{
+		switch (currentToken)
+		{
+			case Token::TYPE_NUMBER: tempToken = Token::TYPE_NUMBER_ARRAY;
+				break;
+			case Token::TYPE_TEXT: tempToken = Token::TYPE_TEXT_ARRAY;
+				break;
+			case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
+				break;
+		}
+		currentToken = lookaheadToken;
+		part = lookahead;
+		s = m.suffix().str();
+		regex_search(s, m, e);
+	}
 	else
 	{
 		if (arrayOpen) ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });

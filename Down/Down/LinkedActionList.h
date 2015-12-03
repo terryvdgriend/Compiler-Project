@@ -17,6 +17,8 @@ class LinkedActionList
 		int Count() { return count; };
 		void printList();
 
+		void removeBetween(ActionNode * start, ActionNode * end);
+
 	private:
 		int count;
 		ActionNode* first;

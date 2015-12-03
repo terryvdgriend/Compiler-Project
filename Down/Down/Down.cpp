@@ -23,7 +23,7 @@ int main(int argc,  char * argv[])
 {
 	//string eoutz = Tokenizer().getKeywordsAsJson();
 	string code = "";
-	bool C = false;
+	bool C = true;
 	bool T = false;
 
 	//==========IDE=============

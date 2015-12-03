@@ -69,9 +69,9 @@ void VirtualMachine::setVariable(string key, string value,Token::iToken token)
 	}
 }
 
-vector<string> VirtualMachine::getFunctionParametersByKey(string key)
+list<string> VirtualMachine::getFunctionParametersByKey(string key)
 {
-	vector<string> parameterList;
+	list<string> parameterList;
 	map<string, string>::iterator it = functionParameters.begin();
 
 	for (it; it != functionParameters.end(); it++)
@@ -134,16 +134,24 @@ vector<shared_ptr<Variable>> VirtualMachine::addArrayToDictionary(string key, in
 
 vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
 {
-	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(key);
-
-	if (hasValueInVariableArrayDictionary(it))
-	{
-		return it->second;
+	auto it = functionParameters.find(key);
+	if (it != functionParameters.end()) {
+		vector<shared_ptr<Variable>> varArray;
+		for (auto p : functionParameters) {
+			if (p.second == it->second) {
+				auto it = variableArrayDictionary.find(p.first);
+				if (hasValueInVariableArrayDictionary(it)) {
+					varArray = it->second;
+					break;
+				}
+				
+			}
+		}
+		return varArray;
 	}
-	//else
-	//{
-	//	ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
-	//}
+	else {
+		ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
+	}
 }
 
 void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> value)

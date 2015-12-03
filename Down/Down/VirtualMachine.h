@@ -20,7 +20,7 @@ class VirtualMachine
 		void addItemToVariableArray(string key, shared_ptr<Variable> value);
 		void addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value);
 		shared_ptr<Variable> getItemFromVariableArray(string key, int index);
-		vector<string> getFunctionParametersByKey(string name);
+		list<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
 		string getFunctionParameterValueByKey(string key);
 		void setFunctionParameter(string name, string value);

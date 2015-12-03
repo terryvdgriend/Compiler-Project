@@ -14,7 +14,7 @@ public:
 	void setFromArray(bool newFromArray) { fromArray = newFromArray; }
 
 	int getFromArrayLength() { return fromArrayLength; }
-	void setFromArrayLength(bool newFromArrayLength) { fromArrayLength = newFromArrayLength; }
+	void setFromArrayLength(int newFromArrayLength) { fromArrayLength = newFromArrayLength; }
 
 	string getCurrentArray() { return currArray; }
 	void setCurrentArray(string newCurrArray) { currArray = newCurrArray; }

@@ -11,10 +11,10 @@ void AddItemToArrayAtCommand::execute(VirtualMachine & vm, AbstractFunctionCall 
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	// TODO: Errorhandling erbij maken (geen ander type kunnen gebruiken)
 
-	Variable* param2 = vm.getVariable(parameters[2]).get();
-	Variable* param3 = vm.getVariable(parameters[3]).get();
+	shared_ptr<Variable> param2 = vm.getVariable(parameters[2]);
+	shared_ptr<Variable> param3 = vm.getVariable(parameters[3]);
 
-	vector<string> functionParams = vm.getFunctionParametersByKey(parameters[1]);
+	list<string> functionParams = vm.getFunctionParametersByKey(parameters[1]);
 
 	string key = param2->getValue();
 	string value = param3->getValue();
@@ -36,39 +36,42 @@ void AddItemToArrayAtCommand::execute(VirtualMachine & vm, AbstractFunctionCall 
 				{
 					bool isAnArrayWithItems = false;
 					vector<shared_ptr<Variable>> arrayWithItems;
-					for (string s : functionParams)
+					for (shared_ptr<Variable> v : vm.getVariableArray(temp))
 					{
-						for (shared_ptr<Variable> v : vm.getVariableArray(s))
+						if (v)
 						{
-							if (v->getType() >= 0 && v->getValue() != "")
-							{
-								isAnArrayWithItems = true;
-								break;
-							}
+							isAnArrayWithItems = true;
+							break;
 						}
-						if (isAnArrayWithItems) { arrayWithItems = vm.getVariableArray(s); }
+					}
+					if (isAnArrayWithItems) { arrayWithItems = vm.getVariableArray(temp); }
+					if (arrayWithItems.size() > 0 && atoi(key.c_str()) >= arrayWithItems.size()) {
+						ErrorHandler::getInstance()->addError(Error{ "index out of bounds", ".md", -1, -1, Error::error });
+						vm.triggerRunFailure();
+						return;
 					}
 					for (int i = 0; i < arrayWithItems.size(); i++)
 					{
-						if (arrayWithItems[i]->getType() >= 0 && arrayWithItems[i]->getValue() != "")
+						if (arrayWithItems[i])
 						{
 							vm.addItemToVariableArrayAt(arrayKey, to_string(i), arrayWithItems[i]);
 						}
 					}
 
-					for (string & item : functionParams) {
-						//vm.addItemToVariableArrayAt(item, key, value);
-					}
+					
 					break;
 				}
+			}
+			for (string & item : functionParams) {
+				vm.addItemToVariableArrayAt(item, key, param3);
 			}
 		}
 	}
 	else
 	{
-		if (key == "") { ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the key is empty", ".md", -1, -1, Error::error }); }
-		else if (value == "") { ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the value is empty", ".md", -1, -1, Error::error }); }
-		else if (arrayKey == "") { ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the array is undefined", ".md", -1, -1, Error::error }); }
-		else if (param2->getType() != VariableType::NUMBER) { ErrorHandler::getInstance()->addError(Error{ "you want to set an item from an array, but the index isn't a number", ".md", -1, -1, Error::error }); }
+		if (key == "") { ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the key is empty", ".md", -1, -1, Error::error }); vm.triggerRunFailure(); }
+		else if (value == "") { ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the value is empty", ".md", -1, -1, Error::error });vm.triggerRunFailure(); }
+		else if (arrayKey == "") { ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the array is undefined", ".md", -1, -1, Error::error }); vm.triggerRunFailure();}
+		else if (param2->getType() != VariableType::NUMBER) { ErrorHandler::getInstance()->addError(Error{ "you want to set an item from an array, but the index isn't a number", ".md", -1, -1, Error::error });vm.triggerRunFailure(); }
 	}
 }

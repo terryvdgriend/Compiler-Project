@@ -1,8 +1,10 @@
 
 >_text_ **tempFact** is "second"
-_text_{ 10 plus 10 } **array** is { "1" , "2" , "3" }
+_text_{ 3 } **array** is { "1" , "2" , "3" }
 
-_text_ **temp** is **array** { 1 }
+_text_ **temp** is **array** { 1 plus 1 plus 1 }
+
+[ printdown **temp** ]
 
 
 >**array** { 0 } is "third"

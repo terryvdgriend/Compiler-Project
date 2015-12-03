@@ -130,16 +130,16 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				}
 				listActionNodes.insertBefore(&actionBefore, pFunction);*/
 
-				tempArguments[0] = "$AddArrayToDictionary";
-				tempArguments[1] = currArray;
+				//tempArguments[0] = "$AddArrayToDictionary";
+				//tempArguments[1] = currArray;
 
 				FunctionCall* pFunction = new FunctionCall();
-				pFunction->setArraySize(2);
+				/*pFunction->setArraySize(2);
 				for (int n = 0; n < 2; n++)
 				{
 					pFunction->setAt(n, tempArguments[n].c_str());
 				}
-				listActionNodes.insertBefore(&actionBefore, pFunction);
+				listActionNodes.insertBefore(&actionBefore, pFunction);*/
 
 				string saArguments[4];
 				saArguments[0] = "$AddItemToArrayAt";

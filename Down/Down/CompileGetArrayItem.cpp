@@ -26,7 +26,7 @@ CompileGetArrayItem::~CompileGetArrayItem()
 
 void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
-	Token* current = &begin;
+ 	Token* current = &begin;
 	int arrayLevel = begin.getLevel();
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
@@ -114,7 +114,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			if (multiIndex) { compiledBodyPart = new CompilePlusMinus(); }
 			else { compiledBodyPart = new CompileSingleStatement(); }
 			
-			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
+			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes,actionBefore);
 
 			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 			directFunctionCall->setArraySize(2);
@@ -122,17 +122,6 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-			///*DirectFunctionCall* directFunctionCall = new DirectFunctionCall;
-			//directFunctionCall->setArraySize(2);
-			//directFunctionCall->setAt(0, SET_CONST_TO_RT);
-			//directFunctionCall->setAt(1, current->getText().c_str());
-			//listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-			//directFunctionCall = new DirectFunctionCall;
-			//directFunctionCall->setArraySize(2);
-			//directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			//directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			//listActionNodes.insertBefore(&actionBefore, directFunctionCall);*/
 
 			string saArguments[3];
 			saArguments[0] = "$GetItemFromArray";
@@ -147,26 +136,20 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			}
 			listActionNodes.insertBefore(&actionBefore, pFunction);
 
-			/*string temp = currArrayItemTempVar;
-			currArrayItemTempVar = getNextLocalVariableName(sBuffer);*/
-
-			directFunctionCall = new DirectFunctionCall(*new Token(*current));
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
-
-			saArguments[0] = "$=";
-			saArguments[1] = currArrayItemTempVar;
-			saArguments[2] = getCurrentLocalVariableName();
-
-			pFunction = new FunctionCall();
-			pFunction->setArraySize(3);
-			for (int n = 0; n < 3; n++)
-			{
-				pFunction->setAt(n, saArguments[n].c_str());
+			ActionNode* end = pFunction;
+			ActionNode* cur = pFunction;
+			while (end != nullptr) {
+				if (dynamic_cast<FunctionCall*>(end) != nullptr) {
+					if(dynamic_cast<FunctionCall*>(end)->getContentArrayNonConstant().at(0) == "$=")
+						break;
+				}
+				end = end->getNext();
 			}
-			listActionNodes.insertBefore(&actionBefore, pFunction);
+			end = end->getPrevious();
+
+			listActionNodes.removeBetween(cur, end);
+
+
 
 			if (!multiIndex) { current = current->next; }
 		}
