@@ -208,11 +208,11 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
+			/*DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			listActionNodes.insertBefore(&actionBefore, directFunctionCall);*/
 
 			if (!multiIndex) { current = current->next; }
 		}

@@ -26,14 +26,28 @@ CompileGetArrayItem::~CompileGetArrayItem()
 
 void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
 {
- 	Token* current = &begin;
+	Token* current = &begin;
 	int arrayLevel = begin.getLevel();
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
 	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
-	expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
+
+	/*bool hasPlusOrMin = false;
+	Token* seeker = current;
+	while (seeker->getEnum() != Token::NEWLINE) {
+		if (seeker->getEnum() == Token::PLUS || seeker->getEnum() == Token::MINUS) {
+			hasPlusOrMin = true;
+			break;
+		}
+		seeker = seeker->next;
+	}*/
+
+	//if (!hasPlusOrMin)
+	//{
+		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
+		expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
+		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
+	//}
 
 	for (TokenExpectation expectation : expected)
 	{
@@ -81,6 +95,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
+				//currArray = getNextLocalVariableName(sBuffer);
 				currArray = getCurrentLocalVariableName();
 			}
 
@@ -114,14 +129,19 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			if (multiIndex) { compiledBodyPart = new CompilePlusMinus(); }
 			else { compiledBodyPart = new CompileSingleStatement(); }
 			
-			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes,actionBefore);
+			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, actionBefore);
 
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			/*if (!hasPlusOrMin)
+			{*/
+				/*CompileSingleStatement* compiledBodyPart = new CompileSingleStatement();
+				compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, actionBefore);*/
 
+				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
+				directFunctionCall->setArraySize(2);
+				directFunctionCall->setAt(0, SET_GET_FROM_RT);
+				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			//}
 
 			string saArguments[3];
 			saArguments[0] = "$GetItemFromArray";
@@ -134,9 +154,18 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			{
 				pFunction->setAt(n, saArguments[n].c_str());
 			}
-			listActionNodes.insertBefore(&actionBefore, pFunction);
 
-			ActionNode* end = pFunction;
+			listActionNodes.insertBefore(&actionBefore, pFunction);
+			//listActionNodes.insertBefore(temp, pFunction);
+
+			//directFunctionCall = new DirectFunctionCall(*new Token(*current));
+			//directFunctionCall->setArraySize(2);
+			//directFunctionCall->setAt(0, SET_GET_FROM_RT);
+			//directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+			////listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			//listActionNodes.insertBefore(temp, directFunctionCall);
+
+			/*ActionNode* end = pFunction;
 			ActionNode* cur = pFunction;
 			while (end != nullptr) {
 				if (dynamic_cast<FunctionCall*>(end) != nullptr) {
@@ -147,11 +176,19 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			}
 			end = end->getPrevious();
 
-			listActionNodes.removeBetween(cur, end);
+			listActionNodes.removeBetween(cur, end);*/
+
+			//if (!multiIndex) { current = current->next; }
 
 
 
-			if (!multiIndex) { current = current->next; }
+			while (current->getEnum() != Token::ARRAY_CLOSE) {
+				current = current->next;
+			}
+			//current = current->next;
+
+			delete pFunction;
+			//delete compiledBodyPart;
 		}
 	}
 
