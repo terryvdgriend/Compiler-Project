@@ -29,7 +29,7 @@ void Token::print(map<string, IToken>& map)
 
 	Text::print(to_string(_positionInList) + string(4, ' '));
 	Text::print(to_string(_lineNumber) + string(4, ' '));
-	Text::print(to_string(_position)	+ string(4, ' '));
+	Text::print(to_string(_position) + string(4, ' '));
 	Text::print(_text + spacer);
 	Text::print(to_string(_level) + string(4, ' '));
 	Text::print(getStringbyEnum(map, getType()) + spacer);
@@ -52,15 +52,15 @@ void Token::addError()
 	ErrorHandler::getInstance()->addError(make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::error));
 }
 
-bool Token::operator!=(const shared_ptr<Token>& other)const
+bool Token::operator!=(const shared_ptr<Token>& other) const
 {
-	if ((_text != other->_text) ||
-		(_level != other->_level) ||
-		(_position != other->_position) ||
-		(_positionInList != other->_positionInList) ||
-		(_type != other->_type) ||
-		(_subType != other->_subType) ||
-		(_lineNumber != other->_lineNumber))
+	if (_text			!= other->_text ||
+		_level			!= other->_level ||
+		_position		!= other->_position ||
+		_positionInList != other->_positionInList ||
+		_type			!= other->_type ||
+		_subType		!= other->_subType ||
+		_lineNumber		!= other->_lineNumber)
 	{
 		return true;
 	}
@@ -70,13 +70,13 @@ bool Token::operator!=(const shared_ptr<Token>& other)const
 
 bool Token::operator!=(shared_ptr<Token> other)
 {
-	if ((_text != other->_text) ||
-		(_level != other->_level) ||
-		(_position != other->_position) ||
-		(_positionInList != other->_positionInList) ||
-		(_type != other->_type) ||
-		(_subType != other->_subType) ||
-		(_lineNumber != other->_lineNumber))
+	if (_text			!= other->_text ||
+		_level			!= other->_level ||
+		_position		!= other->_position ||
+		_positionInList	!= other->_positionInList ||
+		_type			!= other->_type ||
+		_subType		!= other->_subType ||
+		_lineNumber		!= other->_lineNumber)
 	{
 		return true;
 	}
@@ -86,13 +86,13 @@ bool Token::operator!=(shared_ptr<Token> other)
 
 bool Token::compare(shared_ptr<Token> first, shared_ptr<Token> other)
 {
-	if ((first->_text == other->_text) &&
-		(first->_level == other->_level) &&
-		(first->_position == other->_position) &&
-		(first->_positionInList == other->_positionInList) &&
-		(first->_type == other->_type) &&
-		(first->_subType == other->_subType) &&
-		(first->_lineNumber == other->_lineNumber))
+	if (first->_text			== other->_text &&
+		first->_level			== other->_level &&
+		first->_position		== other->_position &&
+		first->_positionInList	== other->_positionInList &&
+		first->_type			== other->_type &&
+		first->_subType			== other->_subType &&
+		first->_lineNumber		== other->_lineNumber)
 	{
 		return true;
 	}

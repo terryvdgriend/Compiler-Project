@@ -89,7 +89,7 @@ void NodeVisitor::visit(SwitchNode& node)
 {
 	if (node.getJumpMap().size() > 0)
 	{
-		vm->execute(*node.getSwitchConditionList());
+		vm->execute(node.getSwitchConditionList());
 		string value;
 
 		if (vm->isAnIdentifier(vm->getReturnValue()))
@@ -115,7 +115,7 @@ void NodeVisitor::visit(SwitchNode& node)
 
 		for (map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>::iterator p = node.getJumpMap().begin(); p != node.getJumpMap().end(); ++p)
 		{
-			vm->execute(*p->first);
+			vm->execute(p->first);
 			string result;
 
 			if (vm->isAnIdentifier(vm->getReturnValue()))

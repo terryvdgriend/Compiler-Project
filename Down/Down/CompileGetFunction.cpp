@@ -15,7 +15,7 @@
 CompileGetFunction::CompileGetFunction()
 {
 	_returnToken		= nullptr;
-	_bodyTokens			= make_shared<LinkedList>();
+	_bodyTokens			= make_shared<LinkedTokenList>();
 	_compiledStatement	= make_shared<LinkedActionList>();
 	_body				= make_shared<LinkedActionList>();
 	_parameters			= make_shared<LinkedActionList>();
@@ -24,7 +24,7 @@ CompileGetFunction::CompileGetFunction()
 	_compiledStatement->add(make_shared<DoNothingNode>());
 }
 
-void CompileGetFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 								 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	shared_ptr<Token> current = begin;
@@ -96,7 +96,7 @@ shared_ptr<Compiler> CompileGetFunction::create()
 	return make_shared<CompileGetFunction>();
 }
 
-void CompileGetFunction::compileNotUserDefined(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
+void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	shared_ptr<Token> current = begin;
 	vector<string> parameters;
@@ -166,18 +166,18 @@ void CompileGetFunction::compileNotUserDefined(shared_ptr<LinkedList>& tokenList
 	begin = current->getNext();
 }
 
-void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
+void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
-	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+	CompileFactory factory;
 	shared_ptr<Token> current = begin;
 	shared_ptr<Token> last = end;
-	vector<shared_ptr<LinkedList>> paramList;
+	vector<shared_ptr<LinkedTokenList>> paramList;
 	int count = 0;
 
 	if (_params.size() > 0) 
 	{
 		_parameters->add(make_shared<DoNothingNode>());
-		shared_ptr<LinkedList> param = make_shared<LinkedList>();
+		shared_ptr<LinkedTokenList> param = make_shared<LinkedTokenList>();
 		stack<IToken> stack;
 
 		do 
@@ -216,12 +216,12 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 						ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
 															  current->getPosition(), ErrorType::error));
 					}
-					param = make_shared<LinkedList>();
+					param = make_shared<LinkedTokenList>();
 					count++;
 				}
 				else 
 				{
-					param->add(current);
+					param->add(make_shared<Token>(current));
 				}
 			}
 			current = current->getNext();
@@ -240,7 +240,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 					ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
 														  current->getPosition(), ErrorType::error));
 				}
-				param = make_shared<LinkedList>();
+				param = make_shared<LinkedTokenList>();
 
 				break;
 			}
@@ -260,7 +260,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 											  current->getPosition(), ErrorType::error));
 	}
 
-	for (shared_ptr<LinkedList> p : paramList) 
+	for (shared_ptr<LinkedTokenList> p : paramList)
 	{
 		shared_ptr<CompileEquals> condition = make_shared<CompileEquals>();
 		condition->compile(p, p->getFirst(), p->getLast(), _parameters, _parameters->getLast());
@@ -268,13 +268,13 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 
 	if (_returnToken) 
 	{
-		_returnToken = _returnToken;
+		_returnToken = make_shared<Token>(_returnToken);
 		shared_ptr<LinkedActionList> rValue = make_shared<LinkedActionList>();
 		shared_ptr<CompileCondition> con = make_shared<CompileCondition>();
 		con->compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
 
 		string sBuffer;
-		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>();
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
 		string tempVar = getNextLocalVariableName(sBuffer);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
@@ -282,7 +282,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 		rValue->insertBefore(pDirectFunction, rValue->getLast());
 		_body->add(rValue);
 	}
-	shared_ptr<LinkedList> body = _bodyTokens;
+	shared_ptr<LinkedTokenList> body = _bodyTokens;
 	changeVariables(body);
 	shared_ptr<Token> currentBody = body->getFirst();
 	_body->add(make_shared<DoNothingNode>());
@@ -295,7 +295,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 
 			break;
 		}
-		shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(currentBody);
+		shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(currentBody);
 
 		if (compiledBodyPart != nullptr) 
 		{
@@ -312,7 +312,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
 		changeVariable(_returnToken);
-		shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>();
+		shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
 		directFunctionCall->setAt(1, _returnToken->getText().c_str());
@@ -321,7 +321,7 @@ void CompileGetFunction::compileUserDefined(shared_ptr<LinkedList>& tokenList, s
 	begin = current;
 }
 
-void CompileGetFunction::changeVariables(shared_ptr<LinkedList>& list)
+void CompileGetFunction::changeVariables(const shared_ptr<LinkedTokenList>& list)
 {
 	shared_ptr<Token> current = list->getFirst();
 
@@ -353,10 +353,10 @@ void CompileGetFunction::changeVariable(shared_ptr<Token>& token)
 	}	
 }
 
-void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<LinkedList>& paramlist)
+void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<LinkedTokenList>& paramlist)
 {
 	shared_ptr<Token> connectToken = make_shared<Token>();
-	shared_ptr<Token> nParam = param;
+	shared_ptr<Token> nParam = make_shared<Token>(param);
 	changeVariable(nParam);
 	connectToken->setType(IToken::EQUALS);
 	connectToken->setLevel(nParam->getLevel());
@@ -364,7 +364,7 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<Linke
 	connectToken->setPositionInList(-1);
 	connectToken->setLineNumber(-1);
 	connectToken->setText("=");
-	shared_ptr<LinkedList> templist = make_shared<LinkedList>();
+	shared_ptr<LinkedTokenList> templist = make_shared<LinkedTokenList>();
 	templist->add(nParam);
 	templist->add(connectToken);
 	shared_ptr<Token> temp = paramlist->getFirst();
@@ -384,7 +384,7 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<Linke
 	templist->add(connectToken);
 	
 	temp = templist->getFirst();
-	paramlist = make_shared<LinkedList>();
+	paramlist = make_shared<LinkedTokenList>();
 
 	while (temp != nullptr) 
 	{

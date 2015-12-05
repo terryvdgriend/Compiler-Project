@@ -13,8 +13,7 @@ class ActionNode
 		shared_ptr<ActionNode> setPrevious(shared_ptr<ActionNode> value);
 
 		virtual void show() = 0;
-		virtual void action() = 0;
-		virtual void accept(NodeVisitor& visitor) = 0;
+		virtual void accept(shared_ptr<NodeVisitor>& visitor) = 0;
 
 	private:
 		shared_ptr<ActionNode> next;

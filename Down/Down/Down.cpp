@@ -2,16 +2,16 @@
 #include "Compute.h"
 #include "FileStreamer.h"
 #include "Format.h"
-#include "LinkedList.h"
+#include "LinkedTokenList.h"
 #include "Tokenizer.h"
 #include "VirtualMachine.h"
 
-#define _CRTDBG_MAP_ALLOC
+//#define _CRTDBG_MAP_ALLOC
 
-int runDown(string& code, bool& printTokenList, bool& printCompiledList);
-shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList);
-shared_ptr<LinkedActionList> runCompiler(shared_ptr<LinkedList>&, bool printCompiledList);
-void runVirtualMachine(shared_ptr<LinkedActionList>& compiledList);
+int runDown(const string code, const bool printTokenList, const bool printCompiledList);
+shared_ptr<LinkedTokenList> runTokenizer(const string code, const bool printTokenList);
+shared_ptr<LinkedActionList> runCompiler(const shared_ptr<LinkedTokenList>&, const bool printCompiledList);
+void runVirtualMachine(const shared_ptr<LinkedActionList>& compiledList);
 bool errors();
 bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList);
 
@@ -31,10 +31,10 @@ int main(int argCounter, char* argv[])
 	return runDown(code, printTokenList, printCompiledList);;
 }
 
-int runDown(string& code, bool& printTokenList, bool& printCompiledList)
+int runDown(const string code, const bool printTokenList, const bool printCompiledList)
 {
 	//==============TOKENIZER========
-	shared_ptr<LinkedList> tokenList = runTokenizer(code, printTokenList);
+	shared_ptr<LinkedTokenList> tokenList = runTokenizer(code, printTokenList);
 
 	if (errors())
 	{
@@ -60,24 +60,24 @@ int runDown(string& code, bool& printTokenList, bool& printCompiledList)
 	return 0;
 }
 
-shared_ptr<LinkedList> runTokenizer(string code, bool printTokenList)
+shared_ptr<LinkedTokenList> runTokenizer(const string code, const  bool printTokenList)
 {
-	shared_ptr<LinkedList> tokenList = make_shared<LinkedList>();
-	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
-	tokenizer->createTokenList(tokenList, code);
+	Tokenizer tokenizer;
+	shared_ptr<LinkedTokenList> tokenList = make_shared<LinkedTokenList>();
+	tokenizer.createTokenList(tokenList, code);
 
 	if (printTokenList)
 	{
-		tokenizer->printTokenList(tokenList);
+		tokenizer.printTokenList(tokenList);
 	}
 
 	return tokenList;
 }
 
-shared_ptr<LinkedActionList> runCompiler(shared_ptr<LinkedList>& tokenList, bool printCompiledList)
+shared_ptr<LinkedActionList> runCompiler(const shared_ptr<LinkedTokenList>& tokenList, const bool printCompiledList)
 {
-	unique_ptr<Compute> compute = make_unique<Compute>();
-	shared_ptr<LinkedActionList> compiledList = compute->computeCompile(tokenList);
+	Compute compute;
+	shared_ptr<LinkedActionList> compiledList = compute.computeCompile(tokenList);
 
 	if (printCompiledList)
 	{
@@ -87,9 +87,10 @@ shared_ptr<LinkedActionList> runCompiler(shared_ptr<LinkedList>& tokenList, bool
 	return compiledList;
 }
 
-void runVirtualMachine(shared_ptr<LinkedActionList>& compiledList)
+void runVirtualMachine(const shared_ptr<LinkedActionList>& compiledList)
 {
 	shared_ptr<VirtualMachine> virtualMachine = make_shared<VirtualMachine>();
+	virtualMachine->init(virtualMachine);
 	virtualMachine->execute(compiledList);
 
 	if (!ErrorHandler::getInstance()->getErrors().empty())
@@ -103,7 +104,7 @@ bool errors()
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		cerr << ErrorHandler::getInstance()->asJson();
-
+		system("pause");
 		return true;
 	}
 
@@ -114,12 +115,12 @@ bool errors()
 // Return: false -> Stop after the execution of this mehod (used to get, for instane, snippets and tokens
 bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList)
 {
-	unique_ptr<FileStreamer> fileStramer = make_unique<FileStreamer>();
-	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
+	FileStreamer fileStramer;
+	Tokenizer tokenizer;
 
 	if (argCounter == 1)
 	{
-		code = fileStramer->readerFromResource("custom");
+		code = fileStramer.readerFromResource("custom");
 
 		return true;
 	}
@@ -135,7 +136,7 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 
 		if (opt == "-r") 
 		{
-			code = fileStramer->readerFromPath(value);
+			code = fileStramer.readerFromPath(value);
 		}
 
 		if (opt == "-t") // Print tokens
@@ -150,27 +151,27 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 
 		if (opt == "getTokens") 
 		{
-			output = tokenizer->getKeywordsAsJson();
+			output = tokenizer.getKeywordsAsJson();
 			cont = false;
 		}
 
 		if (opt == "getSnippets") 
 		{
-			output = fileStramer->readerFromResource("Snippets");
+			output = fileStramer.readerFromResource("Snippets");
 			cont = false;
 		}
 
 		if (opt == "getFunctions") 
 		{
-			output = tokenizer->getFunctionsAsJson();
+			output = tokenizer.getFunctionsAsJson();
 			cont = false;
 		}
 
 		if (opt == "getAll")
 		{
-			output = tokenizer->getFunctionsAsJson();
-			output += tokenizer->getKeywordsAsJson();
-			output += fileStramer->readerFromResource("Snippets");
+			output = tokenizer.getFunctionsAsJson();
+			output += tokenizer.getKeywordsAsJson();
+			output += fileStramer.readerFromResource("Snippets");
 
 			return false;
 		}

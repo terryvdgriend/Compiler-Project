@@ -13,12 +13,7 @@ void FunctionCall::show()
 	cout << "Function: " << function << endl;
 }
 
-void FunctionCall::action()
+void FunctionCall::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
-}
-
-void FunctionCall::accept(NodeVisitor& visitor)
-{
-	visitor.visit(*this);
+	visitor->visit(*this);
 }

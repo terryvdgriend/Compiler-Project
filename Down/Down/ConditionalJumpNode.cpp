@@ -6,14 +6,9 @@ void ConditionalJumpNode::show()
 	cout << "Conditional Jump." << endl;
 }
 
-void ConditionalJumpNode::action()
+void ConditionalJumpNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
-}
-
-void ConditionalJumpNode::accept(NodeVisitor& visitor)
-{
-	visitor.visit(*this);
+	visitor->visit(*this);
 }
 
 shared_ptr<ActionNode> ConditionalJumpNode::getOnTrue()

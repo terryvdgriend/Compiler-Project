@@ -8,7 +8,7 @@
 
 CompileUserFunction::CompileUserFunction() 
 {
-	_body			= make_shared<LinkedList>();
+	_body			= make_shared<LinkedTokenList>();
 	_returnToken	= nullptr;
 }
 
@@ -18,7 +18,7 @@ void CompileUserFunction::connectList()
 	FunctionHandler::getInstance()->addFunction(funcion);
 }
 
-void CompileUserFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 								  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	shared_ptr<Token> current = begin;
@@ -67,12 +67,12 @@ void CompileUserFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<
 			// Check if enum is comingparam else body;
 			if (current->getType() == IToken::START_PARAMETERS)
 			{
-				compileParams(tokenList, current, end);
-				compileBody(tokenList, current, bodyEnd, level);
+				compileParams(current, end);
+				compileBody(current, bodyEnd);
 			}
 			else
 			{
-				compileBody(tokenList, current, bodyEnd, level);
+				compileBody(current, bodyEnd);
 			}
 		}
 	}
@@ -80,7 +80,7 @@ void CompileUserFunction::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<
 	begin = current;
 }
 
-void CompileUserFunction::compileParams(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
+void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	shared_ptr<Token> current = begin;
 	
@@ -138,7 +138,7 @@ void CompileUserFunction::compileParams(shared_ptr<LinkedList>& tokenList, share
 	begin = current;
 }
 
-void CompileUserFunction::compileBody(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, int Level)
+void CompileUserFunction::compileBody(shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	shared_ptr<Token> current = begin;
 

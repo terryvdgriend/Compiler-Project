@@ -1,11 +1,11 @@
 #pragma once
 #include "Token.h"
 
-class LinkedList
+class LinkedTokenList
 {
 	public:
-		LinkedList();
-		LinkedList(shared_ptr<LinkedList>& other);
+		LinkedTokenList();
+		LinkedTokenList(shared_ptr<LinkedTokenList>& other);
 
 		void add(shared_ptr<Token> token);
 		void insertLast(shared_ptr<Token> token);

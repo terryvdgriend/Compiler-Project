@@ -10,7 +10,7 @@ CompileOperator::CompileOperator(shared_ptr<Compiler> nextCompile)
 	pNextLevel = nextCompile;
 }
 
-void CompileOperator::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	map<IToken, string>::iterator iFind;
@@ -98,7 +98,7 @@ void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<Act
 	nextLevelList.push_back(nextLevel);
 }
 
-void CompileOperator::compileNextLevel(shared_ptr<LinkedList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes, 
+void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes,
 									   CompileNextLevelList& nextLevelList)
 {
 	list<shared_ptr<CompileNextLevel>>::iterator step = nextLevelList.begin();

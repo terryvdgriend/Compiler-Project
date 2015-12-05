@@ -12,14 +12,9 @@ void SwitchNode::show()
 	cout << "Switch Jump." << endl;
 }
 
-void SwitchNode::action()
+void SwitchNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
-}
-
-void SwitchNode::accept(NodeVisitor& visitor)
-{
-	visitor.visit(*this);
+	visitor->visit(*this);
 }
 
 shared_ptr<LinkedActionList> SwitchNode::getDefaultNodeList()

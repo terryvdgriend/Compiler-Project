@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Function.h"
 
-Function::Function(string name, string params, shared_ptr<LinkedList> body, vector<shared_ptr<Token>>& paramTokens, shared_ptr<Token> returnToken)
+Function::Function(string name, string params, shared_ptr<LinkedTokenList> body, vector<shared_ptr<Token>>& paramTokens, shared_ptr<Token> returnToken)
 {																									 
 	_name			= name;																			 
 	_params			= params;																		 
@@ -11,7 +11,7 @@ Function::Function(string name, string params, shared_ptr<LinkedList> body, vect
 	_userDefined	= false;																		 
 }																									 
 																									 
-Function::Function(string name, string params, shared_ptr<LinkedList> body, vector<shared_ptr<Token>>& paramTokens, shared_ptr<Token> returnToken, bool userDefined)
+Function::Function(string name, string params, shared_ptr<LinkedTokenList> body, vector<shared_ptr<Token>>& paramTokens, shared_ptr<Token> returnToken, bool userDefined)
 {
 	_name			= name;
 	_params			= params;
@@ -41,7 +41,7 @@ shared_ptr<Token> Function::getReturn()
 	return _returnToken;
 }
 
-shared_ptr<LinkedList> Function::getBody()
+shared_ptr<LinkedTokenList> Function::getBody()
 {
 	return _body;
 }

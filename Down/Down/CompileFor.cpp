@@ -17,10 +17,10 @@ CompileFor::CompileFor()
 	_compiledStatement->add(make_shared<DoNothingNode>());
 }
 
-void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 						 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+	CompileFactory factory;
 	shared_ptr<Token> current = begin;
 	shared_ptr<Token> conClose = nullptr;
 	int level = begin->getLevel();
@@ -92,7 +92,7 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 					next = next->getNext();
 				}
 				// Compile the first part of the for-loop
-				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
+				shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
 				if (compiledBodyPart != nullptr)
 				{
@@ -118,7 +118,7 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 			else if (_increment->getCount() == 0)
 			{
 				// Compile the last part of the for-loop
-				shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
+				shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
 				if (compiledBodyPart != nullptr)
 				{
@@ -141,7 +141,7 @@ void CompileFor::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& b
 
 				while (current->getLevel() > level)
 				{
-					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
+					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
 					if (compiledBodyPart != nullptr) 
 					{

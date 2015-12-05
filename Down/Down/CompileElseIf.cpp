@@ -14,16 +14,16 @@ CompileElseIf::CompileElseIf()
 	_compiledStatement->add(shared_ptr<DoNothingNode>());
 }
 
-void CompileElseIf::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, shared_ptr<LinkedActionList>& listActionNodes, 
+void CompileElseIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, shared_ptr<LinkedActionList>& listActionNodes,
 							shared_ptr<ActionNode>& actionBefore)
 {
 	// No implementation - specific implementation below
 }
 
-void CompileElseIf::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, shared_ptr<LinkedActionList>& listActionNodes, 
+void CompileElseIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, shared_ptr<LinkedActionList>& listActionNodes,
 							shared_ptr<ActionNode>& actionBefore, map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& _conditionBodyMap)
 {
-	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+	CompileFactory factory;
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
@@ -87,7 +87,7 @@ void CompileElseIf::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>
 
 				while (current->getLevel() > level)
 				{
-					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
+					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
 					if (compiledBodyPart != nullptr)
 					{

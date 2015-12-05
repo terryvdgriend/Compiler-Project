@@ -7,12 +7,16 @@
 VirtualMachine::VirtualMachine()
 {
 	commandDictionary	= make_unique<CommandDictionary>();
-	errorsDetected		= false;
+	errorsDetected = false;
 }
 
-void VirtualMachine::execute(shared_ptr<LinkedActionList>& actionList)
+void VirtualMachine::init(shared_ptr<VirtualMachine>& vm)
 {
-	shared_ptr<NodeVisitor> visitor = make_shared<NodeVisitor>(*this);
+	nodeVisitor = make_shared<NodeVisitor>(vm);
+}
+
+void VirtualMachine::execute(const shared_ptr<LinkedActionList>& actionList)
+{
 	map<string, shared_ptr<BaseCommand>> map = commandDictionary->getMap();
 	shared_ptr<ActionNode> currentNode = actionList->getFirst();
 
@@ -26,8 +30,8 @@ void VirtualMachine::execute(shared_ptr<LinkedActionList>& actionList)
 			map[name]->execute(*this, actionNode->getContentArrayNonConstant());
 			
 		}
-		currentNode->accept(*visitor);
-		currentNode = visitor->getNextNode();
+		currentNode->accept(nodeVisitor);
+		currentNode = nodeVisitor->getNextNode();
 	}
 }
 

@@ -6,12 +6,7 @@ void DoNothingNode::show()
 	cout << "Do Nothing." << endl;
 }
 
-void DoNothingNode::action()
+void DoNothingNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
-}
-
-void DoNothingNode::accept(NodeVisitor& visitor)
-{
-	visitor.visit(*this);
+	visitor->visit(*this);
 }

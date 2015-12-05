@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
 #include "Format.h"
-#include "LinkedList.h"
 #include "TokenMap.h"
 #include "TokenRegex.h"
 
@@ -15,7 +14,7 @@ Tokenizer::Tokenizer()
 	actualRegex		= regex("(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\\n)|(smaller|larger) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|\\*\\*\\S*?\\*\\*|-{1,3}|^[\\(\\)\\[\\]]$|[\\S|\\n])");
 }
 
-void Tokenizer::createTokenList(shared_ptr<LinkedList>& tokenList, string codefromfile)
+void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, string codefromfile)
 {
 	shared_ptr<Token> pToken;
 	string s = codefromfile;
@@ -38,6 +37,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedList>& tokenList, string codefr
 		{
 			currentToken = getToken(part);
 		}
+
 		// No token found, so add error
 		if (currentToken == IToken::NONE)
 		{
@@ -176,7 +176,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedList>& tokenList, string codefr
 	checkRemainingErrors();
 }
 
-void Tokenizer::printTokenList(shared_ptr<LinkedList>& tokenList)
+void Tokenizer::printTokenList(shared_ptr<LinkedTokenList>& tokenList)
 {
 	Text::printLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
 	shared_ptr<Token> start = tokenList->getFirst();

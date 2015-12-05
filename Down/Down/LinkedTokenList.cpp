@@ -1,14 +1,14 @@
 #include "stdafx.h"
-#include "LinkedList.h"
+#include "LinkedTokenList.h"
 
-LinkedList::LinkedList()
+LinkedTokenList::LinkedTokenList()
 {
 	_first	= nullptr;
 	_last	= nullptr;
 	_count	= 0;
 }
 
-LinkedList::LinkedList(shared_ptr<LinkedList>& other) 
+LinkedTokenList::LinkedTokenList(shared_ptr<LinkedTokenList>& other)
 {
 	_first	= nullptr;
 	_last	= nullptr;
@@ -45,12 +45,12 @@ LinkedList::LinkedList(shared_ptr<LinkedList>& other)
 	}
 }
 
-void LinkedList::add(shared_ptr<Token> token)
+void LinkedTokenList::add(shared_ptr<Token> token)
 {
 	insertLast(token);
 }
 
-void LinkedList::insertLast(shared_ptr<Token> token)
+void LinkedTokenList::insertLast(shared_ptr<Token> token)
 {
 	if (token != nullptr)
 	{
@@ -69,27 +69,27 @@ void LinkedList::insertLast(shared_ptr<Token> token)
 	}
 }
 
-int LinkedList::getSize()
+int LinkedTokenList::getSize()
 {
 	return _count;
 }
 
-shared_ptr<Token> LinkedList::getFirst()
+shared_ptr<Token> LinkedTokenList::getFirst()
 {
 	return _first;
 }
 
-void LinkedList::setFirst(shared_ptr<Token> first)
+void LinkedTokenList::setFirst(shared_ptr<Token> first)
 {
 	_first = first;
 }
 
-shared_ptr<Token> LinkedList::getLast()
+shared_ptr<Token> LinkedTokenList::getLast()
 {
 	return _last;
 }
 
-void LinkedList::setLast(shared_ptr<Token> last)
+void LinkedTokenList::setLast(shared_ptr<Token> last)
 {
 	_last = last;
 }

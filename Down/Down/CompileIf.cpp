@@ -17,10 +17,10 @@ CompileIf::CompileIf()
 	_compiledStatement->add(make_shared<DoNothingNode>());
 }
 
-void CompileIf::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 						shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
+	CompileFactory factory;
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
@@ -91,7 +91,7 @@ void CompileIf::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& be
 
 				while (current->getLevel() > level)
 				{
-					shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
+					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
 					if (compiledBodyPart != nullptr) 
 					{
@@ -200,7 +200,7 @@ void CompileIf::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& be
 
 					while (current->getLevel() > level)
 					{
-						shared_ptr<Compiler> compiledBodyPart = factory->createCompileStatement(current);
+						shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
 						if (compiledBodyPart != nullptr) 
 						{

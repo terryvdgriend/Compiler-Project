@@ -8,7 +8,7 @@
 #define SET_CONST_TO_RT "ConstantToReturnValue"
 #define SET_GET_FROM_RT "getFromReturnValue"
 
-void CompileSingleStatement::compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 									 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	switch (begin->getType())

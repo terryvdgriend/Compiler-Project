@@ -141,7 +141,7 @@
     <ClInclude Include="IToken.h" />
     <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
-    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="LinkedTokenList.h" />
     <ClInclude Include="MandatoryCommandIncludes.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
@@ -219,7 +219,7 @@
     <ClCompile Include="IdentifierToReturnValueCommand.cpp" />
     <ClCompile Include="JumpGoToNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
-    <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="LinkedTokenList.cpp" />
     <ClCompile Include="MinusCommand.cpp" />
     <ClCompile Include="MinusMinusCommand.cpp" />
     <ClCompile Include="ModuloCommand.cpp" />

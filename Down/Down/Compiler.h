@@ -1,13 +1,13 @@
 #pragma once
 #include "LinkedActionList.h"
-#include "LinkedList.h"
+#include "LinkedTokenList.h"
 
 class Compiler
 {
 	public:
 		Compiler();
 
-		virtual void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+		virtual void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore) = 0;
 		virtual shared_ptr<Compiler> create() = 0;
 

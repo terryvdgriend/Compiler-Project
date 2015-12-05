@@ -1,6 +1,6 @@
 #pragma once
 #include "Token.h"
-#include "LinkedList.h"
+#include "LinkedTokenList.h"
 
 class Tokenizer
 {
@@ -9,8 +9,8 @@ class Tokenizer
 
 		Tokenizer();
 
-		void createTokenList(shared_ptr<LinkedList>& tokenList, string codefromfile);
-		void printTokenList(shared_ptr<LinkedList>& tokenList);
+		void createTokenList(shared_ptr<LinkedTokenList>& tokenList, string codefromfile);
+		void printTokenList(shared_ptr<LinkedTokenList>& tokenList);
 
 		bool getTokenError();
 		string getKeywordsAsJson();

@@ -6,8 +6,7 @@ class ConditionalJumpNode :	public ActionNode
 {
 	public:
 		void show();
-		void action();
-		void accept(NodeVisitor& visitor);
+		void accept(shared_ptr<NodeVisitor>& visitor);
 
 		shared_ptr<ActionNode> getOnTrue();
 		void setOnTrue(shared_ptr<ActionNode> value);

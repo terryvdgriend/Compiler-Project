@@ -4,7 +4,7 @@
 #include "CompileFactory.h"
 #include "DoNothingNode.h"
 
-shared_ptr<LinkedActionList> Compute::computeCompile(shared_ptr<LinkedList>& tokenList)
+shared_ptr<LinkedActionList> Compute::computeCompile(const shared_ptr<LinkedTokenList>& tokenList)
 {
 	shared_ptr<LinkedActionList> compiledList = make_shared<LinkedActionList>();
 	compiledList->add(make_shared<DoNothingNode>());
@@ -13,7 +13,7 @@ shared_ptr<LinkedActionList> Compute::computeCompile(shared_ptr<LinkedList>& tok
 	return compiledList;
 }
 
-void Compute::checkNewCompile(shared_ptr<LinkedList>& tokenList, shared_ptr<LinkedActionList>& compiledList, shared_ptr<Token> token)
+void Compute::checkNewCompile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList, shared_ptr<Token> token)
 {
 	if (ErrorHandler::getInstance()->getErrors().size() > 0)
 	{

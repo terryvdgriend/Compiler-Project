@@ -7,8 +7,9 @@ class VirtualMachine
 {
 	public:
 		VirtualMachine();
-
-		void execute(shared_ptr<LinkedActionList>& actionList);
+		
+		void init(shared_ptr<VirtualMachine>& vm);
+		void execute(const shared_ptr<LinkedActionList>& actionList);
 
 		void addIdentifer(string name);
 
@@ -29,9 +30,10 @@ class VirtualMachine
 		bool errorsDetected;
 
 		unique_ptr<CommandDictionary> commandDictionary;
+		shared_ptr<NodeVisitor> nodeVisitor;
+
 		map<string, shared_ptr<Variable>> variableDictionary;
 		map<string, string> functionParamters;
-
 		vector<string> identifierList;
 
 		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);

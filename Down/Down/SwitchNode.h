@@ -9,8 +9,7 @@ class SwitchNode : public ActionNode
 		SwitchNode();
 
 		void show();
-		void action();
-		void accept(NodeVisitor& visitor);
+		void accept(shared_ptr<NodeVisitor>& visitor);
 
 		shared_ptr<LinkedActionList> getDefaultNodeList();
 		shared_ptr<LinkedActionList> getSwitchConditionList();

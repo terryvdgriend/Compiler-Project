@@ -249,9 +249,6 @@
     <ClCompile Include="LinkedActionList.cpp">
       <Filter>Source Files\Utils\Collections</Filter>
     </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>Source Files\Utils\Collections</Filter>
-    </ClCompile>
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils\ErrorHandling</Filter>
     </ClCompile>
@@ -344,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="TokenRegex.cpp">
       <Filter>Source Files\Tokenizer\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedTokenList.cpp">
+      <Filter>Source Files\Utils\Collections</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -497,9 +497,6 @@
     <ClInclude Include="LinkedActionList.h">
       <Filter>Header Files\Utils\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedList.h">
-      <Filter>Header Files\Utils\Collections</Filter>
-    </ClInclude>
     <ClInclude Include="CompileDoWhile.h">
       <Filter>Header Files\Compiler\Compile\Loops</Filter>
     </ClInclude>
@@ -580,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="TokenExpectation.h">
       <Filter>Header Files\Tokenizer\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedTokenList.h">
+      <Filter>Header Files\Utils\Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

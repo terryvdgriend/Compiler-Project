@@ -6,6 +6,5 @@ class DoNothingNode : public ActionNode
 {
 	public:
 		void show();
-		void action();
-		void accept(NodeVisitor& visitor);
+		void accept(shared_ptr<NodeVisitor>& visitor);
 };

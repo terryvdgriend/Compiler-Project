@@ -7,14 +7,9 @@ void  JumpGoToNode::show()
 	jumpToNode->show();
 }
 
-void  JumpGoToNode::action()
+void JumpGoToNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
-}
-
-void JumpGoToNode::accept(NodeVisitor& visitor)
-{
-	visitor.visit(*this);
+	visitor->visit(*this);
 }
 
 shared_ptr<ActionNode> JumpGoToNode::getJumpToNode()

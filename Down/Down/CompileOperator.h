@@ -10,8 +10,9 @@ class CompileOperator : public Compiler
 
 		CompileOperator(shared_ptr<Compiler> nextCompile);
 
-		void compile(shared_ptr<LinkedList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, 
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
+		virtual shared_ptr<Compiler> create() = 0;
 		
 	protected:
 		TokenMap tokenMap;
@@ -22,5 +23,5 @@ class CompileOperator : public Compiler
 		void fillRunList(const string& sFunctionName, shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& iBefore, vector<shared_ptr<ActionNode>>& beforeList);
 		void fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& current, shared_ptr<CompileNextLevel>& nextLevel, CompileNextLevelList& nextLevelList);
 		void insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, shared_ptr<CompileNextLevel>& nextLevel, CompileNextLevelList& nextLevelList);
-		void compileNextLevel(shared_ptr<LinkedList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes, CompileNextLevelList& nextLevelList);
+		void compileNextLevel(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes, CompileNextLevelList& nextLevelList);
 };

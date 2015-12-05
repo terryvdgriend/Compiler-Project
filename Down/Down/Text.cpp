@@ -21,7 +21,7 @@ namespace Text
 		cout << text;
 	}
 
-	vector<string> split(const string &s, char delim) 
+	vector<string> split(const string& s, char delim) 
 	{
 		stringstream ss(s);
 		string item;
@@ -36,15 +36,15 @@ namespace Text
 	}
 
 	// Trim from start
-	string &ltrim(string &s) 
+	string& ltrim(string& s) 
 	{
-		s.erase(s.begin(), find_if(s.begin(), s.end(), std::not1(ptr_fun<int, int>(std::isspace))));
+		s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
 
 		return s;
 	}
 
 	// Trim from end
-	 std::string &rtrim(std::string &s) 
+	 string& rtrim(string& s) 
 	 {
 		s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
 
@@ -52,7 +52,7 @@ namespace Text
 	}
 
 	// Trim from both ends
-	string &trim(string &s) 
+	string& trim(string& s) 
 	{
 		return ltrim(rtrim(s));
 	}
