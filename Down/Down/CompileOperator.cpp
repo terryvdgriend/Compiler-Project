@@ -46,7 +46,6 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 {
 	string saArguments[3];
 	string sBuffer;
-	shared_ptr<FunctionCall> pFunction = nullptr;
 	shared_ptr<DirectFunctionCall> pDirectFunction = nullptr;
 	int maxN = 2;
 
@@ -62,7 +61,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
 		beforeList.push_back(listActionNodes->insertBefore(iBefore, pDirectFunction));
 	}
-	pFunction = make_shared<FunctionCall>();
+	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(3);
 
 	for (int n = 0; n < 3; n++)

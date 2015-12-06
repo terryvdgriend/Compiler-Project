@@ -270,8 +270,8 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 	{
 		_returnToken = make_shared<Token>(_returnToken);
 		shared_ptr<LinkedActionList> rValue = make_shared<LinkedActionList>();
-		shared_ptr<CompileCondition> con = make_shared<CompileCondition>();
-		con->compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
+		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
+		condition->compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
 
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
@@ -307,7 +307,7 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 		}
 	}
 
-	if (_returnToken) 
+	if (_returnToken != nullptr) 
 	{
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
