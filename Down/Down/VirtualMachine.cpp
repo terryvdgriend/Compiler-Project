@@ -6,7 +6,7 @@
 
 VirtualMachine::VirtualMachine()
 {
-	commandDictionary	= make_unique<CommandDictionary>();
+	commandDictionary = make_unique<CommandDictionary>();
 	errorsDetected = false;
 }
 

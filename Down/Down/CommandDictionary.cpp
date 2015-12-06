@@ -42,7 +42,6 @@ map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary["printdown"]			= make_shared<ShowFunctionCommand>();
 	customFunctionDictionary["printup"]				= make_shared<ShowUpFunctionCommand>();
 	customFunctionDictionary["random"]				= make_shared<RandomFunctionCommand>();
-	customFunctionDictionary["ditwerkt"]			= make_shared<RandomFunctionCommand>();
 
 	/*
 		READ:

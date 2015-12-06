@@ -92,11 +92,6 @@ void runVirtualMachine(const shared_ptr<LinkedActionList>& compiledList)
 	shared_ptr<VirtualMachine> virtualMachine = make_shared<VirtualMachine>();
 	virtualMachine->init(virtualMachine);
 	virtualMachine->execute(compiledList);
-
-	if (!ErrorHandler::getInstance()->getErrors().empty())
-	{
-		cerr << ErrorHandler::getInstance()->asJson();
-	}
 }
 
 bool errors()
@@ -104,7 +99,7 @@ bool errors()
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		cerr << ErrorHandler::getInstance()->asJson();
-
+		
 		return true;
 	}
 
@@ -112,7 +107,7 @@ bool errors()
 }
 
 // Return: true  -> Proceed with the rest of the code (most probable)
-// Return: false -> Stop after the execution of this mehod (used to get, for instane, snippets and tokens
+// Return: false -> Stop after the execution of this mehod (used to get, for instane, snippets and tokens)
 bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, bool& printCompiledList)
 {
 	FileStreamer fileStramer;
@@ -144,7 +139,7 @@ bool ideStuff(int argCounter, char* argv[], string& code, bool& printTokenList, 
 			printTokenList = true;
 		}
 
-		if (opt == "-c") // Print runlist
+		if (opt == "-c") // Print compiled list
 		{
 			printCompiledList = true;
 		}
