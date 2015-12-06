@@ -22,8 +22,8 @@ void Compute::checkNewCompile(const shared_ptr<LinkedTokenList>& tokenList, shar
 
 	if (token != nullptr)
 	{
-		unique_ptr<CompileFactory> factory = make_unique<CompileFactory>();
-		shared_ptr<Compiler> compiler = factory->createCompileStatement(token);
+		CompileFactory factory;
+		shared_ptr<Compiler> compiler = factory.createCompileStatement(token);
 
 		if (compiler != nullptr)
 		{

@@ -4,14 +4,21 @@
 
 CompileFactory::CompileFactory()
 {
+	// Coniditonal
 	tokenCompileDictionary[IToken::IF]						= make_shared<CompileIf>();
-	tokenCompileDictionary[IToken::WHILE]					= make_shared<CompileWhile>();
-	tokenCompileDictionary[IToken::FOR]						= make_shared<CompileFor>();
-	tokenCompileDictionary[IToken::DO]						= make_shared<CompileDoWhile>();
+	tokenCompileDictionary[IToken::SWITCH]					= make_shared<CompileSwitch>();
+
+	// Function
 	tokenCompileDictionary[IToken::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
 	tokenCompileDictionary[IToken::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
+
+	// Loop
+	tokenCompileDictionary[IToken::DO]						= make_shared<CompileDoWhile>();
+	tokenCompileDictionary[IToken::FOR]						= make_shared<CompileFor>();
+	tokenCompileDictionary[IToken::WHILE]					= make_shared<CompileWhile>();
+
+	// Miscellaneous
 	tokenCompileDictionary[IToken::IDENTIFIER]				= make_shared<CompileEquals>();
-	tokenCompileDictionary[IToken::SWITCH]					= make_shared<CompileSwitch>();
 	tokenCompileDictionary[IToken::NEWLINE]					= nullptr;
 }
 

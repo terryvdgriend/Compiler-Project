@@ -46,7 +46,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 {
 	string saArguments[3];
 	string sBuffer;
-	shared_ptr<DirectFunctionCall> pDirectFunction = nullptr;
+	shared_ptr<DirectFunctionCall> pDirectFunction;
 	int maxN = 2;
 
 	saArguments[0] = sFunctionName;
@@ -100,7 +100,7 @@ void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<Act
 void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes,
 									   CompileNextLevelList& nextLevelList)
 {
-	list<shared_ptr<CompileNextLevel>>::iterator step = nextLevelList.begin();
+	CompileNextLevelList::iterator step = nextLevelList.begin();
 
 	while (step != nextLevelList.end())
 	{
