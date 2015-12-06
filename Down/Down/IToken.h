@@ -10,35 +10,35 @@ enum IToken
 	DIVIDE,
 	LESS_THAN,
 	LARGER_THAN,
-	IDENTIFIER,			// VARB **i**
-	NUMBER,				// 1-2-3-4
-	TEXT,				// "txt" 
+	IDENTIFIER,
+	NUMBER,
+	TEXT,
 	FACT,
 	TYPE_NUMBER,
 	TYPE_TEXT,
 	TYPE_FACT,
-	CONDITION_OPEN,		// ( -> simuleren?
-	CONDITION_CLOSE,	// ) -> simuleren?
-	FUNCTION_OPEN,		// ( -> simuleren?
-	FUNCTION_CLOSE,		// ) -> simuleren?
-	BODY_OPEN,			// ____
-	BODY_CLOSED,		// ____
+	CONDITION_OPEN,	
+	CONDITION_CLOSE,
+	FUNCTION_OPEN,	
+	FUNCTION_CLOSE,	
+	BODY_OPEN,
+	BODY_CLOSE,
 	DO,
 	WHILE,
 	IF,
 	ELSE,
-	ELIF,
-	EQUALS,				// IS
-	EQUALS_TO,			// LIKE
-	AND_PARA,			// , (comma)
+	ELSEIF,
+	EQUALS,
+	EQUALS_TO,
+	AND_PARA,
 	CLASS,
 	BOOL,
 	MODULO,
 	PRIVATE,
 	FOR,
 	FOREACH,
-	PRINT,				// TODO: mag weg nu?
-	PRINTUP,			// TODO: mag weg nu?
+	PRINT,
+	PRINTUP,
 	PLUSPLUS,
 	MINUSMINUS,
 	SEPARATOR,
@@ -60,5 +60,5 @@ enum IToken
 	SWITCH_CASE,
 	SWITCH_DEFAULT,
 	SWITCH,
-	ANY					// ALS LAATSTE ! (?)
+	ANY
 };

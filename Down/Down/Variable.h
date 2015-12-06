@@ -5,12 +5,17 @@ class Variable
 {
 	public:
 		Variable(string param);
+
 		VariableType getType();
 		string getValue();
+		IToken getTokenType();
+		void setTokenType(IToken tokentype);
 
 	private:
-		string value;
+		string _value;
+		IToken _tokenType;
+		VariableType _variableType;
+
 		bool is_number(const string& s);
-		VariableType type;
 		bool is_bool(const string& s);
 };

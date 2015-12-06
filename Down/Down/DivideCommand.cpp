@@ -2,13 +2,17 @@
 #include "DivideCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
 	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number)
 	{
@@ -31,6 +35,7 @@ void DivideCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	{
 		// Exception division requires 2 numbers
 		throwTypeError(variable1, variable2, vm);
+
 		return;
 	}
 }

@@ -4,6 +4,6 @@
 class TimesCommand : public BaseCommand
 {
 	public:
-		void execute(VirtualMachine& vm, vector<string>& parameters);
-		/*virtual*/ pair<string, string> accept(CommandVisitor &cmdVisitor);
+		void execute(VirtualMachine& vm, AbstractFunctionCall& node);
+		pair<string, string> accept(CommandVisitor& cmdVisitor);
 };

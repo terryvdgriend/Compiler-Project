@@ -1,6 +1,5 @@
 #pragma once
 #include "ActionNode.h"
-#include "NodeVisitor.h"
 
 class ConditionalJumpNode :	public ActionNode
 {

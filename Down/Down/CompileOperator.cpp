@@ -5,9 +5,9 @@
 
 #define szGetFromReturnValue "getFromReturnValue"
 
-CompileOperator::CompileOperator(shared_ptr<Compiler> nextCompile)
+CompileOperator::CompileOperator(shared_ptr<Compiler> nextlevel)
 {
-	pNextLevel = nextCompile;
+	pNextLevel = nextlevel;
 }
 
 void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
@@ -31,7 +31,7 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 
 		if (iFind != tokenMap.end())
 		{
-			fillRunList(iFind->second, listActionNodes, actionBefore, beforeList);
+			fillRunList(iFind->second, listActionNodes, actionBefore, beforeList, current);
 			fillNextLevelList(beforeList, current, nextLevel, nextLevelList);
 		}
 		current = current->getNext();
@@ -42,7 +42,7 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 }
 
 void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& iBefore, 
-								  vector<shared_ptr<ActionNode>>& beforeList)
+								  vector<shared_ptr<ActionNode>>& beforeList, shared_ptr<Token>& token)
 {
 	string saArguments[3];
 	string sBuffer;
@@ -56,7 +56,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 
 	for (int n = 0; n < maxN; n++)
 	{
-		pDirectFunction = make_shared<DirectFunctionCall>();
+		pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(token));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());

@@ -23,3 +23,5 @@
 #include "GetFromValueCommand.h"
 
 #include "ShowFunctionCommand.h"
+#include "ShowUpFunctionCommand.h"
+#include "RandomFunctionCommand.h"

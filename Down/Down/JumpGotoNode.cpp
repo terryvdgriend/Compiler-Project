@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "JumpGoToNode.h"
+#include "MandatoryNodeIncludes.h"
 
 void  JumpGoToNode::show()
 {

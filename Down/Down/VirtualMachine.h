@@ -10,17 +10,19 @@ class VirtualMachine
 		
 		void init(shared_ptr<VirtualMachine>& vm);
 		void execute(const shared_ptr<LinkedActionList>& actionList);
-
-		void addIdentifer(string name);
+		void triggerRunFailure();
+		
+		string getReturnValue();
+		void setReturnValue(string value);
+		IToken getReturnToken();
+		void setReturnToken(IToken value);
 
 		shared_ptr<Variable> getVariable(string parameter);
-		void setVariable(string name, string value);
+		void setVariable(string key, string value, IToken token);
 		vector<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
 		void setFunctionParameter(string name, string value);
-		string getReturnValue();
-		void setReturnValue(string value);
-		void triggerRunFailure();
+		void addIdentifer(string name);
 
 		bool hasValueInFunctionParameters(string parameter);
 		bool isAnIdentifier(string name);
@@ -28,6 +30,7 @@ class VirtualMachine
 	private:
 		string returnValue;
 		bool errorsDetected;
+		IToken returnToken;
 
 		unique_ptr<CommandDictionary> commandDictionary;
 		shared_ptr<NodeVisitor> nodeVisitor;

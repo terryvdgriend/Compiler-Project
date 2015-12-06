@@ -28,13 +28,13 @@ void CompileElseIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 	int level = begin->getLevel();
 
 	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::ELIF));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::ELSEIF));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_OPEN));
 	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
 	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSED));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
 
 	for (shared_ptr<TokenExpectation> expectation : expected)
 	{

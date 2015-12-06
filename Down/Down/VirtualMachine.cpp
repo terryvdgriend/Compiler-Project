@@ -27,20 +27,36 @@ void VirtualMachine::execute(const shared_ptr<LinkedActionList>& actionList)
 		if (actionNode != nullptr)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
-			map[name]->execute(*this, actionNode->getContentArrayNonConstant());
-			
+			map[name]->execute(*this, *actionNode);	
 		}
 		currentNode->accept(nodeVisitor);
 		currentNode = nodeVisitor->getNextNode();
 	}
 }
 
-void VirtualMachine::addIdentifer(string name)
+void VirtualMachine::triggerRunFailure()
 {
-	if (!isAnIdentifier(name))
-	{
-		identifierList.push_back(name);
-	}
+	errorsDetected = true;
+}
+
+string VirtualMachine::getReturnValue()
+{
+	return returnValue;
+}
+
+void VirtualMachine::setReturnValue(string value)
+{
+	returnValue = value;
+}
+
+IToken VirtualMachine::getReturnToken()
+{
+	return returnToken;
+}
+
+void VirtualMachine::setReturnToken(IToken value)
+{
+	returnToken = value;
 }
 
 shared_ptr<Variable> VirtualMachine::getVariable(string key)
@@ -55,17 +71,20 @@ shared_ptr<Variable> VirtualMachine::getVariable(string key)
 	return nullptr;
 }
 
-void VirtualMachine::setVariable(string key, string value)
+void VirtualMachine::setVariable(string key, string value, IToken token)
 {
 	map<string, shared_ptr<Variable>>::iterator it = variableDictionary.find(key);
 
 	if (hasValueInVariableDictionary(it))
 	{
 		it->second = make_shared<Variable>(value);
+		it->second.get()->setTokenType(token);
 	}
 	else
 	{
-		variableDictionary.insert(make_pair(key, make_shared<Variable>(value)));
+		pair<string, shared_ptr<Variable>> pair = make_pair(key, make_shared<Variable>(value));
+		pair.second.get()->setTokenType(token);
+		variableDictionary.insert(pair);
 	}
 }
 
@@ -106,19 +125,12 @@ void VirtualMachine::setFunctionParameter(string name, string value)
 	functionParamters[name] = value;
 }
 
-string VirtualMachine::getReturnValue()
+void VirtualMachine::addIdentifer(string name)
 {
-	return returnValue;
-}
-
-void VirtualMachine::setReturnValue(string value)
-{
-	returnValue = value;
-}
-
-void VirtualMachine::triggerRunFailure()
-{
-	errorsDetected = true;
+	if (!isAnIdentifier(name))
+	{
+		identifierList.push_back(name);
+	}
 }
 
 bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it)
@@ -126,12 +138,12 @@ bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variabl
 	return it != variableDictionary.end();
 }
 
-bool VirtualMachine::hasValueInFunctionParameters(string key)
-{
-	return functionParamters.find(key) != functionParamters.end();
-}
-
 bool VirtualMachine::isAnIdentifier(string name)
 {
 	return find(identifierList.begin(), identifierList.end(), name) != identifierList.end();
+}
+
+bool VirtualMachine::hasValueInFunctionParameters(string key)
+{
+	return functionParamters.find(key) != functionParamters.end();
 }

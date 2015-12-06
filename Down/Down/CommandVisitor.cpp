@@ -14,7 +14,7 @@ pair<string, string> CommandVisitor::visit(DivideCommand& command)
 
 pair<string, string> CommandVisitor::visit(EqualsCommand& command)
 {
-	return pair<string, string>("", "");
+	return pair<string, string>("assign first variable", "with");
 }
 
 pair<string, string> CommandVisitor::visit(EqualsToCommand& command)

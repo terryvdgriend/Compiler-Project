@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SwitchNode.h"
+#include "MandatoryNodeIncludes.h"
 
 SwitchNode::SwitchNode()
 {

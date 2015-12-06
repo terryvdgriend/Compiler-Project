@@ -130,7 +130,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 		// Create direct functioncall
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
-		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>();
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(current);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
@@ -274,8 +274,8 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 		con->compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
 
 		string sBuffer;
-		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
 		string tempVar = getNextLocalVariableName(sBuffer);
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());

@@ -31,7 +31,7 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
 	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSED));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
 
 	for (shared_ptr<TokenExpectation> expectation : expected)
 	{
@@ -122,7 +122,7 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 			}
 		}
 
-		while (current->getType() == IToken::ELIF)
+		while (current->getType() == IToken::ELSEIF)
 		{
 			shared_ptr<CompileElseIf> compileElseIf = make_shared<CompileElseIf>();
 			shared_ptr<LinkedActionList> newBody = make_shared<LinkedActionList>();
@@ -155,7 +155,7 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 			expected.push_back(make_shared<TokenExpectation>(level, IToken::ELSE));
 			expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
 			expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-			expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSED));
+			expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
 
 			for (shared_ptr<TokenExpectation> expectation : expected)	
 			{

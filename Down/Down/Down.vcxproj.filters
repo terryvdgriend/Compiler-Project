@@ -49,12 +49,6 @@
     <Filter Include="Source Files\Compiler\Nodes">
       <UniqueIdentifier>{fac2dac8-b3a4-46bf-957b-1b5efc2e3b6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{cce45383-3129-4110-8e3e-b08cb921d1c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils">
-      <UniqueIdentifier>{6e285845-8eee-4646-838a-1c3147428ad4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\VM\Commands">
       <UniqueIdentifier>{c8b51d8f-67a9-4df3-a1d6-3a1e8f5aa4c9}</UniqueIdentifier>
     </Filter>
@@ -66,30 +60,6 @@
     </Filter>
     <Filter Include="Source Files\VM\Variable">
       <UniqueIdentifier>{e583ce7c-bde8-4370-ab1b-f57e59881246}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils\ErrorHandling">
-      <UniqueIdentifier>{e5e5b89d-68f6-40e3-ad52-fb934d48f689}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils\FunctionHandling">
-      <UniqueIdentifier>{63ffb78b-dedd-438d-87f7-36e585f297b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils\Collections">
-      <UniqueIdentifier>{7667d6f1-6d6d-40d8-8a37-30f561d7c486}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils\Miscellaneous">
-      <UniqueIdentifier>{6241761d-7aab-45aa-8f61-81d376def772}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utils\ErrorHandling">
-      <UniqueIdentifier>{2c1738bd-90b5-45a1-b218-63963745a39e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utils\FunctionHandling">
-      <UniqueIdentifier>{e4441849-1f57-4eb3-b0da-eaeb45d1cbcf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utils\Miscellaneous">
-      <UniqueIdentifier>{6d3c77c5-b578-4a14-9fd7-32a7f6cf5788}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utils\Collections">
-      <UniqueIdentifier>{a4e54dbf-cc1f-43e1-9923-1839abb995eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\TestScripts">
       <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
@@ -127,13 +97,61 @@
     <Filter Include="Header Files\Tokenizer\Token">
       <UniqueIdentifier>{dc6ef6b2-8c87-4e62-950d-395d41bee88a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Tokenizer\Utils">
-      <UniqueIdentifier>{30126ca1-e454-44ff-94e0-cc9c6744d89f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tokenizer\Token">
       <UniqueIdentifier>{65cad6d6-b545-4d54-b04c-7b44abd3ff8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Tokenizer\Utils">
+    <Filter Include="Header Files\VM\Commands\Functions">
+      <UniqueIdentifier>{f555dd3f-3295-4b30-a580-070c76f7096a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Operators">
+      <UniqueIdentifier>{3a59071e-cbf7-4198-b482-4ae2be45fe13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Miscellaneous">
+      <UniqueIdentifier>{ba359f26-3e13-427e-8691-989a0b7447bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Operators">
+      <UniqueIdentifier>{c440a896-5b68-451a-a16d-44ee3af6b570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Functions">
+      <UniqueIdentifier>{163c532f-5229-4be7-b5de-e70785adff71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Miscellaneous">
+      <UniqueIdentifier>{d1091f15-067e-4bfb-b2c7-720c6a2c32a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{cce45383-3129-4110-8e3e-b08cb921d1c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\ErrorHandling">
+      <UniqueIdentifier>{2c1738bd-90b5-45a1-b218-63963745a39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\FunctionHandling">
+      <UniqueIdentifier>{e4441849-1f57-4eb3-b0da-eaeb45d1cbcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Miscellaneous">
+      <UniqueIdentifier>{6d3c77c5-b578-4a14-9fd7-32a7f6cf5788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Collections">
+      <UniqueIdentifier>{a4e54dbf-cc1f-43e1-9923-1839abb995eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{6e285845-8eee-4646-838a-1c3147428ad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\ErrorHandling">
+      <UniqueIdentifier>{e5e5b89d-68f6-40e3-ad52-fb934d48f689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\FunctionHandling">
+      <UniqueIdentifier>{63ffb78b-dedd-438d-87f7-36e585f297b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Collections">
+      <UniqueIdentifier>{7667d6f1-6d6d-40d8-8a37-30f561d7c486}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Miscellaneous">
+      <UniqueIdentifier>{6241761d-7aab-45aa-8f61-81d376def772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer\Utilities">
+      <UniqueIdentifier>{30126ca1-e454-44ff-94e0-cc9c6744d89f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tokenizer\Utilities">
       <UniqueIdentifier>{9c90861a-1538-4383-9580-2076484a6bee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -174,57 +192,6 @@
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="DivideCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EqualsCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GetFromValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GreaterEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GreaterThanCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="IdentifierToReturnValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="MinusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="MinusMinusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuloCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="NotEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlusPlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ShowFunctionCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="SmallerEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="SmallerThanCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="TimesCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\VM\Variable</Filter>
     </ClCompile>
@@ -237,9 +204,6 @@
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
-    <ClCompile Include="ConstantToReturnValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
@@ -247,31 +211,31 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LinkedActionList.cpp">
-      <Filter>Source Files\Utils\Collections</Filter>
+      <Filter>Source Files\Utilities\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Error.cpp">
-      <Filter>Source Files\Utils\ErrorHandling</Filter>
+      <Filter>Source Files\Utilities\ErrorHandling</Filter>
     </ClCompile>
     <ClCompile Include="ErrorHandler.cpp">
-      <Filter>Source Files\Utils\ErrorHandling</Filter>
+      <Filter>Source Files\Utilities\ErrorHandling</Filter>
     </ClCompile>
     <ClCompile Include="FileStreamer.cpp">
-      <Filter>Source Files\Utils\Miscellaneous</Filter>
+      <Filter>Source Files\Utilities\Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="Format.cpp">
-      <Filter>Source Files\Utils\Miscellaneous</Filter>
+      <Filter>Source Files\Utilities\Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Utils\Miscellaneous</Filter>
+      <Filter>Source Files\Utilities\Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="FunctionHandler.cpp">
-      <Filter>Source Files\Utils\FunctionHandling</Filter>
+      <Filter>Source Files\Utilities\FunctionHandling</Filter>
     </ClCompile>
     <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\VM\Visitors</Filter>
     </ClCompile>
     <ClCompile Include="Function.cpp">
-      <Filter>Source Files\Utils\FunctionHandling</Filter>
+      <Filter>Source Files\Utilities\FunctionHandling</Filter>
     </ClCompile>
     <ClCompile Include="CompileComparison.cpp">
       <Filter>Source Files\Compiler\Compile\Operators</Filter>
@@ -334,16 +298,76 @@
       <Filter>Source Files\Tokenizer\Token</Filter>
     </ClCompile>
     <ClCompile Include="TokenExpectation.cpp">
-      <Filter>Source Files\Tokenizer\Utils</Filter>
+      <Filter>Source Files\Tokenizer\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="TokenMap.cpp">
-      <Filter>Source Files\Tokenizer\Utils</Filter>
+      <Filter>Source Files\Tokenizer\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="TokenRegex.cpp">
-      <Filter>Source Files\Tokenizer\Utils</Filter>
+      <Filter>Source Files\Tokenizer\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="LinkedTokenList.cpp">
-      <Filter>Source Files\Utils\Collections</Filter>
+      <Filter>Source Files\Utilities\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="DivideCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="EqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="EqualsCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="GreaterEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="GreaterThanCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusMinusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuloCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="PlusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="PlusPlusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallerEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallerThanCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="TimesCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantToReturnValueCommand.cpp">
+      <Filter>Source Files\VM\Commands\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="GetFromValueCommand.cpp">
+      <Filter>Source Files\VM\Commands\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="IdentifierToReturnValueCommand.cpp">
+      <Filter>Source Files\VM\Commands\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowUpFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,60 +399,6 @@
       <Filter>Header Files\Compiler</Filter>
     </ClInclude>
     <ClInclude Include="BaseCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstantToReturnValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="DivideCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="EqualsCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="EqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GetFromValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GreaterEqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GreaterThanCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="IdentifierToReturnValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="MinusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="MinusMinusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuloCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="NotEqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="PlusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="PlusPlusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ShowFunctionCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="SmallerEqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="SmallerThanCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="TimesCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="AbstractFunctionCall.h">
@@ -468,34 +438,34 @@
       <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="Error.h">
-      <Filter>Header Files\Utils\ErrorHandling</Filter>
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
     </ClInclude>
     <ClInclude Include="ErrorHandler.h">
-      <Filter>Header Files\Utils\ErrorHandling</Filter>
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
     </ClInclude>
     <ClInclude Include="ErrorLocation.h">
-      <Filter>Header Files\Utils\ErrorHandling</Filter>
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
     </ClInclude>
     <ClInclude Include="ErrorType.h">
-      <Filter>Header Files\Utils\ErrorHandling</Filter>
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
     </ClInclude>
     <ClInclude Include="FileStreamer.h">
-      <Filter>Header Files\Utils\Miscellaneous</Filter>
+      <Filter>Header Files\Utilities\Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="Format.h">
-      <Filter>Header Files\Utils\Miscellaneous</Filter>
+      <Filter>Header Files\Utilities\Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>Header Files\Utils\Miscellaneous</Filter>
+      <Filter>Header Files\Utilities\Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="Function.h">
-      <Filter>Header Files\Utils\FunctionHandling</Filter>
+      <Filter>Header Files\Utilities\FunctionHandling</Filter>
     </ClInclude>
     <ClInclude Include="FunctionHandler.h">
-      <Filter>Header Files\Utils\FunctionHandling</Filter>
+      <Filter>Header Files\Utilities\FunctionHandling</Filter>
     </ClInclude>
     <ClInclude Include="LinkedActionList.h">
-      <Filter>Header Files\Utils\Collections</Filter>
+      <Filter>Header Files\Utilities\Collections</Filter>
     </ClInclude>
     <ClInclude Include="CompileDoWhile.h">
       <Filter>Header Files\Compiler\Compile\Loops</Filter>
@@ -567,26 +537,86 @@
       <Filter>Header Files\Tokenizer\Token</Filter>
     </ClInclude>
     <ClInclude Include="IToken.h">
-      <Filter>Header Files\Tokenizer\Utils</Filter>
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="TokenRegex.h">
-      <Filter>Header Files\Tokenizer\Utils</Filter>
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="TokenMap.h">
-      <Filter>Header Files\Tokenizer\Utils</Filter>
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="TokenExpectation.h">
-      <Filter>Header Files\Tokenizer\Utils</Filter>
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="LinkedTokenList.h">
-      <Filter>Header Files\Utils\Collections</Filter>
+      <Filter>Header Files\Utilities\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowFunctionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="DivideCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="EqualsCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="EqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="GreaterEqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="GreaterThanCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusMinusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuloCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="NotEqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallerEqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusPlusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallerThanCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="TimesCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantToReturnValueCommand.h">
+      <Filter>Header Files\VM\Commands\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="GetFromValueCommand.h">
+      <Filter>Header Files\VM\Commands\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="IdentifierToReturnValueCommand.h">
+      <Filter>Header Files\VM\Commands\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowUpFunctionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunctionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryNodeIncludes.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Snippets.txt">
@@ -596,6 +626,10 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Switch.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </Text>
+    <Text Include="ReadMe.txt" />
+    <Text Include="while.md">
       <Filter>Resource Files\TestScripts</Filter>
     </Text>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DoNothingNode.h"
+#include "MandatoryNodeIncludes.h"
 
 void DoNothingNode::show()
 {

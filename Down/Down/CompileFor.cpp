@@ -36,7 +36,7 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
 	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSED));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
 
 
 	for (shared_ptr<TokenExpectation> expectation : expected)
@@ -91,16 +91,35 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				{
 					next = next->getNext();
 				}
-				// Compile the first part of the for-loop
-				shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
-				if (compiledBodyPart != nullptr)
+				// This means the declaration is empty
+				if (next->getPrevious()->getType() == IToken::CONDITION_OPEN)
 				{
-					compiledBodyPart->compile(tokenList, current, next, _declaration, _declaration->getLast());
+					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no declaration!", ".md", current->getLineNumber(), 
+														 current->getPosition(), ErrorType::error));
+					begin = end;
+
+					return;
 				}
-				else
+				else 
 				{
-					current = current->getNext();
+					// Compile the first part of the for-loop
+					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+
+					if (compiledBodyPart != nullptr)
+					{
+						compiledBodyPart->compile(tokenList, current, next, _declaration, _declaration->getLast());
+
+						// If the list still is empty, fill with an DoNothingNode 
+						if (_declaration->getCount() == 0)
+						{
+							_declaration->insertLast(make_shared<DoNothingNode>());
+						}
+					}
+					else
+					{
+						current = current->getNext();
+					}
 				}
 			}
 			else if (_condition->getCount() == 0)
@@ -114,9 +133,28 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
 				_condition->add(make_shared<DoNothingNode>());
 				condition->compile(tokenList, current, next, _condition, _condition->getLast());
+
+				// If condition still is empty, throw error (we need a condition)
+				if (_condition->getCount() == 0) 
+				{
+					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no condition!", ".md", current->getLineNumber(), 
+														  current->getPosition(), ErrorType::error));
+					begin = end;
+
+					break;
+				}
 			}
 			else if (_increment->getCount() == 0)
 			{
+				if (current->getType() == IToken::CONDITION_CLOSE) 
+				{
+					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no increment!", ".md", current->getLineNumber(), 
+														  current->getPosition(), ErrorType::error));
+					begin = end;
+
+					return;
+				}
+
 				// Compile the last part of the for-loop
 				shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
 
@@ -138,6 +176,7 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 					previous = previous->getPrevious();
 				}
 				previous = previous->getPartner();
+				_body->add(make_shared<DoNothingNode>());
 
 				while (current->getLevel() > level)
 				{

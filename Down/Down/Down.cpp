@@ -104,7 +104,7 @@ bool errors()
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		cerr << ErrorHandler::getInstance()->asJson();
-		system("pause");
+
 		return true;
 	}
 

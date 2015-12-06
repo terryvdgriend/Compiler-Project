@@ -21,6 +21,7 @@ class Tokenizer
 		map<string, IToken> tokenMap;
 		map<string, IToken> tokenRegex;
 		map<string, IToken> regexMap;
+		map<string, IToken> varTokenMap;
 		regex actualRegex;
 		int currentScope;
 		int maxScope;
@@ -33,6 +34,6 @@ class Tokenizer
 		void checkRemainingStack();
 		void checkRemainingErrors();
 
-		IToken getToken(string token);
 		string lookAhead(smatch m, string s);
+		IToken getToken(string token);
 };

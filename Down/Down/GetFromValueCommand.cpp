@@ -2,35 +2,37 @@
 #include "GetFromValueCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-void GetFromValueCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
 	string rValue = vm.getReturnValue();
+	IToken rToken = vm.getReturnToken();
 
 	if (&rValue != nullptr)
 	{
+		vm.setReturnValue("");
+		vm.setReturnToken(IToken::ANY);
 		if (vm.isAnIdentifier(rValue))
 		{
-			vm.setReturnValue("");
-
 			if (!vm.hasValueInFunctionParameters(parameters[1]))
 			{
 				vector<string> value = vm.getFunctionParametersByValue(rValue);
 
 				if (value.size() > 0)
 				{
-					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue());
+					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue(), rToken);
 				}
 				else
 				{
 					// Exception var undefined
-					vm.setVariable(parameters[1], "");
+					vm.setVariable(parameters[1], "", rToken);
 				}
 				vm.setFunctionParameter(parameters[1], rValue);
 			}
 		}
 		else
 		{
-			vm.setVariable(parameters[1], rValue);
+			vm.setVariable(parameters[1], rValue, rToken);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DirectFunctionCall.h"
+#include "MandatoryNodeIncludes.h"
 
 DirectFunctionCall::DirectFunctionCall()
 {
@@ -8,7 +9,7 @@ DirectFunctionCall::DirectFunctionCall()
 
 DirectFunctionCall::DirectFunctionCall(shared_ptr<Token>& token)
 {
-	token = token;
+	_token = token;
 }
 
 void DirectFunctionCall::show()

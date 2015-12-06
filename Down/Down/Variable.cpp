@@ -3,34 +3,44 @@
 
 Variable::Variable(string param) 
 {
-	value = param;
+	_value = param;
 
 	if (&param == nullptr || param == "") 
 	{
-		type = VariableType::nulltype;
+		_variableType = VariableType::nulltype;
 	}
-	else if (is_number(value)) 
+	else if (is_number(_value)) 
 	{
-		type = VariableType::number;
+		_variableType = VariableType::number;
 	}
-	else if (is_bool(value)) 
+	else if (is_bool(_value)) 
 	{
-		type = VariableType::boolean;
+		_variableType = VariableType::boolean;
 	}
 	else 
 	{
-		type = VariableType::text;
+		_variableType = VariableType::text;
 	}	
 }
 
 VariableType Variable::getType() 
 {
-	return type;
+	return _variableType;
 }
 
 string Variable::getValue() 
 {
-	return value;
+	return _value;
+}
+
+IToken Variable::getTokenType()
+{
+	return _tokenType;
+}
+
+void Variable::setTokenType(IToken tokentype)
+{
+	_tokenType = tokentype;
 }
 
 bool Variable::is_number(const string& s)

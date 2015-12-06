@@ -2,13 +2,17 @@
 #include "ModuloCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-void ModuloCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void ModuloCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
 	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number) 
 	{

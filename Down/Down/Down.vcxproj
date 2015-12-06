@@ -83,6 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="ReadMe.txt" />
     <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
     <Text Include="Switch.md" />
@@ -143,6 +144,7 @@
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedTokenList.h" />
     <ClInclude Include="MandatoryCommandIncludes.h" />
+    <ClInclude Include="MandatoryNodeIncludes.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
     <ClInclude Include="ModuloCommand.h" />
@@ -150,8 +152,10 @@
     <ClInclude Include="NotEqualsToCommand.h" />
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
+    <ClInclude Include="RandomFunctionCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
+    <ClInclude Include="ShowUpFunctionCommand.h" />
     <ClInclude Include="SmallerEqualsToCommand.h" />
     <ClInclude Include="SmallerThanCommand.h" />
     <ClInclude Include="stdafx.h" />
@@ -227,7 +231,9 @@
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
+    <ClCompile Include="RandomFunctionCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
+    <ClCompile Include="ShowUpFunctionCommand.cpp" />
     <ClCompile Include="SmallerEqualsToCommand.cpp" />
     <ClCompile Include="SmallerThanCommand.cpp" />
     <ClCompile Include="stdafx.cpp">

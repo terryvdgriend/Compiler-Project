@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ConditionalJumpNode.h"
+#include "MandatoryNodeIncludes.h"
 
 void ConditionalJumpNode::show()
 {

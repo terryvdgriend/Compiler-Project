@@ -2,8 +2,10 @@
 #include "MinusMinusCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-void MinusMinusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
+void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
+
 	Variable variable = *vm.getVariable(parameters[1]);
 
 	if (variable.getType() == VariableType::nulltype)
@@ -16,9 +18,9 @@ void MinusMinusCommand::execute(VirtualMachine& vm, vector<string>& parameters)
 	{
 		int number1 = atoi(variable.getValue().c_str()) - 1;
 
-		for (string & item : vm.getFunctionParametersByKey(parameters.at(1))) 
+		for (string& item : vm.getFunctionParametersByKey(parameters.at(1))) 
 		{
-			vm.setVariable(item, to_string(number1));
+			vm.setVariable(item, to_string(number1), node.getToken()->getSubType());
 		}
 	}
 }

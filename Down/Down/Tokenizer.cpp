@@ -73,6 +73,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, string c
 				part = lookahead;
 				s = m.suffix().str();
 				regex_search(s, m, actualRegex);
+				varTokenMap[part] = pToken->getSubType();
 			}
 			else
 			{
@@ -111,6 +112,12 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, string c
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::error));
 			}
+
+			map<string, IToken>::iterator it = varTokenMap.find(part);
+			if (it != varTokenMap.end())
+			{
+				pToken->setSubType(it->second);
+			}
 		}
 		else if (currentToken == IToken::NEWLINE || currentToken == IToken::COMMENT) // New Lines
 		{
@@ -147,7 +154,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, string c
 		colNr += part.size() + 1;
 
 		////Levels
-		if (currentToken == IToken::BODY_CLOSED || currentToken == IToken::CONDITION_CLOSE ||
+		if (currentToken == IToken::BODY_CLOSE || currentToken == IToken::CONDITION_CLOSE ||
 			currentToken == IToken::FUNCTION_CLOSE || currentToken == IToken::FUNCTION_DECLARE_CLOSE)
 		{
 			lvl--;
@@ -155,11 +162,11 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, string c
 		// Check remaining stack
 		checkStack(pToken, lvl);
 
-		if (tokenList->getLast()->getType() == IToken::BODY_CLOSED)
+		if (tokenList->getLast()->getType() == IToken::BODY_CLOSE)
 		{
 			if (stack.size() > 0)
 			{
-				if ((stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELIF) && currentToken != IToken::ELIF)
+				if ((stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF) && currentToken != IToken::ELSEIF)
 				{
 					checkRemainingStack();
 				}
@@ -296,7 +303,7 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int &lvl)
 			stackToken->setPartner(token);
 			stack.pop();
 		}
-		else if (stack.size() > 0 && stack.top()->getType() == IToken::ELIF)
+		else if (stack.size() > 0 && stack.top()->getType() == IToken::ELSEIF)
 		{
 			shared_ptr<Token> stackToken = stack.top();
 			shared_ptr<Token> partner = stackToken->getPartner();
@@ -322,7 +329,7 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int &lvl)
 		}
 	}
 
-	if (token->getType() == IToken::ELIF)
+	if (token->getType() == IToken::ELSEIF)
 	{
 		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
 		{
@@ -332,7 +339,7 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int &lvl)
 			stack.pop();
 			stack.push(token);
 		}
-		else if (stack.size() > 0 && stack.top()->getType() == IToken::ELIF)
+		else if (stack.size() > 0 && stack.top()->getType() == IToken::ELSEIF)
 		{
 			shared_ptr<Token> stackToken = stack.top();
 			shared_ptr<Token> partner = stackToken->getPartner();
@@ -363,12 +370,12 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int &lvl)
 	{
 		stack.push(token);
 	}
-	else if (token->getType() == IToken::BODY_CLOSED || token->getType() == IToken::CONDITION_CLOSE || token->getType() == IToken::FUNCTION_CLOSE ||
+	else if (token->getType() == IToken::BODY_CLOSE || token->getType() == IToken::CONDITION_CLOSE || token->getType() == IToken::FUNCTION_CLOSE ||
 		token->getType() == IToken::ARRAY_CLOSE || token->getType() == IToken::FUNCTION_DECLARE_CLOSE)
 	{
 		if (stack.size() > 0)
 		{
-			if ((token->getType() == IToken::BODY_CLOSED && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel())
+			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel())
 			{
 				if (token->getNext() != nullptr)
 				{
@@ -379,7 +386,7 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int &lvl)
 				}
 			}
 
-			if ((token->getType() == IToken::BODY_CLOSED && stack.top()->getType() == IToken::BODY_OPEN) ||
+			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::BODY_OPEN) ||
 				(token->getType() == IToken::FUNCTION_CLOSE && stack.top()->getType() == IToken::FUNCTION_OPEN) ||
 				(token->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.top()->getType() == IToken::FUNCTION_DECLARE_OPEN) ||
 				(token->getType() == IToken::ARRAY_CLOSE && stack.top()->getType() == IToken::ARRAY_OPEN) ||
@@ -397,7 +404,7 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int &lvl)
 
 void Tokenizer::checkRemainingStack()
 {
-	if (stack.size() > 0 && (stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELIF))
+	if (stack.size() > 0 && (stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF))
 	{
 		stack.pop();
 	}

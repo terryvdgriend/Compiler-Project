@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "FunctionCall.h"
+#include "MandatoryNodeIncludes.h"
 
 void FunctionCall::show()
 {

@@ -25,7 +25,7 @@ void CompileDoWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, share
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::DO));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
 	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSED));
+	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::WHILE));
 	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_OPEN));
 	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
