@@ -20,6 +20,7 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 			if (next != nullptr && next->getEnum() == Token::ARRAY_OPEN) {
 				CompileGetArrayItem* arrayitem = new CompileGetArrayItem();
 				arrayitem->Compile(cTokenList, begin, end, listActionNodes, actionBefore);
+				delete arrayitem;
 			}
 			else if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
 			{
