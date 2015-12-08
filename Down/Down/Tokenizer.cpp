@@ -44,7 +44,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 	string s("\n"+codefromfile);
 	smatch m;
 
-	int rowNr = 1;
+	int rowNr = 0;
 	int colNr = 1;
 	int lvl = 1;
 
