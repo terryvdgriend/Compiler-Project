@@ -148,19 +148,89 @@ $(function() {
         var md = to_markdown($('#markdown').html());
         global.editor.setValue(md, 1);
     });
+
+    $('#markdown').on('focus', function() {
+        $('#insert').removeAttr('disabled');
+    });
+
+    global.editor.on('focus', function() {
+        $('#insert').attr('disabled', 'disabled');
+    });
+
+    $('#insert').on('click', function() {
+        pasteHtmlAtCaret('<b>NAME</b>', false);
+    });
 });
 
 global.gui.Window.get().on('focus', function() {
     global.setCustomStyle();
 });
 
+function pasteHtmlAtCaret(html, selectPastedContent) {
+    html = html + "&nbsp;";
+    var sel, range;
+    if (window.getSelection) {
+        // IE9 and non-IE
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+
+            // Range.createContextualFragment() would be useful here but is
+            // only relatively recently standardized and is not supported in
+            // some browsers (IE9, for one)
+            var el = document.createElement("div");
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(), node, lastNode;
+            while ( (node = el.firstChild) ) {
+                lastNode = frag.appendChild(node);
+            }
+            var firstNode = frag.firstChild;
+            range.insertNode(frag);
+            
+            // Preserve the selection
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                if (selectPastedContent) {
+                    range.setStartBefore(firstNode);
+                } else {
+                    range.collapse(true);
+                }
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    } else if ( (sel = document.selection) && sel.type != "Control") {
+        // IE < 9
+        var originalRange = sel.createRange();
+        originalRange.collapse(true);
+        sel.createRange().pasteHTML(html);
+        if (selectPastedContent) {
+            range = sel.createRange();
+            range.setEndPoint("StartToStart", originalRange);
+            range.select();
+        }
+    }
+}
+
 </script>
+
+<style>
+#insert {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+</style>
 
 <div id="customCSS"></div>
 
 <!-- Editor -->
 <div id="editor"><textarea id="code"></textarea></div>
 <div id="markdown"></div>
+
+<button id="insert">INSERT</button>
 
 <!-- Log -->
 <div id="log">
