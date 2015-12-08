@@ -1,7 +1,8 @@
 exports.reload = function(){
-    var marked = require("marked");
+    var marked = require("./plugins/marked/marked");
+    var renderer = new marked.Renderer();
     marked.setOptions({
-    renderer: new marked.Renderer(),
+    renderer: renderer,
         gfm: true,
         tables: true,
         breaks: false,
@@ -10,6 +11,11 @@ exports.reload = function(){
         smartLists: true,
         smartypants: false
     });
+
+    renderer.hr = function (text) {
+        return "<hr data-code=\"" + text + "\">\n";
+    }
+
     var resultDiv = global.$('#markdown');
     var code = global.editor.getValue();
     resultDiv.html(marked(code));

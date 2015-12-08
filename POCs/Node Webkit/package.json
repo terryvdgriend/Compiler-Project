@@ -21,8 +21,5 @@
   		"height": 600,
 		"position": "center",
 		"show_in_taskbar": true
-	},
-	"dependencies": {
-		"marked": "^0.3.3"
 	}
 }
