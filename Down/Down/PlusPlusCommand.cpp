@@ -22,7 +22,6 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 			vm.setVariable(item, to_string(number1), node.getToken()->getSub());
 		}
 	}
-
 }
 
 std::pair<string, string> PlusPlusCommand::accept(CommandVisitor& commandVisitor) {

@@ -1,17 +1,26 @@
 {
 	"name": "Down IDE",
-	"version": 0.1,
+	"description": "Official Down IDE",
+    "keywords": [
+        "Down", 
+        "IDE"
+    ], 
+	"version": 1.0,
 	"main": "./html/index.html",
 	"window": {
 		"title": "Down IDE",
+		"app_name": "Down IDE",
 		"toolbar": false,
 		"show": true,
 		"icon": "./img/icon.png",
+		"mac_icon": "nw.icns",
+		"exe_icon": "img/icon.png", 
 		"min_width": 960,
 		"min_height": 600,
 		"width": 960,
   		"height": 600,
-		"position": "center"
+		"position": "center",
+		"show_in_taskbar": true
 	},
 	"dependencies": {
 		"marked": "^0.3.3"
