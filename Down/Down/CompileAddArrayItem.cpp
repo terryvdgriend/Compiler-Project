@@ -61,11 +61,6 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 		string sBuffer;
 
-		if (current->getLineNumber() > 20)
-		{
-			cout << "";
-		}
-
 		if (expectation.Level == arrayLevel)
 		{
 			if (expectation.getTokenType() != Token::ANY && current->getEnum() != expectation.TokenType) {
@@ -79,10 +74,9 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				CompileCondition* compiledBodyPart = new CompileCondition();
 
 				Token* seperator = current;
-				while (seperator->getEnum() == Token::NEWLINE) {
-					if (seperator->getEnum() != Token::NEWLINE) { break; }
+				do {
 					seperator = seperator->next;
-				}
+				} while (seperator->getEnum() != Token::NEWLINE);
 
 				string tempPreviousLocalVariable, tempCurrentLocalVariable;
 
@@ -103,6 +97,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
 					tempCurrentLocalVariable = getCurrentLocalVariableName();
+					currArrayTempVar = getCurrentLocalVariableName();
 				}
 
 				compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
@@ -140,21 +135,18 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 					pFunction->setAt(n, tempArguments[n].c_str());
 				}
 				listActionNodes.insertBefore(&actionBefore, pFunction);*/
-
+				string curr = getCurrentLocalVariableName();
 				string saArguments[4];
 				saArguments[0] = "$AddItemToArrayAt";
-				if (fromArray)
-				{
-					string curr = getCurrentLocalVariableName();
-					saArguments[1] = currArray;
-					saArguments[2] = getPreviousLocalVariableName(sBuffer);
-					saArguments[3] = curr;
-				}
-				else
-				{
+				if (fromArray) {
 					saArguments[1] = currArray;
 					saArguments[2] = currArrayTempVar;
-					saArguments[3] = getCurrentLocalVariableName();
+					saArguments[3] = curr;
+				}
+				else {
+					saArguments[1] = currArray;
+					saArguments[2] = currArrayTempVar;
+					saArguments[3] = curr;
 				}
 
 				pFunction = new FunctionCall();
@@ -179,11 +171,10 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-				//currArrayTempVar = getCurrentLocalVariableName();
 				currArray = getCurrentLocalVariableName();
 			}
-			currArrayTempVar = getCurrentLocalVariableName();
-			current = current->next;
+			if(current->getEnum() != Token::NEWLINE)
+				current = current->next;
 		}
 		else if (expectation.Level >= arrayLevel)
 		{
@@ -194,10 +185,11 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			}
 
 			Token* seperator = current;
-			while (seperator->getEnum() != Token::ARRAY_CLOSE) {
-				if (seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
-				seperator = seperator->next;
+			while (seperator->getEnum() != Token::ARRAY_OPEN)
+			{
+				seperator = seperator->previous;
 			}
+			seperator = seperator->getPartner();
 
 			Compiler* compiledBodyPart;
 
@@ -208,15 +200,15 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
 
-			/*DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
+			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);*/
-
+			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			currArrayTempVar = getCurrentLocalVariableName();
 			if (!multiIndex) { current = current->next; }
 		}
 	}
-
-	begin = *current;
+	if(current != nullptr)
+		begin = *current;
 }

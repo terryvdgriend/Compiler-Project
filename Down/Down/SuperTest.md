@@ -23,19 +23,23 @@ ___
     #### switch ( **xx** )
     case ( 1 )
     --
-        **result2** is 1337
+        **result2** is "1337"
     __
     case ( 2 )
     --
-        **result2** is 10
+        **result2** is "10"
+    __
+	    case ( 16 )
+    --
+        **result2** is "FOUIHWEFOIHEFWEGEGWEGWEGWEGWEGWEGWEGWEGWEGWGWEGWEGEWOIHFEW"
     __
     default
     --
-        **result2** is 2337
+        **result2** is "2337"
     __ 
 ___
 
-_number_ **retVal** is [ Loopy 8 ]
+_number_ **retVal** is [ Loopy 8 plus 8 ]
 [ printdown **retVal** ]
 [ printdown 9 ]
 **retVal** is [ Switchy 2 ]

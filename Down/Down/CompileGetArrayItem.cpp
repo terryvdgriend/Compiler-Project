@@ -32,22 +32,9 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 	list<TokenExpectation> expected = list<TokenExpectation>();
 	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
 
-	/*bool hasPlusOrMin = false;
-	Token* seeker = current;
-	while (seeker->getEnum() != Token::NEWLINE) {
-		if (seeker->getEnum() == Token::PLUS || seeker->getEnum() == Token::MINUS) {
-			hasPlusOrMin = true;
-			break;
-		}
-		seeker = seeker->next;
-	}*/
-
-	//if (!hasPlusOrMin)
-	//{
-		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
-		expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
-		expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
-	//}
+	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
+	expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
+	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
 
 	for (TokenExpectation expectation : expected)
 	{
@@ -108,19 +95,12 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				begin = end;
 				break;
 			}
-
-			Token* prev = current->previous;
-			while (prev->getEnum() != Token::ARRAY_OPEN)
-			{
-				prev = prev->previous;
-			}
-			prev = prev->getPartner();
-
 			Token* seperator = current;
-			while (seperator->getEnum() != Token::ARRAY_CLOSE) {
-				if (seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
-				seperator = seperator->next;
+			while (seperator->getEnum() != Token::ARRAY_OPEN)
+			{
+				seperator = seperator->previous;
 			}
+			seperator = seperator->getPartner();
 
 			Compiler* compiledBodyPart;
 
@@ -186,9 +166,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				current = current->next;
 			}
 			//current = current->next;
-
-			delete pFunction;
-			//delete compiledBodyPart;
+			delete compiledBodyPart;
 		}
 	}
 

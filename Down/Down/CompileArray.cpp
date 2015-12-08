@@ -129,46 +129,93 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			}
 			if (compiledArraySize)
 			{
-				Token* prev = current->previous;
-				while (prev->getEnum() != Token::ARRAY_OPEN)
+				Token* arrClose = current;
+				while (arrClose->getEnum() != Token::ARRAY_OPEN)
 				{
-					prev = prev->previous;
+					arrClose = arrClose->previous;
 				}
-				prev = prev->getPartner();
+				arrClose = current->getPartner();
+				std::vector<LinkedList*> paramList;
+				LinkedList* param = new LinkedList();
+				std::stack<Token::iToken> stack;
 
-				while (current->getEnum() != Token::ARRAY_CLOSE)
-				{
+				do {
+					if (current->getEnum() == Token::ARRAY_OPEN)
+						stack.push(current->getEnum());
+					else if (current->getEnum() == Token::ARRAY_CLOSE && stack.size() > 0)
+						stack.pop();
+					if (stack.size() >= 0) {
+						if (stack.size() == 0 && current->getEnum() == Token::AND_PARA) {
+							if (param->last != nullptr) {
+								param->last->next = nullptr;
+								param->first->previous = nullptr;
+								Token* connectToken = new Token();
+								connectToken->setEnum(Token::NEWLINE);
+								connectToken->setLevel(current->getLevel());
+								connectToken->setPositie(-1);
+								connectToken->setPositieInList(-1);
+								connectToken->setRegelnummer(-1);
+								connectToken->setText("\n");
+								param->add(connectToken);
+								paramList.push_back(param);
+							}
+							else {
+								ErrorHandler::getInstance()->addError(Error{"no assignment is array", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+							}
+							param = new LinkedList();
+						}
+						else {
+							param->add(new Token(*current));
+						}
+					}
+					current = current->next;
+					if (stack.size() == 0 && current->getEnum() == Token::ARRAY_CLOSE) {
+						if (param->last != nullptr) {
+							param->last->next = nullptr;
+							param->first->previous = nullptr;
+							Token* connectToken = new Token();
+							connectToken->setEnum(Token::NEWLINE);
+							connectToken->setLevel(current->getLevel());
+							connectToken->setPositie(-1);
+							connectToken->setPositieInList(-1);
+							connectToken->setRegelnummer(-1);
+							connectToken->setText("\n");
+							param->add(connectToken);
+							paramList.push_back(param);
+						}
+						else {
+							ErrorHandler::getInstance()->addError(Error{ "no assignment is array", ".md", current->getLineNumber(),current->getPositie(), Error::error });
+						}
+						param = new LinkedList();
+						break;
+					}
+				} while (current != arrClose);
+
+				for (auto p : paramList) {
 					CompileAddArrayItem* compiledBodyPart = new CompileAddArrayItem();
 
 					ActionNode* lastActionNode = listActionNodes.getLast()->getPrevious();
-
-					Token* seperator = current;
-					while (seperator->getEnum() != Token::AND_PARA || seperator->getEnum() != Token::ARRAY_CLOSE) {
-						if (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
-						
-						seperator = seperator->next;
-					}
 
 					compiledBodyPart->setFromArray(true);
 					compiledBodyPart->setFromArrayLength(filledLength++);
 					compiledBodyPart->setCurrentArray(currArrayTempVar);
 
-					compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
+					compiledBodyPart->Compile(cTokenList, *p->first, *p->last, listActionNodes, *listActionNodes.getLast());
 
 					if (current->getEnum() == Token::AND_PARA) { current = current->next; }
-					
+
 					delete compiledBodyPart;
 				}
-
 				currArrayTempVar = getCurrentLocalVariableName();
 			}
 			else
 			{
 				Token* seperator = current;
-				while (seperator->getEnum() != Token::ARRAY_CLOSE) {
-					if (seperator->getEnum() == Token::ARRAY_CLOSE) { break; }
-					seperator = seperator->next;
+				while (seperator->getEnum() != Token::ARRAY_OPEN)
+				{
+					seperator = seperator->previous;
 				}
+				seperator = seperator->getPartner();
 
 				Compiler* compiledBodyPart;
 
@@ -187,5 +234,5 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 			}
 		}
 	}
-	if (ErrorHandler::getInstance()->getErrors().size() <= 0) { begin = *current; }
+	 begin = *current; 
 }

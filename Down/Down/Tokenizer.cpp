@@ -55,30 +55,24 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		string part = m[0];
 		//currentToken = getToken(part);
 		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
-
 		// Geen token, dus add error
 		if (currentToken == Token::NONE)
-		//	currentToken = ((find(Functions.begin(), Functions.end(), part) != Functions.end()) ? Token::FUNCTIONUSE : Token::NONE);
-		//else if (currentToken == Token::NONE)
 			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
 
-		if (cTokenList.size() > 0 && cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE && part == "\n")
-		{
-			tempToken = Token::NONE;
-		}
-
-		if (cTokenList.last != NULL && cTokenList.last->getEnum() == Token::NEWLINE && currentToken == Token::IDENTIFIER)
+		if (cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::NEWLINE && currentToken == Token::IDENTIFIER)
 		{
 			string lookahead = lookAhead(m, s);
 			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
+			
 			if (lookaheadToken == Token::ARRAY_OPEN)
 			{
+				part.push_back(currentScope + '0');
 				Token* first = cTokenList.first;
 				while (first->next != nullptr)
 				{
 					if (first->getText() == part)
 					{
-						tempToken = first->getSub();
+						pToken->setSub(first->getSub());
 						break;
 					}
 					first = first->next;
@@ -88,34 +82,8 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		// (cTokenList.last != nullptr && cTokenList.last->previous != nullptr && cToken.last->previous->getEnum() == Token::ARRAY_CLOSE) || next token is Token::ARRAY_OPEN)
 		if ((cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE) && currentToken == Token::IDENTIFIER)
 		{
-			//if (getNextToken(m, s) == Token::ARRAY_OPEN) {
-			//	part.push_back(currentScope + '0');
-			//	if (mappert.count(part) == 0)
-			//		ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			//	auto it = varTokenMap.find(part);
-			//	if (it != varTokenMap.end())
-			//		pToken->setSub(it->second);
-			//}
-			//else {
-
-				int ln = cTokenList.last->getLineNumber();
-				Token* variable = cTokenList.last;
-
-				while (variable->getLineNumber() == ln)
-				{
-					if (variable->previous->getEnum() == Token::NEWLINE) break;
-					variable = variable->previous;
-				}
-
-				switch (variable->getEnum())
-				{
-				case Token::TYPE_NUMBER: pToken->setSub(Token::TYPE_NUMBER_ARRAY);
-					break;
-				case Token::TYPE_TEXT: pToken->setSub(Token::TYPE_TEXT_ARRAY);
-					break;
-				case Token::TYPE_FACT: pToken->setSub(Token::TYPE_FACT_ARRAY);
-					break;
-				}
+			pToken->setSub(tempToken);
+			tempToken = Token::NONE;
 			//}
 				part.push_back(currentScope + '0');
 				if (mappert.count(part) != 0)
@@ -132,6 +100,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
 		{
 			//tempToken = currentToken;
+
 			lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, true);
 		}
 		else if (currentToken == Token::NUMBER) {
@@ -155,12 +124,15 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		}
 		else if (currentToken == Token::IDENTIFIER)
 		{
-			part.push_back(currentScope + '0');
-			if (mappert.count(part) == 0)
-				ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-			auto it = varTokenMap.find(part);
-			if (it != varTokenMap.end())
-				pToken->setSub(it->second);
+			if (pToken->getSub() == Token::NONE) {
+				part.push_back(currentScope + '0');
+				if (mappert.count(part) == 0)
+					ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
+				auto it = varTokenMap.find(part);
+				if (it != varTokenMap.end())
+					pToken->setSub(it->second);
+			}
+			
 		}
 		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
 		{

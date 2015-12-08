@@ -2,7 +2,7 @@
 #include "Token.h"
 
 
-Token::Token() : Level{ 1 }, next{ nullptr }, previous{ nullptr } //etc...
+Token::Token() : Level{ 1 }, next{ nullptr }, previous{ nullptr }, subType{Token::NONE}//etc...
 {
 }
 
