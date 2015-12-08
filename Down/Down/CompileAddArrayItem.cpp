@@ -78,7 +78,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 					seperator = seperator->next;
 				} while (seperator->getEnum() != Token::NEWLINE);
 
-				string tempPreviousLocalVariable, tempCurrentLocalVariable;
+				//string tempPreviousLocalVariable, tempCurrentLocalVariable;
 
 				if (fromArray)
 				{
@@ -88,21 +88,16 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 					directFunctionCall->setAt(1, to_string(getFromArrayLength()).c_str());
 					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-					tempPreviousLocalVariable = getPreviousLocalVariableName(sBuffer);
-
 					directFunctionCall = new DirectFunctionCall(*new Token(*current));
 					directFunctionCall->setArraySize(2);
 					directFunctionCall->setAt(0, SET_GET_FROM_RT);
 					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 					listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-					tempCurrentLocalVariable = getCurrentLocalVariableName();
 					currArrayTempVar = getCurrentLocalVariableName();
 				}
 
 				compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, *listActionNodes.getLast());
-
-				if (!fromArray) { tempPreviousLocalVariable = getPreviousLocalVariableName(sBuffer); }
 
 				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
 				directFunctionCall->setArraySize(2);
@@ -110,31 +105,8 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
 
-				if (fromArray) { tempCurrentLocalVariable = getCurrentLocalVariableName(); }
-
 				string tempArguments[2];
 
-				/*tempArguments[0] = "$AddLengthToArray";
-				tempArguments[1] = currArray;
-
-				FunctionCall* pFunction = new FunctionCall();
-				pFunction->setArraySize(2);
-				for (int n = 0; n < 2; n++)
-				{
-					pFunction->setAt(n, tempArguments[n].c_str());
-				}
-				listActionNodes.insertBefore(&actionBefore, pFunction);*/
-
-				//tempArguments[0] = "$AddArrayToDictionary";
-				//tempArguments[1] = currArray;
-
-				FunctionCall* pFunction = new FunctionCall();
-				/*pFunction->setArraySize(2);
-				for (int n = 0; n < 2; n++)
-				{
-					pFunction->setAt(n, tempArguments[n].c_str());
-				}
-				listActionNodes.insertBefore(&actionBefore, pFunction);*/
 				string curr = getCurrentLocalVariableName();
 				string saArguments[4];
 				saArguments[0] = "$AddItemToArrayAt";
@@ -149,7 +121,7 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 					saArguments[3] = curr;
 				}
 
-				pFunction = new FunctionCall();
+				FunctionCall* pFunction = new FunctionCall();
 				pFunction->setArraySize(4);
 				for (int n = 0; n < 4; n++)
 				{
