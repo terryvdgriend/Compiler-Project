@@ -3,6 +3,7 @@ function init()
     global.$ = $;
     global.window = window;
     global.gui = require('nw.gui');
+    global.debug = false;
 
     global.alert = function(text) {
         alert(text);
@@ -37,11 +38,85 @@ function init()
         }
     }
 
-	global.$(global.window.document).ready(function(){
-		var menu = require("./../js/menu.js");		
-        menu.initMenu();
+    global.saveSettings = function() {
+        localStorage.settings = JSON.stringify(global.settings);
+        console.log("Settings saved:");
+        console.log(global.settings);
+    }
 
+	global.$(global.window.document).ready(function(){        
         global.setFile(null);
-        global.compilerFile = null;
+
+        global.settings = {};
+        global.settings.version = 1.0;
+        global.settings.theme = "twilight";
+        global.settings.printTokenList = false;
+        global.settings.printCompilerList = false;
+        global.settings.compilerFile = null;
+        global.settings.customStyle = [
+            {
+                type: "constant",
+                description: "Constants",
+                color: ""
+            },
+            {
+                type: "operator",
+                description: "Operators",
+                color: ""
+            },
+            {
+                type: "variable",
+                description: "Variables",
+                color: ""
+            },
+            {
+                type: "comment",
+                description: "Comments",
+                color: ""
+            },
+            {
+                type: "type",
+                description: "Types",
+                color: ""
+            },
+            {
+                type: "control",
+                description: "Controllers",
+                color: ""
+            },
+            {
+                type: "function",
+                description: "Functions",
+                color: ""
+            }
+        ];
+
+        if(localStorage.settings != null) {
+            var parsedJSON = JSON.parse(localStorage.settings);
+            if(parsedJSON != null && typeof parsedJSON.version !== 'undefined' && parsedJSON.version == global.settings.version) {
+                global.settings = parsedJSON;
+            } else {
+                global.saveSettings();
+            }
+        } else {
+            global.saveSettings();
+        }
+
+        var menu = require("./../js/menu.js");      
+        menu.initMenu();      
     });
+    
+    // Debug modus
+    var option = {
+        key : "Ctrl+0",
+        active : function() {
+            global.debug = !global.debug;
+            if(global.debug) {
+                global.gui.Window.get().showDevTools();
+            }
+        }
+    };
+
+    var shortcut = new global.gui.Shortcut(option);
+    global.gui.App.registerGlobalHotKey(shortcut);
 }

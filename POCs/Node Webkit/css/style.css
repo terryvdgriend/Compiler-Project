@@ -201,6 +201,10 @@ a {
     font-size: 14px;
 }
 
+#settings input.color {
+    width: 58px;
+}
+
 #settings table.settings {
     width: 100%;
     color: #fff;

@@ -21,8 +21,8 @@ oop.inherits(Mode, TextMode);
 
 (function() {
     // configure comment start/end characters
-    this.lineCommentStart = "//";
-    this.blockComment = {start: "/*", end: "*/"};
+    this.lineCommentStart = ">";
+    //this.blockComment = {start: "/*", end: "*/"};
     
     // special logic for indent/outdent. 
     // By default ace keeps indentation of previous line
