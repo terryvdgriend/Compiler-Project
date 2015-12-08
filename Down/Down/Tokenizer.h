@@ -25,7 +25,7 @@ private:
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
         
     // (#+ (?:else if|else|if|case|while|do|foreach|for|\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|^-?\d.?\d*$|"(.*?)"|\w+|\*\*\S*?\*\*|-{1,3}|^[\(\)\[\]]$|[\S|\n])
-	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\\n)|(smaller|larger) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|\\*\\*\\S*?\\*\\*|-{1,3}|^[\\(\\)\\[\\]]$|[\\S|\\n])" };
+	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\\n)|(like or )?(smaller|larger) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|\\*\\*\\S*?\\*\\*|-{1,3}|^[\\(\\)\\[\\]]$|[\\S|\\n])" };
 	std::string lookAhead(smatch m, std::string s);
 	void lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iToken& currentToken, string& part, int rowNr, int colNr, bool arrayOpen);
 	Token::iToken tempToken;

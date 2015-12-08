@@ -18,6 +18,7 @@ void MinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		int number2 = atoi(variable2.getValue().c_str());
 
 		vm.setReturnValue(to_string(number1 - number2));
+		vm.setReturnToken(variable1.getTokenType());
 	}
 	else {
 		// Exception minus heeft 2 nummers nodig

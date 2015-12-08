@@ -23,8 +23,9 @@ int main(int argc,  char * argv[])
 {
 	//string eoutz = Tokenizer().getKeywordsAsJson();
 	string code = "";
-	bool C = true;
 	bool T = false;
+	bool C = false;
+
 
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, code, T, C))

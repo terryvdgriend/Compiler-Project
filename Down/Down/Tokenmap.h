@@ -33,6 +33,8 @@ struct TokenMap{
 		mappert[std::string("like")] = Token::EQUALS_TO;
 		mappert[std::string("larger than")] = Token::LARGER_THAN;
 		mappert[std::string("smaller than")] = Token::LESS_THAN;
+		mappert[std::string("like or larger than")] = Token::LARGER_LIKE_THAN;
+		mappert[std::string("like or smaller than")] = Token::LESS_LIKE_THAN;
 		mappert[std::string("in")] = Token::IN;
 		mappert[std::string("plus")] = Token::PLUS;
 		mappert[std::string("increased")] = Token::PLUSPLUS;
