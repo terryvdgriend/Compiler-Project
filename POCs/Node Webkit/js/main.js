@@ -4,6 +4,7 @@ function init()
     global.window = window;
     global.gui = require('nw.gui');
     global.debug = false;
+    global.htmlToMarkdown = 0;
 
     global.alert = function(text) {
         alert(text);

@@ -103,6 +103,36 @@ a {
     margin-top: 0;
 }
 
+#markdown h1 {
+    font-size: 2.2em;
+}
+
+#markdown h2 {
+    font-size: 2em;
+}
+
+#markdown h3 {
+    font-size: 1.5em;
+}
+
+#markdown h4 {
+    font-size: 1.17em;
+}
+
+#markdown h1,#markdown h2,#markdown h3,#markdown h4 {
+    margin-bottom: 0.35em;
+}
+
+#markdown p {
+    margin-top: 5px;
+}
+
+#markdown hr {
+    border: 0;
+    height: 1px;
+    background: #fff;
+}
+
 #log {
     display: none;
     width: 100%;

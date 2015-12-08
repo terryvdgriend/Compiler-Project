@@ -1,4 +1,9 @@
 exports.reload = function(){
+    if(global.htmlToMarkdown > 0) {
+        global.htmlToMarkdown--;
+        return;
+    }
+
     var marked = require("./plugins/marked/marked");
     var renderer = new marked.Renderer();
     marked.setOptions({
@@ -18,7 +23,7 @@ exports.reload = function(){
 
     var resultDiv = global.$('#markdown');
     var code = global.editor.getValue();
-    resultDiv.html(marked(code));
+    resultDiv.html(marked(code));   
 };
 
 exports.loadText = function(text) {

@@ -140,11 +140,14 @@ $(function() {
 
     global.setCustomStyle();
 
-    $('#drol').on('click', function() {
-        var to_markdown = require("../js/plugins/html-to-md/md");
+    var to_markdown = require("../js/plugins/html-to-md/md");
+
+    $('#markdown').get(0).contentEditable = true;
+    $('#markdown').on('keyup', function() {
+        global.htmlToMarkdown = 2;
         var md = to_markdown($('#markdown').html());
         global.editor.setValue(md, 1);
-    })
+    });
 });
 
 global.gui.Window.get().on('focus', function() {
@@ -153,20 +156,11 @@ global.gui.Window.get().on('focus', function() {
 
 </script>
 
-<style>
-#drol {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-</style>
-
 <div id="customCSS"></div>
 
 <!-- Editor -->
 <div id="editor"><textarea id="code"></textarea></div>
 <div id="markdown"></div>
-<button id="drol">Naar code!</button>
 
 <!-- Log -->
 <div id="log">
