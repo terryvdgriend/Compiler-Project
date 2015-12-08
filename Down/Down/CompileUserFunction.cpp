@@ -12,12 +12,6 @@ CompileUserFunction::CompileUserFunction()
 	_returnToken	= nullptr;
 }
 
-void CompileUserFunction::connectList() 
-{
-	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, vector<shared_ptr<Token>>{_paramTokens}, _returnToken, true);
-	FunctionHandler::getInstance()->addFunction(funcion);
-}
-
 void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 								  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
@@ -25,20 +19,20 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	int level = begin->getLevel();
 	shared_ptr<Token> bodyEnd = nullptr;
 
-	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_DECLARE));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_CLOSE));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_OPEN));
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_DECLARE));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_CLOSE));
 
-	for (shared_ptr<TokenExpectation> expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		while (current->getType() == IToken::NEWLINE)
 		{
 			current = current->getNext();
 		}
 
-		if (expectation->getLevel() == level)
+		if (expectation.getLevel() == level)
 		{
 			if (current->getType() == IToken::FUNCTION_OPEN)
 			{
@@ -49,10 +43,10 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				functionName = current->getText();
 			}
 
-			if (current->getType() != expectation->getTokenType()) 
+			if (current->getType() != expectation.getTokenType()) 
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
-													  expectation->getTokenType(), current->getType());
+													  expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -64,7 +58,7 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 		}
 		else 
 		{
-			// Check if enum is comingparam else body;
+			// Check if the coming param is an enum, else body;
 			if (current->getType() == IToken::START_PARAMETERS)
 			{
 				compileParams(current, end);
@@ -78,6 +72,11 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	}
 	connectList();
 	begin = current;
+}
+
+shared_ptr<Compiler> CompileUserFunction::create()
+{
+	return make_shared<CompileUserFunction>();
 }
 
 void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Token>& end)
@@ -160,7 +159,8 @@ void CompileUserFunction::compileBody(shared_ptr<Token>& begin, shared_ptr<Token
 	begin = current;
 }
 
-shared_ptr<Compiler> CompileUserFunction::create()
+void CompileUserFunction::connectList()
 {
-	return make_shared<CompileUserFunction>();
+	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, vector<shared_ptr<Token>>{_paramTokens}, _returnToken, true);
+	FunctionHandler::getInstance()->addFunction(funcion);
 }

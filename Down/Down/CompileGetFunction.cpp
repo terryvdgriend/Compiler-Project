@@ -30,18 +30,18 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
-	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_DECLARE_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::FUNCTION_CALL));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_DECLARE_OPEN));
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_CALL));
 
-	for (shared_ptr<TokenExpectation> expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		while (current->getType() == IToken::NEWLINE)
 		{
 			current = current->getNext();
 		}
 
-		if (expectation->getLevel() == level)
+		if (expectation.getLevel() == level)
 		{
 			if (current->getType() == IToken::FUNCTION_CALL)
 			{
@@ -61,10 +61,10 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 				}
 			}
 
-			if (current->getType() != expectation->getTokenType()) 
+			if (current->getType() != expectation.getTokenType()) 
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
-													  expectation->getTokenType(), current->getType());
+													  expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -124,10 +124,10 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			}
 			seperator = seperator->getNext();
 		}
-		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
-		condition->compile(tokenList, current, seperator, _functionParams, _functionParams->getLast());
+		CompileCondition condition;
+		condition.compile(tokenList, current, seperator, _functionParams, _functionParams->getLast());
 
-		// Create direct functioncall
+		// Create direct function call
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
 		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(current);
@@ -262,16 +262,16 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 
 	for (shared_ptr<LinkedTokenList> p : paramList)
 	{
-		shared_ptr<CompileEquals> condition = make_shared<CompileEquals>();
-		condition->compile(p, p->getFirst(), p->getLast(), _parameters, _parameters->getLast());
+		CompileEquals condition;
+		condition.compile(p, p->getFirst(), p->getLast(), _parameters, _parameters->getLast());
 	}
 
 	if (_returnToken) 
 	{
 		_returnToken = make_shared<Token>(_returnToken);
 		shared_ptr<LinkedActionList> rValue = make_shared<LinkedActionList>();
-		shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
-		condition->compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
+		CompileCondition condition;
+		condition.compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
 
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);

@@ -49,22 +49,22 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 		case IToken::CONDITION_OPEN:
 		{
 			shared_ptr<Token> next = begin;
-			shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
-			condition->compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, actionBefore);
+			CompileCondition condition;
+			condition.compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, actionBefore);
 
             break;
 		}
 		case IToken::FUNCTION_DECLARE_OPEN:
 		{
 			shared_ptr<Token> next = begin;
-			shared_ptr<CompileGetFunction> function = make_shared<CompileGetFunction>();
-			function->compile(tokenList, next, next->getPartner(), listActionNodes, actionBefore);
+			CompileGetFunction function;
+			function.compile(tokenList, next, next->getPartner(), listActionNodes, actionBefore);
 
 			break;
 		}
 		case IToken::NUMBER:
 		case IToken::TEXT:
-		case IToken::BOOL:
+		case IToken::FACT:
 		{
 			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
 			directFunctionCall->setArraySize(2);

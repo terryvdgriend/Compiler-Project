@@ -25,28 +25,28 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 	shared_ptr<Token> conClose = nullptr;
 	int level = begin->getLevel();
 
-	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::FOR));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::AND_PARA));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::AND_PARA));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::FOR));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level + 1, IToken::AND_PARA));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level + 1, IToken::AND_PARA));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_CLOSE));
+	expected.push_back(TokenExpectation(level, IToken::BODY_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::BODY_CLOSE));
 
 
-	for (shared_ptr<TokenExpectation> expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		while (current->getType() == IToken::NEWLINE)
 		{
 			current = current->getNext();
 		}
 
-		if (expectation->getLevel() == level)
+		if (expectation.getLevel() == level)
 		{
 			if (current == nullptr)
 			{
@@ -61,10 +61,10 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				conClose = current->getPartner();
 			}
 
-			if (current->getType() != expectation->getTokenType())
+			if (current->getType() != expectation.getTokenType())
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
-													  expectation->getTokenType(), current->getType());
+													  expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -74,9 +74,9 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				current = current->getNext();
 			}
 		}
-		else if (expectation->getLevel() >= level)
+		else if (expectation.getLevel() >= level)
 		{
-			if (current->getType() == expectation->getTokenType() && current->getType() == IToken::AND_PARA)
+			if (current->getType() == expectation.getTokenType() && current->getType() == IToken::AND_PARA)
 			{
 				current = current->getNext();
 
@@ -96,7 +96,7 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				if (next->getPrevious()->getType() == IToken::CONDITION_OPEN)
 				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no declaration!", ".md", current->getLineNumber(), 
-														 current->getPosition(), ErrorType::error));
+														  current->getPosition(), ErrorType::error));
 					begin = end;
 
 					return;
@@ -130,9 +130,9 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				{
 					next = next->getNext();
 				}
-				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
+				CompileCondition condition;
 				_condition->add(make_shared<DoNothingNode>());
-				condition->compile(tokenList, current, next, _condition, _condition->getLast());
+				condition.compile(tokenList, current, next, _condition, _condition->getLast());
 
 				// If condition still is empty, throw error (we need a condition)
 				if (_condition->getCount() == 0) 

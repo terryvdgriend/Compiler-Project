@@ -16,10 +16,10 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 	map<IToken, string>::iterator iFind;
 	shared_ptr<Token> current = begin;
 	vector<shared_ptr<ActionNode>> beforeArray;
-	shared_ptr<CompileNextLevel> nextLevel = make_shared<CompileNextLevel>();
+	CompileNextLevel nextLevel;
 	CompileNextLevelList nextLevelList;
 
-	nextLevel->setBegin(begin);
+	nextLevel.setBegin(begin);
 
 	while (current != nullptr && current != end)
 	{
@@ -46,7 +46,6 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 {
 	string saArguments[3];
 	string sBuffer;
-	shared_ptr<DirectFunctionCall> pDirectFunction;
 	int maxN = 2;
 
 	saArguments[0] = sFunctionName;
@@ -55,7 +54,7 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 
 	for (int n = 0; n < maxN; n++)
 	{
-		pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(token));
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(token));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
@@ -71,29 +70,29 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 	listActionNodes->insertBefore(iBefore, pFunction);
 }
 
-void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& current, shared_ptr<CompileNextLevel>& nextLevel, 
+void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& current, CompileNextLevel& nextLevel, 
 										CompileNextLevelList& nextLevelList)
 {
 	if (nextLevelList.size() == 0)
 	{
-		nextLevel->setBefore(beforeArray.at(0));
+		nextLevel.setBefore(beforeArray.at(0));
 	}
-	nextLevel->setEnd(current);
+	nextLevel.setEnd(current);
 
 	nextLevelList.push_back(nextLevel);
 
-	nextLevel->setBefore(beforeArray.at(1));
-	nextLevel->setBegin(current->getNext());
+	nextLevel.setBefore(beforeArray.at(1));
+	nextLevel.setBegin(current->getNext());
 }
 
-void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, shared_ptr<CompileNextLevel>& nextLevel, 
+void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, CompileNextLevel& nextLevel, 
 										  CompileNextLevelList& nextLevelList)
 {
 	if (nextLevelList.size() == 0)
 	{
-		nextLevel->setBefore(before);
+		nextLevel.setBefore(before);
 	}
-	nextLevel->setEnd(end);
+	nextLevel.setEnd(end);
 	nextLevelList.push_back(nextLevel);
 }
 
@@ -104,8 +103,8 @@ void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenL
 
 	while (step != nextLevelList.end())
 	{
-		shared_ptr<CompileNextLevel> nextLevelList = *step;
-		pNextLevel->compile(tokenList, nextLevelList->getBegin(), nextLevelList->getEnd(), listActionNodes, nextLevelList->getBefore());
+		CompileNextLevel &nextLevelList = *step;
+		pNextLevel->compile(tokenList, nextLevelList.getBegin(), nextLevelList.getEnd(), listActionNodes, nextLevelList.getBefore());
 		++step;
 	}
 }

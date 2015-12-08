@@ -20,13 +20,13 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
-	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::SWITCH));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::SWITCH));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_CLOSE));
 
-	for (shared_ptr<TokenExpectation> expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		while (current->getType() == IToken::NEWLINE)
 		{
@@ -40,7 +40,7 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 			}
 		}
 
-		if (expectation->getLevel() == level)
+		if (expectation.getLevel() == level)
 		{
 			if (current == nullptr) 
 			{
@@ -50,10 +50,10 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 				break;
 			}
 
-			if (current->getType() != expectation->getTokenType()) 
+			if (current->getType() != expectation.getTokenType()) 
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
-													  expectation->getTokenType(), current->getType());
+													  expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -63,20 +63,20 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 				current = current->getNext();
 			}
 		}
-		else if (expectation->getLevel() >= level)
+		else if (expectation.getLevel() >= level)
 		{
 			if (_condition->getCount() == 0) 
 			{
 				if (current->getLevel() >= level)
 				{
-					shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
+					CompileCondition condition;
 					_condition->add(make_shared<DoNothingNode>());
-					condition->compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+					condition.compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
 				}
 				else 
 				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
-														  expectation->getTokenType(), current->getType());
+														  expectation.getTokenType(), current->getType());
 					begin = end;
 
 					break;
@@ -102,14 +102,14 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 	int level = begin->getLevel();
 	list<shared_ptr<LinkedActionList>> conditionList;
 
-	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::SWITCH_CASE));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::CONDITION_CLOSE));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::SWITCH_CASE));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_CLOSE));
+	expected.push_back(TokenExpectation(level, IToken::BODY_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::BODY_CLOSE));
 
 	while (current->getType() == IToken::NEWLINE)
 	{
@@ -128,7 +128,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 		shared_ptr<LinkedActionList> caseCondition = make_shared<LinkedActionList>();
 		shared_ptr<LinkedActionList> caseBody = make_shared<LinkedActionList>();
 
-		for (shared_ptr<TokenExpectation> expectation : expected)
+		for (TokenExpectation expectation : expected)
 		{
 			while (current->getType() == IToken::NEWLINE)
 			{
@@ -142,7 +142,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 				}
 			}
 
-			if (expectation->getLevel() == level)
+			if (expectation.getLevel() == level)
 			{
 				if (current == nullptr) 
 				{
@@ -152,9 +152,9 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 					break;
 				}
 
-				if (current->getType() != expectation->getTokenType()) 
+				if (current->getType() != expectation.getTokenType()) 
 				{
-					if (current->getType() == IToken::SWITCH_CASE && expectation->getTokenType() == IToken::BODY_OPEN)
+					if (current->getType() == IToken::SWITCH_CASE && expectation.getTokenType() == IToken::BODY_OPEN)
 					{
 						conditionList.push_back(caseCondition);
 
@@ -163,7 +163,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 					else 
 					{
 						ErrorHandler::getInstance()->addError(make_shared<Error>("an body", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
-															  expectation->getTokenType(), current->getType());
+															  expectation.getTokenType(), current->getType());
 						begin = end;
 
 						break;
@@ -174,20 +174,20 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 					current = current->getNext();
 				}
 			}
-			else if (expectation->getLevel() >= level)
+			else if (expectation.getLevel() >= level)
 			{
 				if (caseCondition->getCount() == 0) 
 				{
 					if (current->getLevel() > level)
 					{
-						shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
+						CompileCondition condition;
 						caseCondition->add(make_shared<DoNothingNode>());
-						condition->compile(tokenList, current, current->getPrevious()->getPartner(), caseCondition, caseCondition->getLast());
+						condition.compile(tokenList, current, current->getPrevious()->getPartner(), caseCondition, caseCondition->getLast());
 					}
 					else 
 					{
 						ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
-															  expectation->getTokenType(), current->getType());
+															  expectation.getTokenType(), current->getType());
 						begin = end;
 
 						break;
@@ -263,13 +263,13 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
-	list<shared_ptr<TokenExpectation>> expected;
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::SWITCH_DEFAULT));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_OPEN));
-	expected.push_back(make_shared<TokenExpectation>(level + 1, IToken::ANY));
-	expected.push_back(make_shared<TokenExpectation>(level, IToken::BODY_CLOSE));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::SWITCH_DEFAULT));
+	expected.push_back(TokenExpectation(level, IToken::BODY_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::BODY_CLOSE));
 
-	for (shared_ptr<TokenExpectation> expectation : expected)
+	for (TokenExpectation expectation : expected)
 	{
 		while (current->getType() == IToken::NEWLINE)
 		{
@@ -283,7 +283,7 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 			}
 		}
 
-		if (expectation->getLevel() == level)
+		if (expectation.getLevel() == level)
 		{
 			if (current == nullptr)
 			{
@@ -293,10 +293,10 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 				break;
 			}
 
-			if (current->getType() != expectation->getTokenType())
+			if (current->getType() != expectation.getTokenType())
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
-													  expectation->getTokenType(), current->getType());
+													  expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -306,7 +306,7 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 				current = current->getNext();
 			}
 		}
-		else if (expectation->getLevel() >= level)
+		else if (expectation.getLevel() >= level)
 		{
 			shared_ptr<Token> previous = current->getPrevious();
 
