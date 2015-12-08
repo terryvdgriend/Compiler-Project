@@ -41,7 +41,7 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 {
 	//
 	Token  *pToken{};
-	string s(codefromfile);
+	string s("\n"+codefromfile);
 	smatch m;
 
 	int rowNr = 1;
@@ -182,6 +182,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 		//Levels
 		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN || currentToken == Token::FUNCTION_DECLARE_OPEN || currentToken == Token::ARRAY_OPEN)
 		{
+			if (currentToken == Token::FUNCTION_OPEN) {
+				maxScope++;
+				currentScope = maxScope;
+			}
 			lvl++;
 		}
 
@@ -204,6 +208,10 @@ void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
 				CheckRemainingStack();
 		}
 		s = m.suffix().str();
+		if (currentToken == Token::FUNCTION_CLOSE)
+		{
+			currentScope = pToken->getPartner()->getScope();
+		}
 	}
 
 	CheckRemainingStack();
