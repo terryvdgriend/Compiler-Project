@@ -71,8 +71,8 @@ void CompileWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 			}
 			else
 			{
-				_body->add(make_shared<DoNothingNode>());
 				shared_ptr<Token> previous = current->getPrevious();
+				_body->add(make_shared<DoNothingNode>());
 
 				while (previous->getType() != IToken::BODY_OPEN)
 				{

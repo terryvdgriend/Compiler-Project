@@ -98,7 +98,7 @@ void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Tok
 		{
 			if (current->getPrevious() != nullptr && current->getPrevious()->getType() == IToken::RETURNVALUE)
 			{
-				_returnToken = current;
+				_returnToken = make_shared<Token>(current);
 			}
 			else 
 			{
@@ -129,7 +129,7 @@ void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Tok
 						break;
 					}
 				}
-				_paramTokens.push_back(current);
+				_paramTokens.push_back(make_shared<Token>(current));
 			}
 		}
 		current = current->getNext();
@@ -151,7 +151,7 @@ void CompileUserFunction::compileBody(shared_ptr<Token>& begin, shared_ptr<Token
 
 			break;
 		}
-		_body->add(current);
+		_body->add(make_shared<Token>(current));
 		current = current->getNext();
 	} 
 	while (current->getType() != end->getType());

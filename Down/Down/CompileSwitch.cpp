@@ -344,7 +344,7 @@ void CompileSwitch::connectLists()
 
 	if (_conditionBodyMap.size() > 0) 
 	{
-		for (auto p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
+		for (map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>::iterator p = _conditionBodyMap.begin(); p != _conditionBodyMap.end(); ++p)
 		{
 			if (_conditionBodyMap.size() > 0 || _bodyDefault->getCount() > 0)
 			{

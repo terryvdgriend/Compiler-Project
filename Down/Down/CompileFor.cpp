@@ -38,7 +38,6 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
 	expected.push_back(TokenExpectation(level, IToken::BODY_CLOSE));
 
-
 	for (TokenExpectation expectation : expected)
 	{
 		while (current->getType() == IToken::NEWLINE)

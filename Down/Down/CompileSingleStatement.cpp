@@ -30,8 +30,8 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 				directFunctionCall->setAt(1, saArguments[1].c_str());
 				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
-				shared_ptr<CompileCondition> condition = make_shared<CompileCondition>();
-				condition->compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, beforeFunction);
+				CompileCondition condition;
+				condition.compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, beforeFunction);
 			}
 			else
 			{
