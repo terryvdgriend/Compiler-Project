@@ -20,6 +20,7 @@ Token::Token(const shared_ptr<Token>& other)
 	_level			= other->_level;
 	_next			= nullptr;
 	_previous		= nullptr;
+	_scope			= other->_scope;
 }
 
 void Token::print(map<string, IToken>& map)
@@ -52,15 +53,16 @@ void Token::addError()
 	ErrorHandler::getInstance()->addError(make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::error));
 }
 
-bool Token::operator!=(const shared_ptr<Token>& other) const
+bool Token::operator!=(const Token& other) const
 {
-	if (_text			!= other->_text ||
-		_level			!= other->_level ||
-		_position		!= other->_position ||
-		_positionInList != other->_positionInList ||
-		_type			!= other->_type ||
-		_subType		!= other->_subType ||
-		_lineNumber		!= other->_lineNumber)
+	if (_text			!= other._text ||
+		_level			!= other._level ||
+		_position		!= other._position ||
+		_positionInList != other._positionInList ||
+		_type			!= other._type ||
+		_subType		!= other._subType ||
+		_scope			!= other._scope ||
+		_lineNumber		!= other._lineNumber)
 	{
 		return true;
 	}
@@ -68,15 +70,15 @@ bool Token::operator!=(const shared_ptr<Token>& other) const
 	return false;
 }
 
-bool Token::operator!=(shared_ptr<Token> other)
+bool Token::operator!=(Token other)
 {
-	if (_text			!= other->_text ||
-		_level			!= other->_level ||
-		_position		!= other->_position ||
-		_positionInList	!= other->_positionInList ||
-		_type			!= other->_type ||
-		_subType		!= other->_subType ||
-		_lineNumber		!= other->_lineNumber)
+	if (_text			!= other._text ||
+		_level			!= other._level ||
+		_position		!= other._position ||
+		_positionInList	!= other._positionInList ||
+		_type			!= other._type ||
+		_subType		!= other._subType ||
+		_lineNumber		!= other._lineNumber)
 	{
 		return true;
 	}

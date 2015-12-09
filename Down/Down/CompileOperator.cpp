@@ -21,7 +21,7 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 
 	nextLevel.setBegin(begin);
 
-	while (current != nullptr && current != end)
+	while (current != nullptr && *current != end)
 	{
 		if (current->getType() == IToken::NEWLINE)
 		{

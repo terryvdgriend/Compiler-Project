@@ -11,8 +11,8 @@ class Token
 		void print(map<string, IToken>& map);
 		void addError();
 
-		bool operator!=(const shared_ptr<Token>& other)const;
-		bool operator!=(shared_ptr<Token> other);
+		bool operator!=(const Token& other)const;
+		bool operator!=(Token other);
 		static bool compare(shared_ptr<Token> first, shared_ptr<Token> other);
 
 		string getText();

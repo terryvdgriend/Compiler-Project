@@ -161,6 +161,6 @@ void CompileUserFunction::compileBody(shared_ptr<Token>& begin, shared_ptr<Token
 
 void CompileUserFunction::connectList()
 {
-	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, vector<shared_ptr<Token>>{_paramTokens}, _returnToken, true);
+	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, _paramTokens, _returnToken, true);
 	FunctionHandler::getInstance()->addFunction(funcion);
 }
