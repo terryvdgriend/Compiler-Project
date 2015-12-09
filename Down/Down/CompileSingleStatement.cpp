@@ -17,8 +17,8 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 		{
 			shared_ptr<Token> next = begin->getNext();
 			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
-			string sBuffer, saArguments[2];
 			shared_ptr<ActionNode> beforeFunction = nullptr;
+			string sBuffer, saArguments[2];
 
 			if (next != nullptr && next->getType() == IToken::CONDITION_OPEN)
 			{

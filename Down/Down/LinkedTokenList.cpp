@@ -18,7 +18,7 @@ LinkedTokenList::LinkedTokenList(shared_ptr<LinkedTokenList>& other)
 
 	while (current != nullptr) 
 	{
-		shared_ptr<Token> nToken = current;
+		shared_ptr<Token> nToken = make_shared<Token>(current);
 
 		if (nToken->getPartner() != nullptr) 
 		{

@@ -9,13 +9,6 @@ LinkedActionList::LinkedActionList()
 	lastNode	= nullptr;
 }
 
-LinkedActionList::LinkedActionList(const LinkedActionList& other)
-{
-	count		= other.count;
-	firstNode	= other.firstNode;
-	lastNode	= other.lastNode;
-}
-
 shared_ptr<ActionNode> LinkedActionList::add(shared_ptr<ActionNode> value)
 {
 	return insertLast(value);

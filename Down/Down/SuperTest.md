@@ -18,7 +18,7 @@ ___
 
 
 ---
-    ### Switchy gets _number_ **xx** and gives _text_ **result2**
+    ### Switchy gets _number_ **xx** and gives _number_ **result2**
     
     #### switch ( **xx** )
     case ( 1 )

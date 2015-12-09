@@ -5,7 +5,6 @@ class LinkedActionList
 {
 	public:
 		LinkedActionList();
-		LinkedActionList(const LinkedActionList& other);
 
 		void printList();
 

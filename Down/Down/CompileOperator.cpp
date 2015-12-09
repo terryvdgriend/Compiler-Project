@@ -103,7 +103,7 @@ void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenL
 
 	while (step != nextLevelList.end())
 	{
-		CompileNextLevel &nextLevelList = *step;
+		CompileNextLevel& nextLevelList = *step;
 		pNextLevel->compile(tokenList, nextLevelList.getBegin(), nextLevelList.getEnd(), listActionNodes, nextLevelList.getBefore());
 		++step;
 	}

@@ -269,7 +269,6 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 	if (_returnToken) 
 	{
 		_returnToken = make_shared<Token>(_returnToken);
-		changeVariable(_returnToken);
 		shared_ptr<LinkedActionList> rValue = make_shared<LinkedActionList>();
 		CompileCondition condition;
 		condition.compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
@@ -283,7 +282,7 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 		rValue->insertBefore(pDirectFunction, rValue->getLast());
 		_body->add(rValue);
 	}
-	shared_ptr<LinkedTokenList> body = _bodyTokens;
+	shared_ptr<LinkedTokenList> body = make_shared<LinkedTokenList>(_bodyTokens);
 	changeVariables(body);
 	shared_ptr<Token> currentBody = body->getFirst();
 	_body->add(make_shared<DoNothingNode>());
@@ -312,7 +311,7 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 	{
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
-		//changeVariable(_returnToken);
+		changeVariable(_returnToken);
 		shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
