@@ -56,6 +56,10 @@ ___
 _number_ **age**
 
 >Bubble Sort
+[ printdown "" ]
+[printdown "Bubble Sort"]
+[ printdown "" ]
+
 
 _number_ **size** is 7
 _number_ { **size** } **number** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
