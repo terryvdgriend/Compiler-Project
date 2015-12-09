@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CompileIf.h"
 #include "CompileElseIf.h"
-#include "CompileCondition.h"
+#include "CompilerHeader.h"
 #include "ConditionalJumpNode.h"
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
@@ -110,10 +110,17 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 		}
 		else if (expectation.getLevel() >= whileLevel){
 			if (_condition->Count() == 0){
-				CompileCondition* condition = new CompileCondition();
-				_condition->add(new DoNothingNode());
+				Compiler* condition;
+				bool multiIndex = false;
+				if (current->next->getEnum() != Token::CONDITION_CLOSE) {
+					condition = new CompileCondition;
+					multiIndex = true;
+				}
+				else
+					condition = new CompileSingleStatement;
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 				delete condition;
+				if (!multiIndex) { current = current->next; };
 			}
 			else{
 				Token* prev = current->previous;
@@ -123,10 +130,17 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 				}
 				prev = prev->getPartner();
 				while (current->getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-
-					if (compiledBodyPart != nullptr){
+					bool multiIndex = false;
+					Compiler* compiledBodyPart;
+					if (current->getEnum() == Token::NEWLINE || (current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE)) {
+						compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+						multiIndex = true;
+					}
+					else
+						compiledBodyPart = new CompileSingleStatement;
+					if (compiledBodyPart != nullptr) {
 						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
+						if (!multiIndex) { current = current->next; };
 					}
 					else
 					{
@@ -202,16 +216,22 @@ void CompileIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, Linked
 					}
 					prev = prev->getPartner();
 					while (current->getLevel() > whileLevel){
-						Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-
-						if (compiledBodyPart != nullptr){
+						bool multiIndex = false;
+						Compiler* compiledBodyPart;
+						if (current->getEnum() == Token::NEWLINE || (current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE)) {
+							compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+							multiIndex = true;
+						}
+						else
+							compiledBodyPart = new CompileSingleStatement;
+						if (compiledBodyPart != nullptr) {
 							compiledBodyPart->Compile(cTokenList, *current, *prev, *_bodyElse, *_bodyElse->getLast());
+							if (!multiIndex) { current = current->next; };
 						}
 						else
 						{
 							current = current->next;
 						}
-						delete compiledBodyPart;
 					}
 				}
 			}

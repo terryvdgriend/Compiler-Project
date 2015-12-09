@@ -2,7 +2,6 @@
 #include "CompileEquals.h"
 #include "CompileIf.h"
 #include "CompileWhile.h"
-#include "CompileFunction.h"
 #include "CompileDoWhile.h"
 #include "CompileArray.h"
 #include "CompileGetArrayItem.h"
@@ -13,3 +12,4 @@
 #include "CompileCondition.h"
 #include "CompileOperator.h"
 #include "CompileSwitch.h"
+#include "CompileSingleStatement.h"

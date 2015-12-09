@@ -78,7 +78,6 @@ void CompileAddArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 					seperator = seperator->next;
 				} while (seperator->getEnum() != Token::NEWLINE);
 
-				//string tempPreviousLocalVariable, tempCurrentLocalVariable;
 
 				if (fromArray)
 				{

@@ -81,7 +81,7 @@ __
 		#### if ( **number** { **j** } larger than **number** { **j**  plus 1 } )
 		--
 			**temp** is **number** { **j** }
-			**number** { **j**  } is **number** { **j** plus 1 }
+			**number** { **j** } is **number** { **j** plus 1 }
 			**number** { **j** plus 1 } is **temp**
 		__
 	__

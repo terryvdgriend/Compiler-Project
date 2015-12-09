@@ -37,10 +37,14 @@ int main(int argc,  char * argv[])
 	if (Errors())
 		return 0;
 
+	Text::PrintLine("Token Complete");
+
 	//=========COMPILER==============
 	LinkedActionList cRunList = *RunCompiler(&cTokenList, C);
 	if (Errors())
 		return 0;
+
+	Text::PrintLine("Compiler Complete");
 
 	//=========VM==============
 	RunVM(cRunList);

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CompileSwitch.h"
+#include "CompilerHeader.h"
 #include "DoNothingNode.h"
 #include "CompileFactory.h"
 #include "TokenExpectation.h"
@@ -99,10 +99,17 @@ void CompileSwitch::Compile(LinkedList& cTokenList, Token& begin, Token& end, Li
 			if (_condition->Count() == 0) {
 				if (current->getLevel() >= whileLevel)
 				{
-					CompileCondition* condition = new CompileCondition();
-					_condition->add(new DoNothingNode());
+					Compiler* condition;
+					bool multiIndex = false;
+					if (current->next->getEnum() != Token::CONDITION_CLOSE) {
+						condition = new CompileCondition;
+						multiIndex = true;
+					}
+					else
+						condition = new CompileSingleStatement;
 					condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 					delete condition;
+					if (!multiIndex) { current = current->next; };
 				}
 				else 
 				{
@@ -174,10 +181,17 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 			else if (expectation.Level >= whileLevel) {
 				if (caseCondition->Count() == 0) {
 					if (current->getLevel() > whileLevel) {
-						CompileCondition* condition = new CompileCondition();
-						caseCondition->add(new DoNothingNode());
+						Compiler* condition;
+						bool multiIndex = false;
+						if (current->next->getEnum() != Token::CONDITION_CLOSE) {
+							condition = new CompileCondition;
+							multiIndex = true;
+						}
+						else
+							condition = new CompileSingleStatement;
 						condition->Compile(cTokenList, *current, *current->previous->getPartner(), *caseCondition, *caseCondition->getLast());
 						delete condition;
+						if (!multiIndex) { current = current->next; };
 					}
 					else {
 						ErrorHandler::getInstance()->addError(Error{ "an expression", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
@@ -192,10 +206,17 @@ void CompileSwitch::CompileCase(LinkedList& cTokenList, Token& begin, Token& end
 					}
 					prev = prev->getPartner();
 					while (current->getLevel() > whileLevel) {
-						Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-
+						bool multiIndex = false;
+						Compiler* compiledBodyPart;
+						if (current->getEnum() == Token::NEWLINE || (current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE)) {
+							compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+							multiIndex = true;
+						}
+						else
+							compiledBodyPart = new CompileSingleStatement;
 						if (compiledBodyPart != nullptr) {
 							compiledBodyPart->Compile(cTokenList, *current, *prev, *caseBody, *caseBody->getLast());
+							if (!multiIndex) { current = current->next; };
 						}
 						else
 						{
@@ -274,10 +295,17 @@ void CompileSwitch::CompileDefault(LinkedList& cTokenList, Token& begin, Token& 
 			}
 			prev = prev->getPartner();
 			while (current->getLevel() > whileLevel) {
-				Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-
+				bool multiIndex = false;
+				Compiler* compiledBodyPart;
+				if (current->getEnum() == Token::NEWLINE || (current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE)) {
+					compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+					multiIndex = true;
+				}
+				else
+					compiledBodyPart = new CompileSingleStatement;
 				if (compiledBodyPart != nullptr) {
 					compiledBodyPart->Compile(cTokenList, *current, *prev, *_bodyDefault, *_bodyDefault->getLast());
+					if (!multiIndex) { current = current->next; };
 				}
 				else
 				{

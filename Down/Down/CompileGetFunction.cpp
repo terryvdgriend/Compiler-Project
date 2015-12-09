@@ -247,16 +247,36 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 			currentBody = currentBody->next;
 			break;
 		}
-		Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
 
+		bool multiIndex = false;
+		Compiler* compiledBodyPart;
+		if (currentBody->getEnum() == Token::NEWLINE ||(currentBody->next->getEnum() != Token::FUNCTION_CLOSE && currentBody->next->getEnum() != Token::NEWLINE)) {
+			compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
+			multiIndex = true;
+		}
+		else
+			compiledBodyPart = new CompileSingleStatement;
 		if (compiledBodyPart != nullptr) {
 			compiledBodyPart->Compile(*_bodyTokens, *currentBody, *body->last, *_body, *_body->getLast());
+			if (!multiIndex) { currentBody = currentBody->next; };
 		}
 		else
 		{
 			currentBody = currentBody->next;
 		}
 		delete compiledBodyPart;
+
+
+		//Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
+
+		//if (compiledBodyPart != nullptr) {
+		//	compiledBodyPart->Compile(*_bodyTokens, *currentBody, *body->last, *_body, *_body->getLast());
+		//}
+		//else
+		//{
+		//	currentBody = currentBody->next;
+		//}
+		//delete compiledBodyPart;
 	}
 
 	if (_returnToken) {
@@ -329,10 +349,6 @@ void CompileGetFunction::ConnectParams(Token * param,LinkedList &paramlist)
 	
 	temp = templist->first;
 	paramlist = *new LinkedList(*templist);
-	//while (temp != nullptr) {
-	//	paramlist.add(temp);
-	//	temp = temp->next;
-	//}
 }
 
 CompileGetFunction::~CompileGetFunction()
