@@ -9,8 +9,8 @@ pair<string, string> AddItemToArrayAtCommand::accept(CommandVisitor& commandVisi
 void AddItemToArrayAtCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
-	// TODO: Errorhandling erbij maken (geen ander type kunnen gebruiken)
 
+	string param1 = vm.getFunctionParameterValueByKey(parameters[1]);
 	shared_ptr<Variable> param2 = vm.getVariable(parameters[2]);
 	shared_ptr<Variable> param3 = vm.getVariable(parameters[3]);
 
@@ -22,11 +22,11 @@ void AddItemToArrayAtCommand::execute(VirtualMachine & vm, AbstractFunctionCall 
 
 	if (key != "" && value != "" && arrayKey != "" && param2->getType() == VariableType::NUMBER)
 	{
-		// TODO: arrayType aanpassen naar het type van de array
 		VariableType arrayType = param3->getType();
-		if (param3->getType() != arrayType)
+		if (!vm.isVariableTypeSameAsArrayType(param1, param3->getTokenType()))
 		{
-			ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the type isn't aloud in this array", ".md", -1, -1, Error::error });
+			throwTypeError(*param2, *param3, vm);
+			//ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the type isn't aloud in this array", ".md", -1, -1, Error::error });
 		}
 		else
 		{

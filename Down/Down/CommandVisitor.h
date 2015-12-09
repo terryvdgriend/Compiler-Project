@@ -1,7 +1,6 @@
 #pragma once
 
 class AddArrayToDictionaryCommand;
-class AddItemToArrayCommand;
 class AddItemToArrayAtCommand;
 class AddLengthToArrayCommand;
 class ConstantToReturnValueCommand;
@@ -27,7 +26,6 @@ class TimesCommand;
 class CommandVisitor {
 public: 
 	pair<string, string> visit(AddArrayToDictionaryCommand& command);
-	pair<string, string> visit(AddItemToArrayCommand& command);
 	pair<string, string> visit(AddItemToArrayAtCommand& command);
 	pair<string, string> visit(AddLengthToArrayCommand& command);
 	pair<string, string> visit(ConstantToReturnValueCommand& command);

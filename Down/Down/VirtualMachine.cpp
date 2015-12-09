@@ -211,6 +211,48 @@ shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int in
 	}
 }
 
+void VirtualMachine::addArrayTypeToArrayTypes(string arrayName, Token::iToken tokenType)
+{
+	VariableType type;
+	switch (tokenType)
+	{
+		case Token::iToken::TYPE_TEXT_ARRAY:type = VariableType::TEXT;
+			break;
+		case Token::iToken::TYPE_NUMBER_ARRAY: type = VariableType::NUMBER;
+			break;
+		case Token::iToken::TYPE_FACT_ARRAY: type = VariableType::FACT;
+			break;
+		default:
+			break;
+	}
+	if (arrayTypes.find(arrayName) == arrayTypes.end())
+	{
+		arrayTypes.emplace(arrayName, type);
+	}
+}
+
+bool VirtualMachine::isVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType)
+{
+	VariableType type = VariableType::NULLTYPE;
+	switch (tokenType)
+	{
+		case Token::iToken::TYPE_TEXT: type = VariableType::TEXT;
+			break;
+		case Token::iToken::TYPE_NUMBER: type = VariableType::NUMBER;
+			break;
+		case Token::iToken::TYPE_FACT: type = VariableType::FACT;
+			break;
+		default:
+			break;
+	}
+	map<string, VariableType>::iterator iter = arrayTypes.find(arrayName);
+	if (iter != arrayTypes.end())
+	{
+		return iter->second == type;
+	}
+	return false;
+}
+
 void VirtualMachine::setFunctionParameter(string name, string value)
 {
 	functionParameters[name] = value;

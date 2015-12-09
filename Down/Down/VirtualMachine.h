@@ -37,6 +37,9 @@ class VirtualMachine
 
 		bool hasValueInFunctionParameters(string parameter);
 		bool isAnIdentifier(string name);
+
+		void addArrayTypeToArrayTypes(string arrayName, Token::iToken tokenType);
+		bool isVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType);
 		
 	private:
 		string returnValue;
@@ -46,6 +49,8 @@ class VirtualMachine
 		map<string, shared_ptr<BaseCommand>> commandDictionary;
 		map<string, shared_ptr<Variable>> variableDictionary;
 		map<string, string> functionParameters;
+
+		map<string, VariableType> arrayTypes;
 
 		map<string, vector<shared_ptr<Variable>>> variableArrayDictionary;
 

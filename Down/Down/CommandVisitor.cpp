@@ -4,11 +4,8 @@
 std::pair<string, string> CommandVisitor::visit(AddArrayToDictionaryCommand& command) {
 	return std::pair<string, string>("", ""); // Change later
 }
-std::pair<string, string> CommandVisitor::visit(AddItemToArrayCommand& command) {
-	return std::pair<string, string>("", ""); // Change later
-}
 pair<string, string> CommandVisitor::visit(AddItemToArrayAtCommand& command) {
-	return std::pair<string, string>("", ""); // Change later
+	return std::pair<string, string>("add item on position", "with type");
 }
 std::pair<string, string> CommandVisitor::visit(AddLengthToArrayCommand& command) {
 	return std::pair<string, string>("", ""); // Change later
