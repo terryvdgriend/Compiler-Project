@@ -13,23 +13,37 @@
 #include "Format.h"
 #include "DoNothingNode.h"
 
-bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C);
+bool IDEstuff(int argc, char * argv[], std::string &code, bool &PT, bool &PC, bool &BUILD, bool &TIME, bool &TEST);
 LinkedList* RunTokenizer(std::string code, bool print);
 LinkedActionList* RunCompiler(LinkedList* lToken, bool print);
 bool Errors();
 void RunVM(LinkedActionList lToken);
 
-int main(int argc,  char * argv[])
+int main(int argc, char * argv[])
 {
-	//string eoutz = Tokenizer().getKeywordsAsJson();
 	string code = "";
+
+	//TODO: onderstaande 1 klasse van maken met deze waardes.
 	bool C = false;
 	bool T = false;
+	bool TIME = false;
+	bool TEST = false;
+	bool BUILD = false;
 
 	//==========IDE=============
-	if (!IDEstuff(argc, argv, code, T, C))
+	if (!IDEstuff(argc, argv, code, T, C, BUILD, TIME, TEST))
 		return 0;
 
+	// =========TEST============
+	if (TEST)
+	{
+		//(1) Test runnen
+		//..
+		//(2) Errors terug geven, thats it
+		std::cerr << "========== Test runned with x errors ============";
+		Errors();
+		return 0;
+	}
 
 	//=========TOKENIZER==============
 	LinkedList cTokenList = *RunTokenizer(code, T);
@@ -42,7 +56,8 @@ int main(int argc,  char * argv[])
 		return 0;
 
 	//=========VM==============
-	RunVM(cRunList);
+	if (!BUILD)
+		RunVM(cRunList);
 	if (Errors())
 		return 0;
 
@@ -102,7 +117,7 @@ void RunVM(LinkedActionList cRunList)
 
 //Return: true -> ga verder met rest van code (meeste gevallen)
 //Return: false -> stop na deze functie (voor dingen zoals getTokens)
-bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C)
+bool IDEstuff(int argc, char * argv[], std::string &code, bool &PT, bool &PC, bool &BUILD, bool &TIME, bool &TEST)
 {
 	//Text::PrintLine("COUTNERT:  " + argc);
 	if (argc == 1)//andere opties hebben we nog niet
@@ -132,11 +147,23 @@ bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C)
 		}
 		if (opt == "-t")//Print tokens
 		{
-			T = true;
+			PT = true;
 		}
 		if (opt == "-c")//Print runlist
 		{
-			C = true;
+			PC = true;
+		}
+		if (opt == "-build")//build tokens
+		{
+			BUILD = true;
+		}
+		if (opt == "-time")
+		{
+			TIME = true;
+		}
+		if (opt == "-test")
+		{
+			TEST = true;
 		}
 		if (opt == "getTokens") {
 			outz = Tokenizer().getKeywordsAsJson();
