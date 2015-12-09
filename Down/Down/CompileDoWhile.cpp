@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CompileDoWhile.h"
+#include "CompilerHeader.h"
 #include "CompileCondition.h"
 #include "ConditionalJumpNode.h"
 #include "JumpGoToNode.h"
@@ -68,9 +68,17 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 				}
 				prev = prev->getPartner();
 				while (current->getLevel() > whileLevel){
-					Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+					bool multiIndex = false;
+					Compiler* compiledBodyPart;
+					if (current->getEnum() == Token::NEWLINE || (current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE) ) {
+						compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+						multiIndex = true;
+					}
+					else
+						compiledBodyPart = new CompileSingleStatement;
 					if (compiledBodyPart != nullptr){
 						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
+						if (!multiIndex) { current = current->next; };
 					}
 					else
 					{
@@ -80,9 +88,17 @@ void CompileDoWhile::Compile(LinkedList& cTokenList, Token& begin, Token& end, L
 				}
 			}
 			else{
-				CompileCondition* condition = new CompileCondition();
+				Compiler* condition;
+				bool multiIndex = false;
+				if (current->next->getEnum() != Token::CONDITION_CLOSE) {
+					condition = new CompileCondition;
+					multiIndex = true;
+				}
+				else
+					condition = new CompileSingleStatement;
 				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
 				delete condition;
+				if (!multiIndex) { current = current->next; };
 			}
 		}
 	}

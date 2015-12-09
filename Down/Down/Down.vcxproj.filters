@@ -93,13 +93,7 @@
     <ClCompile Include="CompileFactory.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileIf.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileLValue.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileNextLevel.cpp">
@@ -320,13 +314,7 @@
     <ClInclude Include="CompileFactory.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="CompileIf.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileLValue.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileNextLevel.h">
@@ -556,6 +544,18 @@
       <Filter>Resource Files\TestScriptz</Filter>
     </None>
     <None Include="SuperTest.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="2000lines.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="alles.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="custom.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="functionTest.md">
       <Filter>Resource Files\TestScriptz</Filter>
     </None>
   </ItemGroup>

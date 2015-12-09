@@ -20,6 +20,8 @@ public:
 		DIVIDE,
 		LESS_THAN,
 		LARGER_THAN,
+		LESS_LIKE_THAN,
+		LARGER_LIKE_THAN,
 		IDENTIFIER, // VARB **i**
 		NUMBER, // 1-2-3-4
 		TEXT, // "txt" 

@@ -108,11 +108,9 @@
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFor.h" />
-    <ClInclude Include="CompileFunction.h" />
     <ClInclude Include="CompileGetArrayItem.h" />
     <ClInclude Include="CompileGetFunction.h" />
     <ClInclude Include="CompileIf.h" />
-    <ClInclude Include="CompileLValue.h" />
     <ClInclude Include="CompileNextLevel.h" />
     <ClInclude Include="CompileOperator.h" />
     <ClInclude Include="CompilePlusMinus.h" />
@@ -189,11 +187,9 @@
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFor.cpp" />
-    <ClCompile Include="CompileFunction.cpp" />
     <ClCompile Include="CompileGetArrayItem.cpp" />
     <ClCompile Include="CompileGetFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
-    <ClCompile Include="CompileLValue.cpp" />
     <ClCompile Include="CompileNextLevel.cpp" />
     <ClCompile Include="CompileOperator.cpp" />
     <ClCompile Include="CompilePlusMinus.cpp" />
@@ -253,6 +249,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
+    <None Include="2000lines.md" />
+    <None Include="alles.md" />
+    <None Include="custom.md" />
+    <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,7 +4,7 @@
 
 #include "CompileEquals.h"
 #include "CompilePlusMinus.h"
-
+#include "CompilerHeader.h"
 #include "ConditionalJumpNode.h"
 #include "JumpGotoNode.h"
 #include "DoNothingNode.h"
@@ -132,7 +132,7 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 
 			while (current->getEnum() != Token::ARRAY_CLOSE) {
 				current = current->next;
-			}\
+			}
 		}
 	}
 

@@ -147,17 +147,7 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					if (stack.size() >= 0) {
 						if (stack.size() == 0 && current->getEnum() == Token::AND_PARA) {
 							if (param->last != nullptr) {
-								param->last->next = nullptr;
-								param->first->previous = nullptr;
-								Token* connectToken = new Token();
-								connectToken->setEnum(Token::NEWLINE);
-								connectToken->setLevel(current->getLevel());
-								connectToken->setPositie(-1);
-								connectToken->setPositieInList(-1);
-								connectToken->setRegelnummer(-1);
-								connectToken->setText("\n");
-								param->add(connectToken);
-								paramList.push_back(param);
+								CreateNewLineToken(*param, paramList);
 							}
 							else {
 								ErrorHandler::getInstance()->addError(Error{"no assignment is array", ".md", current->getLineNumber(),current->getPositie(), Error::error });
@@ -171,17 +161,7 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 					current = current->next;
 					if (stack.size() == 0 && current->getEnum() == Token::ARRAY_CLOSE) {
 						if (param->last != nullptr) {
-							param->last->next = nullptr;
-							param->first->previous = nullptr;
-							Token* connectToken = new Token();
-							connectToken->setEnum(Token::NEWLINE);
-							connectToken->setLevel(current->getLevel());
-							connectToken->setPositie(-1);
-							connectToken->setPositieInList(-1);
-							connectToken->setRegelnummer(-1);
-							connectToken->setText("\n");
-							param->add(connectToken);
-							paramList.push_back(param);
+							CreateNewLineToken(*param,paramList);
 						}
 						else {
 							ErrorHandler::getInstance()->addError(Error{ "no assignment is array", ".md", current->getLineNumber(),current->getPositie(), Error::error });
@@ -235,4 +215,18 @@ void CompileArray::Compile(LinkedList& cTokenList, Token& begin, Token& end, Lin
 		}
 	}
 	 begin = *current; 
+}
+
+void CompileArray::CreateNewLineToken(LinkedList & param, std::vector<LinkedList*>& list) {
+	param.last->next = nullptr;
+	param.first->previous = nullptr;
+	Token* connectToken = new Token();
+	connectToken->setEnum(Token::NEWLINE);
+	connectToken->setLevel(-1);
+	connectToken->setPositie(-1);
+	connectToken->setPositieInList(-1);
+	connectToken->setRegelnummer(-1);
+	connectToken->setText("\n");
+	param.add(connectToken);
+	list.push_back(&param);
 }
