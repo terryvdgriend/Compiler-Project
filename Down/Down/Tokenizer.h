@@ -24,7 +24,7 @@ private:
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
         
     // (\*{2}\S+?\*{2}|#+ (?:else if|\w+)|and gives|multiplied by|^>.*\n|(\w+) than|^-?\d*\.?\d*$|"(.*?)"|\w+|-{1,3}|[\S|\n])
-	regex e{ "(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|^>.*\\n|(\\w+) than|^-?\\d*\\.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])" };
+	regex e{ "(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(^>.*\\n)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])" };
 	std::string lookAhead(smatch m, std::string s);
 public:
 	Tokenizer();
