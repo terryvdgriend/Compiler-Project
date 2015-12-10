@@ -97,6 +97,19 @@ $(function() {
         langTools.addCompleter(downCompleter);
     });
 
+    global.editor.commands.addCommand(
+        {
+            name: 'saveFile',
+            bindKey: {
+            win: 'return',
+            mac: 'return',
+            sender: 'editor|cli'
+        }, exec: function(env, args, request) {
+            global.editor.insert("  \n");
+            return true;
+        }
+    });
+
     global.editor.on('change', function(e) {
         editor.reload();
     });
