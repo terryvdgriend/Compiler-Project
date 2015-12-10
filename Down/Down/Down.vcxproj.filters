@@ -93,16 +93,7 @@
     <ClCompile Include="CompileFactory.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileGetFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileIf.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileLValue.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="CompileNextLevel.cpp">
@@ -158,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="DivideCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
@@ -240,17 +228,11 @@
     <ClCompile Include="Error.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionHandler.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="ConstantToReturnValueCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandVisitor.cpp">
-      <Filter>Source Files\VM</Filter>
     </ClCompile>
     <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Utils</Filter>
@@ -270,9 +252,6 @@
     <ClCompile Include="CompileUnary.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileFor.cpp">
-      <Filter>Source Files\Compiler</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
@@ -284,6 +263,27 @@
     </ClCompile>
     <ClCompile Include="CommandVisitor.cpp">
       <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="AddItemToArrayAtCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="AddLengthToArrayCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="AddArrayToDictionaryCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GetItemFromArrayCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileAddArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileArray.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,16 +314,7 @@
     <ClInclude Include="CompileFactory.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
-    <ClInclude Include="CompileFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileGetFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="CompileIf.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileLValue.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="CompileNextLevel.h">
@@ -361,24 +352,6 @@
     </ClInclude>
     <ClInclude Include="CompileWhile.h">
       <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileSwitch.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileTimesDivideModulo.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileUserFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileWhile.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="Compute.h">
-      <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandVisitor.h">
-      <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
@@ -482,9 +455,6 @@
     <ClInclude Include="Format.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionHandler.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Token.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
@@ -515,9 +485,6 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CompileUnary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CompileFor.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
@@ -533,9 +500,33 @@
     <ClInclude Include="FunctionHandler.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="AddArrayToDictionaryCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="AddItemToArrayAtCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="AddLengthToArrayCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GetItemFromArrayCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileAddArrayItem.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileArray.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetArrayItem.h">
+      <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Snippets.txt">
@@ -547,43 +538,24 @@
     <Text Include="Switch.md">
       <Filter>Resource Files\TestScriptz</Filter>
     </Text>
-    <Text Include="switch.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.md">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.txt" />
-    <Text Include="for.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="ReadMe.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="calc.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="condition.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="func.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="if.md">
-      <Filter>Resource Files\TestScriptz</Filter>
-    </Text>
-    <Text Include="while.md">
-      <Filter>Resource Files\TestScriptz</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
       <Filter>Resource Files\TestScriptz</Filter>
     </None>
     <None Include="SuperTest.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="2000lines.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="alles.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="custom.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </None>
+    <None Include="functionTest.md">
       <Filter>Resource Files\TestScriptz</Filter>
     </None>
   </ItemGroup>
