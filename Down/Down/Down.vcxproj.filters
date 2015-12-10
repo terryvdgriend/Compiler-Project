@@ -264,13 +264,13 @@
     <ClCompile Include="CommandVisitor.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
+    <ClCompile Include="AddArrayToDictionaryCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
     <ClCompile Include="AddItemToArrayAtCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="AddLengthToArrayCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="AddArrayToDictionaryCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
     <ClCompile Include="GetItemFromArrayCommand.cpp">
