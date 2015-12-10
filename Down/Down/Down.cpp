@@ -3,10 +3,7 @@
 
 int main(int argCounter, char* argv[])
 {
-	ProgramHandler* programHandler = new ProgramHandler();
-	int result = programHandler->runProgram(argCounter, argv);
+	ProgramHandler programHandler;
 
-	delete programHandler;
-
-	return result;
+	return programHandler.runProgram(argCounter, argv);
 }
