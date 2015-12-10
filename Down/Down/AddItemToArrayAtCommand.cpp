@@ -23,9 +23,12 @@ void AddItemToArrayAtCommand::execute(VirtualMachine & vm, AbstractFunctionCall 
 	if (key != "" && value != "" && arrayKey != "" && param2->getType() == VariableType::NUMBER)
 	{
 		VariableType arrayType = param3->getType();
-		if (!vm.isVariableTypeSameAsArrayType(param1, param3->getTokenType()))
+
+		pair<string, string> arrayTypes = vm.getVariableTypeSameAsArrayType(param1, param3->getTokenType());
+
+		if (arrayTypes.first != arrayTypes.second)
 		{
-			throwTypeError(*param2, *param3, vm);
+			throwTypeError(Variable(arrayTypes.second), Variable(arrayTypes.first), vm);
 			//ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array, but the type isn't aloud in this array", ".md", -1, -1, Error::error });
 		}
 		else

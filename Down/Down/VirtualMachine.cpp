@@ -216,11 +216,17 @@ void VirtualMachine::addArrayTypeToArrayTypes(string arrayName, Token::iToken to
 	VariableType type;
 	switch (tokenType)
 	{
-		case Token::iToken::TYPE_TEXT_ARRAY:type = VariableType::TEXT;
+		case Token::iToken::TYPE_TEXT_ARRAY:
+			type = VariableType::TEXT;
+			arrayType = "text";
 			break;
-		case Token::iToken::TYPE_NUMBER_ARRAY: type = VariableType::NUMBER;
+		case Token::iToken::TYPE_NUMBER_ARRAY:
+			type = VariableType::NUMBER;
+			arrayType = "number";
 			break;
-		case Token::iToken::TYPE_FACT_ARRAY: type = VariableType::FACT;
+		case Token::iToken::TYPE_FACT_ARRAY:
+			type = VariableType::FACT;
+			arrayType = "fact";
 			break;
 		default:
 			break;
@@ -231,16 +237,23 @@ void VirtualMachine::addArrayTypeToArrayTypes(string arrayName, Token::iToken to
 	}
 }
 
-bool VirtualMachine::isVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType)
+pair<string, string> VirtualMachine::getVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType)
 {
 	VariableType type = VariableType::NULLTYPE;
+	string tempArrayType = "";
 	switch (tokenType)
 	{
-		case Token::iToken::TYPE_TEXT: type = VariableType::TEXT;
+		case Token::iToken::TYPE_TEXT:
+			type = VariableType::TEXT;
+			tempArrayType = "text";
 			break;
-		case Token::iToken::TYPE_NUMBER: type = VariableType::NUMBER;
+		case Token::iToken::TYPE_NUMBER:
+			type = VariableType::NUMBER;
+			tempArrayType = "number";
 			break;
-		case Token::iToken::TYPE_FACT: type = VariableType::FACT;
+		case Token::iToken::TYPE_FACT:
+			type = VariableType::FACT;
+			tempArrayType = "fact";
 			break;
 		default:
 			break;
@@ -248,9 +261,9 @@ bool VirtualMachine::isVariableTypeSameAsArrayType(string arrayName, Token::iTok
 	map<string, VariableType>::iterator iter = arrayTypes.find(arrayName);
 	if (iter != arrayTypes.end())
 	{
-		return iter->second == type;
+		return pair<string, string>(arrayType, tempArrayType);
 	}
-	return false;
+	return pair<string, string>();
 }
 
 void VirtualMachine::setFunctionParameter(string name, string value)
