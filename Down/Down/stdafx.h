@@ -14,6 +14,7 @@
 // Std libraries
 #include <algorithm>
 #include <cctype>
+#include <ctime>
 #include <fstream>
 #include <functional> 
 #include <iostream>

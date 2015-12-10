@@ -154,6 +154,12 @@
     <Filter Include="Source Files\Tokenizer\Utilities">
       <UniqueIdentifier>{9c90861a-1538-4383-9580-2076484a6bee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities\ProgramHandling">
+      <UniqueIdentifier>{89a3b94d-2588-435f-9bdc-a4bfacbb4706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\ProgramHandling">
+      <UniqueIdentifier>{ae8a5465-e2be-41ef-9483-14a1114e8052}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -368,6 +374,12 @@
     </ClCompile>
     <ClCompile Include="RandomFunctionCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="IDEGateway.cpp">
+      <Filter>Source Files\Utilities\ProgramHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgramHandler.cpp">
+      <Filter>Source Files\Utilities\ProgramHandling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -613,6 +625,12 @@
     </ClInclude>
     <ClInclude Include="MandatoryNodeIncludes.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="IDEGateway.h">
+      <Filter>Header Files\Utilities\ProgramHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramHandler.h">
+      <Filter>Header Files\Utilities\ProgramHandling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

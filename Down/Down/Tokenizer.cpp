@@ -17,7 +17,7 @@ Tokenizer::Tokenizer()
 void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, string codefromfile)
 {
 	shared_ptr<Token> pToken;
-	string codePart = "\n" + codefromfile; // Add an \n to prevent errors with first line comments
+	string codePart = codefromfile; // Add an \n to prevent errors with first line comments
 	smatch match;
 	int rowNr = 1;
 	int colNr = 1;

@@ -138,6 +138,7 @@
     <ClInclude Include="GetFromValueCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
+    <ClInclude Include="IDEGateway.h" />
     <ClInclude Include="IdentifierToReturnValueCommand.h" />
     <ClInclude Include="IToken.h" />
     <ClInclude Include="JumpGoToNode.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="NotEqualsToCommand.h" />
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
+    <ClInclude Include="ProgramHandler.h" />
     <ClInclude Include="RandomFunctionCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
@@ -220,6 +222,7 @@
     <ClCompile Include="GetFromValueCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
+    <ClCompile Include="IDEGateway.cpp" />
     <ClCompile Include="IdentifierToReturnValueCommand.cpp" />
     <ClCompile Include="JumpGoToNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
@@ -231,6 +234,7 @@
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
+    <ClCompile Include="ProgramHandler.cpp" />
     <ClCompile Include="RandomFunctionCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
     <ClCompile Include="ShowUpFunctionCommand.cpp" />
