@@ -12,44 +12,70 @@
 #include "FileStreamer.h"
 #include "Format.h"
 #include "DoNothingNode.h"
+#include <ctime>
 
-bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C);
+struct IDEargs {
+	string code = "";
+	bool printCompileList = false;
+	bool PrintTokenList = false;
+	bool printTime = false;
+	bool Test = false;
+	bool Build = false;
+};
+
+
+bool IDEstuff(int argc, char * argv[], IDEargs &ideargs);
 LinkedList* RunTokenizer(std::string code, bool print);
 LinkedActionList* RunCompiler(LinkedList* lToken, bool print);
 bool Errors();
 void RunVM(LinkedActionList lToken);
+clock_t sttime;
 
-int main(int argc,  char * argv[])
+int main(int argc, char * argv[])
 {
-	//string eoutz = Tokenizer().getKeywordsAsJson();
-	string code = "";
-	bool T = false;
-	bool C = false;
-
+	IDEargs ideargs;
 
 	//==========IDE=============
-	if (!IDEstuff(argc, argv, code, T, C))
+	if (!IDEstuff(argc, argv, ideargs))
 		return 0;
+	
+	if (ideargs.printTime)
+		sttime = clock();
 
+	// =========TEST============
+	if (ideargs.Test)
+	{
+		//(1) Test runnen
+		//..
+		//(2) Errors terug geven, thats it
+		std::cerr << "========== Test runned with x errors ============";
+		Errors();
+		return 0;
+	}
 
 	//=========TOKENIZER==============
-	LinkedList cTokenList = *RunTokenizer(code, T);
+	LinkedList cTokenList = *RunTokenizer(ideargs.code, ideargs.PrintTokenList);
 	if (Errors())
 		return 0;
-
-	Text::PrintLine("Token Complete");
 
 	//=========COMPILER==============
-	LinkedActionList cRunList = *RunCompiler(&cTokenList, C);
+	LinkedActionList cRunList = *RunCompiler(&cTokenList, ideargs.printCompileList);
 	if (Errors())
 		return 0;
-
-	Text::PrintLine("Compiler Complete");
 
 	//=========VM==============
-	RunVM(cRunList);
+	if (!ideargs.Build)
+		RunVM(cRunList);
+
 	if (Errors())
 		return 0;
+
+	if (ideargs.printTime)
+	{
+		double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
+		std::cout << "Time elapsed: " + to_string(elapsed_secs);
+	}
+		
 
 	return 0;
 }
@@ -71,6 +97,8 @@ bool Errors()
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		std::cerr << ErrorHandler::getInstance()->asJson();
+		double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
+		std::cout << "Time elapsed: " + to_string( elapsed_secs);
 		return true;
 	}
 	return false;
@@ -102,23 +130,19 @@ void RunVM(LinkedActionList cRunList)
 }
 
 
-
-
-
 //Return: true -> ga verder met rest van code (meeste gevallen)
 //Return: false -> stop na deze functie (voor dingen zoals getTokens)
-bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C)
+bool IDEstuff(int argc, char * argv[], IDEargs &ideargs)
 {
 	//Text::PrintLine("COUTNERT:  " + argc);
 	if (argc == 1)//andere opties hebben we nog niet
 	{
 		// Als je hier komt, ben je waarschijnlijk(?) aan het debuggen
 		// Dus voor de EZPZ wat fun code.
-		code = FileStreamer{}.readerFromResource("custom");
+		ideargs.code = FileStreamer{}.readerFromResource("custom");
 		return true;
 	}
 
-	//string option = argv[1];
 	string outz = "No valid args\n";
 	bool cont = true;
 
@@ -129,33 +153,44 @@ bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C)
 	{
 		string opt = argv[i];
 		//Text::PrintLine("Wazdeze:  " + opt);
-		if (opt == "-r") {
+		if (opt == "-r" || opt == "-run") {
 			// File
 			FileStreamer fs{};
-			code = fs.readerFromPath(value);
-
+			ideargs.code = fs.readerFromPath(value);
 		}
-		if (opt == "-t")//Print tokens
+		else if (opt == "-t" || opt == "-tokenlist")//Print tokens
 		{
-			T = true;
+			ideargs.PrintTokenList = true;
 		}
-		if (opt == "-c")//Print runlist
+		else if (opt == "-c" || opt == "-compilelist")//Print runlist
 		{
-			C = true;
+			ideargs.printCompileList = true;
 		}
-		if (opt == "getTokens") {
+		else if (opt == "-build")
+		{
+			ideargs.Build = true;
+		}
+		else if (opt == "-time")
+		{
+			ideargs.printTime = true;
+		}
+		else if (opt == "-test")
+		{
+			ideargs.Test = true;
+		}
+		else if (opt == "getTokens") {
 			outz = Tokenizer().getKeywordsAsJson();
 			cont = false;
 		}
-		if (opt == "getSnippets") {
+		else if (opt == "getSnippets") {
 			outz = (FileStreamer{}).readerFromResource("Snippets");
 			cont = false;
 		}
-		if (opt == "getFunctions") {
+		else if (opt == "getFunctions") {
 			outz = Tokenizer().getFunctionsAsJson();
 			cont = false;
 		}
-		if (opt == "getAll")
+		else if (opt == "getAll")
 		{
 			outz = Tokenizer().getFunctionsAsJson();
 			outz += Tokenizer().getKeywordsAsJson();
@@ -164,8 +199,6 @@ bool IDEstuff(int argc, char * argv[], std::string &code, bool &T, bool &C)
 		}
 		i++;
 	}
-
-
 
 	if (!cont)
 	{
