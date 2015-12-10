@@ -520,6 +520,7 @@
     </ClInclude>
     <ClInclude Include="CompileFor.h">
       <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
     <ClInclude Include="CompileGetFunction.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
@@ -535,9 +536,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.md">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Snippets.txt">
@@ -558,6 +556,27 @@
     <Text Include="while.txt" />
     <Text Include="for.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="ReadMe.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="calc.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="condition.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="func.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="myCodeBringsAllTheBoysInTheYard.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="if.md">
+      <Filter>Resource Files\TestScriptz</Filter>
+    </Text>
+    <Text Include="while.md">
+      <Filter>Resource Files\TestScriptz</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
