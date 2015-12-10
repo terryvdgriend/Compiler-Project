@@ -23,6 +23,7 @@ exports.reload = function(){
 
     var resultDiv = global.$('#markdown');
     var code = global.editor.getValue();
+    code = code.replace(/ {4}/gm, "");
     resultDiv.html(marked(code));   
 };
 
