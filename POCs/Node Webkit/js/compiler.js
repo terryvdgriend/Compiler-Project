@@ -46,6 +46,10 @@ exports.run = function(code) {
 				arguments.push("-c");
 			}
 
+			if (global.settings.printElapsedTime) {
+				arguments.push("--time");
+			}
+
 			arguments.push(tempFile);
 			var cmd = spawn(compilerFilePath, arguments);
 

@@ -96,6 +96,15 @@ exports.initMenu = function() {
             global.saveSettings();
         }
     }));
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Print elapsed time',
+        type: 'checkbox',
+        checked: global.settings.printElapsedTime,
+        click: function() {
+            global.settings.printElapsedTime = this.checked;
+            global.saveSettings();
+        }
+    }));
 
     programMenu.append(new gui.MenuItem({ type: 'separator' }));
     programMenu.append(new global.gui.MenuItem({

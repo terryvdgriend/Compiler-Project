@@ -53,6 +53,7 @@ function init()
         global.settings.theme = "twilight";
         global.settings.printTokenList = false;
         global.settings.printCompilerList = false;
+        global.settings.printElapsedTime = false;
         global.settings.compilerFile = null;
         global.settings.customStyle = [
             {
