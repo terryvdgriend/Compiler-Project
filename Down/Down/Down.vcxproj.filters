@@ -252,9 +252,6 @@
     <ClCompile Include="CompileEquals.cpp">
       <Filter>Source Files\Compiler\Compile\Operators</Filter>
     </ClCompile>
-    <ClCompile Include="CompileFunction.cpp">
-      <Filter>Source Files\Compiler\Compile\Operators</Filter>
-    </ClCompile>
     <ClCompile Include="CompileOperator.cpp">
       <Filter>Source Files\Compiler\Compile\Operators</Filter>
     </ClCompile>
@@ -504,9 +501,6 @@
       <Filter>Header Files\Compiler\Compile\Operators</Filter>
     </ClInclude>
     <ClInclude Include="CompileEquals.h">
-      <Filter>Header Files\Compiler\Compile\Operators</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileFunction.h">
       <Filter>Header Files\Compiler\Compile\Operators</Filter>
     </ClInclude>
     <ClInclude Include="CompileOperator.h">

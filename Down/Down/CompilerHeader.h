@@ -3,7 +3,6 @@
 #include "CompileDoWhile.h"
 #include "CompileEquals.h"
 #include "CompileFor.h"
-#include "CompileFunction.h"
 #include "CompileGetFunction.h"
 #include "CompileIf.h"
 #include "CompileOperator.h"
