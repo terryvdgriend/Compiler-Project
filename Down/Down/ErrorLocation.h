@@ -2,7 +2,7 @@
 
 enum ErrorLocation 
 { 
-	tokenizer, 
-	compiler, 
-	vm 
+	TOKENIZER, 
+	COMPILER, 
+	VM 
 };

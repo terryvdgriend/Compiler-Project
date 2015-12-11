@@ -8,8 +8,3 @@ CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(make_shar
 	tokenMap[IToken::DIVIDE]	= "$/";
 	tokenMap[IToken::MODULO]	= "$%";
 }
-
-shared_ptr<Compiler> CompileTimesDivideModulo::create()
-{
-	return make_shared<CompileTimesDivideModulo>();
-}

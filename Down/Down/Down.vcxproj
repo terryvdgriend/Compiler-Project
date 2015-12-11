@@ -93,10 +93,15 @@
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
     <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="AddArrayToDictionaryCommand.h" />
+    <ClInclude Include="AddItemToArrayAtCommand.h" />
+    <ClInclude Include="AddLengthToArrayCommand.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
-    <ClInclude Include="CommandList.h" />
     <ClInclude Include="CommandVisitor.h" />
+    <ClInclude Include="CommandVisitorList.h" />
+    <ClInclude Include="CompileAddArrayItem.h" />
+    <ClInclude Include="CompileArray.h" />
     <ClInclude Include="CompileComparison.h" />
     <ClInclude Include="CompileCondition.h" />
     <ClInclude Include="CompileDoWhile.h" />
@@ -104,6 +109,7 @@
     <ClInclude Include="CompileEquals.h" />
     <ClInclude Include="CompileFactory.h" />
     <ClInclude Include="CompileFor.h" />
+    <ClInclude Include="CompileGetArrayItem.h" />
     <ClInclude Include="CompileGetFunction.h" />
     <ClInclude Include="CompileIf.h" />
     <ClInclude Include="CompileNextLevel.h" />
@@ -135,6 +141,7 @@
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="GetFromValueCommand.h" />
+    <ClInclude Include="GetItemFromArrayCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
     <ClInclude Include="IDEGateway.h" />
@@ -144,7 +151,9 @@
     <ClInclude Include="LinkedActionList.h" />
     <ClInclude Include="LinkedTokenList.h" />
     <ClInclude Include="MandatoryCommandIncludes.h" />
+    <ClInclude Include="MandatoryCommandVisitorIncludes.h" />
     <ClInclude Include="MandatoryNodeIncludes.h" />
+    <ClInclude Include="NodeVisitorList.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
     <ClInclude Include="ModuloCommand.h" />
@@ -172,14 +181,19 @@
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
     <ClInclude Include="VirtualMachine.h" />
-    <ClInclude Include="VisitorList.h" />
+    <ClInclude Include="MandatoryNodeVisitorIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="AddArrayToDictionaryCommand.cpp" />
+    <ClCompile Include="AddItemToArrayAtCommand.cpp" />
+    <ClCompile Include="AddLengthToArrayCommand.cpp" />
     <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CommandVisitor.cpp" />
+    <ClCompile Include="CompileAddArrayItem.cpp" />
+    <ClCompile Include="CompileArray.cpp" />
     <ClCompile Include="CompileComparison.cpp" />
     <ClCompile Include="CompileCondition.cpp" />
     <ClCompile Include="CompileDoWhile.cpp" />
@@ -187,6 +201,7 @@
     <ClCompile Include="CompileEquals.cpp" />
     <ClCompile Include="CompileFactory.cpp" />
     <ClCompile Include="CompileFor.cpp" />
+    <ClCompile Include="CompileGetArrayItem.cpp" />
     <ClCompile Include="CompileGetFunction.cpp" />
     <ClCompile Include="CompileIf.cpp" />
     <ClCompile Include="CompileNextLevel.cpp" />
@@ -218,6 +233,7 @@
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />
+    <ClCompile Include="GetItemFromArrayCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
     <ClCompile Include="IDEGateway.cpp" />

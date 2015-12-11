@@ -13,6 +13,28 @@ string Compiler::getNextLocalVariableName(string& sBuffer)
 
 	sStream << "$" << ++nValue;
 
+	nValueCount = nValue;
+
+	sBuffer = sStream.str();
+
+	return sBuffer;
+}
+
+string Compiler::getCurrentLocalVariableName()
+{
+	stringstream sStream;
+
+	sStream << "$" << nValueCount;
+
+	return sStream.str();
+}
+
+string Compiler::getPreviousLocalVariableName(string& sBuffer)
+{
+	stringstream sStream;
+
+	sStream << "$" << --nValueCount;
+
 	sBuffer = sStream.str();
 
 	return sBuffer;

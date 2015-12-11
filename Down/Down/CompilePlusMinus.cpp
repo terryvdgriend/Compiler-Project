@@ -7,8 +7,3 @@ CompilePlusMinus::CompilePlusMinus() : CompileOperator(make_shared<CompileTimesD
 	tokenMap[IToken::PLUS]	= "$+";
 	tokenMap[IToken::MINUS]	= "$-";
 }
-
-shared_ptr<Compiler> CompilePlusMinus::create()
-{
-	return make_shared<CompilePlusMinus>();
-}

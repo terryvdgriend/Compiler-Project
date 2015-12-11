@@ -53,7 +53,7 @@ string ErrorHandler::asJson()
 
 void ErrorHandler::addError()
 {
-	ErrorLocation errorLocation = ErrorLocation::tokenizer;
+	ErrorLocation errorLocation = ErrorLocation::TOKENIZER;
 	string errorMessage = "Not Defined Error";
 	shared_ptr<Error> error = make_shared<Error>(errorMessage, errorLocation);
 	errors.push_back(error);
@@ -72,7 +72,7 @@ void ErrorHandler::addError(shared_ptr<Error>& error)
 
 void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
 {
-	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLevel(), token->getPosition(), ErrorType::error);
+	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLevel(), token->getPosition(), ErrorType::ERROR);
 	errors.push_back(error);
 }
 

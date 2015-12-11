@@ -2,6 +2,7 @@
 #include "CompileDoWhile.h"
 #include "CompileCondition.h"
 #include "CompileFactory.h"
+#include "CompileSingleStatement.h"
 #include "ConditionalJumpNode.h"
 #include "DoNothingNode.h"
 #include "TokenExpectation.h"
@@ -42,7 +43,7 @@ void CompileDoWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, share
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("do while statement not completed", ".md", -1, -1, ErrorType::error));
+				ErrorHandler::getInstance()->addError(make_shared<Error>("do while statement not completed", ".md", -1, -1, ErrorType::ERROR));
 				begin = end;
 
 				break;
@@ -50,7 +51,7 @@ void CompileDoWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, share
 
 			if (current->getType() != expectation.getTokenType())
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -76,11 +77,28 @@ void CompileDoWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, share
 
 				while (current->getLevel() > level)
 				{
-					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+					shared_ptr<Compiler> compiledBodyPart;
+					bool multiIndex = false;
+
+					if (current->getType() == IToken::NEWLINE || (current->getNext()->getType() != IToken::BODY_CLOSE && 
+						current->getNext()->getType() != IToken::NEWLINE)) 
+					{
+						compiledBodyPart = factory.createCompileStatement(current);
+						multiIndex = true;
+					}
+					else
+					{
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+					}
 
 					if (compiledBodyPart != nullptr)
 					{
 						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
+						}
 					}
 					else
 					{
@@ -90,19 +108,30 @@ void CompileDoWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, share
 			}
 			else
 			{
-				CompileCondition condition;
-				condition.compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+				shared_ptr<Compiler> condition;
+				bool multiIndex = false;
+
+				if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
+				{
+					condition = make_shared<CompileCondition>();
+					multiIndex = true;
+				}
+				else
+				{
+					condition = make_shared<CompileSingleStatement>();
+				}
+				condition->compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+
+				if (!multiIndex)
+				{ 
+					current = current->getNext(); 
+				}
 			}
 		}
 	}
 	connectLists();
 	listActionNodes->insertBefore(actionBefore, _compiledStatement);
 	begin = current;
-}
-
-shared_ptr<Compiler> CompileDoWhile::create()
-{
-	return make_shared<CompileDoWhile>();
 }
 
 void CompileDoWhile::connectLists()

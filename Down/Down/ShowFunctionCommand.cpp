@@ -9,7 +9,7 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 	Variable variable2 = *vm.getVariable(parameters.at(1));
 	string val = "";
 
-	if (variable2.getType() != VariableType::nulltype) 
+	if (variable2.getType() != VariableType::nulltype)
 	{
 		val += variable2.getValue();
 	}

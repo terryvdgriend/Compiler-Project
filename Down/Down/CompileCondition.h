@@ -5,6 +5,4 @@ class CompileCondition : public CompileOperator
 {
 	public:
 		CompileCondition();
-
-		shared_ptr<Compiler> create();
 };

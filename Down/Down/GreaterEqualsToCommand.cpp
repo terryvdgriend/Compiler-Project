@@ -10,7 +10,9 @@ void GreaterEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
 	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number)
 	{

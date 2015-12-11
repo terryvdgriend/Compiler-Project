@@ -2,6 +2,6 @@
 
 enum ErrorType 
 { 
-	warning, 
-	error 
+	WARNING, 
+	ERROR 
 };

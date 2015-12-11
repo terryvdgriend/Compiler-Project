@@ -45,7 +45,7 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -74,11 +74,6 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	begin = current;
 }
 
-shared_ptr<Compiler> CompileUserFunction::create()
-{
-	return make_shared<CompileUserFunction>();
-}
-
 void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	shared_ptr<Token> current = begin;
@@ -88,7 +83,7 @@ void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Tok
 		if (current->getText() == functionName) 
 		{
 			ErrorHandler::getInstance()->addError(make_shared<Error>(functionName + " Cannot call itself", ".md", current->getLineNumber(), 
-												  current->getPosition(), ErrorType::error));
+												  current->getPosition(), ErrorType::ERROR));
 			current = end;
 
 			break;
@@ -146,7 +141,7 @@ void CompileUserFunction::compileBody(shared_ptr<Token>& begin, shared_ptr<Token
 		if (current->getText() == functionName) 
 		{
 			ErrorHandler::getInstance()->addError(make_shared<Error>(functionName + " Cannot call itself", ".md", current->getLineNumber(), 
-												  current->getPosition(), ErrorType::error));
+												  current->getPosition(), ErrorType::ERROR));
 			current = end;
 
 			break;

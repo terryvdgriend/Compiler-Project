@@ -10,5 +10,5 @@ class CompileFactory
 		shared_ptr<Compiler> createCompileStatement(shared_ptr<Token>& token);
 
 	private:
-		map<IToken, shared_ptr<Compiler>> tokenCompileDictionary;
+		map<IToken, function<shared_ptr<Compiler>()>> tokenCompileDictionary;
 };

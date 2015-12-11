@@ -3,6 +3,7 @@
 #include "CompileCondition.h"
 #include "CompileEquals.h"
 #include "CompileFactory.h"
+#include "CompileSingleStatement.h"
 #include "DirectFunctionCall.h"
 #include "DoNothingNode.h"
 #include "FunctionCall.h"
@@ -28,6 +29,7 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 								 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
 	shared_ptr<Token> current = begin;
+	shared_ptr<Token> bodyEnd = nullptr;
 	int level = begin->getLevel();
 
 	list<TokenExpectation> expected;
@@ -43,7 +45,11 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 
 		if (expectation.getLevel() == level)
 		{
-			if (current->getType() == IToken::FUNCTION_CALL)
+			if (current->getType() == IToken::FUNCTION_DECLARE_OPEN) 
+			{
+				bodyEnd = current->getPartner();
+			}
+			else if (current->getType() == IToken::FUNCTION_CALL)
 			{
 				for (shared_ptr<Function> p : FunctionHandler::getInstance()->getFunctions()) 
 				{
@@ -63,7 +69,7 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -78,7 +84,7 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 
 	if (!userDefined)
 	{
-		compileNotUserDefined(tokenList, current, end);
+		compileNotUserDefined(tokenList, current, bodyEnd);
 	}
 	else
 	{
@@ -91,18 +97,13 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 	listActionNodes = list;
 }
 
-shared_ptr<Compiler> CompileGetFunction::create()
-{
-	return make_shared<CompileGetFunction>();
-}
-
 void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
 	shared_ptr<Token> current = begin;
 	vector<string> parameters;
 	_functionParams->add(make_shared<DoNothingNode>());
 
-	while (current->getType() != IToken::FUNCTION_DECLARE_CLOSE)
+	while (current != end)
 	{
 		// Compile condition
 		shared_ptr<Token> seperator = current;
@@ -118,7 +119,8 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			{
 				stack.pop();
 			}
-			else if (stack.size() == 0 && (seperator->getType() == IToken::AND_PARA || seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE))
+
+			if (stack.size() == 0 && (seperator->getType() == IToken::AND_PARA || seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE))
 			{
 				break;
 			}
@@ -137,7 +139,26 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 		_functionParams->insertBefore(_functionParams->getLast(), pDirectFunction);
 		parameters.push_back(tempVar);
 
-		if (current->getType() == IToken::AND_PARA)
+		bool deepFunction = false;
+		shared_ptr<Token> funcion = current->getPrevious();
+
+		while (funcion->getType() != IToken::NEWLINE)
+		{
+			if (funcion == current)
+			{
+				break;
+			}
+
+			if (funcion->getType() == IToken::FUNCTION_DECLARE_CLOSE)
+			{
+				deepFunction = true;
+
+				break;
+			}
+			funcion = funcion->getPrevious();
+		}
+
+		if (current->getType() == IToken::AND_PARA || deepFunction)
 		{
 			current = current->getNext();
 		}
@@ -146,13 +167,13 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 	if (parameters.size() > _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPosition(), ErrorType::error));
+											  current->getPosition(), ErrorType::ERROR));
 	}
 
 	if (parameters.size() < _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
-											 current->getPosition(), ErrorType::error));
+											 current->getPosition(), ErrorType::ERROR));
 	}
 	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(parameters.size()+1);
@@ -194,7 +215,7 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 			if ((size_t)count > _params.size() - 1)
 			{
 				ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-													  current->getPosition(), ErrorType::error));
+													  current->getPosition(), ErrorType::ERROR));
 
 				break;
 			}
@@ -214,7 +235,7 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 					else 
 					{
 						ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
-															  current->getPosition(), ErrorType::error));
+															  current->getPosition(), ErrorType::ERROR));
 					}
 					param = make_shared<LinkedTokenList>();
 					count++;
@@ -238,7 +259,7 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 				else 
 				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::error));
+														  current->getPosition(), ErrorType::ERROR));
 				}
 				param = make_shared<LinkedTokenList>();
 
@@ -252,12 +273,12 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 	if (paramList.size() < _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPosition(), ErrorType::error));
+											  current->getPosition(), ErrorType::ERROR));
 	}
 	else if (paramList.size() > _params.size()) 
 	{
 		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPosition(), ErrorType::error));
+											  current->getPosition(), ErrorType::ERROR));
 	}
 
 	for (shared_ptr<LinkedTokenList> p : paramList)
@@ -295,15 +316,28 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 
 			break;
 		}
-		shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(currentBody);
+		shared_ptr<Compiler> compiledBodyPart; 
+		bool multiIndex = false;
+
+		if (currentBody->getType() == IToken::NEWLINE || (currentBody->getNext()->getType() != IToken::FUNCTION_CLOSE && 
+			currentBody->getNext()->getType() != IToken::NEWLINE)) 
+		{
+			compiledBodyPart = factory.createCompileStatement(currentBody);
+			multiIndex = true;
+		}
+		else
+		{
+			compiledBodyPart = make_shared<CompileSingleStatement>();
+		}
 
 		if (compiledBodyPart != nullptr) 
 		{
 			compiledBodyPart->compile(_bodyTokens, currentBody, body->getLast(), _body, _body->getLast());
-		}
-		else
-		{
-			currentBody = currentBody->getNext();
+
+			if (!multiIndex)
+			{
+				currentBody = currentBody->getNext();
+			}
 		}
 	}
 
@@ -364,14 +398,14 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<Linke
 	connectToken->setPositionInList(-1);
 	connectToken->setLineNumber(-1);
 	connectToken->setText("=");
-	shared_ptr<LinkedTokenList> templist = make_shared<LinkedTokenList>();
-	templist->add(nParam);
-	templist->add(connectToken);
+	shared_ptr<LinkedTokenList> tempList = make_shared<LinkedTokenList>();
+	tempList->add(nParam);
+	tempList->add(connectToken);
 	shared_ptr<Token> temp = paramlist->getFirst();
 
 	while (temp != nullptr) 
 	{
-		templist->add(temp);
+		tempList->add(temp);
 		temp = temp->getNext();
 	}
 	connectToken = make_shared<Token>();
@@ -381,16 +415,10 @@ void CompileGetFunction::connectParams(shared_ptr<Token> param, shared_ptr<Linke
 	connectToken->setPositionInList(-1);
 	connectToken->setLineNumber(-1);
 	connectToken->setText("\n");
-	templist->add(connectToken);
+	tempList->add(connectToken);
 	
-	temp = templist->getFirst();
-	paramlist = make_shared<LinkedTokenList>();
-
-	while (temp != nullptr) 
-	{
-		paramlist->add(temp);
-		temp = temp->getNext();
-	}
+	temp = tempList->getFirst();
+	paramlist = make_shared<LinkedTokenList>(tempList);
 }
 
 void CompileGetFunction::connectLists()

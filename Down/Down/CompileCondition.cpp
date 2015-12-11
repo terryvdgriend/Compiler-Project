@@ -4,12 +4,10 @@
 
 CompileCondition::CompileCondition() : CompileOperator(make_shared<CompileUnary>())
 {
-	tokenMap[IToken::LARGER_THAN]	= "$>";
-	tokenMap[IToken::LESS_THAN]		= "$<";
-	tokenMap[IToken::EQUALS_TO]		= "$==";
-}
-
-shared_ptr<Compiler> CompileCondition::create()
-{
-	return make_shared<CompileCondition>();
+	tokenMap[IToken::LARGER_THAN]		= "$>";
+	tokenMap[IToken::LESS_THAN]			= "$<";
+	tokenMap[IToken::LARGER_LIKE_THAN]	= "$>=";
+	tokenMap[IToken::LESS_LIKE_THAN]	= "$<=";
+	tokenMap[IToken::EQUALS_TO]			= "$==";
+	//tokenMap[IToken::EQUALS]			= "$!=";
 }

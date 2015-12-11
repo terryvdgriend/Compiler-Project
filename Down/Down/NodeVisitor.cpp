@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "NodeVisitor.h"
-#include "ActionNode.h"
+#include "MandatoryNodeVisitorIncludes.h"
 #include "Variable.h"
-#include "VisitorList.h"
 
 NodeVisitor::NodeVisitor(shared_ptr<VirtualMachine>& virtualMachine)
 {
@@ -38,7 +37,7 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 				}
 				else 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::error));
+					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR));
 					vm->triggerRunFailure();
 
 					return;
@@ -103,7 +102,7 @@ void NodeVisitor::visit(SwitchNode& node)
 			else 
 			{
 				vm->triggerRunFailure();
-				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::error));
+				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR));
 
 				return;
 			}
@@ -129,7 +128,7 @@ void NodeVisitor::visit(SwitchNode& node)
 				else
 				{
 					vm->triggerRunFailure();
-					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::error));
+					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR));
 
 					return;
 				}

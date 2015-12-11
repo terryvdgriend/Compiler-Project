@@ -6,6 +6,7 @@ Token::Token()
 	_level		= 1;
 	_next		= nullptr;
 	_previous	= nullptr;
+	_subType	= IToken::NONE;
 }
 
 Token::Token(const shared_ptr<Token>& other)
@@ -18,12 +19,12 @@ Token::Token(const shared_ptr<Token>& other)
 	_lineNumber		= other->_lineNumber;
 	_position		= other->_position;
 	_level			= other->_level;
+	_scope			= other->_scope;
 	_next			= nullptr;
 	_previous		= nullptr;
-	_scope			= other->_scope;
 }
 
-void Token::print(map<string, IToken>& map)
+void Token::print(map<string, IToken>& tokenMap)
 {
 	int space = 20;
 	string spacer = string(space - _text.size(), ' ');
@@ -33,7 +34,7 @@ void Token::print(map<string, IToken>& map)
 	Text::print(to_string(_position) + string(4, ' '));
 	Text::print(_text + spacer);
 	Text::print(to_string(_level) + string(4, ' '));
-	Text::print(getStringbyEnum(map, getType()) + spacer);
+	Text::print(getStringbyType(tokenMap, getType()) + spacer);
 
 	if (this->getPartner() != nullptr)
 	{
@@ -50,7 +51,7 @@ void Token::print(map<string, IToken>& map)
 void Token::addError()
 {
 	string description = "Syntax error: '" + _text + "'";
-	ErrorHandler::getInstance()->addError(make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::error));
+	ErrorHandler::getInstance()->addError(make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::ERROR));
 }
 
 bool Token::operator!=(const Token& other) const
@@ -100,6 +101,21 @@ bool Token::compare(shared_ptr<Token> first, shared_ptr<Token> other)
 	}
 
 	return false;
+}
+
+string Token::getStringbyType(map<string, IToken>& tokenMap, IToken token)
+{
+	map<string, IToken>::const_iterator it;
+
+	for (it = tokenMap.begin(); it != tokenMap.end(); ++it)
+	{
+		if (it->second == token)
+		{
+			return it->first;
+		}
+	}
+
+	return "UNKNOWN";
 }
 
 string Token::getText()
@@ -185,21 +201,6 @@ int Token::getScope()
 void Token::setScope(int scope)
 {
 	_scope = scope;
-}
-
-string Token::getStringbyEnum(map<string, IToken>& tokenMap, IToken token)
-{
-	map<string, IToken>::const_iterator it;
-
-	for (it = tokenMap.begin(); it != tokenMap.end(); ++it)
-	{
-		if (it->second == token)
-		{
-			return it->first;
-		}
-	}
-
-	return "UNKNOWN";
 }
 
 shared_ptr<Token> Token::getNext()

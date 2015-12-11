@@ -2,6 +2,7 @@
 #include "CompileFor.h"
 #include "CompileCondition.h"
 #include "CompileFactory.h"
+#include "CompileSingleStatement.h"
 #include "ConditionalJumpNode.h"
 #include "DoNothingNode.h"
 #include "JumpGoToNode.h"
@@ -49,7 +50,7 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("for statement not completed", ".md", -1, -1, ErrorType::error));
+				ErrorHandler::getInstance()->addError(make_shared<Error>("for statement not completed", ".md", -1, -1, ErrorType::ERROR));
 				begin = end;
 
 				break;
@@ -62,7 +63,7 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 
 			if (current->getType() != expectation.getTokenType())
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -95,7 +96,7 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				if (next->getPrevious()->getType() == IToken::CONDITION_OPEN)
 				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no declaration!", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::error));
+														  current->getPosition(), ErrorType::ERROR));
 					begin = end;
 
 					return;
@@ -103,7 +104,18 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				else 
 				{
 					// Compile the first part of the for-loop
-					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+					shared_ptr<Compiler> compiledBodyPart;
+					bool multiIndex = false;
+
+					if (current->getNext()->getType() != IToken::AND_PARA)
+					{
+						compiledBodyPart = factory.createCompileStatement(current);
+						multiIndex = true;
+					}
+					else
+					{
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+					}
 
 					if (compiledBodyPart != nullptr)
 					{
@@ -113,6 +125,11 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 						if (_declaration->getCount() == 0)
 						{
 							_declaration->insertLast(make_shared<DoNothingNode>());
+						}
+
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
 						}
 					}
 					else
@@ -129,15 +146,30 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				{
 					next = next->getNext();
 				}
-				CompileCondition condition;
-				_condition->add(make_shared<DoNothingNode>());
-				condition.compile(tokenList, current, next, _condition, _condition->getLast());
+				shared_ptr<Compiler> condition;
+				bool multiIndex = false;
+
+				if (current->getNext()->getType() != IToken::AND_PARA) 
+				{
+					condition = make_shared<CompileCondition>();
+					multiIndex = true;
+				}
+				else
+				{
+					condition = make_shared<CompileSingleStatement>();
+				}
+				condition->compile(tokenList, current, next, _condition, _condition->getLast());
+
+				if (!multiIndex) 
+				{
+					current = current->getNext(); 
+				}
 
 				// If condition still is empty, throw error (we need a condition)
 				if (_condition->getCount() == 0) 
 				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no condition!", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::error));
+														  current->getPosition(), ErrorType::ERROR));
 					begin = end;
 
 					break;
@@ -148,18 +180,40 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				if (current->getType() == IToken::CONDITION_CLOSE) 
 				{
 					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no increment!", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::error));
+														  current->getPosition(), ErrorType::ERROR));
 					begin = end;
 
 					return;
 				}
 
 				// Compile the last part of the for-loop
-				shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+				shared_ptr<Compiler> compiledBodyPart;
+				bool multiIndex = false;
+
+				if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
+				{
+					compiledBodyPart = factory.createCompileStatement(current);
+					multiIndex = true;
+				}
+				else
+				{
+					compiledBodyPart = make_shared<CompileSingleStatement>();
+				}
 
 				if (compiledBodyPart != nullptr)
 				{
 					compiledBodyPart->compile(tokenList, current, conClose, _increment, _increment->getLast());
+
+					// If the list still is empty, fill with an DoNothingNode 
+					if (_declaration->getCount() == 0)
+					{
+						_declaration->insertLast(make_shared<DoNothingNode>());
+					}
+
+					if (!multiIndex) 
+					{ 
+						current = current->getNext(); 
+					}
 				}
 				else
 				{
@@ -179,11 +233,28 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 
 				while (current->getLevel() > level)
 				{
-					shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+					shared_ptr<Compiler> compiledBodyPart;
+					bool multiIndex = false;
+
+					if (current->getType() == IToken::NEWLINE || (current->getNext()->getType() != IToken::BODY_CLOSE && 
+						current->getNext()->getType() != IToken::NEWLINE)) 
+					{
+						compiledBodyPart = factory.createCompileStatement(current);
+						multiIndex = true;
+					}
+					else
+					{
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+					}
 
 					if (compiledBodyPart != nullptr) 
 					{
 						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+						
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
+						}
 					}
 					else
 					{
@@ -196,11 +267,6 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 	connectLists();
 	listActionNodes->insertBefore(actionBefore, _compiledStatement);
 	begin = current;
-}
-
-shared_ptr<Compiler> CompileFor::create()
-{
-	return make_shared<CompileFor>();
 }
 
 void CompileFor::connectLists()

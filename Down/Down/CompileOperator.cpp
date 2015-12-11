@@ -21,11 +21,21 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 
 	nextLevel.setBegin(begin);
 
-	while (current != nullptr && *current != end)
+	while (current != nullptr && *current != *end)
 	{
 		if (current->getType() == IToken::NEWLINE)
 		{
 			break;
+		}
+
+		if (current->getPartner() != nullptr)
+		{
+			current = current->getPartner();
+
+			if (current == end)
+			{
+				break;
+			}
 		}
 		iFind = tokenMap.find(current->getType());
 

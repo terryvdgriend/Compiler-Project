@@ -16,14 +16,26 @@ class VirtualMachine
 		void setReturnValue(string value);
 		IToken getReturnToken();
 		void setReturnToken(IToken value);
-
 		shared_ptr<Variable> getVariable(string parameter);
 		void setVariable(string key, string value, IToken token);
-		vector<string> getFunctionParametersByKey(string name);
+
+		list<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
+		string getFunctionParameterValueByKey(string key);
 		void setFunctionParameter(string name, string value);
+
 		void addIdentifer(string name);
 
+		vector<shared_ptr<Variable>> addArrayToDictionary(string key, int length);
+		vector<shared_ptr<Variable>> getVariableArray(string key);
+		void addItemToVariableArray(string key, shared_ptr<Variable> value);
+		void addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value);
+		shared_ptr<Variable> getItemFromVariableArray(string key, int index);
+		void addArrayTypeToArrayTypes(string arrayName, IToken tokenType);
+		pair<string, string> VirtualMachine::getVariableTypeSameAsArrayType(string arrayName, IToken tokenType);	
+
+		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);
+		bool hasValueInVariableArrayDictionary(map<string, vector<shared_ptr<Variable>>>::iterator& it);
 		bool hasValueInFunctionParameters(string parameter);
 		bool isAnIdentifier(string name);
 		
@@ -36,8 +48,10 @@ class VirtualMachine
 		shared_ptr<NodeVisitor> nodeVisitor;
 
 		map<string, shared_ptr<Variable>> variableDictionary;
-		map<string, string> functionParamters;
-		vector<string> identifierList;
+		map<string, string> functionParameters;
+		map<string, VariableType> arrayTypes;
+		map<string, vector<shared_ptr<Variable>>> variableArrayDictionary;
 
-		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);
+		vector<string> identifierList;
+		string arrayType;
 };

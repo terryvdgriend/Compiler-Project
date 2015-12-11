@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Variable.h"
 
+Variable::Variable()
+{
+	// 
+}
+
 Variable::Variable(string param) 
 {
 	_value = param;
@@ -15,7 +20,7 @@ Variable::Variable(string param)
 	}
 	else if (is_bool(_value)) 
 	{
-		_variableType = VariableType::boolean;
+		_variableType = VariableType::fact;
 	}
 	else 
 	{

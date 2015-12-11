@@ -24,7 +24,6 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	}
 }
 
-
 pair<string, string> EqualsCommand::accept(CommandVisitor& commandVisitor) 
 {
 	return commandVisitor.visit(*this);

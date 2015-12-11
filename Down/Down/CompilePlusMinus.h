@@ -5,6 +5,4 @@ class CompilePlusMinus : public CompileOperator
 {
 	public:
 		CompilePlusMinus();
-
-		shared_ptr<Compiler> create();
 };

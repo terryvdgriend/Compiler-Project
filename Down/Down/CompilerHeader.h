@@ -1,11 +1,24 @@
 #pragma once
-#include "CompileCondition.h"
-#include "CompileDoWhile.h"
-#include "CompileEquals.h"
-#include "CompileFor.h"
-#include "CompileGetFunction.h"
+// Array
+#include "CompileArray.h"
+#include "CompileAddArrayItem.h"
+#include "CompileGetArrayItem.h"
+
+// Conditionals
 #include "CompileIf.h"
-#include "CompileOperator.h"
 #include "CompileSwitch.h"
-#include "CompileUserFunction.h"
+
+// Loops
+#include "CompileDoWhile.h"
+#include "CompileFor.h"
 #include "CompileWhile.h"
+
+// Miscellaneous
+#include "CompileGetFunction.h"
+#include "CompileSingleStatement.h"
+#include "CompileUserFunction.h"
+
+// Operators
+#include "CompileCondition.h"
+#include "CompileEquals.h"
+#include "CompileOperator.h"

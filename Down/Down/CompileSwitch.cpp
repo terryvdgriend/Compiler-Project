@@ -2,6 +2,7 @@
 #include "CompileSwitch.h"
 #include "CompileCondition.h"
 #include "CompileFactory.h"
+#include "CompileSingleStatement.h"
 #include "DoNothingNode.h"
 #include "JumpGotoNode.h"
 #include "TokenExpectation.h"
@@ -44,7 +45,7 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 		{
 			if (current == nullptr) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::error));
+				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::ERROR));
 				begin = end;
 
 				break;
@@ -52,7 +53,7 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -69,13 +70,28 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 			{
 				if (current->getLevel() >= level)
 				{
-					CompileCondition condition;
-					_condition->add(make_shared<DoNothingNode>());
-					condition.compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+					shared_ptr<Compiler> condition;
+					bool multiIndex = false;
+
+					if (current->getNext()->getType() != IToken::CONDITION_CLOSE)
+					{
+						condition = make_shared<CompileCondition>();
+						multiIndex = true;
+					}
+					else
+					{
+						condition = make_shared<CompileSingleStatement>();
+					}
+					condition->compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+
+					if (!multiIndex) 
+					{ 
+						current = current->getNext(); 
+					}
 				}
 				else 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::error), 
+					ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
 														  expectation.getTokenType(), current->getType());
 					begin = end;
 
@@ -88,11 +104,6 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 	connectLists();
 	listActionNodes->insertBefore(actionBefore, _compiledStatement);
 	begin = current;
-}
-
-shared_ptr<Compiler> CompileSwitch::create()
-{
-	return make_shared<CompileSwitch>();
 }
 
 void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end)
@@ -146,7 +157,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 			{
 				if (current == nullptr) 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("switch statement not completed", ".md", -1, -1, ErrorType::error));
+					ErrorHandler::getInstance()->addError(make_shared<Error>("switch statement not completed", ".md", -1, -1, ErrorType::ERROR));
 					begin = end;
 
 					break;
@@ -162,7 +173,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 					}
 					else 
 					{
-						ErrorHandler::getInstance()->addError(make_shared<Error>("an body", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
+						ErrorHandler::getInstance()->addError(make_shared<Error>("an body", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
 															  expectation.getTokenType(), current->getType());
 						begin = end;
 
@@ -180,13 +191,28 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 				{
 					if (current->getLevel() > level)
 					{
-						CompileCondition condition;
-						caseCondition->add(make_shared<DoNothingNode>());
-						condition.compile(tokenList, current, current->getPrevious()->getPartner(), caseCondition, caseCondition->getLast());
+						shared_ptr<Compiler> condition;
+						bool multiIndex = false;
+
+						if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
+						{
+							condition = make_shared<CompileCondition>();
+							multiIndex = true;
+						}
+						else
+						{
+							condition = make_shared<CompileSingleStatement>();
+						}
+						condition->compile(tokenList, current, current->getPrevious()->getPartner(), caseCondition, caseCondition->getLast());
+
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
+						}
 					}
 					else 
 					{
-						ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
+						ErrorHandler::getInstance()->addError(make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
 															  expectation.getTokenType(), current->getType());
 						begin = end;
 
@@ -205,11 +231,28 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 
 					while (current->getLevel() > level)
 					{
-						shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+						shared_ptr<Compiler> compiledBodyPart;
+						bool multiIndex = false;
+
+						if (current->getType() == IToken::NEWLINE || (current->getNext()->getType() != IToken::BODY_CLOSE && 
+							current->getNext()->getType() != IToken::NEWLINE))
+						{
+							compiledBodyPart = factory.createCompileStatement(current);
+							multiIndex = true;
+						}
+						else
+						{
+							compiledBodyPart = make_shared<CompileSingleStatement>();
+						}
 
 						if (compiledBodyPart != nullptr) 
 						{
 							compiledBodyPart->compile(tokenList, current, previous, caseBody, caseBody->getLast());
+
+							if (!multiIndex) 
+							{ 
+								current = current->getNext(); 
+							}
 						}
 						else
 						{
@@ -287,7 +330,7 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::error));
+				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::ERROR));
 				begin = end;
 
 				break;
@@ -295,7 +338,7 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 
 			if (current->getType() != expectation.getTokenType())
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::error),
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -318,11 +361,28 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 
 			while (current->getLevel() > level)
 			{
-				shared_ptr<Compiler> compiledBodyPart = factory.createCompileStatement(current);
+				shared_ptr<Compiler> compiledBodyPart; 
+				bool multiIndex = false;
+
+				if (current->getType() == IToken::NEWLINE || (current->getNext()->getType() != IToken::BODY_CLOSE && 
+					current->getNext()->getType() != IToken::NEWLINE))
+				{
+					compiledBodyPart = factory.createCompileStatement(current);
+					multiIndex = true;
+				}
+				else
+				{
+					compiledBodyPart = make_shared<CompileSingleStatement>();
+				}
 
 				if (compiledBodyPart != nullptr)
 				{
 					compiledBodyPart->compile(tokenList, current, previous, _bodyDefault, _bodyDefault->getLast());
+
+					if (!multiIndex) 
+					{ 
+						current = current->getNext(); 
+					}
 				}
 				else
 				{

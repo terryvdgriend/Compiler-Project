@@ -4,33 +4,47 @@
 
 CompileFactory::CompileFactory()
 {
+	// Array
+	tokenCompileDictionary.emplace(IToken::ARRAY_OPEN,				[]()-> shared_ptr<Compiler> { return make_shared<CompileArray>(); });
+
 	// Coniditonal
-	tokenCompileDictionary[IToken::IF]						= make_shared<CompileIf>();
-	tokenCompileDictionary[IToken::SWITCH]					= make_shared<CompileSwitch>();
+	tokenCompileDictionary.emplace(IToken::IF,						[]()-> shared_ptr<Compiler> { return make_shared<CompileIf>(); });
+	tokenCompileDictionary.emplace(IToken::SWITCH,					[]()-> shared_ptr<Compiler> { return make_shared<CompileSwitch>(); });
 
 	// Function
-	tokenCompileDictionary[IToken::FUNCTION_DECLARE_OPEN]	= make_shared<CompileGetFunction>();	// Existing function
-	tokenCompileDictionary[IToken::FUNCTION_OPEN]			= make_shared<CompileUserFunction>();	// User defined functions
+	tokenCompileDictionary.emplace(IToken::FUNCTION_DECLARE_OPEN,	[]()-> shared_ptr<Compiler> { return make_shared<CompileGetFunction>(); });	// Existing function
+	tokenCompileDictionary.emplace(IToken::FUNCTION_OPEN,			[]()-> shared_ptr<Compiler> { return make_shared<CompileUserFunction>(); });	// User defined functions
 
 	// Loop
-	tokenCompileDictionary[IToken::DO]						= make_shared<CompileDoWhile>();
-	tokenCompileDictionary[IToken::FOR]						= make_shared<CompileFor>();
-	tokenCompileDictionary[IToken::WHILE]					= make_shared<CompileWhile>();
+	tokenCompileDictionary.emplace(IToken::DO,						[]()-> shared_ptr<Compiler> { return make_shared<CompileDoWhile>(); });
+	tokenCompileDictionary.emplace(IToken::FOR,						[]()-> shared_ptr<Compiler> { return make_shared<CompileFor>(); });
+	tokenCompileDictionary.emplace(IToken::WHILE,					[]()-> shared_ptr<Compiler> { return make_shared<CompileWhile>(); });
 
 	// Miscellaneous
-	tokenCompileDictionary[IToken::IDENTIFIER]				= make_shared<CompileEquals>();
-	tokenCompileDictionary[IToken::NEWLINE]					= nullptr;
+	tokenCompileDictionary.emplace(IToken::IDENTIFIER,				[]()-> shared_ptr<Compiler> { return make_shared<CompileEquals>(); });
+	tokenCompileDictionary.emplace(IToken::NEWLINE,					[]()-> shared_ptr<Compiler> { return nullptr; });
 }
 
 shared_ptr<Compiler> CompileFactory::createCompileStatement(shared_ptr<Token>& token)
 {
-	map<IToken, shared_ptr<Compiler>>::iterator it = tokenCompileDictionary.find(token->getType());
+	map<IToken, function<shared_ptr<Compiler>()>>::iterator it = tokenCompileDictionary.find(token->getType());
 
 	if (it != tokenCompileDictionary.end())
 	{
 		if (it->second != nullptr)
 		{
-			return it->second->create(); // Create a copy
+			if (token->getSubType() == IToken::TYPE_NUMBER_ARRAY || token->getSubType() == IToken::TYPE_TEXT_ARRAY || 
+				token->getSubType() == IToken::TYPE_FACT_ARRAY)
+			{
+				if (token->getPrevious()->getType() == IToken::NEWLINE && token->getNext()->getType() == IToken::ARRAY_OPEN)
+				{
+					return make_shared<CompileAddArrayItem>();
+				}
+			}
+			else 
+			{
+				return it->second();
+			}
 		}
 
 		return nullptr;

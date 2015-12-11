@@ -5,6 +5,4 @@ class CompileComparison : public CompileOperator
 {
 	public:
 		CompileComparison();
-
-		shared_ptr<Compiler> create();
 };

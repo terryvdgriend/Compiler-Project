@@ -1,6 +1,7 @@
 #include "stdafx.h"
-#include "CompileCondition.h"
 #include "CompileSingleStatement.h"
+#include "CompileCondition.h"
+#include "CompileGetArrayItem.h"
 #include "CompileGetFunction.h"
 #include "DirectFunctionCall.h"
 
@@ -19,8 +20,14 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
 			shared_ptr<ActionNode> beforeFunction = nullptr;
 			string sBuffer, saArguments[2];
+			
+			if (next != nullptr && next->getType() == IToken::ARRAY_OPEN) 
+			{
+				CompileGetArrayItem arrayitem;
+				arrayitem.compile(tokenList, begin, end, listActionNodes, actionBefore);
 
-			if (next != nullptr && next->getType() == IToken::CONDITION_OPEN)
+			}
+			else if (next != nullptr && next->getType() == IToken::CONDITION_OPEN)
 			{
 				saArguments[0] = begin->getText();
 				saArguments[1] = getNextLocalVariableName(sBuffer);
@@ -79,9 +86,4 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
             break;
         }
 	}
-}
-
-shared_ptr<Compiler> CompileSingleStatement::create()
-{
-	return make_shared<CompileSingleStatement>();
 }

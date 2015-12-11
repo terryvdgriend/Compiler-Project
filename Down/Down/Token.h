@@ -8,13 +8,14 @@ class Token
 		Token();
 		Token(const shared_ptr<Token>& other);
 
-		void print(map<string, IToken>& map);
+		void print(map<string, IToken>& tokenMap);
 		void addError();
 
 		bool operator!=(const Token& other)const;
 		bool operator!=(Token other);
 		static bool compare(shared_ptr<Token> first, shared_ptr<Token> other);
 
+		string getStringbyType(map<string, IToken>& map, IToken token);
 		string getText();
 		void setText(string text);
 		IToken getSubType();
@@ -32,7 +33,6 @@ class Token
 		void setPositionInList(int positionInList);
 		int	getScope();
 		void setScope(int scope);
-		string getStringbyEnum(map<string, IToken>& map, IToken token);
 		shared_ptr<Token> getNext();
 		void setNext(shared_ptr<Token> next);
 		shared_ptr<Token> getPrevious();

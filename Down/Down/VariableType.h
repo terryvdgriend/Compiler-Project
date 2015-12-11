@@ -4,6 +4,6 @@ enum VariableType
 {
 	number,
 	text,
-	boolean,
+	fact,
 	nulltype
 };

@@ -12,7 +12,6 @@ class CompileOperator : public Compiler
 
 		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
-		virtual shared_ptr<Compiler> create() = 0;
 		
 	protected:
 		TokenMap tokenMap;

@@ -17,7 +17,7 @@ Error::Error(string name, string file, int line, int column, ErrorType errorType
     _line	= line;
     _column = column;
 
-	if (errorType == warning)
+	if (errorType == ErrorType::WARNING)
 	{
 		_errorTypeString = "Warning";
 	}

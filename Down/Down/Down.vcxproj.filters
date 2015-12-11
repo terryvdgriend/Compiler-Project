@@ -160,6 +160,24 @@
     <Filter Include="Source Files\Utilities\ProgramHandling">
       <UniqueIdentifier>{ae8a5465-e2be-41ef-9483-14a1114e8052}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\VM\Commands\Array">
+      <UniqueIdentifier>{fa41b06a-03f7-4fcb-a3eb-14a6be84b69b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Array">
+      <UniqueIdentifier>{90425fa5-5d92-4c0e-a20d-a5e35d198f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Array">
+      <UniqueIdentifier>{2c1f48ff-d87f-4e8a-81d1-f3f9c6c99cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Array">
+      <UniqueIdentifier>{70c74410-a80b-4fd2-b71e-003dc328194a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Visitors\NodeVisitor">
+      <UniqueIdentifier>{acde4400-7d31-4ee9-9374-2651c312fe4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Visitors\CommandVisitor">
+      <UniqueIdentifier>{c84b084b-2234-4d4a-b078-f01633582142}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -378,6 +396,27 @@
     <ClCompile Include="ProgramHandler.cpp">
       <Filter>Source Files\Utilities\ProgramHandling</Filter>
     </ClCompile>
+    <ClCompile Include="AddArrayToDictionaryCommand.cpp">
+      <Filter>Source Files\VM\Commands\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="AddItemToArrayAtCommand.cpp">
+      <Filter>Source Files\VM\Commands\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="AddLengthToArrayCommand.cpp">
+      <Filter>Source Files\VM\Commands\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="GetItemFromArrayCommand.cpp">
+      <Filter>Source Files\VM\Commands\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileAddArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileArray.cpp">
+      <Filter>Source Files\Compiler\Compile\Array</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -397,9 +436,6 @@
     </ClInclude>
     <ClInclude Include="CompilerHeader.h">
       <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandList.h">
-      <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="CommandDictionary.h">
       <Filter>Header Files\VM</Filter>
@@ -527,17 +563,8 @@
     <ClInclude Include="CompileUserFunction.h">
       <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
     </ClInclude>
-    <ClInclude Include="CommandVisitor.h">
-      <Filter>Header Files\VM\Visitors</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeVisitor.h">
-      <Filter>Header Files\VM\Visitors</Filter>
-    </ClInclude>
     <ClInclude Include="MandatoryCommandIncludes.h">
       <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="VisitorList.h">
-      <Filter>Header Files\VM\Visitors</Filter>
     </ClInclude>
     <ClInclude Include="Token.h">
       <Filter>Header Files\Tokenizer\Token</Filter>
@@ -625,6 +652,45 @@
     </ClInclude>
     <ClInclude Include="ProgramHandler.h">
       <Filter>Header Files\Utilities\ProgramHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="AddArrayToDictionaryCommand.h">
+      <Filter>Header Files\VM\Commands\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="AddItemToArrayAtCommand.h">
+      <Filter>Header Files\VM\Commands\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="AddLengthToArrayCommand.h">
+      <Filter>Header Files\VM\Commands\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="GetItemFromArrayCommand.h">
+      <Filter>Header Files\VM\Commands\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileAddArrayItem.h">
+      <Filter>Header Files\Compiler\Compile\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileArray.h">
+      <Filter>Header Files\Compiler\Compile\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetArrayItem.h">
+      <Filter>Header Files\Compiler\Compile\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeVisitor.h">
+      <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitor.h">
+      <Filter>Header Files\VM\Visitors\CommandVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitorList.h">
+      <Filter>Header Files\VM\Visitors\CommandVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryCommandVisitorIncludes.h">
+      <Filter>Header Files\VM\Visitors\CommandVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeVisitorList.h">
+      <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryNodeVisitorIncludes.h">
+      <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
