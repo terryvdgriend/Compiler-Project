@@ -1,6 +1,8 @@
 
 > Print 1 t/m # w/e om te testen of alles nog werkt ;)
 
+[ThrowError "testerror"]
+
 [ printdown 1 ]
 
 

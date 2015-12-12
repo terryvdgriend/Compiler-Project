@@ -70,6 +70,12 @@
     <Filter Include="Resource Files\TestScriptz">
       <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\VM\Commands\Custom">
+      <UniqueIdentifier>{e4bcc833-0cbb-45e3-8b03-05acbac3e615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Custom">
+      <UniqueIdentifier>{8fd137ba-5b00-4be7-ae8e-e0f07ec31edd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -284,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="CompileGetArrayItem.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorCommand.cpp">
+      <Filter>Source Files\VM\Commands\Custom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +529,9 @@
     </ClInclude>
     <ClInclude Include="CompileGetArrayItem.h">
       <Filter>Header Files\Compiler\Compile</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorCommand.h">
+      <Filter>Header Files\VM\Commands\Custom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
