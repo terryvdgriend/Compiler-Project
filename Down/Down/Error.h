@@ -24,6 +24,8 @@ public:
 	void setType(location tt){ t = tt; };
 	void setFile(std::string f){ file = f; };
 	//
+	std::string getName() { return name; };
+	//
 	~Error();
 };
 

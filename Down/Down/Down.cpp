@@ -13,6 +13,7 @@
 #include "Format.h"
 #include "DoNothingNode.h"
 #include <ctime>
+#include "TestIt.h"
 
 struct IDEargs {
 	string code = "";
@@ -45,11 +46,7 @@ int main(int argc, char * argv[])
 	// =========TEST============
 	if (ideargs.Test)
 	{
-		//(1) Test runnen
-		//..
-		//(2) Errors terug geven, thats it
-		std::cerr << "========== Test runned with x errors ============";
-		Errors();
+		TestIt().RunAll();
 		return 0;
 	}
 
@@ -153,28 +150,28 @@ bool IDEstuff(int argc, char * argv[], IDEargs &ideargs)
 	{
 		string opt = argv[i];
 		//Text::PrintLine("Wazdeze:  " + opt);
-		if (opt == "-r" || opt == "-run") {
+		if (opt == "-r" || opt == "--run") {
 			// File
 			FileStreamer fs{};
 			ideargs.code = fs.readerFromPath(value);
 		}
-		else if (opt == "-t" || opt == "-tokenlist")//Print tokens
+		else if (opt == "-t" || opt == "--tokenlist")//Print tokens
 		{
 			ideargs.PrintTokenList = true;
 		}
-		else if (opt == "-c" || opt == "-compilelist")//Print runlist
+		else if (opt == "-c" || opt == "--compilelist")//Print runlist
 		{
 			ideargs.printCompileList = true;
 		}
-		else if (opt == "-build")
+		else if (opt == "--build")
 		{
 			ideargs.Build = true;
 		}
-		else if (opt == "-time")
+		else if (opt == "--time")
 		{
 			ideargs.printTime = true;
 		}
-		else if (opt == "-test")
+		else if (opt == "--test")
 		{
 			ideargs.Test = true;
 		}
