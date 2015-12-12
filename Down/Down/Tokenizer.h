@@ -26,7 +26,7 @@ private:
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
         
     // (\*{2}\S+?\*{2}|#+ (?:else if|\w+)|and gives|multiplied by|^>.*\n|(\w+) than|^-?\d*\.?\d*$|"(.*?)"|\w+|-{1,3}|[\S|\n])
-	regex e{ "(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(^>.*\\n)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])" };
+	regex e{ "(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])" };
 	void lookAheadMethod(smatch & m, string & s, Token & pToken, Token::iToken & currentToken, string & part, int rowNr, int colNr, bool arrayOpen);
 	std::string lookAhead(smatch m, std::string s);
 public:

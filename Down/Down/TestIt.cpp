@@ -11,16 +11,16 @@ TestIt::TestIt()
 
 void TestIt::RunAll()
 {
-	std::cout << string("\r\n\r\n=============== BUILD 13.3.7 ===============\r\n\r\n");
+	std::cout << string("\r\n\r\n------ Test started ------\r\n\r\n");
 	clock_t sttime = clock();
 
-	Run("If Else", fs.readerFromResource("test_ifelse", "md"));
-	//Run("Forloop", fs.readerFromResource("test_for", "md"));
-	//Run("While loop", fs.readerFromResource("test_while", "md"));
-	//Run("Functions", fs.readerFromResource("test_functions", "md"));
-	Run("Switch Case", TestText{}.textzz);
-	//Run("", fs.readerFromResource("test_", "md"));
-
+	//fs.readerFromResource("test_ifelse", "md")
+	Run("If Else", TestText::GetIfElse());
+	Run("Forloop", TestText::GetFor());
+	Run("While loop", TestText::GetWhile());
+	Run("Functions", TestText::GetFunctions());
+	Run("Switch Case", TestText::GetSwitch());
+	
 
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
 	std::cout << "\r\n\r\nTest finished in: " + to_string(elapsed_secs) + " secs\r\n\r\n";

@@ -15,6 +15,9 @@
 #include <ctime>
 #include "TestIt.h"
 
+//TEMP
+#include "TestText.h"
+
 struct IDEargs {
 	string code = "";
 	bool printCompileList = false;
@@ -34,11 +37,6 @@ clock_t sttime;
 
 int main(int argc, char * argv[])
 {
-	/*string asdcode = FileStreamer{}.readerFromResource("test_ifelse","md");
-	cout << "Hier komt het: ";
-	cout << asdcode;
-	return 0;*/
-
 	IDEargs ideargs;
 	//==========IDE=============
 	if (!IDEstuff(argc, argv, ideargs))
