@@ -93,3 +93,11 @@ __
 --
 	[ printdown **number** { **x** } ]
 __
+
+
+#### if (1 like 2)
+--
+
+[ printdown "mkay" ]
+
+__

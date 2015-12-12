@@ -86,6 +86,10 @@
     <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
     <Text Include="Switch.md" />
+    <Text Include="test_for.md">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </Text>
     <Text Include="while.md" />
     <Text Include="while.txt" />
   </ItemGroup>
@@ -160,6 +164,7 @@
     <ClInclude Include="SwitchNode.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestIt.h" />
+    <ClInclude Include="TestText.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
     <ClInclude Include="Token.h" />
@@ -258,6 +263,10 @@
     <None Include="custom.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
+    <None Include="test_functions.md" />
+    <None Include="test_ifelse.md" />
+    <None Include="test_switch.md" />
+    <None Include="test_while.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

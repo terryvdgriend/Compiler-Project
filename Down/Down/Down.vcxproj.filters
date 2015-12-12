@@ -61,9 +61,6 @@
     <Filter Include="Source Files\VM\Variable">
       <UniqueIdentifier>{e583ce7c-bde8-4370-ab1b-f57e59881246}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\TestScriptz">
-      <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\VM\Commands\Custom">
       <UniqueIdentifier>{e4bcc833-0cbb-45e3-8b03-05acbac3e615}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,12 @@
     </Filter>
     <Filter Include="Header Files\Test">
       <UniqueIdentifier>{a8c5cedc-4a96-4886-b8ae-f45e587f9bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\TestIt">
+      <UniqueIdentifier>{87ddc79a-c9c8-453a-8336-d7a0173b667f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\FunSpul">
+      <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -539,6 +542,9 @@
     <ClInclude Include="TestIt.h">
       <Filter>Header Files\Test</Filter>
     </ClInclude>
+    <ClInclude Include="TestText.h">
+      <Filter>Header Files\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
@@ -554,27 +560,42 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Switch.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
+    </Text>
+    <Text Include="test_for.md">
+      <Filter>Resource Files\TestIt</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
     </None>
     <None Include="SuperTest.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
     </None>
     <None Include="2000lines.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
     </None>
     <None Include="alles.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
     </None>
     <None Include="custom.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
     </None>
     <None Include="functionTest.md">
-      <Filter>Resource Files\TestScriptz</Filter>
+      <Filter>Resource Files\FunSpul</Filter>
+    </None>
+    <None Include="test_while.md">
+      <Filter>Resource Files\TestIt</Filter>
+    </None>
+    <None Include="test_functions.md">
+      <Filter>Resource Files\TestIt</Filter>
+    </None>
+    <None Include="test_switch.md">
+      <Filter>Resource Files\TestIt</Filter>
+    </None>
+    <None Include="test_ifelse.md">
+      <Filter>Resource Files\TestIt</Filter>
     </None>
   </ItemGroup>
 </Project>

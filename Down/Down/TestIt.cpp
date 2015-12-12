@@ -1,32 +1,26 @@
 #include "stdafx.h"
 #include "TestIt.h"
+#include "TestText.h"
 
-
+//fs.readerFromResource("test_ifelse", "md") <-- werkt niet bij een build versie, omdat die niet geinclude worden..
 
 TestIt::TestIt()
 {
 }
 
 
+
 void TestIt::RunAll()
 {
+	std::cout << string("\r\n\r\n=============== BUILD 15.6.8 ===============\r\n\r\n");
 	clock_t sttime = clock();
 
-
-
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	Run("SuperTest", fs.readerFromResource("SuperTest", "md"));
-	//Run("For loop", fs.readerFromResource("","md"));
-	//Run("While loop", fs.readerFromResource("", "md"));
-	//Run("If statements", fs.readerFromResource("", "md"));
-
+	Run("If Else", TestText{}.textzz);
+	Run("Forloop", fs.readerFromResource("test_for", "md"));
+	Run("While loop", fs.readerFromResource("test_while", "md"));
+	Run("Functions", fs.readerFromResource("test_functions", "md"));
+	Run("Switch Case", fs.readerFromResource("test_switch", "md"));
+	//Run("", fs.readerFromResource("test_", "md"));
 
 
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
@@ -39,12 +33,13 @@ void TestIt::Run(string _name, string _code)
 {
 	try
 	{
+		std::cout << string("CODE: " + _code + "\r\n");
 		//=========TOKENIZER==============
 		LinkedList* cTokenList{ new LinkedList() };
 		Tokenizer tnzr{ Tokenizer() };
 		tnzr.createTokenList(*cTokenList, _code);
-		
-		//=========COMPILER==============
+
+		/*//=========COMPILER==============
 		LinkedActionList* cRunList{ new LinkedActionList() };
 		if (ErrorHandler::getInstance()->getErrors().empty())
 		{
@@ -52,13 +47,13 @@ void TestIt::Run(string _name, string _code)
 			Compute compute{ Compute() };
 			compute.ComputeCompile(cTokenList, cRunList);
 		}
-		
+
 		//=========VM==============
 		if (ErrorHandler::getInstance()->getErrors().empty())
 		{
 			VirtualMachine vm{ VirtualMachine() };
 			vm.execute(*cRunList);
-		}
+		}*/
 	}
 	catch (const exception & ex)
 	{
@@ -77,17 +72,17 @@ bool TestIt::Errors(string _name)
 	auto errs = ErrorHandler::getInstance()->getErrors();
 	if (!errs.empty())
 	{
-		std::cerr << string("\r\n\r\n=============== "+ to_string(errs.size()) +" errors in '" + _name + "' ===============\r\n");
+		std::cout << string("\r\n\r\n=============== " + to_string(errs.size()) + " errors in '" + _name + "' ===============\r\n");
 		for (auto err : errs)
 		{
-			std::cerr << string( "  > " + err.getName() + "\r\n");
+			std::cout << string("  > " + err.getName() + "\r\n");
 		}
 		ErrorHandler::getInstance()->clearErrors();
 		return true;
 	}
 	else
 	{
-		
+
 		std::cout << string("=============== No errors in '" + _name + "' ===============\r\n");
 		return false;
 	}
