@@ -2,7 +2,6 @@
 #include "TestIt.h"
 #include "TestText.h"
 
-//fs.readerFromResource("test_ifelse", "md") <-- werkt niet bij een build versie, omdat die niet geinclude worden..
 
 TestIt::TestIt()
 {
@@ -12,14 +11,14 @@ TestIt::TestIt()
 
 void TestIt::RunAll()
 {
-	std::cout << string("\r\n\r\n=============== BUILD 15.6.8 ===============\r\n\r\n");
+	std::cout << string("\r\n\r\n=============== BUILD 13.3.7 ===============\r\n\r\n");
 	clock_t sttime = clock();
 
-	Run("If Else", TestText{}.textzz);
-	Run("Forloop", fs.readerFromResource("test_for", "md"));
-	Run("While loop", fs.readerFromResource("test_while", "md"));
-	Run("Functions", fs.readerFromResource("test_functions", "md"));
-	Run("Switch Case", fs.readerFromResource("test_switch", "md"));
+	Run("If Else", fs.readerFromResource("test_ifelse", "md"));
+	//Run("Forloop", fs.readerFromResource("test_for", "md"));
+	//Run("While loop", fs.readerFromResource("test_while", "md"));
+	//Run("Functions", fs.readerFromResource("test_functions", "md"));
+	Run("Switch Case", TestText{}.textzz);
 	//Run("", fs.readerFromResource("test_", "md"));
 
 
@@ -32,14 +31,13 @@ void TestIt::RunAll()
 void TestIt::Run(string _name, string _code)
 {
 	try
-	{
-		std::cout << string("CODE: " + _code + "\r\n");
+	{	
 		//=========TOKENIZER==============
 		LinkedList* cTokenList{ new LinkedList() };
 		Tokenizer tnzr{ Tokenizer() };
 		tnzr.createTokenList(*cTokenList, _code);
 
-		/*//=========COMPILER==============
+		//=========COMPILER==============
 		LinkedActionList* cRunList{ new LinkedActionList() };
 		if (ErrorHandler::getInstance()->getErrors().empty())
 		{
@@ -53,7 +51,7 @@ void TestIt::Run(string _name, string _code)
 		{
 			VirtualMachine vm{ VirtualMachine() };
 			vm.execute(*cRunList);
-		}*/
+		}
 	}
 	catch (const exception & ex)
 	{
