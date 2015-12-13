@@ -49,9 +49,6 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
 	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
 
-	//commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
-	//commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
-	
 	for (std::pair<string, shared_ptr<BaseCommand>> cf : CustFunc())
 	{
 		commandDictionary[std::string(cf.first)] = cf.second;

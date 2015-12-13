@@ -5,6 +5,8 @@
 
 TestIt::TestIt()
 {
+	list<Error> expectedErrors{};
+	
 }
 
 
@@ -20,18 +22,22 @@ void TestIt::RunAll()
 	Run("While loop", TestText::GetWhile());
 	Run("Functions", TestText::GetFunctions());
 	Run("Switch Case", TestText::GetSwitch());
-	
+	Run("Identifiers", TestText::GetIdentifiers());
+	Run("Identifier undefined ", "**i** is 1337", list<string>{"undefined"});
 
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
 	std::cout << "\r\n\r\nTest finished in: " + to_string(elapsed_secs) + " secs\r\n\r\n";
 }
 
-
-//Kan ook public worden, om zelf bepaalde code te testen..
 void TestIt::Run(string _name, string _code)
 {
+	Run(_name, _code, list<string>{});
+}
+
+void TestIt::Run(string _name, string _code, list<string> expectedErrors)
+{
 	try
-	{	
+	{
 		//=========TOKENIZER==============
 		LinkedList* cTokenList{ new LinkedList() };
 		Tokenizer tnzr{ Tokenizer() };
@@ -65,22 +71,25 @@ void TestIt::Run(string _name, string _code)
 	Errors(_name);
 }
 
+
+
 bool TestIt::Errors(string _name)
 {
 	auto errs = ErrorHandler::getInstance()->getErrors();
 	if (!errs.empty())
 	{
-		std::cout << string("\r\n\r\n=============== " + to_string(errs.size()) + " errors in '" + _name + "' ===============\r\n");
+		std::cout << string("\r\n\r\n=============== " + to_string(errs.size()) + " error(s) in '" + _name + "' ===============\r\n");
 		for (auto err : errs)
 		{
-			std::cout << string("  > " + err.getName() + "\r\n");
+			std::cout << string("  > "); 
+			err.print();
 		}
+		std::cout << string("\r\n");
 		ErrorHandler::getInstance()->clearErrors();
 		return true;
 	}
 	else
 	{
-
 		std::cout << string("=============== No errors in '" + _name + "' ===============\r\n");
 		return false;
 	}

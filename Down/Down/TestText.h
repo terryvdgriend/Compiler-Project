@@ -54,7 +54,6 @@ public:
 		return lolz;
 	}
 
-
 	static const std::string GetIfElse()
 	{
 		auto lolz = R"(
@@ -148,7 +147,16 @@ public:
 	static const std::string GetWhile()
 	{
 		auto lolz = R"(
-		_number_ **xx** is 2
+		_number_ **inc** is 1
+		#### while ( **inc** smaller than 10)
+		--
+			**inc** is **inc** plus 1 
+		__
+
+		#### if (**inc** smaller than 10)	
+		--	
+			[ ThrowError "inc should be smaller than 10, while loop" ]
+		__	
 		 )";
 		return lolz;
 	}
@@ -156,7 +164,53 @@ public:
 	static const std::string GetFor()
 	{
 		auto lolz = R"(
-		_number_ **xx** is 2
+		_number_ **size** is 7
+		_number_ { **size** } **number** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
+		_number_ **temp**
+		 _number_ **x**
+
+		#### for ( **x** is 0 , **x** smaller than **size** , **x** is **x** plus 1)
+		--
+>			[ printdown **number** { **x** } ]
+		__
+
+
+
+		#### for ( _number_ **i** is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
+		--
+			#### for ( _number_ **j** is 0 , **j** like or smaller than  **i** minus 1, **j** is **j** plus 1 )
+			--
+				#### if ( **number** { **j** } larger than **number** { **j**  plus 1 } )
+				--
+					**temp** is **number** { **j** }
+					**number** { **j** } is **number** { **j** plus 1 }
+					**number** { **j** plus 1 } is **temp**
+				__
+			__
+		__
+
+		 )";
+		return lolz;
+	}
+
+	static const std::string GetIdentifiers()
+	{
+		auto lolz = R"(
+		_number_ **aaa** is 5 
+		_number_ **bbb** is 10
+		
+		_number_ **pls** is **aaa** plus **bbb**
+
+		_number_ **min** is **aaa** minus **bbb**
+
+		_number_ **multi1** is 2 multiply 5 
+		_number_ **multi2** is 2 multiplied by 5 
+
+		_number_ **div** is 10 divide 2 
+
+		_number_ **inc** is 5 increased
+		_number_ **dec** is 5 decreased		
+
 		 )";
 		return lolz;
 	}

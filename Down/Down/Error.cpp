@@ -24,11 +24,8 @@ Error::Error(std::string _name, std::string _file, int _line, int _column, error
 
 void Error::print()
 {
-	Text::Print("Line: '1' - Column: '2' - ");
-	Text::Print("FILE.MD - ");
-	Text::Print(name + " - ");
-	//Een lijn
-	Text::Print("\n");
+	Text::Print(string(name + "  |  line/col: " + to_string(line) + "/" + to_string(column) + " | type: " + errorTypeString + " \r\n"));
+
 }
 
 std::string Error::asJsonObject()

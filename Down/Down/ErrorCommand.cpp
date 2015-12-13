@@ -23,3 +23,4 @@ pair<string, string> ErrorCommand::accept(CommandVisitor & cmdVisitor)
 {
 	return pair<string, string>();
 }
+
