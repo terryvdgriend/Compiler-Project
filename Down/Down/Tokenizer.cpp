@@ -258,8 +258,9 @@ void Tokenizer::checkRemainingErrors()
 		{
 			Token* token = this->stack.top();
 			this->stack.pop();
-			token->addError();
-		}
+			if(token->getEnum() != Token::ELSE)
+				token->addError();
+		}	
 	}
 }
 
