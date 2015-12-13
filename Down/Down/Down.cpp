@@ -75,7 +75,6 @@ int main(int argc, char * argv[])
 		std::cout << "Time elapsed: " + to_string(elapsed_secs);
 	}
 		
-
 	return 0;
 }
 
@@ -121,10 +120,6 @@ void RunVM(LinkedActionList cRunList)
 	//=========VM==============
 	VirtualMachine vm{ VirtualMachine() };
 	vm.execute(cRunList);
-
-
-	if (!ErrorHandler::getInstance()->getErrors().empty())
-		std::cerr << ErrorHandler::getInstance()->asJson();
 
 }
 

@@ -88,10 +88,6 @@
     <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
     <Text Include="Switch.md" />
-    <Text Include="test_for.md">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-    </Text>
     <Text Include="while.md" />
     <Text Include="while.txt" />
   </ItemGroup>
@@ -265,7 +261,6 @@
     <None Include="custom.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
-    <None Include="test_functions.md" />
     <Text Include="test_ifelse.md">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
@@ -274,8 +269,6 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
       <DeploymentContent>false</DeploymentContent>
     </Text>
-    <None Include="test_switch.md" />
-    <None Include="test_while.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -65,7 +65,9 @@ std::string ErrorHandler::asJson()
 {
     if (errors.size() == 0)
         return "No errors found";
-    
+
+	
+
     std::string JSON = "[";
     for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
     {

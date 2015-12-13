@@ -73,9 +73,6 @@
     <Filter Include="Header Files\Test">
       <UniqueIdentifier>{a8c5cedc-4a96-4886-b8ae-f45e587f9bc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\TestIt">
-      <UniqueIdentifier>{87ddc79a-c9c8-453a-8336-d7a0173b667f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\FunSpul">
       <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
     </Filter>
@@ -562,9 +559,7 @@
     <Text Include="Switch.md">
       <Filter>Resource Files\FunSpul</Filter>
     </Text>
-    <Text Include="test_for.md">
-      <Filter>Resource Files\TestIt</Filter>
-    </Text>
+    <Text Include="test_ifelse.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
@@ -584,18 +579,6 @@
     </None>
     <None Include="functionTest.md">
       <Filter>Resource Files\FunSpul</Filter>
-    </None>
-    <None Include="test_while.md">
-      <Filter>Resource Files\TestIt</Filter>
-    </None>
-    <None Include="test_functions.md">
-      <Filter>Resource Files\TestIt</Filter>
-    </None>
-    <None Include="test_switch.md">
-      <Filter>Resource Files\TestIt</Filter>
-    </None>
-    <None Include="test_ifelse.md">
-      <Filter>Resource Files\TestIt</Filter>
     </None>
   </ItemGroup>
 </Project>
