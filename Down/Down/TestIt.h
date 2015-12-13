@@ -10,7 +10,7 @@ class TestIt
 private:
 	FileStreamer fs{};
 	
-	bool Errors(string _name);
+	void Errors(string _name, list<string> expectedErrors);
 public:
 	TestIt();
 	void RunAll();

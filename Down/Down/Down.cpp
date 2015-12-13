@@ -44,7 +44,7 @@ int main(int argc, char * argv[])
 	
 	if (ideargs.printTime)
 		sttime = clock();
-
+	
 	// =========TEST============
 	if (ideargs.Test)
 	{
