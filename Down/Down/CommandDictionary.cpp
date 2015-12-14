@@ -10,6 +10,8 @@
 	asd["printup"] = std::make_shared<ShowUpFunctionCommand>();
 	asd["random"] = std::make_shared<RandomFunctionCommand>();
 	asd["ThrowError"] = std::make_shared<ErrorCommand>();
+	asd["count"] = std::make_shared<CountCommand>();
+	asd["getAllFilesInDirectory"] = std::make_shared<GetAllFilesInDirectoryCommand>();
 
 	// LEES: 
 	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)

@@ -127,6 +127,8 @@
     <ClInclude Include="Compute.h" />
     <ClInclude Include="ConditionalJumpNode.h" />
     <ClInclude Include="ConstantToReturnValueCommand.h" />
+    <ClInclude Include="CountCommand.h" />
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="ErrorCommand.h" />
     <ClInclude Include="FunctionHandler.h" />
     <ClInclude Include="DirectFunctionCall.h" />
@@ -139,6 +141,7 @@
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
+    <ClInclude Include="GetAllFilesInDirectoryCommand.h" />
     <ClInclude Include="GetFromValueCommand.h" />
     <ClInclude Include="GetItemFromArrayCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
@@ -208,6 +211,7 @@
     <ClCompile Include="Compute.cpp" />
     <ClCompile Include="ConditionalJumpNode.cpp" />
     <ClCompile Include="ConstantToReturnValueCommand.cpp" />
+    <ClCompile Include="CountCommand.cpp" />
     <ClCompile Include="ErrorCommand.cpp" />
     <ClCompile Include="FunctionHandler.cpp" />
     <ClCompile Include="DirectFunctionCall.cpp" />
@@ -223,6 +227,7 @@
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
+    <ClCompile Include="GetAllFilesInDirectoryCommand.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />
     <ClCompile Include="GetItemFromArrayCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />

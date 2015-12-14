@@ -58,6 +58,9 @@ std::pair<string, string> CommandVisitor::visit(PlusPlusCommand& command) {
 std::pair<string, string> CommandVisitor::visit(ShowFunctionCommand& command) {
 	return std::pair<string, string>("", "");
 }
+std::pair<string, string> CommandVisitor::visit(GetAllFilesInDirectoryCommand& command) {
+	return std::pair<string, string>("", "");
+}
 std::pair<string, string> CommandVisitor::visit(SmallerEqualsToCommand& command) {
 	return std::pair<string, string>("compare (<=)", "to");
 }
@@ -66,4 +69,7 @@ std::pair<string, string> CommandVisitor::visit(SmallerThanCommand& command) {
 }
 std::pair<string, string> CommandVisitor::visit(TimesCommand& command) {
 	return std::pair<string, string>("multiply", "by");
+}
+std::pair<string, string> CommandVisitor::visit(CountCommand& command) {
+	return std::pair<string, string>("count array", "with");
 }

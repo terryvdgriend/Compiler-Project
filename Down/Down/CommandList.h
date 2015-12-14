@@ -24,6 +24,8 @@
 
 #include "ShowFunctionCommand.h"
 #include "ErrorCommand.h"
+#include "CountCommand.h"
+#include "GetAllFilesInDirectoryCommand.h"
 
 #include "AddArrayToDictionaryCommand.h"
 #include "AddLengthToArrayCommand.h"

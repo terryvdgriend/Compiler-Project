@@ -297,6 +297,12 @@
     <ClCompile Include="TestIt.cpp">
       <Filter>Source Files\Test</Filter>
     </ClCompile>
+    <ClCompile Include="CountCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GetAllFilesInDirectoryCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -542,6 +548,15 @@
     <ClInclude Include="TestText.h">
       <Filter>Header Files\Test</Filter>
     </ClInclude>
+    <ClInclude Include="CountCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GetAllFilesInDirectoryCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
@@ -559,7 +574,9 @@
     <Text Include="Switch.md">
       <Filter>Resource Files\FunSpul</Filter>
     </Text>
-    <Text Include="test_ifelse.md" />
+    <Text Include="test_ifelse.md">
+      <Filter>Resource Files\FunSpul</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">

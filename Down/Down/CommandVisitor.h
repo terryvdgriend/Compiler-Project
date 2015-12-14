@@ -22,6 +22,8 @@ class ShowFunctionCommand;
 class SmallerEqualsToCommand;
 class SmallerThanCommand;
 class TimesCommand;
+class CountCommand;
+class GetAllFilesInDirectoryCommand;
 
 class CommandVisitor {
 public: 
@@ -44,7 +46,9 @@ public:
 	pair<string, string> visit(PlusCommand& command);
 	pair<string, string> visit(PlusPlusCommand& command);
 	pair<string, string> visit(ShowFunctionCommand& command);
+	pair<string, string> visit(GetAllFilesInDirectoryCommand & command);
 	pair<string, string> visit(SmallerEqualsToCommand& command);
 	pair<string, string> visit(SmallerThanCommand& command);
 	pair<string, string> visit(TimesCommand& command);
+	pair<string, string> visit(CountCommand & command);
 };
