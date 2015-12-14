@@ -108,6 +108,14 @@ exports.initMenu = function() {
 
     programMenu.append(new gui.MenuItem({ type: 'separator' }));
     programMenu.append(new global.gui.MenuItem({
+        label: 'Build',
+        key: "b",
+        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
+        click: function() {
+            
+        }
+    }));
+    programMenu.append(new global.gui.MenuItem({
         label: 'Run',
         key: "r",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",

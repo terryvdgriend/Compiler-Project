@@ -11,6 +11,12 @@ var DownHighlightRules = function() {
    this.$rules = {
         "start" : [
             {
+                token : "string",
+                regex : '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]'
+            }, {
+                token : "paren",
+                regex : "\-\-|\_\_|\\[|\\]"
+            }, {
                 token : "comment",
                 regex : ">$",
                 next : "start"

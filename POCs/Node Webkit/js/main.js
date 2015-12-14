@@ -45,9 +45,7 @@ function init()
         console.log(global.settings);
     }
 
-	global.$(global.window.document).ready(function(){        
-        global.setFile(null);
-
+    global.setDefaultSettings = function() {
         global.settings = {};
         global.settings.version = 1.0;
         global.settings.theme = "twilight";
@@ -90,9 +88,30 @@ function init()
                 type: "function",
                 description: "Functions",
                 color: ""
+            },
+            {
+                type: "paren",
+                description: "Paren",
+                color: ""
+            },
+            {
+                type: "string",
+                description: "Strings",
+                color: ""
+            },
+            {
+                type: "numeric",
+                description: "Numeric",
+                color: ""
             }
         ];
+    }
 
+	global.$(global.window.document).ready(function(){        
+        global.setFile(null);
+        global.setDefaultSettings();
+
+        // Constants uitsplitten in functions en variables, PAREN toevoegen in CSS, string
         if(localStorage.settings != null) {
             var parsedJSON = JSON.parse(localStorage.settings);
             if(parsedJSON != null && typeof parsedJSON.version !== 'undefined' && parsedJSON.version == global.settings.version) {
