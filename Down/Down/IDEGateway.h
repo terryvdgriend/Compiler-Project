@@ -5,7 +5,7 @@ class IDEGateway
 	public:
 		IDEGateway();
 
-		bool handleIDEArguments(int argCounter, char* argv[]);
+		bool handleIDEArguments(int argCounter, char* argValues[]);
 
 		string getCode();
 		bool doPrintTokenList();

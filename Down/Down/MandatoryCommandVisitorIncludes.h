@@ -5,6 +5,9 @@
 #include "AddLengthToArrayCommand.h"
 #include "GetItemFromArrayCommand.h"
 
+// Error
+#include "ErrorCommand.h"
+
 // Functions
 #include "ShowFunctionCommand.h"
 #include "ShowUpFunctionCommand.h"

@@ -13,73 +13,74 @@ IDEGateway::IDEGateway()
 	runTest				= false;
 }
 
-bool IDEGateway::handleIDEArguments(int argCounter, char* argv[])
+bool IDEGateway::handleIDEArguments(int argCounter, char* argValues[])
 {
 	// Return: true  -> Proceed with the rest of the code (most probable)
 	// Return: false -> Stop after the execution of this method (used to get, for instance, snippets and tokens)
-	FileStreamer fileStramer;
-	Tokenizer tokenizer;
+	FileStreamer fileStreamer;
 
 	if (argCounter == 1)
 	{
-		code = fileStramer.readerFromResource("custom");
+		code = fileStreamer.readerFromResource("custom");
 
 		return true;
 	}
+	Tokenizer tokenizer;
+
 	string output = "No valid args\n";
 	bool cont = true;
 
-	string value = argv[argCounter - 1]; // Last argument = textfile path
+	string value = argValues[argCounter - 1]; // Last argument = textfile path
 	int i = 0;
 
 	while (i != argCounter)
 	{
-		string opt = argv[i];
+		string option = argValues[i];
 
-		if (opt == "-r" || opt == "-run")
+		if (option == "-r" || option == "-run")
 		{
-			code = fileStramer.readerFromPath(value);
+			code = fileStreamer.readerFromPath(value);
 		}
-		else if (opt == "-t" || opt == "-tokenlist")
+		else if (option == "-t" || option == "--tokenlist")
 		{
 			printTokenList = true;
 		}
-		else if (opt == "-c" || opt == "-compilelist")
+		else if (option == "-c" || option == "--compilelist")
 		{
 			printCompiledList = true;
 		}
-		else if (opt == "-time")
+		else if (option == "--time")
 		{
 			printElapsedTime = true;
 		}
-		else if (opt == "-build")
+		else if (option == "--build")
 		{
 			build = true;
 		}
-		else if (opt == "-test")
+		else if (option == "--test")
 		{
 			runTest = true;
 		}
-		else if (opt == "getTokens")
+		else if (option == "getTokens")
 		{
 			output = tokenizer.getKeywordsAsJson();
 			cont = false;
 		}
-		else if (opt == "getSnippets")
+		else if (option == "getSnippets")
 		{
-			output = fileStramer.readerFromResource("Snippets");
+			output = fileStreamer.readerFromResource("Snippets");
 			cont = false;
 		}
-		else if (opt == "getFunctions")
+		else if (option == "getFunctions")
 		{
 			output = tokenizer.getFunctionsAsJson();
 			cont = false;
 		}
-		else if (opt == "getAll")
+		else if (option == "getAll")
 		{
 			output = tokenizer.getFunctionsAsJson();
 			output += tokenizer.getKeywordsAsJson();
-			output += fileStramer.readerFromResource("Snippets");
+			output += fileStreamer.readerFromResource("Snippets");
 
 			return false;
 		}

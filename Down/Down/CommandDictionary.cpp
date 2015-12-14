@@ -30,7 +30,7 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$<="]						= make_shared<SmallerEqualsToCommand>();
 	commandDictionary["$<"]							= make_shared<SmallerThanCommand>();
 	commandDictionary["$*"]							= make_shared<TimesCommand>();
-	
+
 	for (pair<string, shared_ptr<BaseCommand>> cf : getCustomFunctions())
 	{
 		commandDictionary[cf.first] = cf.second;
@@ -48,6 +48,7 @@ map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary["printdown"]			= make_shared<ShowFunctionCommand>();
 	customFunctionDictionary["printup"]				= make_shared<ShowUpFunctionCommand>();
 	customFunctionDictionary["random"]				= make_shared<RandomFunctionCommand>();
+	customFunctionDictionary["ThrowError"]			= make_shared<ErrorCommand>();
 
 	/*
 		READ:

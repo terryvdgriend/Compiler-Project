@@ -17,35 +17,38 @@ Error::Error(string name, string file, int line, int column, ErrorType errorType
     _line	= line;
     _column = column;
 
+	_errorTypeString = "Error";
+
 	if (errorType == ErrorType::WARNING)
 	{
 		_errorTypeString = "Warning";
-	}
-	else
-	{
-		_errorTypeString = "Error";
 	}
 }
 
 void Error::print()
 {
-    Text::print("Line: '1' - Column: '2' - ");
-    Text::print("FILE.MD - ");
-    Text::print(_name + " - ");
-    Text::print("\n");
+	Text::print(_name + "  |  line/col: " + 
+				to_string(_line) + "/" + 
+				to_string(_column) + " | type: " +
+				_errorTypeString + " \r\n");
 }
 
 string Error::asJsonObject()
 {
-    string JSON		= "{";
-    JSON			+= "\"description\":\"" + _name					+ "\", ";
-    JSON			+= "\"line\":\""		+ to_string(_line)		+ "\", ";
-    JSON			+= "\"column\":\""		+ to_string(_column)	+ "\", ";
-    JSON			+= "\"file\":\""		+ _file					+ "\", ";
-    JSON			+= "\"errorType\":\""	+ _errorTypeString		+ "\"";
-    JSON			+= "}";
+	string JSON = "{";
+	JSON += "\"description\":\"" + _name + "\", ";
+	JSON += "\"line\":\"" + to_string(_line) + "\", ";
+	JSON += "\"column\":\"" + to_string(_column) + "\", ";
+	JSON += "\"file\":\"" + _file + "\", ";
+	JSON += "\"errorType\":\"" + _errorTypeString + "\"";
+	JSON += "}";
 
-    return JSON;
+	return JSON;
+}
+
+string Error::getName()
+{
+	return _name;
 }
 
 void Error::setName(string name)

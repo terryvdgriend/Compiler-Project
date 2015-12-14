@@ -1,75 +1,72 @@
 #include "stdafx.h"
 #include "ProgramHandler.h"
 #include "Compute.h"
-#include "IDEGateway.h"
+#include "TestDown.h"
 #include "Tokenizer.h"
 #include "VirtualMachine.h"
 
-int ProgramHandler::runProgram(int argCounter, char* argv[])
+int ProgramHandler::runProgram(int argCounter, char* argValues[])
 {
 	IDEGateway ideGateway;
 
 	//==============IDE==============
-	if (!ideGateway.handleIDEArguments(argCounter, argv))
+	if (!ideGateway.handleIDEArguments(argCounter, argValues))
 	{
 		return 0;
 	}
 
-	//=============CLOCK=============
+	//=============TEST=============
+	if (ideGateway.doRunTest())
+	{
+		TestDown test;
+		test.runAll();
+
+		return 0;
+	}
+
+	//==============DOWN=============
+	return runDown(ideGateway);
+}
+
+int ProgramHandler::runDown(IDEGateway& ideGateway)
+{
+	//=============START-CLOCK=============
 	if (ideGateway.doPrintElapsedTime())
 	{
 		sttime = clock();
 	}
 
-	//=============TEST==============
-	if (ideGateway.doRunTest())
-	{
-		if (!executeTest())
-		{
-			return -1;
-		}
-	}
-
-	//==============DOWN=============
-	return runDown(ideGateway.getCode(), ideGateway.doPrintTokenList(), ideGateway.doPrintCompiledList(), ideGateway.doBuild());
-}
-
-bool ProgramHandler::executeTest()
-{
-	//(1) Run test
-	//(2) Return errors... That's it
-	cerr << "========== Test runned with x amount of errors ============";
-
-	return errors();
-}
-
-int ProgramHandler::runDown(const string code, const bool printTokenList, const bool printCompiledList, const bool build)
-{
-	//==============TOKENIZER========
-	shared_ptr<LinkedTokenList> tokenList = runTokenizer(code, printTokenList);
+	//=============TOKENIZER=============
+	shared_ptr<LinkedTokenList> tokenList = runTokenizer(ideGateway.getCode(), ideGateway.doPrintTokenList());
 
 	if (errors())
 	{
 		return -1;
 	}
 
-	//==============COMPILER=========
-	shared_ptr<LinkedActionList> compiledList = runCompiler(tokenList, printCompiledList);
+	//=============COMPILER=============
+	shared_ptr<LinkedActionList> compiledList = runCompiler(tokenList, ideGateway.doPrintCompiledList());
 
 	if (errors())
 	{
 		return -1;
 	}
 
-	if (!build)
+	//=============VM=============
+	if (!ideGateway.doBuild())
 	{
-		//==============VM===============
 		runVirtualMachine(compiledList);
 	}
 
 	if (errors())
 	{
 		return -1;
+	}
+
+	//=============END-CLOCK=============
+	if (ideGateway.doPrintElapsedTime())
+	{
+		printElapsedTime();
 	}
 
 	return 0;

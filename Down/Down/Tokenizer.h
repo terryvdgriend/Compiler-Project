@@ -20,7 +20,6 @@ class Tokenizer
 	private: 
 		map<string, IToken> tokenMap;
 		map<string, IToken> tokenRegex;
-		map<string, IToken> regexMap;
 		map<string, IToken> varTokenMap;
 		regex actualRegex;
 		int currentScope;
@@ -29,9 +28,9 @@ class Tokenizer
 		bool tokenError;
 		IToken tempToken;
 
-		void checkStack(shared_ptr<Token>& token, int& lvl);
-		void checkCondition(shared_ptr<Token>& token, int& lvl);
-		void checkBrackets(shared_ptr<Token>& token, int& lvl);
+		void checkStack(shared_ptr<Token>& token, int& level);
+		void checkCondition(shared_ptr<Token>& token);
+		void checkBrackets(shared_ptr<Token>& token, int& level);
 		void checkRemainingStack();
 		void checkRemainingErrors();
 

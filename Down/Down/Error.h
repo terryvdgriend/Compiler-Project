@@ -11,6 +11,7 @@ class Error
 		void print();
 		string asJsonObject();
 
+		string getName();
 		void setName(string name); 
 		void setLineColumn(int line, int column);
 		void setLocation(ErrorLocation location);

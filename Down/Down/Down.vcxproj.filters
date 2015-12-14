@@ -178,6 +178,18 @@
     <Filter Include="Header Files\VM\Visitors\CommandVisitor">
       <UniqueIdentifier>{c84b084b-2234-4d4a-b078-f01633582142}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\VM\Commands\Error">
+      <UniqueIdentifier>{b191d766-8698-4c52-8037-b94efde493b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Test">
+      <UniqueIdentifier>{a48262be-85e0-423d-aa9d-84f0c105eaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Error">
+      <UniqueIdentifier>{ad6392c9-334b-4458-bad5-2da94900990b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Test">
+      <UniqueIdentifier>{8c76fb5a-411c-4582-b942-7a7bf2ddbec3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -416,6 +428,12 @@
     </ClCompile>
     <ClCompile Include="CompileArray.cpp">
       <Filter>Source Files\Compiler\Compile\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorCommand.cpp">
+      <Filter>Source Files\VM\Commands\Error</Filter>
+    </ClCompile>
+    <ClCompile Include="TestDown.cpp">
+      <Filter>Source Files\Utilities\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -692,6 +710,15 @@
     <ClInclude Include="MandatoryNodeVisitorIncludes.h">
       <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
     </ClInclude>
+    <ClInclude Include="ErrorCommand.h">
+      <Filter>Header Files\VM\Commands\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="TestText.h">
+      <Filter>Header Files\Utilities\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="TestDown.h">
+      <Filter>Header Files\Utilities\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
@@ -710,6 +737,7 @@
     <Text Include="while.md">
       <Filter>Resource Files\TestScripts</Filter>
     </Text>
+    <Text Include="test_ifelse.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">

@@ -32,6 +32,11 @@ void ErrorHandler::printErrors()
 	}
 }
 
+void ErrorHandler::clearErrors()
+{
+	errors.clear();
+}
+
 string ErrorHandler::asJson()
 {
 	if (errors.size() == 0)
@@ -54,7 +59,7 @@ string ErrorHandler::asJson()
 void ErrorHandler::addError()
 {
 	ErrorLocation errorLocation = ErrorLocation::TOKENIZER;
-	string errorMessage = "Not Defined Error";
+	string errorMessage = "Undefined Error";
 	shared_ptr<Error> error = make_shared<Error>(errorMessage, errorLocation);
 	errors.push_back(error);
 }
@@ -78,9 +83,15 @@ void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
 
 void ErrorHandler::addError(shared_ptr<Error>& error, IToken expected, IToken result)
 {
-	unique_ptr<Tokenizer> tokenizer = make_unique<Tokenizer>();
-	string exptation = tokenizer->getKeyByValueTokenMap(expected);
-	string actualResult = tokenizer->getKeyByValueTokenMap(result);
+	Tokenizer tokenizer;
+	string exptation = tokenizer.getKeyByValueTokenMap(expected);
+	string actualResult = tokenizer.getKeyByValueTokenMap(result);
 	error->setName("Incorrect token! Expected: '" + exptation + "' Result: '" + actualResult + "'");
+	errors.push_back(error);
+}
+
+void ErrorHandler::addThrownError(string errorName)
+{
+	shared_ptr<Error> error = make_shared<Error>("Thrown Error: " + errorName, ErrorLocation::COMPILER);
 	errors.push_back(error);
 }

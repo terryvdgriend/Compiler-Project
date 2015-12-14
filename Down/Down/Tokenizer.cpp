@@ -11,7 +11,7 @@ Tokenizer::Tokenizer()
 	currentScope	= 0;
 	maxScope		= 0;
 	tokenError		= false;
-	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(^>.*\\n)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
+	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
 }
 
 void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const string codefromfile)
@@ -203,12 +203,12 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 void Tokenizer::printTokenList(shared_ptr<LinkedTokenList>& tokenList)
 {
 	Text::printLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
-	shared_ptr<Token> start = tokenList->getFirst();
+	shared_ptr<Token> nextToken = tokenList->getFirst();
 
-	while (start != nullptr)
+	while (nextToken != nullptr)
 	{
-		start->print(tokenMap);
-		start = start->getNext();
+		nextToken->print(tokenMap);
+		nextToken = nextToken->getNext();
 	}
 }
 
@@ -216,7 +216,6 @@ bool Tokenizer::getTokenError()
 {
 	return tokenError;
 }
-
 
 string Tokenizer::getKeywordsAsJson()
 {
@@ -232,7 +231,7 @@ string Tokenizer::getKeywordsAsJson()
 
 			continue;
 		}
-		JSON += "{\"keyword\":\"" + (*it).first + "\"}";
+		JSON += "{\"keyword\":\"" + it->first + "\"}";
 
 		if (i < size - 1)
 		{
@@ -249,9 +248,10 @@ string Tokenizer::getFunctionsAsJson()
 {
 	string JSON = "[";
 	int i = 0;
-	int size = CommandDictionary::getCustomFunctions().size();
+	map<string, shared_ptr<BaseCommand>> customFunction = CommandDictionary::getCustomFunctions();
+	int size = customFunction.size();
 
-	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
+	for (pair<string, shared_ptr<BaseCommand>> cf : customFunction)
 	{
 		JSON += "{\"function\":\"" + cf.first + "\"}";
 
@@ -305,20 +305,19 @@ string Tokenizer::getKeyByValueTokenMap(IToken tokenType)
 	return "";
 }
 
-void Tokenizer::checkStack(shared_ptr<Token>& token, int& lvl) 
+void Tokenizer::checkStack(shared_ptr<Token>& token, int& level)
 {
-	checkCondition(token, lvl);
-	checkBrackets(token, lvl);
+	checkCondition(token);
+	checkBrackets(token, level);
 }
 
-void Tokenizer::checkCondition(shared_ptr<Token>& token, int& lvl) 
+void Tokenizer::checkCondition(shared_ptr<Token>& token)
 {
 	if (token->getType() == IToken::DO)
 	{
 		stack.push(token);
 	}
-
-	if (token->getType() == IToken::WHILE)
+	else if (token->getType() == IToken::WHILE)
 	{
 		if (stack.size() > 0 && stack.top()->getType() == IToken::DO) 
 		{
@@ -328,8 +327,7 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int& lvl)
 			stack.pop();
 		}
 	}
-
-	if (token->getType() == IToken::IF)
+	else if (token->getType() == IToken::IF)
 	{
 		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
 		{
@@ -337,8 +335,7 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int& lvl)
 		}
 		stack.push(token);
 	}
-
-	if (token->getType() == IToken::ELSE)
+	else if (token->getType() == IToken::ELSE)
 	{
 		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
 		{
@@ -372,8 +369,7 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int& lvl)
 			stack.push(token);
 		}
 	}
-
-	if (token->getType() == IToken::ELSEIF)
+	else if (token->getType() == IToken::ELSEIF)
 	{
 		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
 		{
@@ -407,15 +403,17 @@ void Tokenizer::checkCondition(shared_ptr<Token>& token, int& lvl)
 	}
 }
 
-void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& lvl)
+void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& level)
 {
-	if (token->getType() == IToken::BODY_OPEN || token->getType() == IToken::CONDITION_OPEN || token->getType() == IToken::FUNCTION_OPEN ||
-		token->getType() == IToken::ARRAY_OPEN || token->getType() == IToken::FUNCTION_DECLARE_OPEN)
+	if (token->getType() == IToken::BODY_OPEN || token->getType() == IToken::CONDITION_OPEN || 
+		token->getType() == IToken::FUNCTION_OPEN || token->getType() == IToken::ARRAY_OPEN || 
+		token->getType() == IToken::FUNCTION_DECLARE_OPEN)
 	{
 		stack.push(token);
 	}
-	else if (token->getType() == IToken::BODY_CLOSE || token->getType() == IToken::CONDITION_CLOSE || token->getType() == IToken::FUNCTION_CLOSE ||
-			 token->getType() == IToken::ARRAY_CLOSE || token->getType() == IToken::FUNCTION_DECLARE_CLOSE)
+	else if (token->getType() == IToken::BODY_CLOSE || token->getType() == IToken::CONDITION_CLOSE || 
+			 token->getType() == IToken::FUNCTION_CLOSE || token->getType() == IToken::ARRAY_CLOSE || 
+			 token->getType() == IToken::FUNCTION_DECLARE_CLOSE)
 	{
 		if (stack.size() > 0)
 		{
@@ -429,13 +427,14 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& lvl)
 					}
 				}
 			}
+
 			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::BODY_OPEN) ||
 				(token->getType() == IToken::FUNCTION_CLOSE && stack.top()->getType() == IToken::FUNCTION_OPEN) ||
 				(token->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.top()->getType() == IToken::FUNCTION_DECLARE_OPEN) ||
 				(token->getType() == IToken::ARRAY_CLOSE && stack.top()->getType() == IToken::ARRAY_OPEN) ||
 				(token->getType() == IToken::CONDITION_CLOSE && stack.top()->getType() == IToken::CONDITION_OPEN))
 			{
-				token->setLevel(lvl);
+				token->setLevel(level);
 				shared_ptr<Token> stackToken = stack.top();
 				token->setPartner(stackToken);
 				stackToken->setPartner(token);
@@ -463,47 +462,51 @@ void Tokenizer::checkRemainingErrors()
 		{
 			shared_ptr<Token> token = stack.top();
 			stack.pop();
-			token->addError();
+
+			if (token->getType() != IToken::ELSE)
+			{
+				token->addError();
+			}
 		}
 	}
 }
 
 string Tokenizer::lookAhead(smatch match)
 {
-	smatch match2;
-	string lookahead = match.suffix().str();
-	regex_search(lookahead, match2, actualRegex);
+	smatch _match;
+	string lookaheadResult = match.suffix().str();
+	regex_search(lookaheadResult, _match, actualRegex);
 
-	return match2[0];
+	return _match[0];
 }
 
 void Tokenizer::lookAheadMethod(smatch& match, string& codePart, shared_ptr<Token>& token, IToken& currentToken, string& part, int rowNr, int colNr, bool arrayOpen)
 {
-	string lookahead = lookAhead(match);
+	string lookaheadResult = lookAhead(match);
 	IToken lookaheadToken;
 
-	if (tokenMap.find(lookahead) != tokenMap.end())
+	if (tokenMap.find(lookaheadResult) != tokenMap.end())
 	{
-		lookaheadToken = tokenMap[lookahead];
+		lookaheadToken = tokenMap[lookaheadResult];
 	}
 	else
 	{
-		lookaheadToken = getToken(lookahead);
+		lookaheadToken = getToken(lookaheadResult);
 	}
 
 	if (lookaheadToken == IToken::IDENTIFIER)
 	{
-		lookahead.push_back(currentScope + '0');
+		lookaheadResult.push_back(currentScope + '0');
 
-		if (tokenMap.count(lookahead) != 0)
+		if (tokenMap.count(lookaheadResult) != 0)
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+			ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + lookaheadResult + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
 		}
 		token->setSubType(currentToken);
 		currentToken = lookaheadToken;
 
-		tokenMap[lookahead] = IToken::IDENTIFIER;
-		part = lookahead;
+		tokenMap[lookaheadResult] = IToken::IDENTIFIER;
+		part = lookaheadResult;
 		codePart = match.suffix().str();
 		regex_search(codePart, match, actualRegex);
 		varTokenMap[part] = token->getSubType();
@@ -532,7 +535,7 @@ void Tokenizer::lookAheadMethod(smatch& match, string& codePart, shared_ptr<Toke
 			}
 		}
 		currentToken = lookaheadToken;
-		part = lookahead;
+		part = lookaheadResult;
 		codePart = match.suffix().str();
 		regex_search(codePart, match, actualRegex);
 	}
@@ -547,17 +550,16 @@ void Tokenizer::lookAheadMethod(smatch& match, string& codePart, shared_ptr<Toke
 
 IToken Tokenizer::getToken(string token)
 {
-	typedef map<string, IToken>::iterator it_type;
-	smatch m;
+	smatch match;
 
-	for (it_type iterator = regexMap.begin(); iterator != regexMap.end(); iterator++)
+	for (map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); it++)
 	{
-		regex e(iterator->first);
-		regex_search(token, m, e);
+		regex e(it->first);
+		regex_search(token, match, e);
 
-		if (m.size() != 0)
+		if (match.size() != 0)
 		{
-			return iterator->second;
+			return it->second;
 		}
 	}
 
@@ -566,16 +568,16 @@ IToken Tokenizer::getToken(string token)
 
 IToken Tokenizer::getNextToken(smatch& match, string& codePart)
 {
-	string lookahead = lookAhead(match);
+	string lookaheadResult = lookAhead(match);
 	IToken lookaheadToken;
 
-	if (tokenMap.find(lookahead) != tokenMap.end())
+	if (tokenMap.find(lookaheadResult) != tokenMap.end())
 	{
-		lookaheadToken = tokenMap[lookahead];
+		lookaheadToken = tokenMap[lookaheadResult];
 	}
 	else
 	{
-		lookaheadToken = getToken(lookahead);
+		lookaheadToken = getToken(lookaheadResult);
 	}
 
 	return lookaheadToken;
