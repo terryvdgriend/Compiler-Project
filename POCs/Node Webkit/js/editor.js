@@ -21,7 +21,7 @@ exports.reload = function(){
         return "<hr data-code=\"" + text + "\">\n";
     }
 
-    var resultDiv = global.$('#markdown');
+    var resultDiv = global.$('#markdown #markdownCode');
     var code = global.editor.getValue();
     code = code.replace(/ {4}/gm, "");
     resultDiv.html(marked(code));   

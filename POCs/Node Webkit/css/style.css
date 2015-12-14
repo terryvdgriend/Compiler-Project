@@ -97,6 +97,14 @@ a {
     color: #fff;
     font-family: "Consolas", "Menlo Regular", sans-serif;
     font-size: 16px;
+    position: relative;
+}
+
+#markdown #markdownCode {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #markdown *:first-child {
@@ -131,6 +139,38 @@ a {
     border: 0;
     height: 1px;
     background: #fff;
+}
+
+#contextmenu{
+    margin:0;
+    padding:0;
+    background: rgba(255,255,255,0.15);
+    -webkit-box-shadow: 0 0 17px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 0 17px 0 rgba(0,0,0,0.5);
+}
+
+#contextmenu li {
+    list-style-type:none;
+    margin:0px;
+    padding: 4px 5px;
+    color: #FFF;
+    cursor:pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+    min-width: 110px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#contextmenu li:last-child {
+    border: 0;
+}
+
+#contextmenu li.hover{
+    background: rgba(255,255,255,0.3);
 }
 
 #log {
@@ -278,7 +318,6 @@ a {
 #settings input, #settings button {
     font-family: Arial !important;
 }
-
 
 
 

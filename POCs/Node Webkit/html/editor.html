@@ -1,10 +1,12 @@
 <script src="../js/plugins/ace/ace.js" type="text/javascript"></script>
 <script src="../js/plugins/ace/theme-twilight.js" type="text/javascript"></script>
 <script src="../js/plugins/ace/ext-language_tools.js" type="text/javascript"></script>
+<script src="../js/plugins/contextmenu/jquery.contextmenu.js" type="text/javascript"></script>
 
 <script>
 var editor = require("./../js/editor.js");
 var compiler = require("./../js/compiler.js");
+var to_markdown = require("../js/plugins/html-to-md/md");
 
 global.setCustomStyle = function() {
     if(global.settings.customStyle != null) {
@@ -29,6 +31,12 @@ global.setCustomStyle = function() {
 }
 
 $(function() {
+
+    $('#markdown #markdownCode').contextmenu({
+        "Variable": function() {
+            pasteHtmlAtCaret('<b>VARIABLE</b>', false);
+        }
+    }, 'right', 0);
 
     var tabs = $("#log > div").tabs();
     tabs.find(".ui-tabs-nav").sortable({
@@ -153,13 +161,9 @@ $(function() {
 
     global.setCustomStyle();
 
-    var to_markdown = require("../js/plugins/html-to-md/md");
-
-    $('#markdown').get(0).contentEditable = true;
-    $('#markdown').on('keyup', function() {
-        global.htmlToMarkdown = 2;
-        var md = to_markdown($('#markdown').html());
-        global.editor.setValue(md, 1);
+    $('#markdown #markdownCode').get(0).contentEditable = true;
+    $('#markdown #markdownCode').on('keyup', function() {
+        updateCodeLeft();
     });
 
     $('#markdown').on('focus', function() {
@@ -179,8 +183,14 @@ global.gui.Window.get().on('focus', function() {
     global.setCustomStyle();
 });
 
+function updateCodeLeft() {
+    global.htmlToMarkdown = 2;
+    var md = to_markdown($('#markdown #markdownCode').html());
+    global.editor.setValue(md, 1);
+}
+
 function pasteHtmlAtCaret(html, selectPastedContent) {
-    html = html + "&nbsp;";
+    html = "&nbsp;" + html + "&nbsp;";
     var sel, range;
     if (window.getSelection) {
         // IE9 and non-IE
@@ -225,25 +235,19 @@ function pasteHtmlAtCaret(html, selectPastedContent) {
             range.select();
         }
     }
+
+    updateCodeLeft();
 }
 
 </script>
-
-<style>
-#insert {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-}
-</style>
 
 <div id="customCSS"></div>
 
 <!-- Editor -->
 <div id="editor"><textarea id="code"></textarea></div>
-<div id="markdown"></div>
-
-<button id="insert">INSERT</button>
+<div id="markdown">
+    <div id="markdownCode"></div>
+</div>
 
 <!-- Log -->
 <div id="log">
