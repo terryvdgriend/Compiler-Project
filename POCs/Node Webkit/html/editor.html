@@ -137,7 +137,7 @@ $(function() {
 
     $('body').on('click', 'table.errors tr', function(event) {
         event.preventDefault();
-        global.editor.gotoLine($(this).data('line'), $(this).data('column'), true);
+        global.editor.gotoLine($(this).data('line'), $(this).data('column')-1, true);
     });
 
     $('#log a.save').on('click', function() {

@@ -165,6 +165,10 @@ a {
     user-select: none;
 }
 
+.ace-twilight .ace_hidden-cursors .ace_cursor {
+    opacity: 0.45 !important;
+}
+
 #contextmenu li:last-child {
     border: 0;
 }
