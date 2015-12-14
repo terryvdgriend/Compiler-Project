@@ -5,16 +5,14 @@ public:
 	static const std::string getSnippets()
 	{
 		auto lolz = R"(
-	[
-	   {
-		  "trigger":"for",
-		  "snippet":"#### for (_number_ **i** ; **i** increase )\n{\n}\n"
-	   },
-	   {
-		  "trigger":"switch",
-		  "snippet":"#### switch ( **sw** )\ncase ( 1 )\n--\n__\ncase ( 2 )\n--\n\n__\ndefault\n--\n\n__\n"
-	   }
+
+							[
+		  "printdown":"[printdown "KAAS"]",
+		  "function":"#### temp \n --- \n> Your code here ;)\n ___"
+		  "for":"### for ( _number_ **i** ; **i** smaller than 10 ; **i** is **i** plus 1  ) \n --- \n> Your code here ;)\n ___"
 	]
+
+
 		)";
 		return lolz;
 	}
