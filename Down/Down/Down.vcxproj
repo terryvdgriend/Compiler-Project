@@ -85,11 +85,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
     <Text Include="Switch.md" />
-    <Text Include="while.md" />
-    <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -255,7 +252,6 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
     <None Include="2000lines.md" />
     <None Include="alles.md" />
     <None Include="custom.md" />

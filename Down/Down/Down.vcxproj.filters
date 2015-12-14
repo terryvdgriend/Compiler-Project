@@ -547,24 +547,12 @@
     <Text Include="custom.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="while.md">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="Snippets.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="while.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="Switch.md">
       <Filter>Resource Files\FunSpul</Filter>
     </Text>
     <Text Include="test_ifelse.md" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\ForFibo.md">
-      <Filter>Resource Files\FunSpul</Filter>
-    </None>
     <None Include="SuperTest.md">
       <Filter>Resource Files\FunSpul</Filter>
     </None>

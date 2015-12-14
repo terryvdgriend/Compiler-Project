@@ -177,7 +177,7 @@ bool IDEstuff(int argc, char * argv[], IDEargs &ideargs)
 			cont = false;
 		}
 		else if (opt == "getSnippets") {
-			outz = (FileStreamer{}).readerFromResource("Snippets");
+			outz = TestText::getSnippets();
 			cont = false;
 		}
 		else if (opt == "getFunctions") {
