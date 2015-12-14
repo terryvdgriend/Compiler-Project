@@ -20,7 +20,7 @@
 
 struct IDEargs {
 	string code = "";
-	bool printCompileList = false;
+	bool printCompileList = true;
 	bool PrintTokenList = false;
 	bool printTime = false;
 	bool Test = false;

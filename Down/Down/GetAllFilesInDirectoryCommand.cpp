@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GetAllFilesInDirectoryCommand.h"
 #include "CommandVisitor.h"
+#include "CompileSingleStatement.h"
 
 #ifdef _WIN32
     #include "dirent.h"
@@ -32,21 +33,37 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 	directory = directory.substr(1, directory.size() - 2);
 
 	dir = opendir(directory.c_str()); /*your directory*/
-	if (dir != nullptr) {
-		while (dir)
-		{
-			de = readdir(dir);
-			if (!de) break;
-			Text::PrintLine(de->d_name);
-		}
-		closedir(dir);
-	}
-	else {
+	if (dir == nullptr) {
 		throwTypeError(var, var, vm);
+		return;
 	}
+	while (dir)
+	{
+		de = readdir(dir);
+		if (!de) break;
+		out.push_back(de->d_name);
+	}
+	closedir(dir);
 	
+	string buffer;
+	CompileSingleStatement varGetter = CompileSingleStatement();
+	string localVariable;
+	string arrayDictionary = varGetter.getNextLocalVariableName(buffer);
+	string arrayIdentifier = varGetter.getNextLocalVariableName(buffer);
+	vm.setVariable(arrayDictionary, "", Token::TYPE_TEXT_ARRAY);
+	auto arrayVar = vm.getVariable(arrayDictionary);
+	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
+	vm.addArrayToDictionary(arrayDictionary, out.size());
+	vm.addIdentifer(arrayIdentifier);
 
-
+	for (size_t i = 0; i < out.size(); i++)
+	{
+		localVariable = varGetter.getNextLocalVariableName(buffer);
+		vm.setVariable(localVariable, out.at(i), Token::TYPE_TEXT);
+		vm.addItemToVariableArrayAt(arrayDictionary, to_string(i), vm.getVariable(localVariable));
+	}
+	vm.setReturnValue(arrayIdentifier);
+	vm.setReturnToken(Token::TYPE_TEXT_ARRAY);
 }
 
 pair<string, string> GetAllFilesInDirectoryCommand::accept(CommandVisitor & cmdVisitor)

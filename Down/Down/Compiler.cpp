@@ -13,6 +13,7 @@ Compiler::~Compiler()
 {
 }*/
 
+
 string Compiler::getNextLocalVariableName(string& sBuffer)
 {
 	static int nValue = 0;
