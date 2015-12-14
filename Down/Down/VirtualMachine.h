@@ -39,7 +39,7 @@ class VirtualMachine
 		bool isAnIdentifier(string name);
 
 		void addArrayTypeToArrayTypes(string arrayName, Token::iToken tokenType);
-		pair<string, string> VirtualMachine::getVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType);
+		pair<string, string> getVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType);
 		
 	private:
 		string returnValue;

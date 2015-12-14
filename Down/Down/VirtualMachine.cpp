@@ -130,6 +130,8 @@ vector<shared_ptr<Variable>> VirtualMachine::addArrayToDictionary(string key, in
 			return temp;
 		}
 	}
+    
+    return vector<shared_ptr<Variable>>();
 }
 
 vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
@@ -152,6 +154,7 @@ vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
 	else {
 		ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
 	}
+    return vector<shared_ptr<Variable>>();
 }
 
 void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> value)
@@ -209,6 +212,7 @@ shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int in
 	{
 		ErrorHandler::getInstance()->addError(Error{ "you want to get an item from an array which doesn't exist", ".md",-1, -1, Error::error });
 	}
+    return nullptr;
 }
 
 void VirtualMachine::addArrayTypeToArrayTypes(string arrayName, Token::iToken tokenType)

@@ -1,7 +1,1 @@
-_number_ **size** is 7
-_string_ { **size** } **number** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
-_number_ **temp**
- _number_ **x**
-
-
-[getAllFilesInDirectory "D:\\_Data\Github\newApps\newApps\newApps"]
+[getAllFilesInDirectory "/Users/Maurice/Compiler-Project/Down/Down"]

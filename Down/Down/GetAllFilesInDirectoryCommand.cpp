@@ -1,7 +1,13 @@
 #include "stdafx.h"
 #include "GetAllFilesInDirectoryCommand.h"
 #include "CommandVisitor.h"
-#include "dirent.h"
+
+#ifdef _WIN32
+    #include "dirent.h"
+#else
+    #include <dirent.h>
+#endif
+
 
 GetAllFilesInDirectoryCommand::GetAllFilesInDirectoryCommand()
 {
@@ -31,7 +37,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 		{
 			de = readdir(dir);
 			if (!de) break;
-			out.push_back(de->d_name);
+			Text::PrintLine(de->d_name);
 		}
 		closedir(dir);
 	}
