@@ -9,7 +9,7 @@
 	asd["printdown"] = std::make_shared<ShowFunctionCommand>();
 	asd["printup"] = std::make_shared<ShowUpFunctionCommand>();
 	asd["random"] = std::make_shared<RandomFunctionCommand>();
-	asd["ditwerkt"] = std::make_shared<RandomFunctionCommand>();
+	asd["ThrowError"] = std::make_shared<ErrorCommand>();
 
 	// LEES: 
 	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
@@ -40,13 +40,15 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$++"]						= make_shared<PlusPlusCommand>();
 	commandDictionary["$--"]						= make_shared<MinusMinusCommand>();
 
+	commandDictionary["$AddArrayToDictionary"]		= make_shared<AddArrayToDictionaryCommand>();
+	commandDictionary["$AddLengthToArray"]			= make_shared<AddLengthToArrayCommand>();
+	commandDictionary["$AddItemToArrayAt"]			= make_shared<AddItemToArrayAtCommand>();
+	commandDictionary["$GetItemFromArray"]			= make_shared<GetItemFromArrayCommand>();
+
 	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();
 	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
 	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
 
-	//commandDictionary["printdown"]					= make_shared<ShowFunctionCommand>();
-	//commandDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
-	
 	for (std::pair<string, shared_ptr<BaseCommand>> cf : CustFunc())
 	{
 		commandDictionary[std::string(cf.first)] = cf.second;

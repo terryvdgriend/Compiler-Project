@@ -4,6 +4,7 @@
 class Variable
 {
 	public:
+		Variable() {}
 		Variable(string param);
 		VariableType getType();
 		string getValue();

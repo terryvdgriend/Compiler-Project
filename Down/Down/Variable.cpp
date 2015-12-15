@@ -14,7 +14,7 @@ Variable::Variable(string param)
 	}
 	else if (is_bool(value)) 
 	{
-		type = VariableType::BOOL;
+		type = VariableType::FACT;
 	}
 	else 
 	{

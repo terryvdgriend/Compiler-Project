@@ -49,7 +49,10 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 			current = current->next;
 		}
 		if (expectation.getLevel() == Level) {
-			if (current->getEnum() == Token::FUNCTION_CALL) {
+			if (current->getEnum() == Token::FUNCTION_DECLARE_OPEN) {
+				bodyEnd = current->getPartner();
+			}
+			else if (current->getEnum() == Token::FUNCTION_CALL) {
 				for (auto p : FunctionHandler::getInstance()->getFunctions()) 
 				{
 					if (p.getName() == current->getText()) {
@@ -73,7 +76,7 @@ void CompileGetFunction::Compile(LinkedList & cTokenList, Token & begin, Token &
 		}
 	}
 	if (!userdef)
-		CompileNotUserDefined(cTokenList, *current, end);
+		CompileNotUserDefined(cTokenList, *current, *bodyEnd);
 	else 
 		CompileUserDefined(cTokenList, *current, end);
 
@@ -90,7 +93,8 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 	Token *current = &begin;
 	std::vector<std::string> parameters;
 	_functionParams->add(new DoNothingNode());
-	while (current->getEnum() != Token::FUNCTION_DECLARE_CLOSE) {
+
+	while (*current != end) {
 		// compile condition
 		Token * seperator = current;
 		std::stack<Token::iToken> stack;
@@ -100,7 +104,7 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 			else if (seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE && stack.size() > 0) {
 				stack.pop();
 			}
-			else if (stack.size() == 0 && (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE))
+			if (stack.size() == 0 && (seperator->getEnum() == Token::AND_PARA || seperator->getEnum() == Token::FUNCTION_DECLARE_CLOSE))
 				break;
 
 			seperator = seperator->next;
@@ -118,7 +122,18 @@ void CompileGetFunction::CompileNotUserDefined(LinkedList & cTokenList, Token & 
 		_functionParams->insertBefore(_functionParams->getLast(),pDirectFunction);
 		///
 		parameters.push_back(tempVar);
-		if(current->getEnum() == Token::AND_PARA)
+		bool deepFunction = false;
+		Token* func = current->previous;
+		while (func->getEnum() != Token::NEWLINE) {
+			if (func == current)
+				break;
+			if (func->getEnum() == Token::FUNCTION_DECLARE_CLOSE) {
+				deepFunction = true;
+				break;
+			}
+			func = func->previous;
+		}
+		if(current->getEnum() == Token::AND_PARA || deepFunction)
 			current = current->next;
 	}
 	if (parameters.size() > _params.size()) {
@@ -232,16 +247,36 @@ void CompileGetFunction::CompileUserDefined(LinkedList & cTokenList, Token & beg
 			currentBody = currentBody->next;
 			break;
 		}
-		Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
 
+		bool multiIndex = false;
+		Compiler* compiledBodyPart;
+		if (currentBody->getEnum() == Token::NEWLINE ||(currentBody->next->getEnum() != Token::FUNCTION_CLOSE && currentBody->next->getEnum() != Token::NEWLINE)) {
+			compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
+			multiIndex = true;
+		}
+		else
+			compiledBodyPart = new CompileSingleStatement;
 		if (compiledBodyPart != nullptr) {
 			compiledBodyPart->Compile(*_bodyTokens, *currentBody, *body->last, *_body, *_body->getLast());
+			if (!multiIndex) { currentBody = currentBody->next; };
 		}
 		else
 		{
 			currentBody = currentBody->next;
 		}
 		delete compiledBodyPart;
+
+
+		//Compiler* compiledBodyPart = CompileFactory().CreateCompileStatement(*currentBody);
+
+		//if (compiledBodyPart != nullptr) {
+		//	compiledBodyPart->Compile(*_bodyTokens, *currentBody, *body->last, *_body, *_body->getLast());
+		//}
+		//else
+		//{
+		//	currentBody = currentBody->next;
+		//}
+		//delete compiledBodyPart;
 	}
 
 	if (_returnToken) {
@@ -311,12 +346,9 @@ void CompileGetFunction::ConnectParams(Token * param,LinkedList &paramlist)
 	connectToken->setText("\n");
 	templist->add(connectToken);
 	
+	
 	temp = templist->first;
-	paramlist = *new LinkedList();
-	while (temp != nullptr) {
-		paramlist.add(temp);
-		temp = temp->next;
-	}
+	paramlist = *new LinkedList(*templist);
 }
 
 CompileGetFunction::~CompileGetFunction()

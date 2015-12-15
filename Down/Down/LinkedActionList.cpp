@@ -116,6 +116,9 @@ void LinkedActionList::printList(){
 	}
 }
 
+void LinkedActionList::removeBetween(ActionNode* start, ActionNode* end) {
+}
+
 LinkedActionList::~LinkedActionList()
 {
 	//ActionNode* iter = this->first;

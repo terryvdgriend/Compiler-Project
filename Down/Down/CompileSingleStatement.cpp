@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CompileSingleStatement.h"
+#include "CompileGetArrayItem.h"
 
 #define SET_ID_TO_RT  "IdentifierToReturnValue"
 #define SET_CONST_TO_RT  "ConstantToReturnValue"
@@ -15,8 +16,13 @@ void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token
 			DirectFunctionCall* directFunctionCall = nullptr;
 			string sBuffer, saArguments[2];
 			ActionNode* beforeFunction = nullptr;
-
-			if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
+			
+			if (next != nullptr && next->getEnum() == Token::ARRAY_OPEN) {
+				CompileGetArrayItem* arrayitem = new CompileGetArrayItem();
+				arrayitem->Compile(cTokenList, begin, end, listActionNodes, actionBefore);
+				delete arrayitem;
+			}
+			else if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
 			{
 				directFunctionCall = new DirectFunctionCall(*new Token(begin));
 				saArguments[0] = begin.getText();

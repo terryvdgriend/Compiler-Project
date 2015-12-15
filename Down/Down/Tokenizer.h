@@ -19,12 +19,15 @@ private:
 	std::map<string, Token::iToken> varTokenMap;
 	Stack stack;
 	Token::iToken getToken(std::string token);
+	Token::iToken tempToken;
 	bool tokenError = false;
+	Token::iToken getNextToken(smatch & m, string & s);
 	void checkRemainingErrors();
 	//Omdat else if als eerst staat zal deze gekozen worden..  nasty work around.
         
-    // (#+ (?:else if|else|if|case|while|do|foreach|for|\w+)|and gives|multiplied by|(^>.*\n)|(smaller|larger) than|^-?\d.?\d*$|"(.*?)"|\w+|\*\*\S*?\*\*|-{1,3}|^[\(\)\[\]]$|[\S|\n])
-	regex e{ "(#+ (?:else if|else|if|case|while|do|foreach|for|\\w+)|and gives|multiplied by|(^>.*\\n)|(smaller|larger) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|\\*\\*\\S*?\\*\\*|-{1,3}|^[\\(\\)\\[\\]]$|[\\S|\\n])" };
+    // (\*{2}\S+?\*{2}|#+ (?:else if|\w+)|and gives|multiplied by|^>.*\n|(\w+) than|^-?\d*\.?\d*$|"(.*?)"|\w+|-{1,3}|[\S|\n])
+	regex e{ "(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])" };
+	void lookAheadMethod(smatch & m, string & s, Token & pToken, Token::iToken & currentToken, string & part, int rowNr, int colNr, bool arrayOpen);
 	std::string lookAhead(smatch m, std::string s);
 public:
 	Tokenizer();

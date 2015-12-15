@@ -29,6 +29,14 @@ void ErrorHandler::addError(Error e)
     errors.push_back(e);
 }
 
+void ErrorHandler::addThrownError(std::string s)
+{
+
+	Error err{ "Thrown Error: " + s ,Error::location::compiler };
+	errors.push_back(err);
+	
+}
+
 void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken result )
 {
 	Tokenizer tokert{};
@@ -40,11 +48,13 @@ void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken resul
 
 void ErrorHandler::addError(std::string s, Token * t)
 {
-	//Tokenizer tokert{};
-	//std::string tokenstr = tokert.getKeyByValueMappert(t->getEnum());
 	errors.push_back(Error{ s, ".MD", t->getLevel(), t->getPositie(), Error::error });
 }
 
+void ErrorHandler::clearErrors()
+{
+	errors.clear();
+}
 
 std::list<Error> ErrorHandler::getErrors()
 {
@@ -55,7 +65,9 @@ std::string ErrorHandler::asJson()
 {
     if (errors.size() == 0)
         return "No errors found";
-    
+
+	
+
     std::string JSON = "[";
     for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
     {

@@ -18,7 +18,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	else {
 		throwTypeError(variable1, variable2, vm);
 	}
-	
+
 }
 
 

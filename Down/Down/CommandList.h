@@ -23,3 +23,9 @@
 #include "GetFromValueCommand.h"
 
 #include "ShowFunctionCommand.h"
+#include "ErrorCommand.h"
+
+#include "AddArrayToDictionaryCommand.h"
+#include "AddLengthToArrayCommand.h"
+#include "AddItemToArrayAtCommand.h"
+#include "GetItemFromArrayCommand.h"

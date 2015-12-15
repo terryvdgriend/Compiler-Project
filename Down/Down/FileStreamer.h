@@ -10,6 +10,7 @@ public:
 	FileStreamer();
 	std::string readerFromPath(std::string path);
 	std::string readerFromResource(std::string path);
+	std::string readerFromResource(std::string path, std::string ext);
 	~FileStreamer();
 };
 

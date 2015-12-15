@@ -8,7 +8,6 @@ void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	string rValue = vm.getReturnValue();
 	Token::iToken rToken = vm.getReturnToken();
-
 	if (&rValue != nullptr)
 	{
 		vm.setReturnValue("");

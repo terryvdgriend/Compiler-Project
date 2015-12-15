@@ -4,24 +4,33 @@
 
 CompileFactory::CompileFactory()
 {
-	mappert[Token::IF] = new CompileIf();
-	mappert[Token::WHILE] = new CompileWhile();
-	mappert[Token::FOR] = new CompileFor();
-	mappert[Token::DO] = new CompileDoWhile();
-	//mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileFunction();//Bestaande functie
-	mappert[Token::FUNCTION_DECLARE_OPEN] = new CompileGetFunction();//Bestaande functie
-	mappert[Token::FUNCTION_OPEN] = new CompileUserFunction(); // aangemaakte functie
-	mappert[Token::IDENTIFIER] = new CompileEquals();
-	mappert[Token::SWITCH] = new CompileSwitch();
-	mappert[Token::NEWLINE] = nullptr;
+	mappert.emplace(Token::IF, []() -> Compiler* { return new CompileIf; });
+	mappert.emplace(Token::WHILE, []() -> Compiler* { return new CompileWhile; });
+	mappert.emplace(Token::FOR, []() -> Compiler* { return new CompileFor; });
+	mappert.emplace(Token::DO, []() -> Compiler* { return new CompileDoWhile; });
+	mappert.emplace(Token::FUNCTION_DECLARE_OPEN, []() -> Compiler* { return new CompileGetFunction; });
+	mappert.emplace(Token::FUNCTION_OPEN, []() -> Compiler* { return new CompileUserFunction; });
+	mappert.emplace(Token::IDENTIFIER, []() -> Compiler* { return new CompileEquals; });
+	mappert.emplace(Token::ARRAY_OPEN, []() -> Compiler* { return new CompileArray; });
+	mappert.emplace(Token::SWITCH, []() -> Compiler* { return new CompileSwitch; });
+	mappert.emplace(Token::NEWLINE, []() -> Compiler* { return nullptr; });
 }
 
 Compiler * CompileFactory::CreateCompileStatement(Token& tknzr)
 {
-	std::map<Token::iToken, Compiler*>::iterator it = mappert.find(tknzr.getEnum());
+	auto it = mappert.find(tknzr.getEnum());
 	if (it != mappert.end()){
-		if (it->second != nullptr){
-			return it->second->Create(); // Create is een copy maken
+		if (it->second != nullptr) {
+			if (tknzr.getSub() == Token::TYPE_NUMBER_ARRAY || tknzr.getSub() == Token::TYPE_TEXT_ARRAY || tknzr.getSub() == Token::TYPE_FACT_ARRAY)
+			{
+				if (tknzr.previous->getEnum() == Token::NEWLINE && tknzr.next->getEnum() == Token::ARRAY_OPEN) { 
+					return new CompileAddArrayItem;
+				}
+			}
+			else {
+				return it->second();
+			}
+
 		}
 		return nullptr;
 	}

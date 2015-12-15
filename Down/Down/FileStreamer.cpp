@@ -6,9 +6,15 @@ FileStreamer::FileStreamer()
 {
 }
 
+//Extension type .txt / Als je iets anders wilt kies dan de overload
 std::string FileStreamer::readerFromResource(std::string filename)
 {
-	ifstream input_file{ "./" + filename + ".txt"};
+	return readerFromResource(filename, "txt");
+}
+
+std::string FileStreamer::readerFromResource(std::string filename, std::string ext)
+{
+	ifstream input_file{ "./" + filename + "." + ext };
 
 	string line;
 	string alllines;

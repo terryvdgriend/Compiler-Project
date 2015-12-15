@@ -20,6 +20,8 @@ public:
 		DIVIDE,
 		LESS_THAN,
 		LARGER_THAN,
+		LESS_LIKE_THAN,
+		LARGER_LIKE_THAN,
 		IDENTIFIER, // VARB **i**
 		NUMBER, // 1-2-3-4
 		TEXT, // "txt" 
@@ -27,6 +29,9 @@ public:
 		TYPE_NUMBER,
 		TYPE_TEXT,
 		TYPE_FACT,
+		TYPE_NUMBER_ARRAY,
+		TYPE_TEXT_ARRAY,
+		TYPE_FACT_ARRAY,
 		CONDITION_OPEN,  // ( -> simuleren?
 		CONDITION_CLOSE, // ) -> simuleren?
 		FUNCTION_OPEN,  // ( -> simuleren?
@@ -42,7 +47,6 @@ public:
 		EQUALS_TO, // LIKE
 		AND_PARA, // , (comma)
 		CLASS,
-		BOOL,
 		MODULO,
 		PRIVATE,
 		FOR,
@@ -70,6 +74,7 @@ public:
 		SWITCH_CASE,
 		SWITCH_DEFAULT,
 		SWITCH,
+		LENGTH,
 		ANY // ALS LAATSTE ! (?)
 	};
 
