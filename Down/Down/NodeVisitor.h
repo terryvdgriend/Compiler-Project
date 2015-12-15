@@ -5,7 +5,7 @@
 class NodeVisitor
 {
 	public:
-		NodeVisitor(shared_ptr<VirtualMachine>& virtualMachine);
+		NodeVisitor(VirtualMachine& virtualMachine);
 
 		void visit(ConditionalJumpNode& node);
 		void visit(DirectFunctionCall& node);
@@ -17,6 +17,6 @@ class NodeVisitor
 		shared_ptr<ActionNode> getNextNode();
 
 	private:
-		shared_ptr<VirtualMachine> vm;
+		VirtualMachine* vm;
 		shared_ptr<ActionNode> nextNode;
 };

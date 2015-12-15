@@ -101,9 +101,8 @@ shared_ptr<LinkedActionList> ProgramHandler::runCompiler(const shared_ptr<Linked
 
 void ProgramHandler::runVirtualMachine(const shared_ptr<LinkedActionList>& compiledList)
 {
-	shared_ptr<VirtualMachine> virtualMachine = make_shared<VirtualMachine>();
-	virtualMachine->init(virtualMachine);
-	virtualMachine->execute(compiledList);
+	VirtualMachine virtualMachine;
+	virtualMachine.execute(compiledList);
 }
 
 void ProgramHandler::printElapsedTime()

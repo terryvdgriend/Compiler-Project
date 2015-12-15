@@ -3,9 +3,9 @@
 #include "MandatoryNodeVisitorIncludes.h"
 #include "Variable.h"
 
-NodeVisitor::NodeVisitor(shared_ptr<VirtualMachine>& virtualMachine)
+NodeVisitor::NodeVisitor(VirtualMachine& virtualMachine)
 {
-	vm = virtualMachine;
+	vm = &virtualMachine;
 }
 
 void NodeVisitor::visit(ConditionalJumpNode& node)

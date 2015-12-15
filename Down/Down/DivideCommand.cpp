@@ -6,18 +6,18 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
-	Variable variable1 = *vm.getVariable(parameters.at(1));
-	Variable variable2 = *vm.getVariable(parameters.at(2));
+	shared_ptr<Variable> variable1 = vm.getVariable(parameters.at(1));
+	shared_ptr<Variable> variable2 = vm.getVariable(parameters.at(2));
 
-	if (isUndefined(variable1, variable2, vm))
+	if (isUndefined(*variable1, *variable2, vm))
 	{
 		return;
 	}
 
-	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number)
+	if (variable1->getType() == VariableType::number && variable2->getType() == VariableType::number)
 	{
-		int number1 = atoi(variable1.getValue().c_str());
-		int number2 = atoi(variable2.getValue().c_str());
+		int number1 = atoi(variable1->getValue().c_str());
+		int number2 = atoi(variable2->getValue().c_str());
 
 		if (number2 != 0) 
 		{
@@ -34,7 +34,7 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	else 
 	{
 		// Exception division requires 2 numbers
-		throwTypeError(variable1, variable2, vm);
+		throwTypeError(*variable1, *variable2, vm);
 
 		return;
 	}

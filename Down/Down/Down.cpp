@@ -4,6 +4,7 @@
 int main(int argCounter, char* argValues[])
 {
 	ProgramHandler programHandler;
-
-	return programHandler.runProgram(argCounter, argValues);
+	int result = programHandler.runProgram(argCounter, argValues);
+	//_CrtDumpMemoryLeaks();
+	return result;
 }

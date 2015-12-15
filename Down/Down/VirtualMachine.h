@@ -7,8 +7,6 @@ class VirtualMachine
 {
 	public:
 		VirtualMachine();
-		
-		void init(shared_ptr<VirtualMachine>& vm);
 		void execute(const shared_ptr<LinkedActionList>& actionList);
 		void triggerRunFailure();
 		
@@ -45,7 +43,6 @@ class VirtualMachine
 		IToken returnToken;
 
 		unique_ptr<CommandDictionary> commandDictionary;
-		shared_ptr<NodeVisitor> nodeVisitor;
 
 		map<string, shared_ptr<Variable>> variableDictionary;
 		map<string, string> functionParameters;

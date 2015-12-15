@@ -6,7 +6,7 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, AbstractFunctionCa
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
-	for (string & item : vm.getFunctionParametersByKey(parameters[1])) 
+	for (string& item : vm.getFunctionParametersByKey(parameters[1])) 
 	{
 		vector<shared_ptr<Variable>> tempArray = vm.getVariableArray(item);
 

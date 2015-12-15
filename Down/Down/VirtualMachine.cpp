@@ -10,15 +10,11 @@ VirtualMachine::VirtualMachine()
 	errorsDetected = false;
 }
 
-void VirtualMachine::init(shared_ptr<VirtualMachine>& vm)
-{
-	nodeVisitor = make_shared<NodeVisitor>(vm);
-}
-
 void VirtualMachine::execute(const shared_ptr<LinkedActionList>& actionList)
 {
 	map<string, shared_ptr<BaseCommand>> map = commandDictionary->getMap();
 	shared_ptr<ActionNode> currentNode = actionList->getFirst();
+	shared_ptr<NodeVisitor> nodeVisitor = make_shared<NodeVisitor>(*this);
     while (currentNode != nullptr && !errorsDetected)
 	{
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode.get());
