@@ -9,6 +9,8 @@ class GetItemFromArrayCommand;
 class ShowFunctionCommand;
 class ShowUpFunctionCommand;
 class RandomFunctionCommand;
+class GetAllFilesInDirectoryCommand;
+class CountCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

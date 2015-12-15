@@ -1,4 +1,1 @@
-#### for ( _number_ **i** is 0 , **i** smaller than  [count [getAllFilesInDirectory "D:\\_Data\Github\newApps\newApps\newApps"]] , **i** is **i** plus 1 )
---
-    [printdown [getAllFilesInDirectory "D:\\_Data\Github\newApps\newApps\newApps"] { **i** } ]
-__
+[count [getAllFilesInDirectory "D:\\_Data\Github\newApps\newApps\newApps" ] ]

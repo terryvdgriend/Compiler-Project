@@ -12,6 +12,8 @@
 #include "ShowFunctionCommand.h"
 #include "ShowUpFunctionCommand.h"
 #include "RandomFunctionCommand.h"
+#include "GetAllFilesInDirectoryCommand.h"
+#include "CountCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"

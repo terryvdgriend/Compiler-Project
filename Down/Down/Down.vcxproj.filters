@@ -470,9 +470,6 @@
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractFunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
@@ -728,14 +725,17 @@
     <ClInclude Include="TestCode.h">
       <Filter>Header Files\Utilities\Test</Filter>
     </ClInclude>
-    <ClInclude Include="CountCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GetAllFilesInDirectoryCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="dirent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CountCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="GetAllFilesInDirectoryCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -754,9 +754,7 @@
     <Text Include="while.md">
       <Filter>Resource Files\TestScripts</Filter>
     </Text>
-    <Text Include="test_ifelse.md">
-      <Filter>Resource Files\FunSpul</Filter>
-    </Text>
+    <Text Include="test_ifelse.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
