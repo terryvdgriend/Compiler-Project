@@ -1,25 +1,22 @@
 #pragma once
-#include "CompileOperator.h"
-#include "DoNothingNode.h"
-#include "TokenExpectation.h"
-#include "FunctionHandler.h"
+#include "Compiler.h"
 
-class CompileUserFunction :
-	public Compiler
+class CompileUserFunction : public Compiler
 {
-private:
-	string _params;
-	LinkedList* _body;
-	std::vector<Token*>_paramTokens;
-	Token* _returnToken;
-	std::string functionName;
-public:
-	CompileUserFunction();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void CompileParams(LinkedList & cTokenList, Token & begin, Token & end);
-	void CompileBody(LinkedList & cTokenList, Token & begin, Token & end, int Level);
-	void ConnectList();
-	Compiler * Create() { return new CompileUserFunction(); };
-	~CompileUserFunction();
-};
+	public:
+		CompileUserFunction();
 
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
+
+	private:
+		string _params;
+		string functionName;
+		shared_ptr<LinkedTokenList> _body;
+		vector<shared_ptr<Token>> _paramTokens;
+		shared_ptr<Token> _returnToken;
+
+		void compileParams(shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void compileBody(shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void connectList();
+};

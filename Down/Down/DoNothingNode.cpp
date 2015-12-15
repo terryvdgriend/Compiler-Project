@@ -1,17 +1,13 @@
 #include "stdafx.h"
 #include "DoNothingNode.h"
+#include "MandatoryNodeIncludes.h"
 
 void DoNothingNode::show()
 {
-	cout << "Do nothing. \n";
+	cout << "Do Nothing." << endl;
 }
 
-void DoNothingNode::action()
+void DoNothingNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
-}
-
-void DoNothingNode::accept(NodeVisitor& visitor)
-{
-	visitor.visit(*this);
+	visitor->visit(*this);
 }

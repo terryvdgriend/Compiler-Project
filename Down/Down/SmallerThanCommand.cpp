@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SmallerThanCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void SmallerThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -10,11 +10,15 @@ void SmallerThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
-	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER) {
+	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number) 
+	{
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());
+
 		if (number1 < number2)
 		{
 			vm.setReturnValue("true");
@@ -24,13 +28,16 @@ void SmallerThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 			vm.setReturnValue("false");
 		}
 	}
-	else {
+	else
+	{
 		// Exception "cannot compare different types than numbers"
 		throwTypeError(variable1, variable2, vm);
+
 		return;
 	}
 }
 
-std::pair<string, string> SmallerThanCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> SmallerThanCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

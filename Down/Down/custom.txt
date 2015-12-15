@@ -1,14 +1,1 @@
-		
-		#### if (1 like 2)	
-		--	
-			[ ThrowError "1 can never be 2.." ]
-		__	
-		#### else if (2 like 1)	
-		--
-			[ ThrowError "2 can never be 1.." ]
-		__	
-		#### else
-		--
-			> Hier komt ie uit
-		__
-			
+[ printdown "mkay" ]

@@ -3,16 +3,20 @@
 
 class CompileElseIf : public Compiler
 {
-public:
-	CompileElseIf();
-	~CompileElseIf();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore, std::map<LinkedActionList*, LinkedActionList*>& _conditionBodyMap);
-	Compiler * Create() { return new CompileElseIf(); };
-private:
-	LinkedActionList* _compiledStatement;
-	LinkedActionList* _condition;
-	LinkedActionList* _body;
-	ActionNode* bodyNode;
-	void ConnectLists();
+	public:
+		CompileElseIf();
+
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore, 
+					 map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& _conditionBodyMap);
+
+	private:
+		shared_ptr<LinkedActionList> _compiledStatement;
+		shared_ptr<LinkedActionList> _condition;
+		shared_ptr<LinkedActionList> _body;
+		shared_ptr<ActionNode> bodyNode;
+
+		void connectLists();
 };

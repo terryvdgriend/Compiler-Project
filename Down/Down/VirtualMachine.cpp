@@ -1,43 +1,57 @@
 #include "stdafx.h"
 #include "VirtualMachine.h"
-#include "CommandDictionary.h"
 #include "AbstractFunctionCall.h"
+#include "NodeVisitor.h"
+#include "Variable.h"
 
 VirtualMachine::VirtualMachine()
 {
-	commandDictionary = CommandDictionary().getMap();
-	runsVeryNaz = true;
+	commandDictionary = make_unique<CommandDictionary>();
+	errorsDetected = false;
 }
 
-void VirtualMachine::execute(LinkedActionList& actionList)
+void VirtualMachine::execute(const shared_ptr<LinkedActionList>& actionList)
 {
-	ActionNode* currentNode = actionList.getFirst();
-	shared_ptr<NodeVisitor> visitor = make_shared<NodeVisitor>(*this);
-
-	while (currentNode != nullptr && runsVeryNaz)
+	map<string, shared_ptr<BaseCommand>> map = commandDictionary->getMap();
+	shared_ptr<ActionNode> currentNode = actionList->getFirst();
+	shared_ptr<NodeVisitor> nodeVisitor = make_shared<NodeVisitor>(*this);
+    while (currentNode != nullptr && !errorsDetected)
 	{
-		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode);
+		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode.get());
 
-		if (actionNode)
+		if (actionNode != nullptr)
 		{
 			string name = actionNode->getContentArrayNonConstant()[0];
-			commandDictionary[name]->execute(*this, *actionNode);
-			
+			map[name]->execute(*this, *actionNode);	
 		}
-		//(*currentNode).accept(*visitor);
-		//currentNode = (*visitor).nextNode;
-
-		currentNode->accept(*visitor);
-		currentNode = visitor->nextNode;
+		currentNode->accept(nodeVisitor);
+		currentNode = nodeVisitor->getNextNode();
 	}
 }
 
-void VirtualMachine::addIdentifer(string name)
+void VirtualMachine::triggerRunFailure()
 {
-	if (!isAnIdentifier(name))
-	{
-		identifierList.push_back(name);
-	}
+	errorsDetected = true;
+}
+
+string VirtualMachine::getReturnValue()
+{
+	return returnValue;
+}
+
+void VirtualMachine::setReturnValue(string value)
+{
+	returnValue = value;
+}
+
+IToken VirtualMachine::getReturnToken()
+{
+	return returnToken;
+}
+
+void VirtualMachine::setReturnToken(IToken value)
+{
+	returnToken = value;
 }
 
 shared_ptr<Variable> VirtualMachine::getVariable(string key)
@@ -52,7 +66,7 @@ shared_ptr<Variable> VirtualMachine::getVariable(string key)
 	return nullptr;
 }
 
-void VirtualMachine::setVariable(string key, string value,Token::iToken token)
+void VirtualMachine::setVariable(string key, string value, IToken token)
 {
 	map<string, shared_ptr<Variable>>::iterator it = variableDictionary.find(key);
 
@@ -63,7 +77,7 @@ void VirtualMachine::setVariable(string key, string value,Token::iToken token)
 	}
 	else
 	{
-		auto pair = make_pair(key, make_shared<Variable>(value));
+		pair<string, shared_ptr<Variable>> pair = make_pair(key, make_shared<Variable>(value));
 		pair.second.get()->setTokenType(token);
 		variableDictionary.insert(pair);
 	}
@@ -111,6 +125,7 @@ string VirtualMachine::getFunctionParameterValueByKey(string key)
 		if (it->second == functionParameters[key])
 		{
 			parameter = it->second;
+
 			break;
 		}
 	}
@@ -118,39 +133,67 @@ string VirtualMachine::getFunctionParameterValueByKey(string key)
 	return parameter;
 }
 
+void VirtualMachine::setFunctionParameter(string name, string value)
+{
+	functionParameters[name] = value;
+}
+
+void VirtualMachine::addIdentifer(string name)
+{
+	if (!isAnIdentifier(name))
+	{
+		identifierList.push_back(name);
+	}
+}
+
 vector<shared_ptr<Variable>> VirtualMachine::addArrayToDictionary(string key, int length)
 {
 	map<string, string>::iterator iter;
+
 	for (iter = functionParameters.begin(); iter != functionParameters.end(); ++iter)
 	{
 		if (iter->first == key)
 		{
 			vector<shared_ptr<Variable>> temp(length);
 			variableArrayDictionary.emplace(iter->first, temp);
+
 			return temp;
 		}
 	}
+
+	return vector<shared_ptr<Variable>>();
 }
 
 vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
 {
-	auto it = functionParameters.find(key);
-	if (it != functionParameters.end()) {
+	map<string, string>::iterator it = functionParameters.find(key);
+
+	if (it != functionParameters.end()) 
+	{
 		vector<shared_ptr<Variable>> varArray;
-		for (auto p : functionParameters) {
-			if (p.second == it->second) {
-				auto it = variableArrayDictionary.find(p.first);
-				if (hasValueInVariableArrayDictionary(it)) {
+
+		for (pair<string, string> p : functionParameters)
+		{
+			if (p.second == it->second) 
+			{
+				map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(p.first);
+
+				if (hasValueInVariableArrayDictionary(it)) 
+				{
 					varArray = it->second;
+
 					break;
 				}
-				
 			}
 		}
+
 		return varArray;
 	}
-	else {
-		ErrorHandler::getInstance()->addError(Error{ "you want to get an array which doesn't exist", ".md", -1, -1, Error::error });
+	else 
+	{
+		ErrorHandler::getInstance()->addError(make_shared<Error>("you want to get an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR));
+
+		return vector<shared_ptr<Variable>>();
 	}
 }
 
@@ -160,20 +203,17 @@ void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> val
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
-		for (int i = 0; i < it->second.size(); i++)
+		for (int i = 0; (size_t)i < it->second.size(); i++)
 		{
 			shared_ptr<Variable> curr = it->second.at(i);
 			if (curr->getValue() == "" && curr->getType() < 0)
 			{
 				it->second[i] = value;
+
 				break;
 			}
 		}
 	}
-	//else
-	//{
-	//	ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
-	//}
 }
 
 void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value)
@@ -182,19 +222,16 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, share
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
-		for (int i = 0; i < it->second.size(); i++)
+		for (int i = 0; (size_t)i < it->second.size(); i++)
 		{
 			if (i == atoi(key.c_str()))
 			{
 				it->second[i] = value;
+
 				break;
 			}
 		}
 	}
-	//else
-	//{
-	//	ErrorHandler::getInstance()->addError(Error{ "you want to add an item to an array which doesn't exist", ".md", -1, -1, Error::error });
-	//}
 }
 
 shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int index)
@@ -207,93 +244,92 @@ shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int in
 	}
 	else
 	{
-		ErrorHandler::getInstance()->addError(Error{ "you want to get an item from an array which doesn't exist", ".md",-1, -1, Error::error });
+		ErrorHandler::getInstance()->addError(make_shared<Error>("you want to get an item from an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR));
+
+		return nullptr;
 	}
 }
 
-void VirtualMachine::addArrayTypeToArrayTypes(string arrayName, Token::iToken tokenType)
+void VirtualMachine::addArrayTypeToArrayTypes(string arrayName, IToken tokenType)
 {
 	VariableType type;
+
 	switch (tokenType)
 	{
-		case Token::iToken::TYPE_TEXT_ARRAY:
-			type = VariableType::TEXT;
+		case IToken::TYPE_TEXT_ARRAY:
+		{
+			type = VariableType::text;
 			arrayType = "text";
+
 			break;
-		case Token::iToken::TYPE_NUMBER_ARRAY:
-			type = VariableType::NUMBER;
+		}
+		case IToken::TYPE_NUMBER_ARRAY:
+		{
+			type = VariableType::number;
 			arrayType = "number";
+
 			break;
-		case Token::iToken::TYPE_FACT_ARRAY:
-			type = VariableType::FACT;
+		}
+		case IToken::TYPE_FACT_ARRAY:
+		{
+			type = VariableType::fact;
 			arrayType = "fact";
+
 			break;
+		}
 		default:
+		{
 			break;
+		}
 	}
+
 	if (arrayTypes.find(arrayName) == arrayTypes.end())
 	{
 		arrayTypes.emplace(arrayName, type);
 	}
 }
 
-pair<string, string> VirtualMachine::getVariableTypeSameAsArrayType(string arrayName, Token::iToken tokenType)
+pair<string, string> VirtualMachine::getVariableTypeSameAsArrayType(string arrayName, IToken tokenType)
 {
-	VariableType type = VariableType::NULLTYPE;
+	VariableType type = VariableType::nulltype;
 	string tempArrayType = "";
+
 	switch (tokenType)
 	{
-		case Token::iToken::TYPE_TEXT:
-			type = VariableType::TEXT;
+		case IToken::TYPE_TEXT:
+		{
+			type = VariableType::text;
 			tempArrayType = "text";
+			
 			break;
-		case Token::iToken::TYPE_NUMBER:
-			type = VariableType::NUMBER;
+		}
+		case IToken::TYPE_NUMBER:
+		{
+			type = VariableType::number;
 			tempArrayType = "number";
+		
 			break;
-		case Token::iToken::TYPE_FACT:
-			type = VariableType::FACT;
+		}
+		case IToken::TYPE_FACT:
+		{
+			type = VariableType::fact;
 			tempArrayType = "fact";
+		
 			break;
+		}
 		default:
+		{
 			break;
+		}
 	}
 	map<string, VariableType>::iterator iter = arrayTypes.find(arrayName);
+
 	if (iter != arrayTypes.end())
 	{
 		return pair<string, string>(arrayType, tempArrayType);
 	}
+
 	return pair<string, string>();
-}
-
-void VirtualMachine::setFunctionParameter(string name, string value)
-{
-	functionParameters[name] = value;
-}
-
-string VirtualMachine::getReturnValue()
-{
-	return returnValue;
-}
-
-void VirtualMachine::setReturnValue(string value)
-{
-	returnValue = value;
-}
-
-Token::iToken VirtualMachine::getReturnToken()
-{
-	return returnToken;
-}
-
-void VirtualMachine::setReturnToken(Token::iToken value)
-{
-	returnToken = value;
-}
-
-void VirtualMachine::triggerRunFailure()
-{
-	runsVeryNaz = false;
 }
 
 bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it)

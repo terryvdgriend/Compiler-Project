@@ -1,20 +1,22 @@
 #pragma once
 #include "ActionNode.h"
 #include "LinkedActionList.h"
-#include "NodeVisitor.h"
-class SwitchNode :
-	public ActionNode
+
+class SwitchNode : public ActionNode
 {
-public:
-	SwitchNode();
-	~SwitchNode();
+	public:
+		SwitchNode();
 
-	void show();
-	void accept(NodeVisitor& visitor);
-	void action();
-public:
-	LinkedActionList* defaultNodeList;
-	LinkedActionList* switchCondition;
-	std::map<LinkedActionList*, LinkedActionList*> jumpMap;
+		void show();
+		void accept(shared_ptr<NodeVisitor>& visitor);
+
+		shared_ptr<LinkedActionList> getDefaultNodeList();
+		shared_ptr<LinkedActionList> getSwitchConditionList();
+		void setSwitchConditionList(shared_ptr<LinkedActionList> value);
+		map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& getJumpMap();
+
+	private:
+		shared_ptr<LinkedActionList> defaultNodeList;
+		shared_ptr<LinkedActionList> switchConditionList;
+		map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>> jumpMap;
 };
-

@@ -1,128 +1,161 @@
 #include "stdafx.h"
 #include "CompileUserFunction.h"
-#include "CompileFactory.h"
 #include "CompileCondition.h"
+#include "CompileFactory.h"
+#include "Function.h"
+#include "FunctionHandler.h"
+#include "TokenExpectation.h"
 
 CompileUserFunction::CompileUserFunction() 
 {
-	_body = new LinkedList();
-	_returnToken = nullptr;
+	_body			= make_shared<LinkedTokenList>();
+	_returnToken	= nullptr;
 }
 
-void CompileUserFunction::ConnectList() {
-	Function func = Function(functionName,_params,_body,_paramTokens,_returnToken,true);
-	FunctionHandler::getInstance()->addFunction(func);
-}
-
-void CompileUserFunction::Compile(LinkedList & cTokenList, Token & begin, Token & end, LinkedActionList & listActionNodes, ActionNode & actionBefore)
+void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+								  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	Token* current = &begin;
-	int Level = begin.getLevel();
+	shared_ptr<Token> current = begin;
+	int level = begin->getLevel();
+	shared_ptr<Token> bodyEnd = nullptr;
 
-	Token* bodyEnd = nullptr;
-	//
-	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_back(TokenExpectation(Level, Token::FUNCTION_OPEN));
-	expected.push_back(TokenExpectation(Level, Token::FUNCTION_DECLARE));
-	expected.push_back(TokenExpectation(Level + 1, Token::ANY));
-	expected.push_back(TokenExpectation(Level, Token::FUNCTION_CLOSE));
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_OPEN));
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_DECLARE));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::FUNCTION_CLOSE));
+
 	for (TokenExpectation expectation : expected)
 	{
-		while (current->getEnum() == Token::NEWLINE) {
-			current = current->next;
+		while (current->getType() == IToken::NEWLINE)
+		{
+			current = current->getNext();
 		}
-		if (expectation.getLevel() == Level) {
-			if (current->getEnum() == Token::FUNCTION_OPEN) {
+
+		if (expectation.getLevel() == level)
+		{
+			if (current->getType() == IToken::FUNCTION_OPEN)
+			{
 				bodyEnd = current->getPartner();
 			}
-			else if (current->getEnum() == Token::FUNCTION_DECLARE) {
+			else if (current->getType() == IToken::FUNCTION_DECLARE)
+			{
 				functionName = current->getText();
 			}
-			if (current->getEnum() != expectation.getTokenType()) {
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
+
+			if (current->getType() != expectation.getTokenType()) 
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
+													  expectation.getTokenType(), current->getType());
 				begin = end;
+
 				break;
 			}
 			else
-				current = current->next;
+			{
+				current = current->getNext();
+			}
 		}
-		else {
-			//check if enum is comingparam else body;
-			if (current->getEnum() == Token::START_PARAMETERS) {
-				CompileParams(cTokenList,* current, end);
-				CompileBody(cTokenList, *current, *bodyEnd,Level);
+		else 
+		{
+			// Check if the coming param is an enum, else body;
+			if (current->getType() == IToken::START_PARAMETERS)
+			{
+				compileParams(current, end);
+				compileBody(current, bodyEnd);
 			}
 			else
 			{
-				CompileBody(cTokenList, *current, *bodyEnd,Level);
+				compileBody(current, bodyEnd);
 			}
 		}
 	}
-	ConnectList();
-	begin = *current;
+	connectList();
+	begin = current;
 }
-void CompileUserFunction::CompileParams(LinkedList & cTokenList, Token & begin, Token & end)
+
+void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
-	Token* current = &begin;
+	shared_ptr<Token> current = begin;
 	
-	while (current->getEnum() != Token::NEWLINE)
+	while (current->getType() != IToken::NEWLINE)
 	{
-		if (current->getText() == functionName) {
-			ErrorHandler::getInstance()->addError(Error{ functionName + " Cannot call itself", ".md", current->getLineNumber(),current->getPositie(), Error::error });
-			current = &end;
+		if (current->getText() == functionName) 
+		{
+			ErrorHandler::getInstance()->addError(make_shared<Error>(functionName + " Cannot call itself", ".md", current->getLineNumber(), 
+												  current->getPosition(), ErrorType::ERROR));
+			current = end;
+
 			break;
 		}
-		if (current->getEnum() == Token::IDENTIFIER)
+
+		if (current->getType() == IToken::IDENTIFIER)
 		{
-			if (current->previous != nullptr && current->previous->getEnum() == Token::RETURNVALUE) {
-				_returnToken = new Token(*current);
+			if (current->getPrevious() != nullptr && current->getPrevious()->getType() == IToken::RETURNVALUE)
+			{
+				_returnToken = make_shared<Token>(current);
 			}
-			else {
-				switch (current->getSub()) {
-					case Token::TYPE_NUMBER: {
+			else 
+			{
+				switch (current->getSubType()) 
+				{
+					case IToken::TYPE_NUMBER:
+					{
 						_params += 'i';
+
 						break;
 					}
-					case Token::TYPE_FACT: {
+					case IToken::TYPE_FACT:
+					{
 						_params += 'b';
+
 						break;
 					}
-					case Token::TYPE_TEXT: {
+					case IToken::TYPE_TEXT:
+					{
 						_params += 's';
+
 						break;
 					}
-					default: {
+					default: 
+					{
 						_params += 'a';
+
 						break;
 					}
 				}
-				_paramTokens.push_back(new Token(*current));
+				_paramTokens.push_back(make_shared<Token>(current));
 			}
-			
 		}
-			
-		current = current->next;
+		current = current->getNext();
 	}
-
-	begin = *current;
+	begin = current;
 }
 
-void CompileUserFunction::CompileBody(LinkedList & cTokenList, Token & begin, Token & end,int Level)
+void CompileUserFunction::compileBody(shared_ptr<Token>& begin, shared_ptr<Token>& end)
 {
-	Token* current = &(begin);
+	shared_ptr<Token> current = begin;
 
-	do {
-		if (current->getText() == functionName) {
-			ErrorHandler::getInstance()->addError(Error{ functionName + " Cannot call itself", ".md", current->getLineNumber(),current->getPositie(), Error::error });
-			current = &end;
+	do 
+	{
+		if (current->getText() == functionName) 
+		{
+			ErrorHandler::getInstance()->addError(make_shared<Error>(functionName + " Cannot call itself", ".md", current->getLineNumber(), 
+												  current->getPosition(), ErrorType::ERROR));
+			current = end;
+
 			break;
 		}
-		_body->add(new Token(*current));
-		current = current->next;
-	} while (current->getEnum() != end.getEnum());
-	begin = *current;
+		_body->add(make_shared<Token>(current));
+		current = current->getNext();
+	} 
+	while (current->getType() != end->getType());
+
+	begin = current;
 }
 
-CompileUserFunction::~CompileUserFunction()
+void CompileUserFunction::connectList()
 {
+	shared_ptr<Function> funcion = make_shared<Function>(functionName, _params, _body, _paramTokens, _returnToken, true);
+	FunctionHandler::getInstance()->addFunction(funcion);
 }

@@ -1,16 +1,9 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
 
 class FileStreamer
 {
-public:
-	FileStreamer();
-	std::string readerFromPath(std::string path);
-	std::string readerFromResource(std::string path);
-	std::string readerFromResource(std::string path, std::string ext);
-	~FileStreamer();
+	public:
+		string readerFromPath(string path);
+		string readerFromResource(string path);
+		string readerFromResource(string path, string ext);
 };
-

@@ -1,20 +1,16 @@
 #pragma once
 #include "Compiler.h"
-#include "CompileNextLevel.h"
 
 class CompileArray : public Compiler
 {
-public:
-	CompileArray();
-	~CompileArray();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void CreateNewLineToken(LinkedList & param, std::vector<LinkedList*>& list);
-	Compiler * Create() { return new CompileArray(); };
+	public:
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 
-private:
-	string currArrayTempVar;
-	string prevArrayTempVar;
+	private:
+		string currentArrayTempVar;
+		string previousArrayTempVar;
+		int filledLength;
 
-	int filledLength;
+		void createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list);
 };
-

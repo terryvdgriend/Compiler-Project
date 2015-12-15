@@ -85,8 +85,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
     <Text Include="Switch.md" />
+    <Text Include="while.md" />
+    <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -96,8 +99,8 @@
     <ClInclude Include="AddLengthToArrayCommand.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
-    <ClInclude Include="CommandList.h" />
     <ClInclude Include="CommandVisitor.h" />
+    <ClInclude Include="CommandVisitorList.h" />
     <ClInclude Include="CompileAddArrayItem.h" />
     <ClInclude Include="CompileArray.h" />
     <ClInclude Include="CompileComparison.h" />
@@ -125,6 +128,9 @@
     <ClInclude Include="ConditionalJumpNode.h" />
     <ClInclude Include="ConstantToReturnValueCommand.h" />
     <ClInclude Include="ErrorCommand.h" />
+    <ClInclude Include="ErrorLocation.h" />
+    <ClInclude Include="ErrorType.h" />
+    <ClInclude Include="Function.h" />
     <ClInclude Include="FunctionHandler.h" />
     <ClInclude Include="DirectFunctionCall.h" />
     <ClInclude Include="DivideCommand.h" />
@@ -140,10 +146,16 @@
     <ClInclude Include="GetItemFromArrayCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
+    <ClInclude Include="IDEGateway.h" />
     <ClInclude Include="IdentifierToReturnValueCommand.h" />
+    <ClInclude Include="IToken.h" />
     <ClInclude Include="JumpGoToNode.h" />
     <ClInclude Include="LinkedActionList.h" />
-    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="LinkedTokenList.h" />
+    <ClInclude Include="MandatoryCommandIncludes.h" />
+    <ClInclude Include="MandatoryCommandVisitorIncludes.h" />
+    <ClInclude Include="MandatoryNodeIncludes.h" />
+    <ClInclude Include="NodeVisitorList.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
     <ClInclude Include="ModuloCommand.h" />
@@ -151,25 +163,29 @@
     <ClInclude Include="NotEqualsToCommand.h" />
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
+    <ClInclude Include="ProgramHandler.h" />
+    <ClInclude Include="RandomFunctionCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
+    <ClInclude Include="ShowUpFunctionCommand.h" />
     <ClInclude Include="SmallerEqualsToCommand.h" />
     <ClInclude Include="SmallerThanCommand.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SwitchNode.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TestIt.h" />
-    <ClInclude Include="TestText.h" />
+    <ClInclude Include="TestDown.h" />
+    <ClInclude Include="TestCode.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenExpectation.h" />
     <ClInclude Include="Tokenizer.h" />
-    <ClInclude Include="Tokenmap.h" />
-    <ClInclude Include="Tokenregex.h" />
+    <ClInclude Include="TokenMap.h" />
+    <ClInclude Include="TokenRegex.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableType.h" />
     <ClInclude Include="VirtualMachine.h" />
+    <ClInclude Include="MandatoryNodeVisitorIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractFunctionCall.cpp" />
@@ -206,6 +222,7 @@
     <ClCompile Include="ConditionalJumpNode.cpp" />
     <ClCompile Include="ConstantToReturnValueCommand.cpp" />
     <ClCompile Include="ErrorCommand.cpp" />
+    <ClCompile Include="Function.cpp" />
     <ClCompile Include="FunctionHandler.cpp" />
     <ClCompile Include="DirectFunctionCall.cpp" />
     <ClCompile Include="DivideCommand.cpp" />
@@ -224,10 +241,11 @@
     <ClCompile Include="GetItemFromArrayCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
+    <ClCompile Include="IDEGateway.cpp" />
     <ClCompile Include="IdentifierToReturnValueCommand.cpp" />
     <ClCompile Include="JumpGoToNode.cpp" />
     <ClCompile Include="LinkedActionList.cpp" />
-    <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="LinkedTokenList.cpp" />
     <ClCompile Include="MinusCommand.cpp" />
     <ClCompile Include="MinusMinusCommand.cpp" />
     <ClCompile Include="ModuloCommand.cpp" />
@@ -235,7 +253,10 @@
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
+    <ClCompile Include="ProgramHandler.cpp" />
+    <ClCompile Include="RandomFunctionCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
+    <ClCompile Include="ShowUpFunctionCommand.cpp" />
     <ClCompile Include="SmallerEqualsToCommand.cpp" />
     <ClCompile Include="SmallerThanCommand.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -243,19 +264,20 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SwitchNode.cpp" />
-    <ClCompile Include="TestIt.cpp" />
+    <ClCompile Include="TestCode.cpp" />
+    <ClCompile Include="TestDown.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TimesCommand.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TokenExpectation.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="TokenMap.cpp" />
+    <ClCompile Include="TokenRegex.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="2000lines.md" />
-    <None Include="alles.md" />
-    <None Include="custom.md" />
-    <None Include="functionTest.md" />
+    <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
     <None Include="SuperTest.md" />
     <Text Include="test_ifelse.md">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

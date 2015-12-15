@@ -1,16 +1,15 @@
-#pragma once
 #include "stdafx.h"
 #include "ConstantToReturnValueCommand.h"
-#include "CommandVisitor.h"
-
+#include "MandatoryCommandIncludes.h"
 
 void ConstantToReturnValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	vm.setReturnValue(parameters.at(1));
-	vm.setReturnToken(node.getToken()->getSub());
+	vm.setReturnToken(node.getToken()->getSubType());
 }
 
-std::pair<string, string> ConstantToReturnValueCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> ConstantToReturnValueCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

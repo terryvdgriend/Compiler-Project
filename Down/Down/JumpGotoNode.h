@@ -1,14 +1,15 @@
 #pragma once
-#include "NodeVisitor.h"
+#include "ActionNode.h"
 
 class JumpGoToNode : public ActionNode
 {
 	public:
-		ActionNode* getJumpToNode(){ return jumpToNode; };
-		void setJumpToNode(ActionNode* value){ jumpToNode = value; };
 		void show();
-		void action();
-		void accept(NodeVisitor& visitor);
+		void accept(shared_ptr<NodeVisitor>& visitor);
+
+		shared_ptr<ActionNode> getJumpToNode();
+		void setJumpToNode(shared_ptr<ActionNode> value);
+
 	private:
-		ActionNode* jumpToNode;
+		shared_ptr<ActionNode> jumpToNode;
 };

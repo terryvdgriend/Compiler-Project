@@ -3,9 +3,7 @@
 
 class AddArrayToDictionaryCommand : public BaseCommand
 {
-public:
-	/*virtual*/ pair<string, string> accept(class CommandVisitor &cmdVisitor);
-
-	// Inherited via BaseCommand
-	virtual void execute(VirtualMachine & vm, AbstractFunctionCall & node) override;
+	public:
+		virtual void execute(VirtualMachine& vm, AbstractFunctionCall& node);
+		pair<string, string> accept(CommandVisitor& cmdVisitor);
 };

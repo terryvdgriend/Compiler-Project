@@ -5,22 +5,21 @@ class LinkedActionList
 {
 	public:
 		LinkedActionList();
-		LinkedActionList(const LinkedActionList &other);
-		~LinkedActionList();
-		ActionNode* insertBefore(ActionNode* right, ActionNode* value);
-		ActionNode * insertBefore(ActionNode * right, LinkedActionList * value);
-		ActionNode* insertLast(ActionNode* value);
-		ActionNode* add(ActionNode* value);
-		ActionNode* add(LinkedActionList* list);
-		ActionNode* getFirst(){ return first; };
-		ActionNode* getLast(){ return last; };
-		int Count() { return count; };
+
 		void printList();
 
-		void removeBetween(ActionNode * start, ActionNode * end);
+		shared_ptr<ActionNode> add(shared_ptr<ActionNode> value);
+		shared_ptr<ActionNode> add(shared_ptr<LinkedActionList> list);
+		shared_ptr<ActionNode> insertBefore(shared_ptr<ActionNode> right, shared_ptr<ActionNode> value);
+		shared_ptr<ActionNode> insertBefore(shared_ptr<ActionNode> right, shared_ptr<LinkedActionList> value);
+		shared_ptr<ActionNode> insertLast(shared_ptr<ActionNode> value);
+
+		int getCount();
+		shared_ptr<ActionNode> getFirst();
+		shared_ptr<ActionNode> getLast();
 
 	private:
 		int count;
-		ActionNode* first;
-		ActionNode* last;
+		shared_ptr<ActionNode> firstNode;
+		shared_ptr<ActionNode> lastNode;
 };
