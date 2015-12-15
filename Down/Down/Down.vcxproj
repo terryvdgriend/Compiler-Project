@@ -85,7 +85,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
     <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
     <Text Include="Switch.md" />
@@ -175,7 +174,7 @@
     <ClInclude Include="SwitchNode.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestDown.h" />
-    <ClInclude Include="TestText.h" />
+    <ClInclude Include="TestCode.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TimesCommand.h" />
     <ClInclude Include="Token.h" />
@@ -265,6 +264,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SwitchNode.cpp" />
+    <ClCompile Include="TestCode.cpp" />
     <ClCompile Include="TestDown.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TimesCommand.cpp" />

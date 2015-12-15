@@ -4,7 +4,7 @@
 #include "LinkedActionList.h"
 #include "LinkedTokenList.h"
 #include "Tokenizer.h"
-#include "TestText.h"
+#include "TestCode.h"
 #include "VirtualMachine.h"
 
 void TestDown::runAll()
@@ -12,12 +12,12 @@ void TestDown::runAll()
 	cout << "\r\n\r\n------ Test started ------\r\n\r\n";
 	clock_t sttime = clock();
 
-	run("If Else", TestText::GetIfElse());
-	run("Forloop", TestText::GetFor());
-	run("While loop", TestText::GetWhile());
-	run("Functions", TestText::GetFunctions());
-	run("Switch Case", TestText::GetSwitch());
-	run("Identifiers", TestText::GetIdentifiers());
+	run("If Else", TestCode::GetIfElse());
+	run("Forloop", TestCode::GetFor());
+	run("While loop", TestCode::GetWhile());
+	run("Functions", TestCode::GetFunctions());
+	run("Switch Case", TestCode::GetSwitch());
+	run("Identifiers", TestCode::GetIdentifiers());
 	run("Identifier undefined/already defined", "**a** is 5 _number_ **b** _number_ **b**", list<string>{"already", "undefined"});
 
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;

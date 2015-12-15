@@ -13,8 +13,8 @@ CompileOperator::CompileOperator(shared_ptr<Compiler> nextlevel)
 void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	map<IToken, string>::iterator iFind;
 	shared_ptr<Token> current = begin;
+	map<IToken, string>::iterator iFind;
 	vector<shared_ptr<ActionNode>> beforeArray;
 	CompileNextLevel nextLevel;
 	CompileNextLevelList nextLevelList;
