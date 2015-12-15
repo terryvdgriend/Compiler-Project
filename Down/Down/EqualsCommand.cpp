@@ -8,6 +8,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	Variable variable1 = *vm.getVariable(parameters.at(1));
 	Variable variable2 = *vm.getVariable(parameters.at(2));
+
 	if (variable1.getTokenType() == variable2.getTokenType()) {
 		variable1 = variable2;
 

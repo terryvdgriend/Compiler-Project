@@ -14,7 +14,7 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		parameters[1] = parameters[2];
 	}
 
-	if (variable.getType() != VariableType::NULLTYPE && variable.getType() == VariableType::NUMBER)
+	if (variable.getType() != VariableType::NULLTYPE && variable.getTokenType() == Token::TYPE_NUMBER)
 	{
 		int number1 = atoi(variable.getValue().c_str()) + 1;
 		

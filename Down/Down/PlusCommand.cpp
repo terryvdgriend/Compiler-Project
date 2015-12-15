@@ -12,7 +12,7 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	if (isUndefined(variable1, variable2, vm))
 		return;
 
-	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER) {
+	if (variable1.getTokenType() == Token::TYPE_NUMBER && variable2.getTokenType() == Token::TYPE_NUMBER) {
 
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());
@@ -20,7 +20,7 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		vm.setReturnValue(to_string(number1 + number2));
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else if (variable1.getType() == VariableType::FACT && variable2.getType() == VariableType::FACT) {
+	else if (variable1.getTokenType() == Token::TYPE_FACT && variable2.getTokenType() == Token::TYPE_FACT) {
 		bool bool1 = (variable1.getValue() == "true") ? true : false;
 		bool bool2 = (variable2.getValue() == "true") ? true : false;
 		bool outcome = bool1 + bool2;

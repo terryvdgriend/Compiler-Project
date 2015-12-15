@@ -20,6 +20,7 @@ void NotEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	{
 		vm.setReturnValue("false");
 	}
+	vm.setReturnToken(Token::TYPE_FACT);
 }
 
 std::pair<string, string> NotEqualsToCommand::accept(CommandVisitor& commandVisitor) {
