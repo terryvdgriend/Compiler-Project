@@ -1,6 +1,0 @@
-
-_number_ **i** is 6
-
-**i** is **i** divide 2
-
-[ printdown **i** ]

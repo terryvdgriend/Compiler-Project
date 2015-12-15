@@ -19,7 +19,7 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		int number1 = atoi(variable.getValue().c_str()) + 1;
 		
 		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
-			vm.setVariable(item, to_string(number1), node.getToken()->getSub());
+			vm.setVariable(item, to_string(number1), variable.getTokenType());
 		}
 	}
 }
