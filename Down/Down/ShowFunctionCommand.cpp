@@ -12,7 +12,12 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 	string val = "";
 
 	if (variable2.getType() != VariableType::NULLTYPE) {
+
 		val += variable2.getValue();
+
+		if (variable2.getTokenType() == Token::TYPE_NUMBER) {
+			val = removeUnnecessaryDotsAndZeros(val);
+		}
 	}
 
 	val.erase(remove(val.begin(), val.end(), '\"'), val.end());

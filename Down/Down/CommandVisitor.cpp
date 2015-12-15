@@ -38,10 +38,10 @@ std::pair<string, string> CommandVisitor::visit(IdentifierToReturnValueCommand& 
 	return std::pair<string, string>("", "");
 }
 std::pair<string, string> CommandVisitor::visit(MinusCommand& command) {
-	return std::pair<string, string>("subtract", "from");
+	return std::pair<string, string>("subtract", "by");
 }
 std::pair<string, string> CommandVisitor::visit(MinusMinusCommand& command) {
-	return std::pair<string, string>("subtract", "from");
+	return std::pair<string, string>("subtract", "by");
 }
 std::pair<string, string> CommandVisitor::visit(ModuloCommand& command) {
 	return std::pair<string, string>("get remainder (modulo)", "from");

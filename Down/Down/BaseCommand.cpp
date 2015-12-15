@@ -38,3 +38,24 @@ void BaseCommand::throwTypeError(Variable& var1, Variable& var2, VirtualMachine&
 	ErrorHandler::getInstance()->addError(Error{ "cannot " + words.first + " " + var1.getValue() + " " + words.second + " " + var2.getValue(),".md", -1, -1, Error::error });
 	vm.triggerRunFailure();
 }
+
+string BaseCommand::removeUnnecessaryDotsAndZeros(string input) {
+
+	if (input.find('.') != std::string::npos) {
+
+		while (input.size() != 0) {
+			char current = input[input.size() - 1];
+
+			if (current == '0') {
+				input = input.substr(0, input.size() - 1);
+			}
+			else {
+				if (current == '.') {
+					input = input.substr(0, input.size() - 1);
+				}
+				break;
+			}
+		}
+	}
+	return input;
+}

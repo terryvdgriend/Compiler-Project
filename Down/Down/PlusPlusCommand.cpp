@@ -16,7 +16,7 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	if (variable.getType() != VariableType::NULLTYPE && variable.getTokenType() == Token::TYPE_NUMBER)
 	{
-		int number1 = atoi(variable.getValue().c_str()) + 1;
+		double number1 = atof(variable.getValue().c_str()) + 1;
 		
 		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
 			vm.setVariable(item, to_string(number1), variable.getTokenType());

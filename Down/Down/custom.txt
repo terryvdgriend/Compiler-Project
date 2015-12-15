@@ -1,0 +1,5 @@
+_number_ **g** is 10
+
+**g** is **g** divide -2
+
+[ printdown **g** ]

@@ -15,4 +15,5 @@ public:
 	virtual pair<string, string> accept(class CommandVisitor &cmdVisitor) = 0;
 	bool isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm);
 	void throwTypeError(Variable& var1, Variable& var2, VirtualMachine& vm);
+	string removeUnnecessaryDotsAndZeros(string input);
 };

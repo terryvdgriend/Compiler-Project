@@ -13,8 +13,8 @@ void SmallerEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 		return;
 
 	if (variable1.getTokenType() == Token::TYPE_NUMBER && variable2.getTokenType() == Token::TYPE_NUMBER) {
-		int number1 = atoi(variable1.getValue().c_str());
-		int number2 = atoi(variable2.getValue().c_str());
+		double number1 = atof(variable1.getValue().c_str());
+		double number2 = atof(variable2.getValue().c_str());
 		if (number1 <= number2)
 		{
 			vm.setReturnValue("true");
