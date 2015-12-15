@@ -2,6 +2,21 @@
 class TestText
 {
 public:
+	static const std::string getSnippets()
+	{
+		auto lolz = R"(
+
+							[
+		  "printdown":"[printdown "KAAS"]",
+		  "function":"#### temp \n --- \n> Your code here ;)\n ___"
+		  "for":"### for ( _number_ **i** ; **i** smaller than 10 ; **i** is **i** plus 1  ) \n --- \n> Your code here ;)\n ___"
+	]
+
+
+		)";
+		return lolz;
+	}
+
 	static const std::string GetSwitch()
 	{
 		auto lolz = R"(
