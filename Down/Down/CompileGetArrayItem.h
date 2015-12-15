@@ -4,14 +4,11 @@
 
 class CompileGetArrayItem : public Compiler
 {
-public:
-	CompileGetArrayItem();
-	~CompileGetArrayItem();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileGetArrayItem(); };
+	public:
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 
-private:
-	string currArray;
-	string currArrayItemTempVar;
+	private:
+		string currentArray;
+		string currentArrayItemTempVar;
 };
-

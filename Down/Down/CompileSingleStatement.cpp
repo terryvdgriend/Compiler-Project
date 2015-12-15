@@ -1,90 +1,89 @@
 #include "stdafx.h"
 #include "CompileSingleStatement.h"
+#include "CompileCondition.h"
 #include "CompileGetArrayItem.h"
+#include "CompileGetFunction.h"
+#include "DirectFunctionCall.h"
 
-#define SET_ID_TO_RT  "IdentifierToReturnValue"
-#define SET_CONST_TO_RT  "ConstantToReturnValue"
-#define SET_GET_FROM_RT  "getFromReturnValue"
+#define SET_ID_TO_RT "IdentifierToReturnValue"
+#define SET_CONST_TO_RT "ConstantToReturnValue"
+#define SET_GET_FROM_RT "getFromReturnValue"
 
-void CompileSingleStatement::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
+void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+									 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	switch (begin.getEnum())
+	switch (begin->getType())
 	{
-		case Token::IDENTIFIER:
+		case IToken::IDENTIFIER:
 		{
-			Token* next = begin.next;
-			DirectFunctionCall* directFunctionCall = nullptr;
+			shared_ptr<Token> next = begin->getNext();
+			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
+			shared_ptr<ActionNode> beforeFunction = nullptr;
 			string sBuffer, saArguments[2];
-			ActionNode* beforeFunction = nullptr;
 			
-			if (next != nullptr && next->getEnum() == Token::ARRAY_OPEN) {
-				CompileGetArrayItem* arrayitem = new CompileGetArrayItem();
-				arrayitem->Compile(cTokenList, begin, end, listActionNodes, actionBefore);
-				delete arrayitem;
-			}
-			else if (next != nullptr && next->getEnum() == Token::CONDITION_OPEN)
+			if (next != nullptr && next->getType() == IToken::ARRAY_OPEN) 
 			{
-				directFunctionCall = new DirectFunctionCall(*new Token(begin));
-				saArguments[0] = begin.getText();
+				CompileGetArrayItem arrayitem;
+				arrayitem.compile(tokenList, begin, end, listActionNodes, actionBefore);
+
+			}
+			else if (next != nullptr && next->getType() == IToken::CONDITION_OPEN)
+			{
+				saArguments[0] = begin->getText();
 				saArguments[1] = getNextLocalVariableName(sBuffer);
+
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_ID_TO_RT);
 				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
 				CompileCondition condition;
-				condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, *beforeFunction);
+				condition.compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, beforeFunction);
 			}
 			else
 			{
 				saArguments[0] = SET_ID_TO_RT;
-				saArguments[1] = begin.getText();
+				saArguments[1] = begin->getText();
 
-				directFunctionCall = new DirectFunctionCall(*new Token(begin));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, saArguments[0].c_str());
 				directFunctionCall->setAt(1, saArguments[1].c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 			}
             
             break;
 		}
-		
-		case Token::CONDITION_OPEN:
+		case IToken::CONDITION_OPEN:
 		{
-			Token* next = &begin;
+			shared_ptr<Token> next = begin;
 			CompileCondition condition;
-			condition.Compile(cTokenList, *next->next, *next->getPartner(), listActionNodes, actionBefore);
+			condition.compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, actionBefore);
+
             break;
 		}
-		case Token::FUNCTION_DECLARE_OPEN:
+		case IToken::FUNCTION_DECLARE_OPEN:
 		{
-			Token* next = &begin;
+			shared_ptr<Token> next = begin;
 			CompileGetFunction function;
-			function.Compile(cTokenList, *next, *next->getPartner(), listActionNodes, actionBefore);
+			function.compile(tokenList, next, next->getPartner(), listActionNodes, actionBefore);
+
 			break;
 		}
-		case Token::NUMBER:
-		case Token::TEXT:
-		case Token::FACT:
+		case IToken::NUMBER:
+		case IToken::TEXT:
+		case IToken::FACT:
 		{
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(begin));
+			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_CONST_TO_RT);
-			directFunctionCall->setAt(1, begin.getText().c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			directFunctionCall->setAt(1, begin->getText().c_str());
+			listActionNodes->insertBefore(actionBefore, directFunctionCall);
+
             break;
 		}
-        default: {
+        default: 
+		{
             break;
         }
 	}
 }
-
-CompileSingleStatement::CompileSingleStatement(){
-
-}
-
-CompileSingleStatement::~CompileSingleStatement(){
-}
-

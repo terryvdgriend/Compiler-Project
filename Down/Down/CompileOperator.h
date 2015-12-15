@@ -4,24 +4,27 @@
 
 class CompileOperator : public Compiler
 {
-protected:
-	Compiler *pNextLevel;
-public:
-	CompileOperator(Compiler* pNext);
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	~CompileOperator();
-	typedef std::map<Token::iToken, string> TokenMap;
+	public:
+		typedef map<IToken, string> TokenMap;
+		typedef list<CompileNextLevel> CompileNextLevelList;
 
-	TokenMap &getTokenMap();
-public:
-	typedef std::list<CompileNextLevel> CompileNextLevelList;
+		CompileOperator(shared_ptr<Compiler> nextlevel);
 
-private:
-	TokenMap tokenMap;
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
+		
+	protected:
+		TokenMap tokenMap;
 
-	void fillRunList(const std::string&, LinkedActionList&, ActionNode&, std::vector<ActionNode*>* beforeArray, Token& token);
-	void fillNextLevelList(std::vector<ActionNode*>* beforeArray, Token&, CompileNextLevel&, CompileNextLevelList&);
-	void insertLastNextLevel(Token&, ActionNode&, CompileNextLevel&, CompileNextLevelList&);
-	void compileNextLevel(LinkedList& cTokenList, LinkedActionList& cRunList, CompileNextLevelList& cNextLevelList);
+	private:
+		shared_ptr<Compiler> pNextLevel;
+
+		void fillRunList(const string& sFunctionName, shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& iBefore, 
+						 vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& token);
+		void fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& current, CompileNextLevel& nextLevel,
+							   CompileNextLevelList& nextLevelList);
+		void insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, CompileNextLevel& nextLevel, 
+								 CompileNextLevelList& nextLevelList);
+		void compileNextLevel(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes,
+							  CompileNextLevelList& nextLevelList);
 };
-

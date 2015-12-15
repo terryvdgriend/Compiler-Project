@@ -1,215 +1,286 @@
 #include "stdafx.h"
-#include "CompilerHeader.h"
+#include "CompileFor.h"
 #include "CompileCondition.h"
-#include "ConditionalJumpNode.h"
-#include "JumpGoToNode.h"
-#include "DoNothingNode.h"
 #include "CompileFactory.h"
+#include "CompileSingleStatement.h"
+#include "ConditionalJumpNode.h"
+#include "DoNothingNode.h"
+#include "JumpGoToNode.h"
 #include "TokenExpectation.h"
-#include "CompilePlusMinus.h"
 
 CompileFor::CompileFor()
 {
-	_compiledStatement = new LinkedActionList();
-	_declaration = new LinkedActionList();
-	_increment = new LinkedActionList();
-	_condition = new LinkedActionList();
-	_body = new LinkedActionList();
-	_compiledStatement->add(new DoNothingNode());
+	_compiledStatement	= make_shared<LinkedActionList>();
+	_declaration		= make_shared<LinkedActionList>();
+	_increment			= make_shared<LinkedActionList>();
+	_condition			= make_shared<LinkedActionList>();
+	_body				= make_shared<LinkedActionList>();
+	_compiledStatement->add(make_shared<DoNothingNode>());
 }
 
-void CompileFor::ConnectLists(){
-	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	JumpGoToNode* jumpBackNode = new JumpGoToNode();
+void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+						 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
+{
+	CompileFactory factory;
+	shared_ptr<Token> current = begin;
+	shared_ptr<Token> conClose = nullptr;
+	int level = begin->getLevel();
+
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::FOR));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level + 1, IToken::AND_PARA));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level + 1, IToken::AND_PARA));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_CLOSE));
+	expected.push_back(TokenExpectation(level, IToken::BODY_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::BODY_CLOSE));
+
+	for (TokenExpectation expectation : expected)
+	{
+		while (current->getType() == IToken::NEWLINE)
+		{
+			current = current->getNext();
+		}
+
+		if (expectation.getLevel() == level)
+		{
+			if (current == nullptr)
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("for statement not completed", ".md", -1, -1, ErrorType::ERROR));
+				begin = end;
+
+				break;
+			}
+
+			if (current->getType() == IToken::CONDITION_OPEN)
+			{
+				conClose = current->getPartner();
+			}
+
+			if (current->getType() != expectation.getTokenType())
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
+													  expectation.getTokenType(), current->getType());
+				begin = end;
+
+				break;
+			}
+			else
+			{
+				current = current->getNext();
+			}
+		}
+		else if (expectation.getLevel() >= level)
+		{
+			if (current->getType() == expectation.getTokenType() && current->getType() == IToken::AND_PARA)
+			{
+				current = current->getNext();
+
+				continue;
+			}
+
+			if (_declaration->getCount() == 0)
+			{
+				shared_ptr<Token> next = current->getPrevious();
+
+				while (next->getType() != IToken::AND_PARA)
+				{
+					next = next->getNext();
+				}
+
+				// This means the declaration is empty
+				if (next->getPrevious()->getType() == IToken::CONDITION_OPEN)
+				{
+					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no declaration!", ".md", current->getLineNumber(), 
+														  current->getPosition(), ErrorType::ERROR));
+					begin = end;
+
+					return;
+				}
+				else 
+				{
+					// Compile the first part of the for-loop
+					shared_ptr<Compiler> compiledBodyPart;
+					bool multiIndex = false;
+
+					if (current->getNext()->getType() != IToken::AND_PARA)
+					{
+						compiledBodyPart = factory.createCompileStatement(current);
+						multiIndex = true;
+					}
+					else
+					{
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+					}
+
+					if (compiledBodyPart != nullptr)
+					{
+						compiledBodyPart->compile(tokenList, current, next, _declaration, _declaration->getLast());
+
+						// If the list still is empty, fill with an DoNothingNode 
+						if (_declaration->getCount() == 0)
+						{
+							_declaration->insertLast(make_shared<DoNothingNode>());
+						}
+
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
+						}
+					}
+					else
+					{
+						current = current->getNext();
+					}
+				}
+			}
+			else if (_condition->getCount() == 0)
+			{
+				shared_ptr<Token> next = current->getNext();
+
+				while (next->getType() != IToken::AND_PARA)
+				{
+					next = next->getNext();
+				}
+				shared_ptr<Compiler> condition;
+				bool multiIndex = false;
+
+				if (current->getNext()->getType() != IToken::AND_PARA) 
+				{
+					condition = make_shared<CompileCondition>();
+					multiIndex = true;
+				}
+				else
+				{
+					condition = make_shared<CompileSingleStatement>();
+				}
+				condition->compile(tokenList, current, next, _condition, _condition->getLast());
+
+				if (!multiIndex) 
+				{
+					current = current->getNext(); 
+				}
+
+				// If condition still is empty, throw error (we need a condition)
+				if (_condition->getCount() == 0) 
+				{
+					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no condition!", ".md", current->getLineNumber(), 
+														  current->getPosition(), ErrorType::ERROR));
+					begin = end;
+
+					break;
+				}
+			}
+			else if (_increment->getCount() == 0)
+			{
+				if (current->getType() == IToken::CONDITION_CLOSE) 
+				{
+					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no increment!", ".md", current->getLineNumber(), 
+														  current->getPosition(), ErrorType::ERROR));
+					begin = end;
+
+					return;
+				}
+
+				// Compile the last part of the for-loop
+				shared_ptr<Compiler> compiledBodyPart;
+				bool multiIndex = false;
+
+				if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
+				{
+					compiledBodyPart = factory.createCompileStatement(current);
+					multiIndex = true;
+				}
+				else
+				{
+					compiledBodyPart = make_shared<CompileSingleStatement>();
+				}
+
+				if (compiledBodyPart != nullptr)
+				{
+					compiledBodyPart->compile(tokenList, current, conClose, _increment, _increment->getLast());
+
+					// If the list still is empty, fill with an DoNothingNode 
+					if (_declaration->getCount() == 0)
+					{
+						_declaration->insertLast(make_shared<DoNothingNode>());
+					}
+
+					if (!multiIndex) 
+					{ 
+						current = current->getNext(); 
+					}
+				}
+				else
+				{
+					current = current->getNext();
+				}
+			}
+			else
+			{
+				shared_ptr<Token> previous = current->getPrevious();
+
+				while (previous->getType() != IToken::BODY_OPEN)
+				{
+					previous = previous->getPrevious();
+				}
+				previous = previous->getPartner();
+				_body->add(make_shared<DoNothingNode>());
+
+				while (current->getLevel() > level)
+				{
+					shared_ptr<Compiler> compiledBodyPart;
+					bool multiIndex = false;
+
+					if (current->getType() == IToken::NEWLINE || (current->getNext()->getType() != IToken::BODY_CLOSE && 
+						current->getNext()->getType() != IToken::NEWLINE)) 
+					{
+						compiledBodyPart = factory.createCompileStatement(current);
+						multiIndex = true;
+					}
+					else
+					{
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+					}
+
+					if (compiledBodyPart != nullptr) 
+					{
+						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+						
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
+						}
+					}
+					else
+					{
+						current = current->getNext();
+					}
+				}
+			}
+		}
+	}
+	connectLists();
+	listActionNodes->insertBefore(actionBefore, _compiledStatement);
+	begin = current;
+}
+
+void CompileFor::connectLists()
+{
+	shared_ptr<ConditionalJumpNode> conditionalJumpNode = make_shared<ConditionalJumpNode>();
+	shared_ptr<JumpGoToNode> jumpBackNode = make_shared<JumpGoToNode>();
 	_compiledStatement->add(_declaration);
 	_compiledStatement->add(_condition);
 	_compiledStatement->add(conditionalJumpNode);
 	_compiledStatement->add(_body);
 	_compiledStatement->add(_increment);
 	_compiledStatement->add(jumpBackNode);
-	_compiledStatement->add(new DoNothingNode());
+	_compiledStatement->add(make_shared<DoNothingNode>());
 	jumpBackNode->setJumpToNode(_condition->getFirst());
 	conditionalJumpNode->setOnTrue(_body->getFirst());
 	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
-}
-
-void CompileFor::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
-{
-	Token* current = &begin;
-	int whileLevel = begin.getLevel();
-	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_back(TokenExpectation(whileLevel, Token::FOR));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::AND_PARA));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::AND_PARA));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
-	Token* conClose = nullptr;
-	for (TokenExpectation expectation : expected)
-	{
-		while (current->getEnum() == Token::NEWLINE){
-			current = current->next;
-		}
-		if (expectation.Level == whileLevel){
-			if (current == nullptr){
-				ErrorHandler::getInstance()->addError(Error{ "for statement not completed", ".md", -1, -1, Error::error });
-				begin = end;
-				break;
-			}
-			if (current->getEnum() == Token::CONDITION_OPEN)
-				conClose = current->getPartner();
-			if (current->getEnum() != expectation.TokenType){
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
-				begin = end;
-				break;
-			}
-			else
-				current = current->next;
-		}
-		else if (expectation.Level >= whileLevel){
-			if (current->getEnum() == expectation.TokenType && current->getEnum() == Token::AND_PARA) {
-				current = current->next;
-				continue;
-			}
-			if (_declaration->Count() == 0){
-				Token* next = current->previous;
-				while (next->getEnum() != Token::AND_PARA){
-					next = next->next;
-				}
-
-				// This means the declaration is empty
-				if (next->previous->getEnum() == Token::CONDITION_OPEN)
-				{
-					ErrorHandler::getInstance()->addError(Error{ "For statement has no declaration!", ".md", current->getLineNumber(), current->getPositie(), Error::error });
-					begin = end;
-					return;
-				}
-				else {
-					// Compile the first part of the for-loop
-					bool multiIndex = false;
-					Compiler* compiledBodyPart;
-					if (current->next->getEnum() != Token::AND_PARA) {
-						compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-						multiIndex = true;
-					}
-					else
-						compiledBodyPart = new CompileSingleStatement;
-					if (compiledBodyPart != nullptr) {
-						compiledBodyPart->Compile(cTokenList, *current, *next, *_declaration, *_declaration->getLast());
-
-						// If the list still is empty, fill with DoNothingNode 
-						if (_declaration->Count() == 0)
-							_declaration->insertLast(new DoNothingNode());
-
-						if (!multiIndex) { current = current->next; };
-					}
-					else
-					{
-						current = current->next;
-					}
-					delete compiledBodyPart;
-				}
-			}
-			else if (_condition->Count() == 0){
-				Token* next = current->next;
-				while (next->getEnum() != Token::AND_PARA) {
-					next = next->next;
-				}
-
-				Compiler* condition;
-				bool multiIndex = false;
-				if (current->next->getEnum() != Token::AND_PARA) {
-					condition = new CompileCondition;
-					multiIndex = true;
-				}
-				else
-					condition = new CompileSingleStatement;
-				condition->Compile(cTokenList, *current, *next, *_condition, *_condition->getLast());
-				delete condition;
-				if (!multiIndex) { current = current->next; };
-
-				// If condition still is empty, throw error (we need a condition)
-				if (_condition->Count() == 0) {
-					ErrorHandler::getInstance()->addError(Error{ "For statement has no condition!", ".md", current->getLineNumber(), current->getPositie(), Error::error });
-					begin = end;
-					break;
-				}
-			}
-			else if (_increment->Count() == 0){
-				// Compile the last part of the for-loop
-				// TODO: Compile increment
-				if (current->getEnum() == Token::CONDITION_CLOSE) {
-					ErrorHandler::getInstance()->addError(Error{ "For statement has no increment!", ".md", current->getLineNumber(), current->getPositie(), Error::error });
-					begin = end;
-					return;
-				}
-				bool multiIndex = false;
-				Compiler* compiledBodyPart;
-				if (current->next->getEnum() != Token::CONDITION_CLOSE) {
-					compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-					multiIndex = true;
-				}
-				else
-					compiledBodyPart = new CompileSingleStatement;
-				if (compiledBodyPart != nullptr) {
-					compiledBodyPart->Compile(cTokenList, *current, *conClose, *_increment, *_increment->getLast());
-
-					// If the list still is empty, fill with DoNothingNode 
-					if (_declaration->Count() == 0)
-						_declaration->insertLast(new DoNothingNode());
-
-					if (!multiIndex) { current = current->next; };
-				}
-				else
-				{
-					current = current->next;
-				}
-				delete compiledBodyPart;
-
-			}
-			else{
-				Token* prev = current->previous;
-				while (prev->getEnum() != Token::BODY_OPEN) {
-					prev = prev->previous;
-				}
-				prev = prev->getPartner();
-				_body->add(new DoNothingNode());
-				while (current->getLevel() > whileLevel) {
-					bool multiIndex = false;
-					Compiler* compiledBodyPart;
-					if (current->getEnum() == Token::NEWLINE ||(current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE) ) {
-						compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
-						multiIndex = true;
-					}
-					else
-						compiledBodyPart = new CompileSingleStatement;
-					if (compiledBodyPart != nullptr) {
-						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
-						if (!multiIndex) { current = current->next; };
-					}
-					else
-					{
-						current = current->next;
-					}
-					delete compiledBodyPart;
-				}
-			}
-		}
-	}
-	ConnectLists();
-	listActionNodes.insertBefore(&actionBefore, _compiledStatement);
-	begin = *current;
-}
-
-CompileFor::~CompileFor()
-{
-	delete bodyNode;
-	delete _body;
-	delete _condition;
-	delete _compiledStatement;
 }

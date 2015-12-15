@@ -1,465 +1,580 @@
 #include "stdafx.h"
 #include "Tokenizer.h"
-//
 #include "Format.h"
-#include "LinkedList.h"
-#include "Tokenmap.h"
-#include "Tokenregex.h"
-//
-
+#include "TokenMap.h"
+#include "TokenRegex.h"
 
 Tokenizer::Tokenizer()
 {
-	mappert =  TokenMap::tm;
-	regexert = TokenRegex::tr;
+	tokenMap		= TokenMap::getTokenMap();
+	tokenRegex		= TokenRegex::getTokenRegex();
+	currentScope	= 0;
+	maxScope		= 0;
+	tokenError		= false;
+	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
 }
 
-string Tokenizer::getKeyByValueMappert(Token::iToken tkn)
+void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const string codefromfile)
 {
-	for (map<string, Token::iToken>::const_iterator it = mappert.begin(); it != mappert.end(); ++it)
-	{
-		if (it->second == tkn)
-			return it->first;
-	}
-	for (auto it = regexert.begin(); it != regexert.end(); ++it)
-	{
-		if (it->second == tkn)
-		{
-			switch (it->second)
-			{
-				case Token::NUMBER: return "number";
-				case Token::TEXT: return "text";
-				case Token::FACT: return "fact";
-				default: return "";
-			}
-		}
-	}
-	return "";
-}
-
-void Tokenizer::createTokenList(LinkedList& cTokenList, string codefromfile)
-{
-	//
-	Token  *pToken{};
-	string s("\n"+codefromfile);
-	smatch m;
-
+	shared_ptr<Token> token;
+	string code = "\n" + codefromfile; // Add an \n (new line) to prevent errors with first line comments
+	smatch match;
 	int rowNr = 0;
 	int colNr = 1;
 	int lvl = 1;
 
-	while (regex_search(s, m, e))
+	while (regex_search(code, match, actualRegex))
 	{
-		pToken = new Token;
-		Token::iToken currentToken;
-		string part = m[0];
-		//currentToken = getToken(part);
-		currentToken = (this->mappert.find(part) != mappert.end()) ? mappert[part] : getToken(part);
-		// Geen token, dus add error
-		if (currentToken == Token::NONE)
-			ErrorHandler::getInstance()->addError(Error{ string("Token not found &#9785; ") , "unknown.MD", rowNr, colNr, Error::errorType::error });
+		token = make_shared<Token>();
+		IToken currentToken;
+		string part = match[0];
 
-		if (cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::NEWLINE && currentToken == Token::IDENTIFIER)
+		if (tokenMap.find(part) != tokenMap.end())
 		{
-			string lookahead = lookAhead(m, s);
-			Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
-			
-			if (lookaheadToken == Token::ARRAY_OPEN)
+			currentToken = tokenMap[part];
+		}
+		else
+		{
+			currentToken = getToken(part);
+		}
+
+		// No token found, so add error
+		if (currentToken == IToken::NONE)
+		{
+			ErrorHandler::getInstance()->addError(make_shared<Error>("Token not found &#9785; ", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+		}
+
+		if (tokenList->getLast() != nullptr && tokenList->getLast()->getType() == IToken::NEWLINE && currentToken == IToken::IDENTIFIER)
+		{
+			string lookahead = lookAhead(match);
+			IToken lookaheadToken;
+
+			if (tokenMap.find(lookahead) != tokenMap.end())
+			{
+				lookaheadToken = tokenMap[lookahead];
+			}
+			else
+			{
+				lookaheadToken = getToken(lookahead);
+			}
+
+			if (lookaheadToken == IToken::ARRAY_OPEN)
 			{
 				part.push_back(currentScope + '0');
-				Token* first = cTokenList.first;
-				while (first->next != nullptr)
+				shared_ptr<Token> first = tokenList->getFirst();
+
+				while (first->getNext() != nullptr)
 				{
 					if (first->getText() == part)
 					{
-						pToken->setSub(first->getSub());
+						token->setSubType(first->getSubType());
+
 						break;
 					}
-					first = first->next;
+					first = first->getNext();
 				}
 			}
 		}
-		// (cTokenList.last != nullptr && cTokenList.last->previous != nullptr && cToken.last->previous->getEnum() == Token::ARRAY_CLOSE) || next token is Token::ARRAY_OPEN)
-		if ((cTokenList.last != nullptr && cTokenList.last->getEnum() == Token::ARRAY_CLOSE) && currentToken == Token::IDENTIFIER)
-		{
-			pToken->setSub(tempToken);
-			tempToken = Token::NONE;
-			//}
-				part.push_back(currentScope + '0');
-				if (mappert.count(part) != 0)
-				{
-					ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-				}
-				mappert[part] = Token::IDENTIFIER;
-				varTokenMap[part] = pToken->getSub();
-		}
-		//else if (currentToken == Token::ARRAY_CLOSE && tempToken != Token::NONE)
-		//{
-		//	lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, false);
-		//}
-		else if (currentToken == Token::TYPE_NUMBER || currentToken == Token::TYPE_TEXT || currentToken == Token::TYPE_FACT)
-		{
-			//tempToken = currentToken;
 
-			lookAheadMethod(m, s, *pToken, currentToken, part, rowNr, colNr, true);
-		}
-		else if (currentToken == Token::NUMBER) {
-			pToken->setSub(Token::TYPE_NUMBER);
-		}
-		else if (currentToken == Token::TEXT) {
-			pToken->setSub(Token::TYPE_TEXT);
-		}
-		else if (currentToken == Token::FACT){
-			pToken->setSub(Token::TYPE_FACT);
-		}
-		else if (currentToken == Token::FUNCTION_DECLARE)
+		if ((tokenList->getLast() != nullptr && tokenList->getLast()->getType() == IToken::ARRAY_CLOSE) && currentToken == IToken::IDENTIFIER)
 		{
-			mappert[part.substr(4, part.length() - 1)] = Token::FUNCTION_CALL;
+			token->setSubType(tempToken);
+			tempToken = IToken::NONE;
+			part.push_back(currentScope + '0');
+
+			if (tokenMap.count(part) != 0)
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+			}
+			tokenMap[part] = IToken::IDENTIFIER;
+			varTokenMap[part] = token->getSubType();
+		}
+		else if (currentToken == IToken::TYPE_NUMBER || currentToken == IToken::TYPE_TEXT || currentToken == IToken::TYPE_FACT)
+		{
+			lookAheadMethod(match, code, token, currentToken, part, rowNr, colNr, true);
+		}
+		else if (currentToken == IToken::NUMBER)
+		{
+			token->setSubType(IToken::TYPE_NUMBER);
+		}
+		else if (currentToken == IToken::TEXT) 
+		{
+			token->setSubType(IToken::TYPE_TEXT);
+		}
+		else if (currentToken == IToken::FACT) 
+		{
+			token->setSubType(IToken::TYPE_FACT);
+		}
+		else if (currentToken == IToken::FUNCTION_DECLARE)
+		{
+			tokenMap[part.substr(4, part.length() - 1)] = IToken::FUNCTION_CALL;
 			part = part.substr(4, part.length() - 1);
 		}
-		else if (currentToken == Token::FUNCTIONUSE)
+		else if (currentToken == IToken::FUNCTIONUSE)
 		{
-			if (mappert.count(part) != 0)
-				ErrorHandler::getInstance()->addError(Error{ "function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-		}
-		else if (currentToken == Token::IDENTIFIER)
-		{
-			if (pToken->getSub() == Token::NONE) {
-				part.push_back(currentScope + '0');
-				if (mappert.count(part) == 0)
-					ErrorHandler::getInstance()->addError(Error{ "identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-				auto it = varTokenMap.find(part);
-				if (it != varTokenMap.end())
-					pToken->setSub(it->second);
+			if (tokenMap.count(part) != 0)
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
 			}
-			
 		}
-		else if (currentToken == Token::NEWLINE || currentToken == Token::COMMENT) //New Lines
+		else if (currentToken == IToken::IDENTIFIER)
 		{
-			colNr = 1; rowNr++;
+			if (token->getSubType() == IToken::NONE)
+			{
+				part.push_back(currentScope + '0');
+
+				if (tokenMap.count(part) == 0)
+				{
+					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+				}
+				map<string, IToken>::iterator it = varTokenMap.find(part);
+
+				if (it != varTokenMap.end())
+				{
+					token->setSubType(it->second);
+				}
+			}
 		}
-		
-		pToken->setText((part));
-		pToken->setLevel(lvl);
-		pToken->setPositie(colNr);
-		pToken->setPositieInList(cTokenList.size());
-		pToken->setRegelnummer(rowNr);
-		pToken->setEnum(currentToken);
-		pToken->setPartner(nullptr);
-
-		//Add + Next
-		if(currentToken != Token::COMMENT)
-			cTokenList.add(pToken);
-
-		//Levels
-		if (currentToken == Token::BODY_OPEN || currentToken == Token::CONDITION_OPEN || currentToken == Token::FUNCTION_OPEN || currentToken == Token::FUNCTION_DECLARE_OPEN || currentToken == Token::ARRAY_OPEN)
+		else if (currentToken == IToken::NEWLINE || currentToken == IToken::COMMENT) // New Lines
 		{
-			if (currentToken == Token::FUNCTION_OPEN) {
+			colNr = 1; 
+			rowNr++;
+		}
+		token->setText((part));
+		token->setLevel(lvl);
+		token->setPosition(colNr);
+		token->setPositionInList(tokenList->getSize());
+		token->setLineNumber(rowNr);
+		token->setType(currentToken);
+		token->setPartner(nullptr);
+
+		// Add + Next
+		if (currentToken != IToken::COMMENT)
+		{
+			tokenList->add(token);
+		}
+
+		// Levels
+		if (currentToken == IToken::BODY_OPEN || currentToken == IToken::CONDITION_OPEN || currentToken == IToken::FUNCTION_OPEN || 
+			currentToken == IToken::FUNCTION_DECLARE_OPEN || currentToken == IToken::ARRAY_OPEN)
+		{
+			if (currentToken == IToken::FUNCTION_OPEN) 
+			{
 				maxScope++;
 				currentScope = maxScope;
 			}
 			lvl++;
 		}
 
-		//++ col
+		// ++col
 		colNr += part.size() + 1;
 
-		////Levels
-		if (currentToken == Token::BODY_CLOSED || currentToken == Token::CONDITION_CLOSE || currentToken == Token::FUNCTION_CLOSE || currentToken == Token::FUNCTION_DECLARE_CLOSE || currentToken == Token::ARRAY_CLOSE)
+		// Levels
+		if (currentToken == IToken::BODY_CLOSE || currentToken == IToken::CONDITION_CLOSE || currentToken == IToken::FUNCTION_CLOSE || 
+			currentToken == IToken::FUNCTION_DECLARE_CLOSE || currentToken == IToken::ARRAY_CLOSE)
 		{
 			lvl--;
 		}
-		// check Remaining stack
 
+		// Check remaining stack
+		checkStack(token, lvl);
 
-		CheckStack(*pToken, lvl);
-		// cTokenlist->last == body_closed && stack.top == IF or ELSEIF && current != ELSE IF
-		if (cTokenList.last->getEnum() == Token::BODY_CLOSED) {
-			if (stack.size() > 0)
-			if ((stack.top()->getEnum() == Token::IF || stack.top()->getEnum() == Token::ELIF) && currentToken != Token::ELIF)
-				CheckRemainingStack();
-		}
-		s = m.suffix().str();
-		if (currentToken == Token::FUNCTION_CLOSE)
+		if (tokenList->getLast()->getType() == IToken::BODY_CLOSE) 
 		{
-			currentScope = pToken->getPartner()->getScope();
+			if (stack.size() > 0)
+			{
+				if ((stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF) && currentToken != IToken::ELSEIF)
+				{
+					checkRemainingStack();
+				}
+			}
+		}
+		code = match.suffix().str();
+
+		if (currentToken == IToken::FUNCTION_CLOSE)
+		{
+			currentScope = token->getPartner()->getScope();
 		}
 	}
-
-	CheckRemainingStack();
+	checkRemainingStack();
 	checkRemainingErrors();
 }
 
-void Tokenizer::lookAheadMethod(smatch& m, string& s, Token& pToken, Token::iToken& currentToken, string& part, int rowNr, int colNr, bool arrayOpen)
+void Tokenizer::printTokenList(shared_ptr<LinkedTokenList>& tokenList)
 {
-	string lookahead = lookAhead(m, s);
-	Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
-	if (lookaheadToken == Token::IDENTIFIER)
-	{
-		lookahead.push_back(currentScope + '0');
-		if (mappert.count(lookahead) != 0)
-		{
-			ErrorHandler::getInstance()->addError(Error{ "identifier '" + lookahead + "' is already defined", "unknown.MD", rowNr, colNr, Error::errorType::error });
-		}
-		pToken.setSub(currentToken);
-		currentToken = lookaheadToken;
+	Text::printLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
+	shared_ptr<Token> nextToken = tokenList->getFirst();
 
-		
-		mappert[lookahead] = Token::IDENTIFIER;
-		part = lookahead;
-		s = m.suffix().str();
-		regex_search(s, m, e);
-		varTokenMap[part] = pToken.getSub();
-
-	}
-	else if (lookaheadToken == Token::ARRAY_OPEN)
+	while (nextToken != nullptr)
 	{
-		switch (currentToken)
-		{
-			case Token::TYPE_NUMBER: tempToken = Token::TYPE_NUMBER_ARRAY;
-				break;
-			case Token::TYPE_TEXT: tempToken = Token::TYPE_TEXT_ARRAY;
-				break;
-			case Token::TYPE_FACT: tempToken = Token::TYPE_FACT_ARRAY;
-				break;
-		}
-		currentToken = lookaheadToken;
-		part = lookahead;
-		s = m.suffix().str();
-		regex_search(s, m, e);
-	}
-	else
-	{
-		if (arrayOpen) ErrorHandler::getInstance()->addError(Error{ "Expected an identifier", "unknown.MD", rowNr, colNr, Error::errorType::error });
+		nextToken->print(tokenMap);
+		nextToken = nextToken->getNext();
 	}
 }
 
-string Tokenizer::lookAhead(smatch m, string s)
+bool Tokenizer::getTokenError()
 {
-	smatch m2;
-	string lookahead = m.suffix().str();
-	regex_search(lookahead, m2, e);
-	return m2[0];
+	return tokenError;
 }
 
-
-Token::iToken Tokenizer::getNextToken(smatch& m, string& s) {
-	string lookahead = lookAhead(m, s);
-	Token::iToken lookaheadToken = (this->mappert.find(lookahead) != mappert.end()) ? mappert[lookahead] : getToken(lookahead);
-	return lookaheadToken;
-}
-
-void Tokenizer::checkRemainingErrors()
+string Tokenizer::getKeywordsAsJson()
 {
-	if (this->stack.size() > 0)
+	string JSON = "[";
+	int size = (int)tokenMap.size();
+	int i = 0;
+
+	for (map<string, IToken>::iterator it = tokenMap.begin(); it != tokenMap.end(); ++it)
 	{
-		tokenError = true;
-		while (this->stack.size() > 0)
+		if (it->second == IToken::NEWLINE)
 		{
-			Token* token = this->stack.top();
-			this->stack.pop();
-			if(token->getEnum() != Token::ELSE)
-				token->addError();
-		}	
-	}
-}
+			i++;
 
-void Tokenizer::printTokenList(LinkedList& cTokenList)
-{
-	Text::PrintLine("POSITIELIJST - REGELNR - POSITIE - TEXT - LEVEL - PARTNER");
-	Token* start = cTokenList.first;
-	while (start != nullptr){
-		start->Print(this->mappert);
-		start = start->next;
-	}
-}
-
-void Tokenizer::CheckRemainingStack(){
-	if (this->stack.size() > 0 && (this->stack.top()->getEnum() == Token::IF || this->stack.top()->getEnum() == Token::ELIF)){
-		this->stack.pop();
-	}
-}
-
-
-void Tokenizer::CheckStack(Token& token, int &lvl){
-	CheckCondition(token, lvl);
-	CheckBrackets(token, lvl);
-};
-
-void Tokenizer::CheckCondition(Token& token, int &lvl){
-	if (token.getEnum() == Token::DO)
-	{
-		this->stack.push(&token);
-	}
-	if (token.getEnum() == Token::WHILE){
-		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::DO){
-			Token* stackToken = this->stack.top();
-			token.setPartner(stackToken);
-			stackToken->setPartner(&token);
-			this->stack.pop();
+			continue;
 		}
-	}
-	if (token.getEnum() == Token::IF)
-	{
-		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
+		JSON += "{\"keyword\":\"" + it->first + "\"}";
+
+		if (i < size - 1)
 		{
-			this->stack.pop();
+			JSON += ",";
 		}
-		this->stack.push(&token);
+		i++;
 	}
-	if (token.getEnum() == Token::ELSE)
-	{
-		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
-		{
-			Token* stackToken = this->stack.top();
-			token.setPartner(stackToken);
-			stackToken->setPartner(&token);
-			this->stack.pop();
-		}
-		else if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::ELIF)
-		{
-			Token* stackToken = this->stack.top();
-			Token* partner = stackToken->getPartner();
-			if (partner == nullptr){
-				this->stack.push(&token);
-			}
-			else{
-				while (partner->getEnum() != Token::IF){
-					partner = partner->getPartner();
-				}
-				token.setPartner(partner);
-				stackToken->setPartner(&token);
-				this->stack.pop();
-			}
+	JSON += "]";
 
-		}
-		else{
-			this->stack.push(&token);
-		}
-	}
-	if (token.getEnum() == Token::ELIF)
-	{
-		if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::IF)
-		{
-			Token* stackToken = this->stack.top();
-			token.setPartner(stackToken);
-			stackToken->setPartner(&token);
-			this->stack.pop();
-			this->stack.push(&token);
-		}
-		else if (this->stack.size() > 0 && this->stack.top()->getEnum() == Token::ELIF)
-		{
-			Token* stackToken = this->stack.top();
-			Token* partner = stackToken->getPartner();
-			if (partner != nullptr){
-				while (partner->getEnum() != Token::IF){
-					partner = partner->getPartner();
-				}
-				token.setPartner(partner);
-				stackToken->setPartner(&token);
-				this->stack.pop();
-			}
-			this->stack.push(&token);
-		}
-		else{
-			this->stack.push(&token);
-		}
-	}
-};
-
-void Tokenizer::CheckBrackets(Token& token, int &lvl)
-{
-	if (token.getEnum() == Token::BODY_OPEN || token.getEnum() == Token::CONDITION_OPEN || token.getEnum() == Token::FUNCTION_OPEN || token.getEnum() == Token::ARRAY_OPEN || token.getEnum() == Token::FUNCTION_DECLARE_OPEN)
-	{
-		this->stack.push(&token);
-	}
-	else if (token.getEnum() == Token::BODY_CLOSED || token.getEnum() == Token::CONDITION_CLOSE || token.getEnum() == Token::FUNCTION_CLOSE || token.getEnum() == Token::ARRAY_CLOSE || token.getEnum() == Token::FUNCTION_DECLARE_CLOSE)
-	{
-		if (this->stack.size() > 0)
-		{
-			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::IF) && token.getLevel() == this->stack.top()->getLevel())
-			{
-				if (token.next != nullptr)
-				{
-					if (token.next->getEnum() != Token::ELSE)
-					{
-						this->stack.pop();
-					}
-				}
-			}
-			if ((token.getEnum() == Token::BODY_CLOSED && this->stack.top()->getEnum() == Token::BODY_OPEN) ||
-				(token.getEnum() == Token::FUNCTION_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_OPEN) ||
-				(token.getEnum() == Token::FUNCTION_DECLARE_CLOSE && this->stack.top()->getEnum() == Token::FUNCTION_DECLARE_OPEN) ||
-				(token.getEnum() == Token::ARRAY_CLOSE && this->stack.top()->getEnum() == Token::ARRAY_OPEN) ||
-				(token.getEnum() == Token::CONDITION_CLOSE && this->stack.top()->getEnum() == Token::CONDITION_OPEN))
-			{
-				token.setLevel(lvl);
-				Token* stackToken = this->stack.top();
-				token.setPartner(stackToken);
-				stackToken->setPartner(&token);
-				this->stack.pop();
-			}
-		}
-	}
-};
-
-
-Token::iToken Tokenizer::getToken(string token)
-{
-	smatch m;
-	typedef map<string, Token::iToken>::iterator it_type;
-	for (it_type iterator = regexert.begin(); iterator != regexert.end(); iterator++) 
-	{
-		regex e(iterator->first);
-		regex_search(token, m, e);
-		if (m.size() != 0)
-		{
-			return iterator->second;
-		}
-	}
-	return Token::NONE;
+	return JSON;
 }
 
 string Tokenizer::getFunctionsAsJson()
 {
 	string JSON = "[";
 	int i = 0;
-	int size = CommandDictionary::CustFunc().size();
-	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::CustFunc())
+	map<string, shared_ptr<BaseCommand>> customFunction = CommandDictionary::getCustomFunctions();
+	int size = customFunction.size();
+
+	for (pair<string, shared_ptr<BaseCommand>> cf : customFunction)
 	{
 		JSON += "{\"function\":\"" + cf.first + "\"}";
 
 		if (i < size - 1)
-			JSON += ",";
-		i++;
-	}
-	JSON += "]";
-	return JSON;
-}
-
-string Tokenizer::getKeywordsAsJson()
-{
-	string JSON = "[";
-	int size = (int)mappert.size();
-	int i = 0;
-	for (map<string, Token::iToken>::iterator it = mappert.begin(); it != mappert.end(); ++it)
-	{
-		if ((*it).second == Token::NEWLINE)
 		{
-			i++;
-			continue;
-		}
-		JSON += "{\"keyword\":\"" + (*it).first + "\"}";
-
-		if (i < size - 1)
 			JSON += ",";
+		}
 		i++;
 	}
 	JSON += "]";
+
 	return JSON;
 }
 
-
-Tokenizer::~Tokenizer()
+string Tokenizer::getKeyByValueTokenMap(IToken tokenType)
 {
+	for (map<string, IToken>::const_iterator it = tokenMap.begin(); it != tokenMap.end(); ++it)
+	{
+		if (it->second == tokenType)
+		{
+			return it->first;
+		}
+	}
+
+	for (map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); ++it)
+	{
+		if (it->second == tokenType)
+		{
+			switch (it->second)
+			{
+				case IToken::NUMBER: 
+				{
+					return "number";
+				}
+				case IToken::TEXT:
+				{
+					return "text";
+				}
+				case IToken::FACT: 
+				{
+					return "fact";
+				}
+				default: 
+				{
+					return "";
+				}
+			}
+		}
+	}
+
+	return "";
+}
+
+void Tokenizer::checkStack(shared_ptr<Token>& token, int& level)
+{
+	checkCondition(token);
+	checkBrackets(token, level);
+}
+
+void Tokenizer::checkCondition(shared_ptr<Token>& token)
+{
+	if (token->getType() == IToken::DO)
+	{
+		stack.push(token);
+	}
+	else if (token->getType() == IToken::WHILE)
+	{
+		if (stack.size() > 0 && stack.top()->getType() == IToken::DO) 
+		{
+			shared_ptr<Token> stackToken = stack.top();
+			token->setPartner(stackToken);
+			stackToken->setPartner(token);
+			stack.pop();
+		}
+	}
+	else if (token->getType() == IToken::IF)
+	{
+		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
+		{
+			stack.pop();
+		}
+		stack.push(token);
+	}
+	else if (token->getType() == IToken::ELSE)
+	{
+		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
+		{
+			shared_ptr<Token> stackToken = stack.top();
+			token->setPartner(stackToken);
+			stackToken->setPartner(token);
+			stack.pop();
+		}
+		else if (stack.size() > 0 && stack.top()->getType() == IToken::ELSEIF)
+		{
+			shared_ptr<Token> stackToken = stack.top();
+			shared_ptr<Token> partner = stackToken->getPartner();
+
+			if (partner == nullptr) 
+			{
+				stack.push(token);
+			}
+			else 
+			{
+				while (partner->getType() != IToken::IF) 
+				{
+					partner = partner->getPartner();
+				}
+				token->setPartner(partner);
+				stackToken->setPartner(token);
+				stack.pop();
+			}
+		}
+		else 
+		{
+			stack.push(token);
+		}
+	}
+	else if (token->getType() == IToken::ELSEIF)
+	{
+		if (stack.size() > 0 && stack.top()->getType() == IToken::IF)
+		{
+			shared_ptr<Token> stackToken = stack.top();
+			token->setPartner(stackToken);
+			stackToken->setPartner(token);
+			stack.pop();
+			stack.push(token);
+		}
+		else if (stack.size() > 0 && stack.top()->getType() == IToken::ELSEIF)
+		{
+			shared_ptr<Token> stackToken = stack.top();
+			shared_ptr<Token> partner = stackToken->getPartner();
+
+			if (partner != nullptr) 
+			{
+				while (partner->getType() != IToken::IF)
+				{
+					partner = partner->getPartner();
+				}
+				token->setPartner(partner);
+				stackToken->setPartner(token);
+				stack.pop();
+			}
+			stack.push(token);
+		}
+		else 
+		{
+			stack.push(token);
+		}
+	}
+}
+
+void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& level)
+{
+	if (token->getType() == IToken::BODY_OPEN || token->getType() == IToken::CONDITION_OPEN || 
+		token->getType() == IToken::FUNCTION_OPEN || token->getType() == IToken::ARRAY_OPEN || 
+		token->getType() == IToken::FUNCTION_DECLARE_OPEN)
+	{
+		stack.push(token);
+	}
+	else if (token->getType() == IToken::BODY_CLOSE || token->getType() == IToken::CONDITION_CLOSE || 
+			 token->getType() == IToken::FUNCTION_CLOSE || token->getType() == IToken::ARRAY_CLOSE || 
+			 token->getType() == IToken::FUNCTION_DECLARE_CLOSE)
+	{
+		if (stack.size() > 0)
+		{
+			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel())
+			{
+				if (token->getNext() != nullptr)
+				{
+					if (token->getNext()->getType() != IToken::ELSE)
+					{
+						stack.pop();
+					}
+				}
+			}
+
+			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::BODY_OPEN) ||
+				(token->getType() == IToken::FUNCTION_CLOSE && stack.top()->getType() == IToken::FUNCTION_OPEN) ||
+				(token->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.top()->getType() == IToken::FUNCTION_DECLARE_OPEN) ||
+				(token->getType() == IToken::ARRAY_CLOSE && stack.top()->getType() == IToken::ARRAY_OPEN) ||
+				(token->getType() == IToken::CONDITION_CLOSE && stack.top()->getType() == IToken::CONDITION_OPEN))
+			{
+				token->setLevel(level);
+				shared_ptr<Token> stackToken = stack.top();
+				token->setPartner(stackToken);
+				stackToken->setPartner(token);
+				stack.pop();
+			}
+		}
+	}
+}
+
+void Tokenizer::checkRemainingStack()
+{
+	while (stack.size() > 0 && (stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF))
+	{
+		stack.pop();
+	}
+}
+
+void Tokenizer::checkRemainingErrors()
+{
+	if (stack.size() > 0)
+	{
+		tokenError = true;
+
+		while (stack.size() > 0)
+		{
+			shared_ptr<Token> token = stack.top();
+			stack.pop();
+			token->addError();
+		}
+	}
+}
+
+string Tokenizer::lookAhead(smatch match)
+{
+	smatch _match;
+	string lookaheadResult = match.suffix().str();
+	regex_search(lookaheadResult, _match, actualRegex);
+
+	return _match[0];
+}
+
+void Tokenizer::lookAheadMethod(smatch& match, string& codePart, shared_ptr<Token>& token, IToken& currentToken, string& part, int rowNr, int colNr, bool arrayOpen)
+{
+	string lookaheadResult = lookAhead(match);
+	IToken lookaheadToken;
+
+	if (tokenMap.find(lookaheadResult) != tokenMap.end())
+	{
+		lookaheadToken = tokenMap[lookaheadResult];
+	}
+	else
+	{
+		lookaheadToken = getToken(lookaheadResult);
+	}
+
+	if (lookaheadToken == IToken::IDENTIFIER)
+	{
+		lookaheadResult.push_back(currentScope + '0');
+
+		if (tokenMap.count(lookaheadResult) != 0)
+		{
+			ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + lookaheadResult + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+		}
+		token->setSubType(currentToken);
+		currentToken = lookaheadToken;
+
+		tokenMap[lookaheadResult] = IToken::IDENTIFIER;
+		part = lookaheadResult;
+		codePart = match.suffix().str();
+		regex_search(codePart, match, actualRegex);
+		varTokenMap[part] = token->getSubType();
+	}
+	else if (lookaheadToken == IToken::ARRAY_OPEN)
+	{
+		switch (currentToken)
+		{
+			case IToken::TYPE_NUMBER:
+			{
+				tempToken = IToken::TYPE_NUMBER_ARRAY;
+
+				break;
+			}
+			case IToken::TYPE_TEXT:
+			{
+				tempToken = IToken::TYPE_TEXT_ARRAY;
+
+				break;
+			}
+			case IToken::TYPE_FACT:
+			{
+				tempToken = IToken::TYPE_FACT_ARRAY;
+
+				break;
+			}
+		}
+		currentToken = lookaheadToken;
+		part = lookaheadResult;
+		codePart = match.suffix().str();
+		regex_search(codePart, match, actualRegex);
+	}
+	else
+	{
+		if (arrayOpen)
+		{
+			ErrorHandler::getInstance()->addError(make_shared<Error>("Expected an identifier", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+		}
+	}
+}
+
+IToken Tokenizer::getToken(string token)
+{
+	smatch match;
+
+	for (map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); it++)
+	{
+		regex e(it->first);
+		regex_search(token, match, e);
+
+		if (match.size() != 0)
+		{
+			return it->second;
+		}
+	}
+
+	return IToken::NONE;
+}
+
+IToken Tokenizer::getNextToken(smatch& match, string& codePart)
+{
+	string lookaheadResult = lookAhead(match);
+	IToken lookaheadToken;
+
+	if (tokenMap.find(lookaheadResult) != tokenMap.end())
+	{
+		lookaheadToken = tokenMap[lookaheadResult];
+	}
+	else
+	{
+		lookaheadToken = getToken(lookaheadResult);
+	}
+
+	return lookaheadToken;
 }

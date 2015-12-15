@@ -1,63 +1,61 @@
-#pragma once
 #include "stdafx.h"
 #include "CommandDictionary.h"
-#include "CommandList.h"
-
- map<string, shared_ptr<BaseCommand>>  CommandDictionary::CustFunc()
-{
-	map<string, shared_ptr<BaseCommand>> asd;
-	asd["printdown"] = std::make_shared<ShowFunctionCommand>();
-	asd["printup"] = std::make_shared<ShowUpFunctionCommand>();
-	asd["random"] = std::make_shared<RandomFunctionCommand>();
-	asd["ThrowError"] = std::make_shared<ErrorCommand>();
-	asd["count"] = std::make_shared<CountCommand>();
-	asd["getAllFilesInDirectory"] = std::make_shared<GetAllFilesInDirectoryCommand>();
-
-	// LEES: 
-	// als je een eigen functie wil toevoegen, geef dan de naam op van de functie (zoals wij hem in code gaan typen)
-	// en geef dan aan welke classe hiervoor gebruikt moet worden (die overigens wel een baseCommand override)
-	
-	//asd["DOEIETS"] = std::make_shared<ShowFunctionCommand>();
-	
-	//
-	return asd;
-};
+#include "MandatoryCommandVisitorIncludes.h"
 
 CommandDictionary::CommandDictionary()
 {
-	commandDictionary["$="]							= make_shared<EqualsCommand>();
-
-	commandDictionary["$<"]							= make_shared<SmallerThanCommand>();
-	commandDictionary["$<="]						= make_shared<SmallerEqualsToCommand>();
-	commandDictionary["$=="]						= make_shared<EqualsToCommand>();
-	commandDictionary["$!="]						= make_shared<NotEqualsToCommand>();
-	commandDictionary["$>="]						= make_shared<GreaterEqualsToCommand>();
-	commandDictionary["$>"]							= make_shared<GreaterThanCommand>();
-
-	commandDictionary["$*"]							= make_shared<TimesCommand>();
-	commandDictionary["$/"]							= make_shared<DivideCommand>();
-	commandDictionary["$%"]							= make_shared<ModuloCommand>();
-	commandDictionary["$+"]							= make_shared<PlusCommand>();
-	commandDictionary["$-"]							= make_shared<MinusCommand>();
-	commandDictionary["$++"]						= make_shared<PlusPlusCommand>();
-	commandDictionary["$--"]						= make_shared<MinusMinusCommand>();
-
+	// Array
 	commandDictionary["$AddArrayToDictionary"]		= make_shared<AddArrayToDictionaryCommand>();
-	commandDictionary["$AddLengthToArray"]			= make_shared<AddLengthToArrayCommand>();
 	commandDictionary["$AddItemToArrayAt"]			= make_shared<AddItemToArrayAtCommand>();
+	commandDictionary["$AddLengthToArray"]			= make_shared<AddLengthToArrayCommand>();
 	commandDictionary["$GetItemFromArray"]			= make_shared<GetItemFromArrayCommand>();
 
-	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();
+	// Miscellaneous
 	commandDictionary["ConstantToReturnValue"]		= make_shared<ConstantToReturnValueCommand>();
 	commandDictionary["getFromReturnValue"]			= make_shared<GetFromValueCommand>();
+	commandDictionary["IdentifierToReturnValue"]	= make_shared<IdentifierToReturnValueCommand>();
+	
+	// Operators
+	commandDictionary["$/"]							= make_shared<DivideCommand>();
+	commandDictionary["$="]							= make_shared<EqualsCommand>();
+	commandDictionary["$=="]						= make_shared<EqualsToCommand>();
+	commandDictionary["$>="]						= make_shared<GreaterEqualsToCommand>();
+	commandDictionary["$>"]							= make_shared<GreaterThanCommand>();
+	commandDictionary["$-"]							= make_shared<MinusCommand>();
+	commandDictionary["$--"]						= make_shared<MinusMinusCommand>();
+	commandDictionary["$%"]							= make_shared<ModuloCommand>();
+	commandDictionary["$!="]						= make_shared<NotEqualsToCommand>();
+	commandDictionary["$+"]							= make_shared<PlusCommand>();
+	commandDictionary["$++"]						= make_shared<PlusPlusCommand>();
+	commandDictionary["$<="]						= make_shared<SmallerEqualsToCommand>();
+	commandDictionary["$<"]							= make_shared<SmallerThanCommand>();
+	commandDictionary["$*"]							= make_shared<TimesCommand>();
 
-	for (std::pair<string, shared_ptr<BaseCommand>> cf : CustFunc())
+	for (pair<string, shared_ptr<BaseCommand>> cf : getCustomFunctions())
 	{
-		commandDictionary[std::string(cf.first)] = cf.second;
+		commandDictionary[cf.first] = cf.second;
 	}
 }
 
-map<string, shared_ptr<BaseCommand>> CommandDictionary::getMap()
+map<string, shared_ptr<BaseCommand>>& CommandDictionary::getMap()
 {
 	return commandDictionary;
 }
+
+map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
+{
+	map<string, shared_ptr<BaseCommand>> customFunctionDictionary;
+	customFunctionDictionary["printdown"]				= make_shared<ShowFunctionCommand>();
+	customFunctionDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
+	customFunctionDictionary["random"]					= make_shared<RandomFunctionCommand>();
+	customFunctionDictionary["ThrowError"]				= make_shared<ErrorCommand>();
+	customFunctionDictionary["getAllFilesInDirectory"]	= make_shared<GetAllFilesInDirectoryCommand>();
+	customFunctionDictionary["count"]					= make_shared<CountCommand>();
+	/*
+		READ:
+		If you want to define your own function(s), provide a name for the function and 
+		couple a BaseCommand implementation as shown in the above function declerations.
+	*/
+
+	return customFunctionDictionary;
+};

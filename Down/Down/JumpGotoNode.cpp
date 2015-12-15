@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "JumpGoToNode.h"
+#include "MandatoryNodeIncludes.h"
 
 void  JumpGoToNode::show()
 {
@@ -7,12 +8,17 @@ void  JumpGoToNode::show()
 	jumpToNode->show();
 }
 
-void  JumpGoToNode::action()
+void JumpGoToNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
+	visitor->visit(*this);
 }
 
-void JumpGoToNode::accept(NodeVisitor& visitor)
+shared_ptr<ActionNode> JumpGoToNode::getJumpToNode()
 {
-	visitor.visit(*this);
+	return jumpToNode;
+}
+
+void JumpGoToNode::setJumpToNode(shared_ptr<ActionNode> value)
+{
+	jumpToNode = value;
 }

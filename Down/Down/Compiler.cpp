@@ -1,23 +1,15 @@
 #include "stdafx.h"
 #include "Compiler.h"
 
-#include <sstream>
-
-/*
 Compiler::Compiler()
 {
+	currentToken = nullptr;
 }
-
-
-Compiler::~Compiler()
-{
-}*/
-
 
 string Compiler::getNextLocalVariableName(string& sBuffer)
 {
 	static int nValue = 0;
-	stringstream   sStream;
+	stringstream sStream;
 
 	sStream << "$" << ++nValue;
 
@@ -28,9 +20,18 @@ string Compiler::getNextLocalVariableName(string& sBuffer)
 	return sBuffer;
 }
 
+string Compiler::getCurrentLocalVariableName()
+{
+	stringstream sStream;
+
+	sStream << "$" << nValueCount;
+
+	return sStream.str();
+}
+
 string Compiler::getPreviousLocalVariableName(string& sBuffer)
 {
-	stringstream   sStream;
+	stringstream sStream;
 
 	sStream << "$" << --nValueCount;
 
@@ -39,11 +40,12 @@ string Compiler::getPreviousLocalVariableName(string& sBuffer)
 	return sBuffer;
 }
 
-string Compiler::getCurrentLocalVariableName()
+shared_ptr<Token> Compiler::getCurrentToken()
 {
-	stringstream   sStream;
+	return currentToken;
+}
 
-	sStream << "$" << nValueCount;
-
-	return sStream.str();
+void Compiler::setCurrentToken(shared_ptr<Token>& nextToken)
+{
+	currentToken = nextToken;
 }

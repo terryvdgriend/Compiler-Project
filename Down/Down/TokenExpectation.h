@@ -3,17 +3,15 @@
 
 struct TokenExpectation
 {
-public:
-	int Level;
-	Token::iToken TokenType;
-public:
-	
-	TokenExpectation(int level, Token::iToken tokenType)
-	{
-		Level = level;
-		TokenType = tokenType;
-	};
-	int getLevel() { return Level; };
-	Token::iToken getTokenType() { return TokenType; };
+	public:
+		TokenExpectation(int level, IToken tokenType);
 
+		int getLevel();
+		void setLevel(int level);
+		IToken getTokenType();
+		void setTokenType(IToken tokenType);
+
+	private:
+		int _level;
+		IToken _tokenType;
 };

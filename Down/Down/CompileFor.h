@@ -3,17 +3,19 @@
 
 class CompileFor : public Compiler
 {
-private:
-	LinkedActionList* _compiledStatement;
-	LinkedActionList* _condition;
-	LinkedActionList* _body;
-	LinkedActionList* _declaration;
-	LinkedActionList* _increment;
-	ActionNode* bodyNode;
-public:
-	CompileFor();
-	void ConnectLists();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileFor(); };
-	~CompileFor();
+	public:
+		CompileFor();
+
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
+
+	private:
+		shared_ptr<LinkedActionList> _compiledStatement;
+		shared_ptr<LinkedActionList> _condition;
+		shared_ptr<LinkedActionList> _body;
+		shared_ptr<LinkedActionList> _declaration;
+		shared_ptr<LinkedActionList> _increment;
+		shared_ptr<ActionNode> bodyNode;
+
+		void connectLists();
 };

@@ -1,24 +1,28 @@
 #include "stdafx.h"
 #include "AbstractFunctionCall.h"
+#include "MandatoryNodeIncludes.h"
 
 void AbstractFunctionCall::setArraySize(size_t nSize)
 {
 	m_sContentArray.resize(nSize);
 }
 
-void AbstractFunctionCall::setAt(unsigned nPosition, const char* szText)
+void AbstractFunctionCall::setAt(unsigned newPosition, const char* szText)
 {
-	m_sContentArray[nPosition] = szText;
+	m_sContentArray[newPosition] = szText;
 }
 
-const AbstractFunctionCall::contentArray&
-
-AbstractFunctionCall::getContentArray() const
+vector<string>& AbstractFunctionCall::getContentArrayNonConstant()
 {
 	return m_sContentArray;
 }
 
-vector<string>& AbstractFunctionCall::getContentArrayNonConstant()
+shared_ptr<Token> AbstractFunctionCall::getToken()
+{
+	return _token;
+}
+
+const AbstractFunctionCall::contentArray& AbstractFunctionCall::getContentArray() const
 {
 	return m_sContentArray;
 }
