@@ -339,6 +339,10 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 				currentBody = currentBody->getNext();
 			}
 		}
+		else
+		{
+			currentBody = currentBody->getNext();
+		}
 	}
 
 	if (_returnToken != nullptr) 

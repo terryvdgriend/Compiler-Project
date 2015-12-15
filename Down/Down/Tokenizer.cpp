@@ -446,7 +446,7 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& level)
 
 void Tokenizer::checkRemainingStack()
 {
-	if (stack.size() > 0 && (stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF))
+	while (stack.size() > 0 && (stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF))
 	{
 		stack.pop();
 	}
@@ -462,11 +462,7 @@ void Tokenizer::checkRemainingErrors()
 		{
 			shared_ptr<Token> token = stack.top();
 			stack.pop();
-
-			if (token->getType() != IToken::ELSE)
-			{
-				token->addError();
-			}
+			token->addError();
 		}
 	}
 }

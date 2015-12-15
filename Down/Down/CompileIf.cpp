@@ -139,7 +139,6 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 		}
 	}
 	_conditionBodyMap[_condition] = _body;
-
 	if (current != nullptr) 
 	{
 		// Check if there is an else if-statement 
@@ -272,6 +271,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 	{
 		connectLists(); // Build list without theelse
 	}
+	if (_bodyElse->getCount() == 0 && _conditionBodyMap.size() == 1)
+		current = current->getPrevious();
 	listActionNodes->insertBefore(actionBefore, _compiledStatement);
 	begin = current;
 }

@@ -53,8 +53,9 @@ void TestDown::run(string _name, string _code, list<string> expectedErrors)
 		//=========VM==============
 		if (ErrorHandler::getInstance()->getErrors().empty())
 		{
-			VirtualMachine vm;
-			vm.execute(compiledList);
+			shared_ptr<VirtualMachine> vm = make_shared<VirtualMachine>();
+			vm->init(vm);
+			vm->execute(compiledList);
 		}
 	}
 	catch (const exception& e)

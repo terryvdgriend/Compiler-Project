@@ -26,7 +26,7 @@ Token::Token(const shared_ptr<Token>& other)
 
 void Token::print(map<string, IToken>& tokenMap)
 {
-	int space = 20;
+	int space = 40;
 	string spacer = string(space - _text.size(), ' ');
 
 	Text::print(to_string(_positionInList) + string(4, ' '));

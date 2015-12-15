@@ -19,7 +19,6 @@ void VirtualMachine::execute(const shared_ptr<LinkedActionList>& actionList)
 {
 	map<string, shared_ptr<BaseCommand>> map = commandDictionary->getMap();
 	shared_ptr<ActionNode> currentNode = actionList->getFirst();
-
     while (currentNode != nullptr && !errorsDetected)
 	{
 		AbstractFunctionCall* actionNode = dynamic_cast<AbstractFunctionCall*>(currentNode.get());

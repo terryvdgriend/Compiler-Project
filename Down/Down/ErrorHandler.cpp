@@ -77,7 +77,7 @@ void ErrorHandler::addError(shared_ptr<Error>& error)
 
 void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
 {
-	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLevel(), token->getPosition(), ErrorType::ERROR);
+	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLineNumber(), token->getPosition(), ErrorType::ERROR);
 	errors.push_back(error);
 }
 
