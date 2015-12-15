@@ -21,4 +21,5 @@
 // Operators
 #include "CompileCondition.h"
 #include "CompileEquals.h"
+#include "CompilePlusMinus.h"
 #include "CompileOperator.h"

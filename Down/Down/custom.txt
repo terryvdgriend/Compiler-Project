@@ -1,1 +1,13 @@
-[count [getAllFilesInDirectory "D:\\_Data\Github\newApps\newApps\newApps" ] ]
+#### for ( _number_ **i** is 0 , **i** smaller than [count [getAllFilesInDirectory "D:\\_Data\Github\newApps\newApps\newApps"]] , **i** is **i** plus 1 )
+--
+    [ printdown [random "D:\\_Data\Github\newApps\newApps\newApps"] { **i** } ]
+__
+
+_number_ { 7 } **number** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
+_number_ **temp**
+ _number_ **x**
+
+#### for ( **x** is 0 , **x** smaller than [count **number**] , **x** is **x** plus 1)
+--
+	[ printdown **number** ]
+__

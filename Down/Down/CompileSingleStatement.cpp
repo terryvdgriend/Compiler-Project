@@ -64,8 +64,17 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 		case IToken::FUNCTION_DECLARE_OPEN:
 		{
 			shared_ptr<Token> next = begin;
-			CompileGetFunction function;
-			function.compile(tokenList, next, next->getPartner(), listActionNodes, actionBefore);
+			if (next->getPartner()->getNext() != nullptr && next->getPartner()->getNext()->getType() == IToken::ARRAY_OPEN)
+			{
+				CompileGetArrayItem arrayitem;
+				arrayitem.compile(tokenList, begin, end, listActionNodes, actionBefore);
+
+			}
+			else {
+				CompileGetFunction function;
+				function.compile(tokenList, next, next->getPartner(), listActionNodes, actionBefore);
+			}
+
 
 			break;
 		}

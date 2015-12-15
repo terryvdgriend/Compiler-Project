@@ -109,7 +109,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 		shared_ptr<Token> seperator = current;
 		stack<IToken> stack;
 
-		while (stack.size() >= 0 && (seperator->getType() != IToken::AND_PARA || seperator->getType() != IToken::FUNCTION_DECLARE_CLOSE))
+		while (stack.size() >= 0)
 		{
 			if (seperator->getType() == IToken::FUNCTION_DECLARE_OPEN)
 			{
@@ -120,7 +120,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 				stack.pop();
 			}
 
-			if (stack.size() == 0 && (seperator->getType() == IToken::AND_PARA || seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE))
+			if (stack.size() == 0 && (seperator->getType() == IToken::AND_PARA || seperator == end))
 			{
 				break;
 			}
@@ -142,23 +142,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 		bool deepFunction = false;
 		shared_ptr<Token> funcion = current->getPrevious();
 
-		while (funcion->getType() != IToken::NEWLINE)
-		{
-			if (funcion == current)
-			{
-				break;
-			}
-
-			if (funcion->getType() == IToken::FUNCTION_DECLARE_CLOSE)
-			{
-				deepFunction = true;
-
-				break;
-			}
-			funcion = funcion->getPrevious();
-		}
-
-		if (current->getType() == IToken::AND_PARA || deepFunction)
+		if (current->getType() == IToken::AND_PARA)
 		{
 			current = current->getNext();
 		}

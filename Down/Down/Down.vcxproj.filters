@@ -754,13 +754,18 @@
     <Text Include="while.md">
       <Filter>Resource Files\TestScripts</Filter>
     </Text>
-    <Text Include="test_ifelse.md" />
+    <Text Include="test_ifelse.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
       <Filter>Resource Files\TestScripts</Filter>
     </None>
     <None Include="SuperTest.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </None>
+    <None Include="functionTest.md">
       <Filter>Resource Files\TestScripts</Filter>
     </None>
   </ItemGroup>

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CompileGetArrayItem.h"
-#include "CompilePlusMinus.h"
-#include "CompileSingleStatement.h"
+#include "CompilerHeader.h"
 #include "DirectFunctionCall.h"
 #include "FunctionCall.h"
 #include "TokenExpectation.h"
@@ -17,7 +16,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	int level = begin->getLevel();
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
-	expected.push_back(TokenExpectation(level, IToken::IDENTIFIER));
+	expected.push_back(TokenExpectation(level, IToken::ANY));
 	expected.push_back(TokenExpectation(level, IToken::ARRAY_OPEN));
 	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
 	expected.push_back(TokenExpectation(level, IToken::ARRAY_CLOSE));
@@ -47,15 +46,6 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 
 		if (expectation.getLevel() == level)
 		{
-			if (current->getType() != expectation.getTokenType())
-			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
-													  expectation.getTokenType(), current->getType());
-				begin = end;
-
-				break;
-			}
-
 			if (current->getType() == IToken::IDENTIFIER)
 			{
 				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
@@ -73,8 +63,32 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
 				currentArray = getCurrentLocalVariableName();
+				current = current->getNext();
 			}
-			current = current->getNext();
+			else if (current->getType() == IToken::FUNCTION_DECLARE_OPEN) {
+				CompileGetFunction function;
+				function.compile(tokenList, current, current->getPartner(), listActionNodes, actionBefore);
+				currentArrayItemTempVar = getCurrentLocalVariableName();
+
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
+				directFunctionCall->setArraySize(2);
+				directFunctionCall->setAt(0, SET_GET_FROM_RT);
+				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
+
+				currentArray = getCurrentLocalVariableName();
+			}
+			else if(current->getType() != expectation.getTokenType()){
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
+					expectation.getTokenType(), current->getType());
+				begin = end;
+
+				break;
+			}
+			else {
+				current = current->getNext();
+			}
+			
 		}
 		else if (expectation.getLevel() > level)
 		{
