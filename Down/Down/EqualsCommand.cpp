@@ -11,6 +11,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	if (variable1->getTokenType() == variable2->getTokenType()) 
 	{
+
 		variable1 = variable2;
 
 		for (string& item : vm.getFunctionParametersByKey(parameters.at(1))) 

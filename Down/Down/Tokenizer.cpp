@@ -147,6 +147,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		token->setLineNumber(rowNr);
 		token->setType(currentToken);
 		token->setPartner(nullptr);
+		token->setScope(currentScope);
 
 		// Add + Next
 		if (currentToken != IToken::COMMENT)
