@@ -101,3 +101,37 @@ __
 [ printdown "mkay" ]
 
 __
+
+[ printdown "" ]
+[ printdown "" ]
+
+_number_ { 7 } **numbers** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
+
+---
+### CalcyArray gets _number_ { } **age** and gives _number_ { } **result** 
+**age** { 1 } is 15
+**result** is **age**
+___
+
+#### for (**i** is 0 , **i** smaller than [count **numbers**] , **i** is **i** plus 1 )
+--
+    [ printdown **numbers** { **i** } ]
+__
+
+_number_ { 7 } **number2**
+[ printdown "" ]
+
+**number2** is [CalcyArray **numbers** ]
+
+#### for ( **i** is 0 , **i** smaller than [count **number2**] , **i** is **i** plus 1 )
+--
+    [ printdown **number2** { **i** } ]
+__
+
+
+_text_ { [count [getAllFilesInDirectory "C:\\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include"]] } **files** is [getAllFilesInDirectory "C:\\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include"]
+
+#### for(**i** is  0 , **i** smaller than [count **files**], **i** is **i** plus 1)
+--
+[printdown **files** { **i** }]
+__

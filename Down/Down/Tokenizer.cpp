@@ -107,8 +107,13 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		}
 		else if (currentToken == IToken::FUNCTION_DECLARE)
 		{
-			tokenMap[part.substr(4, part.length() - 1)] = IToken::FUNCTION_CALL;
-			part = part.substr(4, part.length() - 1);
+			auto it = tokenMap.find(part.substr(4, part.length() - 1));
+			if (it != tokenMap.end())
+				ErrorHandler::getInstance()->addError(make_shared<Error>("function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+			else {
+				tokenMap[part.substr(4, part.length() - 1)] = IToken::FUNCTION_CALL;
+				part = part.substr(4, part.length() - 1);
+			}
 		}
 		else if (currentToken == IToken::FUNCTIONUSE)
 		{

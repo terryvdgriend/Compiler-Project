@@ -38,30 +38,37 @@ pair<string, string> EqualsCommand::accept(CommandVisitor& commandVisitor)
 
 void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& parameters) {
 	//get both array's
-	auto toArray = vm.getVariableArray(parameters[1]);
+	auto toIdentifier = parameters[1];
+	auto toArray = vm.getVariableArray(toIdentifier);
+	string functParamByKey = vm.getFunctionParameterValueByKey(toIdentifier);
 	auto fromArray = vm.getVariableArray(parameters[2]);
+	for (auto identifier : vm.getFunctionParametersByValue(functParamByKey)) {
+		if(vm.isAnArrayIdentifier(identifier)){
+			toArray = vm.getVariableArray(identifier);
+			toIdentifier = identifier;
+		}
+	}
 
-	string buffer;
 	
-	string localVariable;
-
 	if (toArray.size() == 0) {
-		vm.addArrayToDictionary(parameters[1], fromArray.size());
+		toArray = vm.addArrayToDictionary(toIdentifier, fromArray.size());
+		
+	}
+	if (toArray.size() >= fromArray.size()) {
+		string buffer;
+		string localVariable;
+		CompileSingleStatement varGetter = CompileSingleStatement();
 		for (size_t i = 0; i < fromArray.size(); i++)
 		{
-			CompileSingleStatement varGetter = CompileSingleStatement();
+			
 			localVariable = varGetter.getNextLocalVariableName(buffer);
 			vm.setVariable(localVariable, fromArray.at(i)->getValue(), fromArray.at(i)->getTokenType());
-			vm.addItemToVariableArrayAt(parameters[1], to_string(i), vm.getVariable(localVariable));
+			vm.addItemToVariableArrayAt(toIdentifier, to_string(i), vm.getVariable(localVariable));
 		}
-		// create Array
-		//set old array to this array
-	}
-	else if(toArray.size() >= fromArray.size()) {
-		//set old array to this array
 	}
 	else {
-		// throw error index out of bounds
+		throwCustomError("index out of bounds array", vm);
 	}
+
 
 }

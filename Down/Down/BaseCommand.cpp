@@ -43,3 +43,9 @@ void BaseCommand::throwTypeError(Variable& var1, Variable& var2, VirtualMachine&
 	ErrorHandler::getInstance()->addError(make_shared<Error>("cannot " + words.first + " " + var1.getValue() + " " + words.second + " " + var2.getValue(), ".md", -1, -1, ErrorType::ERROR));
 	vm.triggerRunFailure();
 }
+
+void BaseCommand::throwCustomError(string error, VirtualMachine& vm)
+{
+	ErrorHandler::getInstance()->addError(make_shared<Error>(error, ".md", -1, -1, ErrorType::ERROR));
+	vm.triggerRunFailure();
+}
