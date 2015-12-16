@@ -127,7 +127,7 @@ _number_ { 7 } **number2**
     [ printdown **number2** { **i** } ]
 __
 
-_text_ **fileDir** is "/Users/Maurice/Compiler-Project/Down/Down/"
+_text_ **fileDir** is "."
 
 _text_ { [count [getAllFilesInDirectory **fileDir**]] } **files** is [getAllFilesInDirectory **fileDir**]
 
