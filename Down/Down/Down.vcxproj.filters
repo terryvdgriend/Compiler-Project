@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Tokenizer">
       <UniqueIdentifier>{990d6c60-b0b7-40e7-9db3-3e715a59520f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Libs">
+      <UniqueIdentifier>{565d4ecc-7028-422a-bb32-88245a473653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs">
+      <UniqueIdentifier>{ff4c1690-be39-48c8-9ad5-9e787812052d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Compiler">
       <UniqueIdentifier>{e1a3dfd5-ec34-44f6-8ad5-959b545c5fef}</UniqueIdentifier>
     </Filter>
@@ -43,12 +49,6 @@
     <Filter Include="Source Files\Compiler\Nodes">
       <UniqueIdentifier>{fac2dac8-b3a4-46bf-957b-1b5efc2e3b6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{cce45383-3129-4110-8e3e-b08cb921d1c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils">
-      <UniqueIdentifier>{6e285845-8eee-4646-838a-1c3147428ad4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\VM\Commands">
       <UniqueIdentifier>{c8b51d8f-67a9-4df3-a1d6-3a1e8f5aa4c9}</UniqueIdentifier>
     </Filter>
@@ -61,72 +61,144 @@
     <Filter Include="Source Files\VM\Variable">
       <UniqueIdentifier>{e583ce7c-bde8-4370-ab1b-f57e59881246}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\VM\Commands\Custom">
-      <UniqueIdentifier>{e4bcc833-0cbb-45e3-8b03-05acbac3e615}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\VM\Commands\Custom">
-      <UniqueIdentifier>{8fd137ba-5b00-4be7-ae8e-e0f07ec31edd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Test">
-      <UniqueIdentifier>{8ed42cba-8b0b-4034-8d5d-f279a1e4add6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Test">
-      <UniqueIdentifier>{a8c5cedc-4a96-4886-b8ae-f45e587f9bc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\FunSpul">
+    <Filter Include="Resource Files\TestScripts">
       <UniqueIdentifier>{beee2260-13f4-4445-a2ed-df4ca8857a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Operators">
+      <UniqueIdentifier>{eb90959f-dfcf-423b-baac-7dfbe770f6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Loops">
+      <UniqueIdentifier>{20e01e1d-07bb-4f0a-b0f2-bbf29c37961a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Conditionals">
+      <UniqueIdentifier>{ce1ab408-0fd2-4267-ab4b-fd9599593238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Miscellaneous">
+      <UniqueIdentifier>{1d45fc2f-6e42-4b0c-9ade-6a7c07bd8231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Loops">
+      <UniqueIdentifier>{75b82704-1f76-4f2a-b6f4-e8583705767b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Conditionals">
+      <UniqueIdentifier>{fa8701ce-07af-4009-b5a2-9a5e15e20dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Miscellaneous">
+      <UniqueIdentifier>{16ea980a-3b6d-43fb-9c75-0b84d374b79c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Operators">
+      <UniqueIdentifier>{6d1053f2-4931-429f-814c-5fcecb67bc91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Visitors">
+      <UniqueIdentifier>{9b05846f-4cc8-4416-8343-aae229f12f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Visitors">
+      <UniqueIdentifier>{74feabd5-a62b-45ef-864d-010c0287103f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer\Token">
+      <UniqueIdentifier>{dc6ef6b2-8c87-4e62-950d-395d41bee88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tokenizer\Token">
+      <UniqueIdentifier>{65cad6d6-b545-4d54-b04c-7b44abd3ff8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Functions">
+      <UniqueIdentifier>{f555dd3f-3295-4b30-a580-070c76f7096a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Operators">
+      <UniqueIdentifier>{3a59071e-cbf7-4198-b482-4ae2be45fe13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Miscellaneous">
+      <UniqueIdentifier>{ba359f26-3e13-427e-8691-989a0b7447bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Operators">
+      <UniqueIdentifier>{c440a896-5b68-451a-a16d-44ee3af6b570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Functions">
+      <UniqueIdentifier>{163c532f-5229-4be7-b5de-e70785adff71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Miscellaneous">
+      <UniqueIdentifier>{d1091f15-067e-4bfb-b2c7-720c6a2c32a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{cce45383-3129-4110-8e3e-b08cb921d1c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\ErrorHandling">
+      <UniqueIdentifier>{2c1738bd-90b5-45a1-b218-63963745a39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\FunctionHandling">
+      <UniqueIdentifier>{e4441849-1f57-4eb3-b0da-eaeb45d1cbcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Miscellaneous">
+      <UniqueIdentifier>{6d3c77c5-b578-4a14-9fd7-32a7f6cf5788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Collections">
+      <UniqueIdentifier>{a4e54dbf-cc1f-43e1-9923-1839abb995eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{6e285845-8eee-4646-838a-1c3147428ad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\ErrorHandling">
+      <UniqueIdentifier>{e5e5b89d-68f6-40e3-ad52-fb934d48f689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\FunctionHandling">
+      <UniqueIdentifier>{63ffb78b-dedd-438d-87f7-36e585f297b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Collections">
+      <UniqueIdentifier>{7667d6f1-6d6d-40d8-8a37-30f561d7c486}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Miscellaneous">
+      <UniqueIdentifier>{6241761d-7aab-45aa-8f61-81d376def772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer\Utilities">
+      <UniqueIdentifier>{30126ca1-e454-44ff-94e0-cc9c6744d89f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tokenizer\Utilities">
+      <UniqueIdentifier>{9c90861a-1538-4383-9580-2076484a6bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\ProgramHandling">
+      <UniqueIdentifier>{89a3b94d-2588-435f-9bdc-a4bfacbb4706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\ProgramHandling">
+      <UniqueIdentifier>{ae8a5465-e2be-41ef-9483-14a1114e8052}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Array">
+      <UniqueIdentifier>{fa41b06a-03f7-4fcb-a3eb-14a6be84b69b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler\Compile\Array">
+      <UniqueIdentifier>{90425fa5-5d92-4c0e-a20d-a5e35d198f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Array">
+      <UniqueIdentifier>{2c1f48ff-d87f-4e8a-81d1-f3f9c6c99cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler\Compile\Array">
+      <UniqueIdentifier>{70c74410-a80b-4fd2-b71e-003dc328194a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Visitors\NodeVisitor">
+      <UniqueIdentifier>{acde4400-7d31-4ee9-9374-2651c312fe4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Visitors\CommandVisitor">
+      <UniqueIdentifier>{c84b084b-2234-4d4a-b078-f01633582142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Commands\Error">
+      <UniqueIdentifier>{b191d766-8698-4c52-8037-b94efde493b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Test">
+      <UniqueIdentifier>{a48262be-85e0-423d-aa9d-84f0c105eaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM\Commands\Error">
+      <UniqueIdentifier>{ad6392c9-334b-4458-bad5-2da94900990b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Test">
+      <UniqueIdentifier>{8c76fb5a-411c-4582-b942-7a7bf2ddbec3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CompileComparison.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileCondition.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileDoWhile.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileElseIf.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileEquals.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="CompileFactory.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
-    <ClCompile Include="CompileIf.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileNextLevel.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileOperator.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompilePlusMinus.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
     <ClCompile Include="Compiler.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileSingleStatement.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileSwitch.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileTimesDivideModulo.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileUserFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileWhile.cpp">
       <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="Compute.cpp">
@@ -156,57 +228,6 @@
     <ClCompile Include="ConditionalJumpNode.cpp">
       <Filter>Source Files\Compiler\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="DivideCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EqualsCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GetFromValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GreaterEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GreaterThanCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="IdentifierToReturnValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="MinusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="MinusMinusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuloCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="NotEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlusPlusCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ShowFunctionCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="SmallerEqualsToCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="SmallerThanCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="TimesCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\VM\Variable</Filter>
     </ClCompile>
@@ -216,86 +237,212 @@
     <ClCompile Include="Tokenizer.cpp">
       <Filter>Source Files\Tokenizer</Filter>
     </ClCompile>
-    <ClCompile Include="Token.cpp">
-      <Filter>Source Files\Tokenizer</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Format.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="FileStreamer.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="ErrorHandler.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Error.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="CommandDictionary.cpp">
       <Filter>Source Files\VM</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstantToReturnValueCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeVisitor.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkedActionList.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileFor.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileGetFunction.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileUnary.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
     </ClCompile>
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionHandler.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Down.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LinkedActionList.cpp">
+      <Filter>Source Files\Utilities\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Error.cpp">
+      <Filter>Source Files\Utilities\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorHandler.cpp">
+      <Filter>Source Files\Utilities\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStreamer.cpp">
+      <Filter>Source Files\Utilities\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="Format.cpp">
+      <Filter>Source Files\Utilities\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\Utilities\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionHandler.cpp">
+      <Filter>Source Files\Utilities\FunctionHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeVisitor.cpp">
+      <Filter>Source Files\VM\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="Function.cpp">
+      <Filter>Source Files\Utilities\FunctionHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileComparison.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileCondition.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileEquals.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileOperator.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilePlusMinus.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileTimesDivideModulo.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUnary.cpp">
+      <Filter>Source Files\Compiler\Compile\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileDoWhile.cpp">
+      <Filter>Source Files\Compiler\Compile\Loops</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileFor.cpp">
+      <Filter>Source Files\Compiler\Compile\Loops</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileWhile.cpp">
+      <Filter>Source Files\Compiler\Compile\Loops</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileElseIf.cpp">
+      <Filter>Source Files\Compiler\Compile\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileSwitch.cpp">
+      <Filter>Source Files\Compiler\Compile\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileIf.cpp">
+      <Filter>Source Files\Compiler\Compile\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileGetFunction.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileNextLevel.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileSingleStatement.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileUserFunction.cpp">
+      <Filter>Source Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClCompile>
     <ClCompile Include="CommandVisitor.cpp">
-      <Filter>Source Files\VM</Filter>
+      <Filter>Source Files\VM\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>Source Files\Tokenizer\Token</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenExpectation.cpp">
+      <Filter>Source Files\Tokenizer\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenMap.cpp">
+      <Filter>Source Files\Tokenizer\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenRegex.cpp">
+      <Filter>Source Files\Tokenizer\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedTokenList.cpp">
+      <Filter>Source Files\Utilities\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="DivideCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="EqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="EqualsCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="GreaterEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="GreaterThanCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusMinusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuloCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="PlusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="PlusPlusCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallerEqualsToCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallerThanCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="TimesCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantToReturnValueCommand.cpp">
+      <Filter>Source Files\VM\Commands\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="GetFromValueCommand.cpp">
+      <Filter>Source Files\VM\Commands\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="IdentifierToReturnValueCommand.cpp">
+      <Filter>Source Files\VM\Commands\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowUpFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomFunctionCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="IDEGateway.cpp">
+      <Filter>Source Files\Utilities\ProgramHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgramHandler.cpp">
+      <Filter>Source Files\Utilities\ProgramHandling</Filter>
     </ClCompile>
     <ClCompile Include="AddArrayToDictionaryCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Array</Filter>
     </ClCompile>
     <ClCompile Include="AddItemToArrayAtCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Array</Filter>
     </ClCompile>
     <ClCompile Include="AddLengthToArrayCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Array</Filter>
     </ClCompile>
     <ClCompile Include="GetItemFromArrayCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileAddArrayItem.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
-    </ClCompile>
-    <ClCompile Include="CompileArray.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
+      <Filter>Source Files\VM\Commands\Array</Filter>
     </ClCompile>
     <ClCompile Include="CompileGetArrayItem.cpp">
-      <Filter>Source Files\Compiler\Compile</Filter>
+      <Filter>Source Files\Compiler\Compile\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileAddArrayItem.cpp">
+      <Filter>Source Files\Compiler\Compile\Array</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileArray.cpp">
+      <Filter>Source Files\Compiler\Compile\Array</Filter>
     </ClCompile>
     <ClCompile Include="ErrorCommand.cpp">
-      <Filter>Source Files\VM\Commands\Custom</Filter>
+      <Filter>Source Files\VM\Commands\Error</Filter>
     </ClCompile>
-    <ClCompile Include="TestIt.cpp">
-      <Filter>Source Files\Test</Filter>
+    <ClCompile Include="TestDown.cpp">
+      <Filter>Source Files\Utilities\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCode.cpp">
+      <Filter>Source Files\Utilities\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="CountCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GetAllFilesInDirectoryCommand.cpp">
+      <Filter>Source Files\VM\Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,34 +455,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompileComparison.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileCondition.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileDoWhile.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileElseIf.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileEquals.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="CompileFactory.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileIf.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileNextLevel.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileOperator.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompilePlusMinus.h">
       <Filter>Header Files\Compiler\Compile</Filter>
     </ClInclude>
     <ClInclude Include="Compiler.h">
@@ -344,86 +464,11 @@
     <ClInclude Include="CompilerHeader.h">
       <Filter>Header Files\Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="CommandList.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
     <ClInclude Include="CommandDictionary.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="CompileSingleStatement.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileSwitch.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileTimesDivideModulo.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileUserFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileWhile.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
     <ClInclude Include="Compute.h">
       <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstantToReturnValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="DivideCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="EqualsCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="EqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GetFromValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GreaterEqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GreaterThanCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="IdentifierToReturnValueCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="MinusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="MinusMinusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuloCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="NotEqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="PlusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="PlusPlusCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ShowFunctionCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="SmallerEqualsToCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="SmallerThanCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="TimesCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="AbstractFunctionCall.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
@@ -449,37 +494,7 @@
     <ClInclude Include="SwitchNode.h">
       <Filter>Header Files\Compiler\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedActionList.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="LinkedList.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Error.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ErrorHandler.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="FileStreamer.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Format.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Token.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
-    <ClInclude Include="TokenExpectation.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
     <ClInclude Include="Tokenizer.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
-    <ClInclude Include="Tokenmap.h">
-      <Filter>Header Files\Tokenizer</Filter>
-    </ClInclude>
-    <ClInclude Include="Tokenregex.h">
       <Filter>Header Files\Tokenizer</Filter>
     </ClInclude>
     <ClInclude Include="VariableType.h">
@@ -491,82 +506,267 @@
     <ClInclude Include="VirtualMachine.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="NodeVisitor.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Error.h">
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandler.h">
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorLocation.h">
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorType.h">
+      <Filter>Header Files\Utilities\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="FileStreamer.h">
+      <Filter>Header Files\Utilities\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="Format.h">
+      <Filter>Header Files\Utilities\Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>Header Files\Utils</Filter>
+      <Filter>Header Files\Utilities\Miscellaneous</Filter>
     </ClInclude>
-    <ClInclude Include="CompileFor.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileGetFunction.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileUnary.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandVisitor.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Function.h">
+      <Filter>Header Files\Utilities\FunctionHandling</Filter>
     </ClInclude>
     <ClInclude Include="FunctionHandler.h">
-      <Filter>Header Files\Utils</Filter>
+      <Filter>Header Files\Utilities\FunctionHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedActionList.h">
+      <Filter>Header Files\Utilities\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileDoWhile.h">
+      <Filter>Header Files\Compiler\Compile\Loops</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileWhile.h">
+      <Filter>Header Files\Compiler\Compile\Loops</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileFor.h">
+      <Filter>Header Files\Compiler\Compile\Loops</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileElseIf.h">
+      <Filter>Header Files\Compiler\Compile\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileIf.h">
+      <Filter>Header Files\Compiler\Compile\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileSwitch.h">
+      <Filter>Header Files\Compiler\Compile\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileCondition.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileComparison.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileEquals.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileOperator.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUnary.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileTimesDivideModulo.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilePlusMinus.h">
+      <Filter>Header Files\Compiler\Compile\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileGetFunction.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileNextLevel.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileSingleStatement.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="CompileUserFunction.h">
+      <Filter>Header Files\Compiler\Compile\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryCommandIncludes.h">
+      <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>Header Files\Tokenizer\Token</Filter>
+    </ClInclude>
+    <ClInclude Include="IToken.h">
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenRegex.h">
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenMap.h">
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenExpectation.h">
+      <Filter>Header Files\Tokenizer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedTokenList.h">
+      <Filter>Header Files\Utilities\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowFunctionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="DivideCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="EqualsCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="EqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="GreaterEqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="GreaterThanCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusMinusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuloCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="NotEqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallerEqualsToCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusPlusCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallerThanCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="TimesCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantToReturnValueCommand.h">
+      <Filter>Header Files\VM\Commands\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="GetFromValueCommand.h">
+      <Filter>Header Files\VM\Commands\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="IdentifierToReturnValueCommand.h">
+      <Filter>Header Files\VM\Commands\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowUpFunctionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunctionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryNodeIncludes.h">
+      <Filter>Header Files\Compiler\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="IDEGateway.h">
+      <Filter>Header Files\Utilities\ProgramHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramHandler.h">
+      <Filter>Header Files\Utilities\ProgramHandling</Filter>
     </ClInclude>
     <ClInclude Include="AddArrayToDictionaryCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
+      <Filter>Header Files\VM\Commands\Array</Filter>
     </ClInclude>
     <ClInclude Include="AddItemToArrayAtCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
+      <Filter>Header Files\VM\Commands\Array</Filter>
     </ClInclude>
     <ClInclude Include="AddLengthToArrayCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
+      <Filter>Header Files\VM\Commands\Array</Filter>
     </ClInclude>
     <ClInclude Include="GetItemFromArrayCommand.h">
-      <Filter>Header Files\VM\Commands</Filter>
+      <Filter>Header Files\VM\Commands\Array</Filter>
     </ClInclude>
     <ClInclude Include="CompileAddArrayItem.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
+      <Filter>Header Files\Compiler\Compile\Array</Filter>
     </ClInclude>
     <ClInclude Include="CompileArray.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
+      <Filter>Header Files\Compiler\Compile\Array</Filter>
     </ClInclude>
     <ClInclude Include="CompileGetArrayItem.h">
-      <Filter>Header Files\Compiler\Compile</Filter>
+      <Filter>Header Files\Compiler\Compile\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeVisitor.h">
+      <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitor.h">
+      <Filter>Header Files\VM\Visitors\CommandVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandVisitorList.h">
+      <Filter>Header Files\VM\Visitors\CommandVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryCommandVisitorIncludes.h">
+      <Filter>Header Files\VM\Visitors\CommandVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeVisitorList.h">
+      <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
+    </ClInclude>
+    <ClInclude Include="MandatoryNodeVisitorIncludes.h">
+      <Filter>Header Files\VM\Visitors\NodeVisitor</Filter>
     </ClInclude>
     <ClInclude Include="ErrorCommand.h">
-      <Filter>Header Files\VM\Commands\Custom</Filter>
+      <Filter>Header Files\VM\Commands\Error</Filter>
     </ClInclude>
-    <ClInclude Include="TestIt.h">
-      <Filter>Header Files\Test</Filter>
+    <ClInclude Include="TestDown.h">
+      <Filter>Header Files\Utilities\Test</Filter>
     </ClInclude>
-    <ClInclude Include="TestText.h">
-      <Filter>Header Files\Test</Filter>
+    <ClInclude Include="TestCode.h">
+      <Filter>Header Files\Utilities\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CountCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="GetAllFilesInDirectoryCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCommand.h">
+      <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="custom.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Switch.md">
-      <Filter>Resource Files\FunSpul</Filter>
+    <Text Include="Snippets.txt">
+      <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="test_ifelse.md" />
+    <Text Include="while.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Switch.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </Text>
+    <Text Include="while.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </Text>
+    <Text Include="test_ifelse.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Desktop\ForFibo.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </None>
     <None Include="SuperTest.md">
-      <Filter>Resource Files\FunSpul</Filter>
-    </None>
-    <None Include="2000lines.md">
-      <Filter>Resource Files\FunSpul</Filter>
-    </None>
-    <None Include="alles.md">
-      <Filter>Resource Files\FunSpul</Filter>
-    </None>
-    <None Include="custom.md">
-      <Filter>Resource Files\FunSpul</Filter>
+      <Filter>Resource Files\TestScripts</Filter>
     </None>
     <None Include="functionTest.md">
-      <Filter>Resource Files\FunSpul</Filter>
+      <Filter>Resource Files\TestScripts</Filter>
     </None>
   </ItemGroup>
 </Project>

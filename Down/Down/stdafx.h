@@ -1,23 +1,36 @@
 // stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently, but
 // are changed infrequently
-
 #pragma once
 
 #include "targetver.h"
 
-#include <stdio.h>
-// Voor de apple users
+// For the Apple (OSX) users
 #ifdef _WIN32
+#include <crtdbg.h>
 #include <tchar.h>
 #endif
 
-#include <string>
-#include <vector>
-#include <map>
+// Std libraries
+#include <algorithm>
+#include <cctype>
+#include <ctime>
+#include <fstream>
+#include <functional> 
 #include <iostream>
-#include "ErrorHandler.h"
+#include <list>
+#include <locale>
+#include <map>
 #include <memory>
+#include <regex>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stack>
+#include <string>
+#include <sstream>
+#include <vector>
 
 using namespace std;
-// TODO: reference additional headers your program requires here
+
+// Own libraries
+#include "ErrorHandler.h"

@@ -1,132 +1,168 @@
 #include "stdafx.h"
 #include "LinkedActionList.h"
 
-
 LinkedActionList::LinkedActionList()
 {
-	this->count = 0;
-	this->first = nullptr;
-	this->last = nullptr;
+	count		= 0;
+	firstNode	= nullptr;
+	lastNode	= nullptr;
 }
 
-LinkedActionList::LinkedActionList(const LinkedActionList & other)
+shared_ptr<ActionNode> LinkedActionList::add(shared_ptr<ActionNode> value)
 {
-	count = other.count;
-	first = other.first;
-	last = other.last;
+	return insertLast(value);
 }
 
-ActionNode* LinkedActionList::add(ActionNode* value){
-	return this->insertLast(value);
-}
+shared_ptr<ActionNode> LinkedActionList::add(shared_ptr<LinkedActionList> list)
+{
+	if (list != nullptr)
+	{
+		shared_ptr<ActionNode> current = list->firstNode;
 
-ActionNode* LinkedActionList::add(LinkedActionList* list){
-	if (list != nullptr){
-		ActionNode* current = list->first;
 		if (current == nullptr)
-			this->insertLast(current);
+		{
+			insertLast(current);
+		}
 		else
-			while (current != nullptr){
-				this->insertLast(current);
+		{
+			while (current != nullptr)
+			{
+				insertLast(current);
 				current = current->getNext();
 			}
-		return this->last;
+		}
+
+		return lastNode;
 	}
-	else{
+	else
+	{
 		return nullptr;
 	}
 }
 
-
-ActionNode* LinkedActionList::insertBefore(ActionNode* right, ActionNode* value){
+shared_ptr<ActionNode> LinkedActionList::insertBefore(shared_ptr<ActionNode> right, shared_ptr<ActionNode> value)
+{
 	if (right == nullptr)
-		return this->insertLast(value);
-	else{
-		ActionNode* left = right->getPrevious();
+	{
+		return insertLast(value);
+	}
+	else
+	{
+		shared_ptr<ActionNode> left = right->getPrevious();
 		count++;
 		value->setNext(right);
 		right->setPrevious(value);
+
 		if (left == nullptr)
-			this->first = value;
-		else{
+		{
+			firstNode = value;
+		}
+		else
+		{
 			left->setNext(value);
 			value->setPrevious(left);
 		}
+
 		return value;
 	}
 }
 
-ActionNode* LinkedActionList::insertBefore(ActionNode* right, LinkedActionList* list) {
-	ActionNode* current;
-	if (list != nullptr) {
-		if (right == nullptr) {
-			current = list->first;
-			while (current != nullptr) {
-				this->insertLast(current);
+shared_ptr<ActionNode> LinkedActionList::insertBefore(shared_ptr<ActionNode> right, shared_ptr<LinkedActionList> list)
+{
+	shared_ptr<ActionNode> current;
+
+	if (list != nullptr) 
+	{
+		if (right == nullptr) 
+		{
+			current = list->firstNode;
+
+			while (current != nullptr) 
+			{
+				insertLast(current);
 				current = current->getNext();
 			}
-			return this->getLast();
+
+			return lastNode;
 		}
-		else {
-			current = list->first;
-			ActionNode* value;
-			ActionNode* left;
-			while (current != nullptr) {
+		else 
+		{
+			current = list->firstNode;
+			shared_ptr<ActionNode> value;
+			shared_ptr<ActionNode> left;
+
+			while (current != nullptr) 
+			{
 				value = current;
 				current = current->getNext();
 				left = right->getPrevious();
 				count++;
 				value->setNext(right);
 				right->setPrevious(value);
+
 				if (left == nullptr)
-					this->first = value;
-				else {
+				{
+					firstNode = value;
+				}
+				else 
+				{
 					left->setNext(value);
 					value->setPrevious(left);
 				}
 			}
+
 			return right->getPrevious();
 		}
 	}
-	else {
+	else 
+	{
 		return right;
 	}
-	
 }
 
-ActionNode* LinkedActionList::insertLast(ActionNode* value){
-	if (value != nullptr){
-		this->count++;
-		if (first == nullptr)
-			this->first = this->last = value;
-		else{
-			this->last->setNext(value);
-			value->setPrevious(this->last);
-			this->last = value;
+shared_ptr<ActionNode> LinkedActionList::insertLast(shared_ptr<ActionNode> value)
+{
+	if (value != nullptr)
+	{
+		count++;
+
+		if (firstNode == nullptr)
+		{
+			firstNode = lastNode = value;
+		}
+		else
+		{
+			lastNode->setNext(value);
+			value->setPrevious(lastNode);
+			lastNode = value;
 		}
 	}
+
 	return value;
 }
 
-void LinkedActionList::printList(){
-	ActionNode* current = first;
-	while (current != nullptr){
-		current->show();
-		current = current->getNext();
+void LinkedActionList::printList()
+{
+	shared_ptr<ActionNode> currentNode = firstNode;
+
+	while (currentNode != nullptr)
+	{
+		currentNode->show();
+		currentNode = currentNode->getNext();
 	}
 }
 
-void LinkedActionList::removeBetween(ActionNode* start, ActionNode* end) {
-}
-
-LinkedActionList::~LinkedActionList()
+int LinkedActionList::getCount()
 {
-	//ActionNode* iter = this->first;
-	//while (iter != nullptr){
-	//	ActionNode* current = iter;
-	//	iter = iter->getNext();
-	//	//delete current;
-	//}
+	return count;
 }
 
+shared_ptr<ActionNode> LinkedActionList::getFirst()
+{
+	return firstNode;
+}
 
+shared_ptr<ActionNode> LinkedActionList::getLast()
+{
+	return lastNode;
+}

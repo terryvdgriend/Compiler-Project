@@ -1,114 +1,148 @@
 #include "stdafx.h"
 #include "CompileElseIf.h"
-#include "CompilerHeader.h"
-#include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
-#include "DoNothingNode.h"
+#include "CompileCondition.h"
 #include "CompileFactory.h"
+#include "CompileSingleStatement.h"
+#include "ConditionalJumpNode.h"
+#include "DoNothingNode.h"
 #include "TokenExpectation.h"
 
 CompileElseIf::CompileElseIf()
 {
-	_compiledStatement = new LinkedActionList();
-	_condition = new LinkedActionList();
-	_body = new LinkedActionList();
-	_compiledStatement->add(new DoNothingNode());
+	_compiledStatement	= make_shared<LinkedActionList>();
+	_condition			= make_shared<LinkedActionList>();
+	_body				= make_shared<LinkedActionList>();
+	_compiledStatement->add(shared_ptr<DoNothingNode>());
 }
 
-void CompileElseIf::ConnectLists(){
-	ConditionalJumpNode* conditionalJumpNode = new ConditionalJumpNode();
-	_compiledStatement->add(_condition);
-	_compiledStatement->add(conditionalJumpNode);
-	_compiledStatement->add(_body);
-	_compiledStatement->add(new DoNothingNode());
-	conditionalJumpNode->setOnTrue(_body->getFirst());
-	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
-}
-void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore){};
-void CompileElseIf::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore,std::map<LinkedActionList*, LinkedActionList*>& _conditionBodyMap)
+void CompileElseIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, shared_ptr<LinkedActionList>& listActionNodes,
+							shared_ptr<ActionNode>& actionBefore)
 {
-	//Check if all the tokens are correct
-	Token* current = &begin;
-	int whileLevel = begin.getLevel();
-	std::list<TokenExpectation> expected = std::list<TokenExpectation>();
-	expected.push_back(TokenExpectation(whileLevel, Token::ELIF));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::CONDITION_CLOSE));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_OPEN));
-	expected.push_back(TokenExpectation(whileLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(whileLevel, Token::BODY_CLOSED));
+	// No implementation - specific implementation below
+}
+
+void CompileElseIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end, shared_ptr<LinkedActionList>& listActionNodes,
+							shared_ptr<ActionNode>& actionBefore, map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& _conditionBodyMap)
+{
+	CompileFactory factory;
+	shared_ptr<Token> current = begin;
+	int level = begin->getLevel();
+
+	list<TokenExpectation> expected;
+	expected.push_back(TokenExpectation(level, IToken::ELSEIF));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::CONDITION_CLOSE));
+	expected.push_back(TokenExpectation(level, IToken::BODY_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::BODY_CLOSE));
 
 	for (TokenExpectation expectation : expected)
 	{
-		while (current->getEnum() == Token::NEWLINE){
-			current = current->next;
+		while (current->getType() == IToken::NEWLINE)
+		{
+			current = current->getNext();
 		}
-		if (expectation.getLevel() == whileLevel){
-			if (current == nullptr){
-				ErrorHandler::getInstance()->addError(Error{ "while statement not completed", ".md", -1, -1, Error::error });
+
+		if (expectation.getLevel() == level)
+		{
+			if (current == nullptr)
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("while statement not completed", ".md", -1, -1, ErrorType::ERROR));
 				begin = end;
+
 				break;
 			}
-			if (current->getEnum() != expectation.getTokenType()){
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.getTokenType(), current->getEnum());
+
+			if (current->getType() != expectation.getTokenType())
+			{
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
+													  expectation.getTokenType(), current->getType());
 				begin = end;
+
 				break;
 			}
 			else
-				current = current->next;
+			{
+				current = current->getNext();
+			}
 		}
-		else if (expectation.getLevel() >= whileLevel){
-			if (_condition->Count() == 0){
-				Compiler* condition;
+		else if (expectation.getLevel() >= level)
+		{
+			if (_condition->getCount() == 0)
+			{
+				shared_ptr<Compiler> condition;
 				bool multiIndex = false;
-				if (current->next->getEnum() != Token::CONDITION_CLOSE) {
-					condition = new CompileCondition;
+
+				if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
+				{
+					condition = make_shared<CompileCondition>();
 					multiIndex = true;
 				}
 				else
-					condition = new CompileSingleStatement;
-				condition->Compile(cTokenList, *current, *current->previous->getPartner(), *_condition, *_condition->getLast());
-				delete condition;
-				if (!multiIndex) { current = current->next; };
-			}
-			else{
-				bodyNode = _body->add(new DoNothingNode());
-				Token* prev = current->previous;
-				while (prev->getEnum() != Token::BODY_OPEN){
-					prev = prev->previous;
+				{
+					condition = make_shared<CompileSingleStatement>();
 				}
-				prev = prev->getPartner();
-				while (current->getLevel() > whileLevel){
+				condition->compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+
+				if (!multiIndex) 
+				{ 
+					current = current->getNext(); 
+				}
+			}
+			else
+			{
+				shared_ptr<Token> previous = current->getPrevious();
+				bodyNode = _body->add(make_shared<DoNothingNode>());
+
+				while (previous->getType() != IToken::BODY_OPEN)
+				{
+					previous = previous->getPrevious();
+				}
+				previous = previous->getPartner();
+
+				while (current->getLevel() > level)
+				{
+					shared_ptr<Compiler> compiledBodyPart;
 					bool multiIndex = false;
-					Compiler* compiledBodyPart;
-					if (current->getEnum() == Token::NEWLINE || (current->next->getEnum() != Token::BODY_CLOSED && current->next->getEnum() != Token::NEWLINE)) {
-						compiledBodyPart = CompileFactory().CreateCompileStatement(*current);
+
+					if (current->getType() == IToken::NEWLINE || (current->getNext()->getType() != IToken::BODY_CLOSE && 
+						current->getNext()->getType() != IToken::NEWLINE)) 
+					{
+						compiledBodyPart = factory.createCompileStatement(current);
 						multiIndex = true;
 					}
 					else
-						compiledBodyPart = new CompileSingleStatement;
-					if (compiledBodyPart != nullptr) {
-						compiledBodyPart->Compile(cTokenList, *current, *prev, *_body, *_body->getLast());
-						if (!multiIndex) { current = current->next; };
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+
+					if (compiledBodyPart != nullptr)
+					{
+						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+
+						if (!multiIndex) 
+						{ 
+							current = current->getNext(); 
+						}
 					}
 					else
 					{
-						current = current->next;
+						current = current->getNext(); 
 					}
-					delete compiledBodyPart;
 				}
 			}
 		}
 	}
 	_conditionBodyMap[_condition] = _body;
-	//ConnectLists();
-	//listActionNodes.add(_compiledStatement);
-	begin = *current;
+	begin = current;
 }
 
-
-CompileElseIf::~CompileElseIf()
+void CompileElseIf::connectLists() 
 {
-	delete _compiledStatement, _condition, _body;
+	shared_ptr<ConditionalJumpNode> conditionalJumpNode = make_shared<ConditionalJumpNode>();
+	_compiledStatement->add(_condition);
+	_compiledStatement->add(conditionalJumpNode);
+	_compiledStatement->add(_body);
+	_compiledStatement->add(make_shared<DoNothingNode>());
+	conditionalJumpNode->setOnTrue(_body->getFirst());
+	conditionalJumpNode->setOnFalse(_compiledStatement->getLast());
 }

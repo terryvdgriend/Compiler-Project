@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PlusCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -10,29 +10,52 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
-	if (variable1.getType() == VariableType::NUMBER && variable2.getType() == VariableType::NUMBER) {
-
+	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number) 
+	{
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());
 
 		vm.setReturnValue(to_string(number1 + number2));
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else if (variable1.getType() == VariableType::FACT && variable2.getType() == VariableType::FACT) {
-		bool bool1 = (variable1.getValue() == "true") ? true : false;
-		bool bool2 = (variable2.getValue() == "true") ? true : false;
+	else if (variable1.getType() == VariableType::fact && variable2.getType() == VariableType::fact) 
+	{
+		bool bool1 = false;
+		bool bool2 = false;
+
+		if (variable1.getValue() == "true")
+		{
+			bool1 = true;
+		}
+
+		if (variable2.getValue() == "true")
+		{
+			bool2 = true;
+		}
 		bool outcome = bool1 + bool2;
-		vm.setReturnValue((outcome)? "true" : "false");
+
+		if (outcome)
+		{
+			vm.setReturnValue("true");
+		}
+		else
+		{
+			vm.setReturnValue("false");
+		}
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else {
+	else 
+	{
 		vm.setReturnValue(variable1.getValue() + variable2.getValue());
-		vm.setReturnToken(Token::TYPE_TEXT);
+		vm.setReturnToken(IToken::TYPE_TEXT);
 	}
 }
 
-std::pair<string, string> PlusCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> PlusCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

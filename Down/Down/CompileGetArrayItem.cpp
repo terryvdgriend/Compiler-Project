@@ -1,48 +1,33 @@
 #include "stdafx.h"
-
 #include "CompileGetArrayItem.h"
-
-#include "CompileEquals.h"
-#include "CompilePlusMinus.h"
 #include "CompilerHeader.h"
-#include "ConditionalJumpNode.h"
-#include "JumpGotoNode.h"
-#include "DoNothingNode.h"
-#include "CompileFactory.h"
+#include "DirectFunctionCall.h"
+#include "FunctionCall.h"
 #include "TokenExpectation.h"
-#include "CompileSingleStatement.h"
 
 #define SET_ID_TO_RT "IdentifierToReturnValue"
 #define SET_CONST_TO_RT "ConstantToReturnValue"
 #define SET_GET_FROM_RT "getFromReturnValue"
 
-CompileGetArrayItem::CompileGetArrayItem()
+void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+								  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-}
-
-CompileGetArrayItem::~CompileGetArrayItem()
-{
-}
-
-void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore)
-{
-	Token* current = &begin;
-	int arrayLevel = begin.getLevel();
+	shared_ptr<Token> current = begin;
+	int level = begin->getLevel();
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
-	expected.push_back(TokenExpectation(arrayLevel, Token::IDENTIFIER));
-
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_OPEN));
-	expected.push_back(TokenExpectation(arrayLevel + 1, Token::ANY));
-	expected.push_back(TokenExpectation(arrayLevel, Token::ARRAY_CLOSE));
+	expected.push_back(TokenExpectation(level, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::ARRAY_OPEN));
+	expected.push_back(TokenExpectation(level + 1, IToken::ANY));
+	expected.push_back(TokenExpectation(level, IToken::ARRAY_CLOSE));
 
 	for (TokenExpectation expectation : expected)
 	{
-		while (current->getEnum() == Token::NEWLINE)
+		while (current->getType() == IToken::NEWLINE)
 		{
-			if (current->next != nullptr)
+			if (current->getNext() != nullptr)
 			{
-				current = current->next;
+				current = current->getNext();
 			}
 			else
 			{
@@ -50,91 +35,120 @@ void CompileGetArrayItem::Compile(LinkedList& cTokenList, Token& begin, Token& e
 			}
 		}
 
-		if (current == nullptr) {
-			ErrorHandler::getInstance()->addError(Error{ "get an item not completed", ".md",-1, -1, Error::error });
+		if (current == nullptr)
+		{
+			ErrorHandler::getInstance()->addError(make_shared<Error>("get an item not completed", ".md", -1, -1, ErrorType::ERROR));
 			begin = end;
+
 			break;
 		}
-
 		string sBuffer;
 
-		if (expectation.Level == arrayLevel)
+		if (expectation.getLevel() == level)
 		{
-			if (current->getEnum() != expectation.TokenType) {
-				ErrorHandler::getInstance()->addError(Error{ "", ".md", current->getLevel(), current->getPositie(), Error::error }, expectation.TokenType, current->getEnum());
-				begin = end;
-				break;
-			}
-
-			if (current->getEnum() == Token::IDENTIFIER)
+			if (current->getType() == IToken::IDENTIFIER)
 			{
-				DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_ID_TO_RT);
 				directFunctionCall->setAt(1, current->getText().c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
-				currArrayItemTempVar = getCurrentLocalVariableName();
+				currentArrayItemTempVar = getCurrentLocalVariableName();
 
-				directFunctionCall = new DirectFunctionCall(*new Token(*current));
+				directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-				listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
-				currArray = getCurrentLocalVariableName();
+				currentArray = getCurrentLocalVariableName();
+				current = current->getNext();
 			}
+			else if (current->getType() == IToken::FUNCTION_DECLARE_OPEN) {
+				CompileGetFunction function;
+				function.compile(tokenList, current, current->getPartner(), listActionNodes, actionBefore);
+				currentArrayItemTempVar = getCurrentLocalVariableName();
 
-			current = current->next;
-		}
-		else if (expectation.Level > arrayLevel)
-		{
-			if (current->getEnum() == Token::ARRAY_CLOSE) {
-				ErrorHandler::getInstance()->addError(Error{ "No number or identifier found.", ".md", current->getLineNumber(), current->getPositie(), Error::error });
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
+				directFunctionCall->setArraySize(2);
+				directFunctionCall->setAt(0, SET_GET_FROM_RT);
+				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
+
+				currentArray = getCurrentLocalVariableName();
+			}
+			else if(current->getType() != expectation.getTokenType()){
+				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
+					expectation.getTokenType(), current->getType());
 				begin = end;
+
 				break;
 			}
-			Token* seperator = current;
-			while (seperator->getEnum() != Token::ARRAY_OPEN)
+			else {
+				current = current->getNext();
+			}
+			
+		}
+		else if (expectation.getLevel() > level)
+		{
+			if (current->getType() == IToken::ARRAY_CLOSE) 
 			{
-				seperator = seperator->previous;
+				ErrorHandler::getInstance()->addError(make_shared<Error>("No number or identifier found.", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR));
+				begin = end;
+
+				break;
+			}
+			shared_ptr<Token> seperator = current;
+
+			while (seperator->getType() != IToken::ARRAY_OPEN)
+			{
+				seperator = seperator->getPrevious();
 			}
 			seperator = seperator->getPartner();
+			shared_ptr<Compiler> compiledBodyPart;
+			bool multiIndex = false;
 
-			Compiler* compiledBodyPart;
+			if (current->getNext()->getType() != IToken::ARRAY_CLOSE)
+			{
+				multiIndex = true;
+			}
 
-			bool multiIndex = current->next->getEnum() != Token::ARRAY_CLOSE;
+			if (multiIndex) 
+			{ 
+				compiledBodyPart = make_shared<CompilePlusMinus>(); 
+			}
+			else 
+			{ 
+				compiledBodyPart = make_shared<CompileSingleStatement>(); 
+			}
+			compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, actionBefore);
 
-			if (multiIndex) { compiledBodyPart = new CompilePlusMinus(); }
-			else { compiledBodyPart = new CompileSingleStatement(); }
-			
-			compiledBodyPart->Compile(cTokenList, *current, *seperator, listActionNodes, actionBefore);
-
-			DirectFunctionCall* directFunctionCall = new DirectFunctionCall(*new Token(*current));
+			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes.insertBefore(&actionBefore, directFunctionCall);
+			listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
 			string saArguments[3];
 			saArguments[0] = "$GetItemFromArray";
-			saArguments[1] = currArray;
+			saArguments[1] = currentArray;
 			saArguments[2] = getCurrentLocalVariableName();
 
-			FunctionCall* pFunction = new FunctionCall();
+			shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 			pFunction->setArraySize(3);
+
 			for (int n = 0; n < 3; n++)
 			{
 				pFunction->setAt(n, saArguments[n].c_str());
 			}
+			listActionNodes->insertBefore(actionBefore, pFunction);
 
-			listActionNodes.insertBefore(&actionBefore, pFunction);
-
-			while (current->getEnum() != Token::ARRAY_CLOSE) {
-				current = current->next;
+			while (current->getType() != IToken::ARRAY_CLOSE) 
+			{
+				current = current->getNext();
 			}
 		}
 	}
-
-	begin = *current;
+	begin = current;
 }

@@ -2,15 +2,9 @@
 #include "CompileTimesDivideModulo.h"
 #include "CompileSingleStatement.h"
 
-CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(new CompileSingleStatement)
+CompileTimesDivideModulo::CompileTimesDivideModulo() : CompileOperator(make_shared<CompileSingleStatement>())
 {
-	TokenMap &tokenMap = getTokenMap();
-	tokenMap[Token::TIMES] = "$*";
-	tokenMap[Token::DIVIDE] = "$/";
-	tokenMap[Token::MODULO] = "$%";
-}
-
-CompileTimesDivideModulo::~CompileTimesDivideModulo()
-{
-	//delete pNextLevel;
+	tokenMap[IToken::TIMES]		= "$*";
+	tokenMap[IToken::DIVIDE]	= "$/";
+	tokenMap[IToken::MODULO]	= "$%";
 }
