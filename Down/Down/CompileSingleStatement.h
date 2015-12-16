@@ -1,16 +1,9 @@
 #pragma once
 #include "Compiler.h"
-#include "DirectFunctionCall.h"
-#include "FunctionCall.h"
-#include "CompileCondition.h"
-#include "CompileGetFunction.h"
 
 class CompileSingleStatement : public Compiler
 {
-public:
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	Compiler * Create() { return new CompileSingleStatement(); };
-	CompileSingleStatement();
-	~CompileSingleStatement();
+	public:
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 };
-

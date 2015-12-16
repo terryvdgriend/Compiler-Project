@@ -1,11 +1,8 @@
 #pragma once
 #include "CompileOperator.h"
-class CompileCondition :
-	public CompileOperator
-{
-public:
-	CompileCondition();
-	Compiler * Create() { return new CompileCondition(); };
-	~CompileCondition();
-};
 
+class CompileCondition : public CompileOperator
+{
+	public:
+		CompileCondition();
+};

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "TimesCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -10,9 +10,11 @@ void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
-	if (variable1.getTokenType() == Token::TYPE_NUMBER && variable2.getTokenType() == Token::TYPE_NUMBER) {
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) {
 
 		double number1 = atof(variable1.getValue().c_str());
 		double number2 = atof(variable2.getValue().c_str());
@@ -20,13 +22,16 @@ void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		vm.setReturnValue(to_string(number1 * number2));
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else {
-		// Exception times heeft 2 nummers nodig
+	else 
+	{
+		// Exception times requires 2 numbers
 		throwTypeError(variable1, variable2, vm);
+
 		return;
 	}
 }
 
-std::pair<string, string> TimesCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> TimesCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

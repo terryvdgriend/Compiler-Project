@@ -1,46 +1,73 @@
 #include "stdafx.h"
 #include "Error.h"
+#include "Text.h"
 
-
-Error::Error(std::string _name, location _location)
+Error::Error(string name, ErrorLocation location)
 {
-	name = _name;
-	t = _location;
+    _name		= name;
+    _location	= location;
+	_line		= -1;
+	_column		= -1;
 }
 
-Error::Error(std::string _name, std::string _file, int _line, int _column, errorType _errorType)
+Error::Error(string name, string file, int line, int column, ErrorType errorType)
 {
-	name = _name;
-	file = _file;
-	line = _line;
-	column = _column;
+    _name	= name;
+    _file	= file;
+    _line	= line;
+    _column = column;
 
-	// Voor even zo
-	errorTypeString = "Error";
-	if (_errorType == warning)
-		errorTypeString = "Warning";
+	_errorTypeString = "Error";
+
+	if (errorType == ErrorType::WARNING)
+	{
+		_errorTypeString = "Warning";
+	}
 }
-
 
 void Error::print()
 {
-	Text::Print(string(name + "  |  line/col: " + to_string(line) + "/" + to_string(column) + " | type: " + errorTypeString + " \r\n"));
-
+	Text::print(_name + "  |  line/col: " + 
+				to_string(_line) + "/" + 
+				to_string(_column) + " | type: " +
+				_errorTypeString + " \r\n");
 }
 
-std::string Error::asJsonObject()
+string Error::asJsonObject()
 {
-	std::string JSON = "{";
-	JSON += "\"description\":\"" + name + "\", ";
-	JSON += "\"line\":\"" + std::to_string(line) + "\", ";
-	JSON += "\"column\":\"" + std::to_string(column) + "\", ";
-	JSON += "\"file\":\"" + file + "\", ";
-	JSON += "\"errorType\":\"" + errorTypeString + "\"";
-	//JSON += "\"description\":\"" + name + "\"";
+	string JSON = "{";
+	JSON += "\"description\":\"" + _name + "\", ";
+	JSON += "\"line\":\"" + to_string(_line) + "\", ";
+	JSON += "\"column\":\"" + to_string(_column) + "\", ";
+	JSON += "\"file\":\"" + _file + "\", ";
+	JSON += "\"errorType\":\"" + _errorTypeString + "\"";
 	JSON += "}";
+
 	return JSON;
 }
 
-Error::~Error()
+string Error::getName()
 {
+	return _name;
+}
+
+void Error::setName(string name)
+{
+	_name = name;
+}
+
+void Error::setLineColumn(int line, int column)
+{
+	_line	= line;
+	_column = column;
+}
+
+void Error::setLocation(ErrorLocation location)
+{
+	_location = location;
+};
+
+void Error::setFile(string file)
+{
+	_file = file;
 }

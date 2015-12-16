@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "NotEqualsToCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void NotEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -10,7 +10,9 @@ void NotEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
 	if (variable1.getValue() != variable2.getValue())
 	{
@@ -20,9 +22,10 @@ void NotEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	{
 		vm.setReturnValue("false");
 	}
-	vm.setReturnToken(Token::TYPE_FACT);
+	vm.setReturnToken(IToken::TYPE_FACT);
 }
 
-std::pair<string, string> NotEqualsToCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> NotEqualsToCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

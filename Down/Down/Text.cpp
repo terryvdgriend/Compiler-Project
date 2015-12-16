@@ -1,50 +1,59 @@
 #include "stdafx.h"
 #include "Text.h"
 
-
-namespace Text{
-	int ReadLine()
+namespace Text
+{
+	int readLine()
 	{
 		int inputz;
-		std::cin >> inputz;
+		cin >> inputz;
+
 		return inputz;
 	}
 
-	void PrintLine(std::string text)
+	void printLine(string text)
 	{
-		std::cout << text << "\n";
+		cout << text << endl;
 	}
 
-	void Print(std::string text)
+	void print(string text)
 	{
-		std::cout << text;
+		cout << text;
 	}
 
-	std::vector<std::string> Split(const std::string &s, char delim) {
-		std::stringstream ss(s);
-		std::string item;
-		std::vector<std::string> elems;
-		while (std::getline(ss, item, delim)) {
+	vector<string> split(const string& s, char delim) 
+	{
+		stringstream ss(s);
+		string item;
+		vector<string> elems;
+
+		while (getline(ss, item, delim)) 
+		{
 			elems.push_back(item);
 		}
+
 		return elems;
 	}
 
-	// trim from start
-	std::string &ltrim(std::string &s) {
-		s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+	// Trim from start
+	string& ltrim(string& s) 
+	{
+		s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
+
 		return s;
 	}
 
-	// trim from end
-	 std::string &rtrim(std::string &s) {
-		s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+	// Trim from end
+	 string& rtrim(string& s) 
+	 {
+		s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
+
 		return s;
 	}
 
-	// trim from both ends
-	std::string &trim(std::string &s) {
+	// Trim from both ends
+	string& trim(string& s) 
+	{
 		return ltrim(rtrim(s));
 	}
-
 };

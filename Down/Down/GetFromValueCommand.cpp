@@ -1,17 +1,17 @@
 #include "stdafx.h"
 #include "GetFromValueCommand.h"
-#include <vector>
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	string rValue = vm.getReturnValue();
-	Token::iToken rToken = vm.getReturnToken();
+	IToken rToken = vm.getReturnToken();
+
 	if (&rValue != nullptr)
 	{
 		vm.setReturnValue("");
-		vm.setReturnToken(Token::ANY);
+		vm.setReturnToken(IToken::ANY);
 		if (vm.isAnIdentifier(rValue))
 		{
 			if (!vm.hasValueInFunctionParameters(parameters[1]))
@@ -24,8 +24,7 @@ void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 				}
 				else
 				{
-					// Hier exception throwen var is undefined
-
+					// Exception var undefined
 					vm.setVariable(parameters[1], "", rToken);
 				}
 				vm.setFunctionParameter(parameters[1], rValue);
@@ -38,6 +37,7 @@ void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 	}
 }
 
-std::pair<string, string> GetFromValueCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> GetFromValueCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

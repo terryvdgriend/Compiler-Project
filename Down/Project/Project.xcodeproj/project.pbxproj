@@ -7,72 +7,81 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		517936851C0C99CC002AF321 /* AbstractFunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936431C0C99CB002AF321 /* AbstractFunctionCall.cpp */; };
-		517936861C0C99CC002AF321 /* ActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936441C0C99CB002AF321 /* ActionNode.cpp */; };
-		517936871C0C99CC002AF321 /* BaseCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936451C0C99CB002AF321 /* BaseCommand.cpp */; };
-		517936881C0C99CC002AF321 /* CommandDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936461C0C99CB002AF321 /* CommandDictionary.cpp */; };
-		517936891C0C99CC002AF321 /* CommandVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936471C0C99CB002AF321 /* CommandVisitor.cpp */; };
-		5179368A1C0C99CC002AF321 /* CompileComparison.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936481C0C99CB002AF321 /* CompileComparison.cpp */; };
-		5179368B1C0C99CC002AF321 /* CompileCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936491C0C99CB002AF321 /* CompileCondition.cpp */; };
-		5179368C1C0C99CC002AF321 /* CompileDoWhile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179364A1C0C99CB002AF321 /* CompileDoWhile.cpp */; };
-		5179368D1C0C99CC002AF321 /* CompileElseIf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179364B1C0C99CB002AF321 /* CompileElseIf.cpp */; };
-		5179368E1C0C99CC002AF321 /* CompileEquals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179364C1C0C99CB002AF321 /* CompileEquals.cpp */; };
-		5179368F1C0C99CC002AF321 /* CompileFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179364D1C0C99CB002AF321 /* CompileFactory.cpp */; };
-		517936901C0C99CC002AF321 /* CompileFor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179364E1C0C99CB002AF321 /* CompileFor.cpp */; };
-		517936911C0C99CC002AF321 /* CompileFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179364F1C0C99CB002AF321 /* CompileFunction.cpp */; };
-		517936921C0C99CC002AF321 /* CompileGetFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936501C0C99CB002AF321 /* CompileGetFunction.cpp */; };
-		517936931C0C99CC002AF321 /* CompileIf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936511C0C99CB002AF321 /* CompileIf.cpp */; };
-		517936941C0C99CC002AF321 /* CompileLValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936521C0C99CB002AF321 /* CompileLValue.cpp */; };
-		517936951C0C99CC002AF321 /* CompileNextLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936531C0C99CB002AF321 /* CompileNextLevel.cpp */; };
-		517936961C0C99CC002AF321 /* CompileOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936541C0C99CB002AF321 /* CompileOperator.cpp */; };
-		517936971C0C99CC002AF321 /* CompilePlusMinus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936551C0C99CB002AF321 /* CompilePlusMinus.cpp */; };
-		517936981C0C99CC002AF321 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936561C0C99CB002AF321 /* Compiler.cpp */; };
-		517936991C0C99CC002AF321 /* CompileSingleStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936571C0C99CB002AF321 /* CompileSingleStatement.cpp */; };
-		5179369A1C0C99CC002AF321 /* CompileSwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936581C0C99CB002AF321 /* CompileSwitch.cpp */; };
-		5179369B1C0C99CC002AF321 /* CompileTimesDivideModulo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936591C0C99CB002AF321 /* CompileTimesDivideModulo.cpp */; };
-		5179369C1C0C99CC002AF321 /* CompileUnary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179365A1C0C99CB002AF321 /* CompileUnary.cpp */; };
-		5179369D1C0C99CC002AF321 /* CompileUserFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179365B1C0C99CB002AF321 /* CompileUserFunction.cpp */; };
-		5179369E1C0C99CC002AF321 /* CompileWhile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179365C1C0C99CB002AF321 /* CompileWhile.cpp */; };
-		5179369F1C0C99CC002AF321 /* Compute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179365D1C0C99CB002AF321 /* Compute.cpp */; };
-		517936A01C0C99CC002AF321 /* ConditionalJumpNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179365E1C0C99CB002AF321 /* ConditionalJumpNode.cpp */; };
-		517936A11C0C99CC002AF321 /* ConstantToReturnValueCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179365F1C0C99CC002AF321 /* ConstantToReturnValueCommand.cpp */; };
-		517936A21C0C99CC002AF321 /* DirectFunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936601C0C99CC002AF321 /* DirectFunctionCall.cpp */; };
-		517936A31C0C99CC002AF321 /* DivideCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936611C0C99CC002AF321 /* DivideCommand.cpp */; };
-		517936A41C0C99CC002AF321 /* DoNothingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936621C0C99CC002AF321 /* DoNothingNode.cpp */; };
-		517936A51C0C99CC002AF321 /* Down.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936631C0C99CC002AF321 /* Down.cpp */; };
-		517936A61C0C99CC002AF321 /* EqualsCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936641C0C99CC002AF321 /* EqualsCommand.cpp */; };
-		517936A71C0C99CC002AF321 /* EqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936651C0C99CC002AF321 /* EqualsToCommand.cpp */; };
-		517936A81C0C99CC002AF321 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936661C0C99CC002AF321 /* Error.cpp */; };
-		517936A91C0C99CC002AF321 /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936671C0C99CC002AF321 /* ErrorHandler.cpp */; };
-		517936AA1C0C99CC002AF321 /* FileStreamer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936681C0C99CC002AF321 /* FileStreamer.cpp */; };
-		517936AB1C0C99CC002AF321 /* Format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936691C0C99CC002AF321 /* Format.cpp */; };
-		517936AC1C0C99CC002AF321 /* FunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179366A1C0C99CC002AF321 /* FunctionCall.cpp */; };
-		517936AD1C0C99CC002AF321 /* FunctionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179366B1C0C99CC002AF321 /* FunctionHandler.cpp */; };
-		517936AE1C0C99CC002AF321 /* GetFromValueCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179366C1C0C99CC002AF321 /* GetFromValueCommand.cpp */; };
-		517936AF1C0C99CC002AF321 /* GreaterEqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179366D1C0C99CC002AF321 /* GreaterEqualsToCommand.cpp */; };
-		517936B01C0C99CC002AF321 /* GreaterThanCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179366E1C0C99CC002AF321 /* GreaterThanCommand.cpp */; };
-		517936B11C0C99CC002AF321 /* IdentifierToReturnValueCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179366F1C0C99CC002AF321 /* IdentifierToReturnValueCommand.cpp */; };
-		517936B21C0C99CC002AF321 /* JumpGotoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936701C0C99CC002AF321 /* JumpGotoNode.cpp */; };
-		517936B31C0C99CC002AF321 /* LinkedActionList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936711C0C99CC002AF321 /* LinkedActionList.cpp */; };
-		517936B41C0C99CC002AF321 /* LinkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936721C0C99CC002AF321 /* LinkedList.cpp */; };
-		517936B51C0C99CC002AF321 /* MinusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936731C0C99CC002AF321 /* MinusCommand.cpp */; };
-		517936B61C0C99CC002AF321 /* MinusMinusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936741C0C99CC002AF321 /* MinusMinusCommand.cpp */; };
-		517936B71C0C99CC002AF321 /* ModuloCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936751C0C99CC002AF321 /* ModuloCommand.cpp */; };
-		517936B81C0C99CC002AF321 /* NodeVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936761C0C99CC002AF321 /* NodeVisitor.cpp */; };
-		517936B91C0C99CC002AF321 /* NotEqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936771C0C99CC002AF321 /* NotEqualsToCommand.cpp */; };
-		517936BA1C0C99CC002AF321 /* PlusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936781C0C99CC002AF321 /* PlusCommand.cpp */; };
-		517936BB1C0C99CC002AF321 /* PlusPlusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936791C0C99CC002AF321 /* PlusPlusCommand.cpp */; };
-		517936BC1C0C99CC002AF321 /* ShowFunctionCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179367A1C0C99CC002AF321 /* ShowFunctionCommand.cpp */; };
-		517936BD1C0C99CC002AF321 /* SmallerEqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179367B1C0C99CC002AF321 /* SmallerEqualsToCommand.cpp */; };
-		517936BE1C0C99CC002AF321 /* SmallerThanCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179367C1C0C99CC002AF321 /* SmallerThanCommand.cpp */; };
-		517936BF1C0C99CC002AF321 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179367D1C0C99CC002AF321 /* stdafx.cpp */; };
-		517936C01C0C99CC002AF321 /* SwitchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179367E1C0C99CC002AF321 /* SwitchNode.cpp */; };
-		517936C11C0C99CC002AF321 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5179367F1C0C99CC002AF321 /* Text.cpp */; };
-		517936C21C0C99CC002AF321 /* TimesCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936801C0C99CC002AF321 /* TimesCommand.cpp */; };
-		517936C31C0C99CC002AF321 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936811C0C99CC002AF321 /* Token.cpp */; };
-		517936C41C0C99CC002AF321 /* Tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936821C0C99CC002AF321 /* Tokenizer.cpp */; };
-		517936C51C0C99CC002AF321 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936831C0C99CC002AF321 /* Variable.cpp */; };
-		517936C61C0C99CC002AF321 /* VirtualMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 517936841C0C99CC002AF321 /* VirtualMachine.cpp */; };
+		51DA591C1C1F1B1300069367 /* AbstractFunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D11C1F1B1300069367 /* AbstractFunctionCall.cpp */; };
+		51DA591D1C1F1B1300069367 /* ActionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D21C1F1B1300069367 /* ActionNode.cpp */; };
+		51DA591E1C1F1B1300069367 /* AddArrayToDictionaryCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D31C1F1B1300069367 /* AddArrayToDictionaryCommand.cpp */; };
+		51DA591F1C1F1B1300069367 /* AddItemToArrayAtCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D41C1F1B1300069367 /* AddItemToArrayAtCommand.cpp */; };
+		51DA59201C1F1B1300069367 /* AddLengthToArrayCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D51C1F1B1300069367 /* AddLengthToArrayCommand.cpp */; };
+		51DA59211C1F1B1300069367 /* BaseCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D61C1F1B1300069367 /* BaseCommand.cpp */; };
+		51DA59221C1F1B1300069367 /* CommandDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D71C1F1B1300069367 /* CommandDictionary.cpp */; };
+		51DA59231C1F1B1300069367 /* CommandVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D81C1F1B1300069367 /* CommandVisitor.cpp */; };
+		51DA59241C1F1B1300069367 /* CompileAddArrayItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58D91C1F1B1300069367 /* CompileAddArrayItem.cpp */; };
+		51DA59251C1F1B1300069367 /* CompileArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58DA1C1F1B1300069367 /* CompileArray.cpp */; };
+		51DA59261C1F1B1300069367 /* CompileComparison.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58DB1C1F1B1300069367 /* CompileComparison.cpp */; };
+		51DA59271C1F1B1300069367 /* CompileCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58DC1C1F1B1300069367 /* CompileCondition.cpp */; };
+		51DA59281C1F1B1300069367 /* CompileDoWhile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58DD1C1F1B1300069367 /* CompileDoWhile.cpp */; };
+		51DA59291C1F1B1300069367 /* CompileElseIf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58DE1C1F1B1300069367 /* CompileElseIf.cpp */; };
+		51DA592A1C1F1B1300069367 /* CompileEquals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58DF1C1F1B1300069367 /* CompileEquals.cpp */; };
+		51DA592B1C1F1B1300069367 /* CompileFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E01C1F1B1300069367 /* CompileFactory.cpp */; };
+		51DA592C1C1F1B1300069367 /* CompileFor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E11C1F1B1300069367 /* CompileFor.cpp */; };
+		51DA592D1C1F1B1300069367 /* CompileGetArrayItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E21C1F1B1300069367 /* CompileGetArrayItem.cpp */; };
+		51DA592E1C1F1B1300069367 /* CompileGetFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E31C1F1B1300069367 /* CompileGetFunction.cpp */; };
+		51DA592F1C1F1B1300069367 /* CompileIf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E41C1F1B1300069367 /* CompileIf.cpp */; };
+		51DA59301C1F1B1300069367 /* CompileNextLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E51C1F1B1300069367 /* CompileNextLevel.cpp */; };
+		51DA59311C1F1B1300069367 /* CompileOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E61C1F1B1300069367 /* CompileOperator.cpp */; };
+		51DA59321C1F1B1300069367 /* CompilePlusMinus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E71C1F1B1300069367 /* CompilePlusMinus.cpp */; };
+		51DA59331C1F1B1300069367 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E81C1F1B1300069367 /* Compiler.cpp */; };
+		51DA59341C1F1B1300069367 /* CompileSingleStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58E91C1F1B1300069367 /* CompileSingleStatement.cpp */; };
+		51DA59351C1F1B1300069367 /* CompileSwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58EA1C1F1B1300069367 /* CompileSwitch.cpp */; };
+		51DA59361C1F1B1300069367 /* CompileTimesDivideModulo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58EB1C1F1B1300069367 /* CompileTimesDivideModulo.cpp */; };
+		51DA59371C1F1B1300069367 /* CompileUnary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58EC1C1F1B1300069367 /* CompileUnary.cpp */; };
+		51DA59381C1F1B1300069367 /* CompileUserFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58ED1C1F1B1300069367 /* CompileUserFunction.cpp */; };
+		51DA59391C1F1B1300069367 /* CompileWhile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58EE1C1F1B1300069367 /* CompileWhile.cpp */; };
+		51DA593A1C1F1B1300069367 /* Compute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58EF1C1F1B1300069367 /* Compute.cpp */; };
+		51DA593B1C1F1B1300069367 /* ConditionalJumpNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F01C1F1B1300069367 /* ConditionalJumpNode.cpp */; };
+		51DA593C1C1F1B1300069367 /* ConstantToReturnValueCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F11C1F1B1300069367 /* ConstantToReturnValueCommand.cpp */; };
+		51DA593D1C1F1B1300069367 /* CountCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F21C1F1B1300069367 /* CountCommand.cpp */; };
+		51DA593E1C1F1B1300069367 /* DirectFunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F31C1F1B1300069367 /* DirectFunctionCall.cpp */; };
+		51DA593F1C1F1B1300069367 /* DivideCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F41C1F1B1300069367 /* DivideCommand.cpp */; };
+		51DA59401C1F1B1300069367 /* DoNothingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F51C1F1B1300069367 /* DoNothingNode.cpp */; };
+		51DA59411C1F1B1300069367 /* Down.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F61C1F1B1300069367 /* Down.cpp */; };
+		51DA59421C1F1B1300069367 /* EqualsCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F71C1F1B1300069367 /* EqualsCommand.cpp */; };
+		51DA59431C1F1B1300069367 /* EqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F81C1F1B1300069367 /* EqualsToCommand.cpp */; };
+		51DA59441C1F1B1300069367 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58F91C1F1B1300069367 /* Error.cpp */; };
+		51DA59451C1F1B1300069367 /* ErrorCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58FA1C1F1B1300069367 /* ErrorCommand.cpp */; };
+		51DA59461C1F1B1300069367 /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58FB1C1F1B1300069367 /* ErrorHandler.cpp */; };
+		51DA59471C1F1B1300069367 /* FileStreamer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58FC1C1F1B1300069367 /* FileStreamer.cpp */; };
+		51DA59481C1F1B1300069367 /* Format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58FD1C1F1B1300069367 /* Format.cpp */; };
+		51DA59491C1F1B1300069367 /* FunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58FE1C1F1B1300069367 /* FunctionCall.cpp */; };
+		51DA594A1C1F1B1300069367 /* FunctionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA58FF1C1F1B1300069367 /* FunctionHandler.cpp */; };
+		51DA594B1C1F1B1300069367 /* GetAllFilesInDirectoryCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59001C1F1B1300069367 /* GetAllFilesInDirectoryCommand.cpp */; };
+		51DA594C1C1F1B1300069367 /* GetFromValueCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59011C1F1B1300069367 /* GetFromValueCommand.cpp */; };
+		51DA594D1C1F1B1300069367 /* GetItemFromArrayCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59021C1F1B1300069367 /* GetItemFromArrayCommand.cpp */; };
+		51DA594E1C1F1B1300069367 /* GreaterEqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59031C1F1B1300069367 /* GreaterEqualsToCommand.cpp */; };
+		51DA594F1C1F1B1300069367 /* GreaterThanCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59041C1F1B1300069367 /* GreaterThanCommand.cpp */; };
+		51DA59501C1F1B1300069367 /* IdentifierToReturnValueCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59051C1F1B1300069367 /* IdentifierToReturnValueCommand.cpp */; };
+		51DA59511C1F1B1300069367 /* JumpGotoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59061C1F1B1300069367 /* JumpGotoNode.cpp */; };
+		51DA59521C1F1B1300069367 /* LinkedActionList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59071C1F1B1300069367 /* LinkedActionList.cpp */; };
+		51DA59531C1F1B1300069367 /* LinkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59081C1F1B1300069367 /* LinkedList.cpp */; };
+		51DA59541C1F1B1300069367 /* MinusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59091C1F1B1300069367 /* MinusCommand.cpp */; };
+		51DA59551C1F1B1300069367 /* MinusMinusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA590A1C1F1B1300069367 /* MinusMinusCommand.cpp */; };
+		51DA59561C1F1B1300069367 /* ModuloCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA590B1C1F1B1300069367 /* ModuloCommand.cpp */; };
+		51DA59571C1F1B1300069367 /* NodeVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA590C1C1F1B1300069367 /* NodeVisitor.cpp */; };
+		51DA59581C1F1B1300069367 /* NotEqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA590D1C1F1B1300069367 /* NotEqualsToCommand.cpp */; };
+		51DA59591C1F1B1300069367 /* PlusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA590E1C1F1B1300069367 /* PlusCommand.cpp */; };
+		51DA595A1C1F1B1300069367 /* PlusPlusCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA590F1C1F1B1300069367 /* PlusPlusCommand.cpp */; };
+		51DA595B1C1F1B1300069367 /* ShowFunctionCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59101C1F1B1300069367 /* ShowFunctionCommand.cpp */; };
+		51DA595C1C1F1B1300069367 /* SmallerEqualsToCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59111C1F1B1300069367 /* SmallerEqualsToCommand.cpp */; };
+		51DA595D1C1F1B1300069367 /* SmallerThanCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59121C1F1B1300069367 /* SmallerThanCommand.cpp */; };
+		51DA595E1C1F1B1300069367 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59131C1F1B1300069367 /* stdafx.cpp */; };
+		51DA595F1C1F1B1300069367 /* SwitchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59141C1F1B1300069367 /* SwitchNode.cpp */; };
+		51DA59601C1F1B1300069367 /* TestIt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59151C1F1B1300069367 /* TestIt.cpp */; };
+		51DA59611C1F1B1300069367 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59161C1F1B1300069367 /* Text.cpp */; };
+		51DA59621C1F1B1300069367 /* TimesCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59171C1F1B1300069367 /* TimesCommand.cpp */; };
+		51DA59631C1F1B1300069367 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59181C1F1B1300069367 /* Token.cpp */; };
+		51DA59641C1F1B1300069367 /* Tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA59191C1F1B1300069367 /* Tokenizer.cpp */; };
+		51DA59651C1F1B1300069367 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA591A1C1F1B1300069367 /* Variable.cpp */; };
+		51DA59661C1F1B1300069367 /* VirtualMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DA591B1C1F1B1300069367 /* VirtualMachine.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,145 +98,166 @@
 
 /* Begin PBXFileReference section */
 		517935F01C0C99BC002AF321 /* Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project; sourceTree = BUILT_PRODUCTS_DIR; };
-		517935FA1C0C99CB002AF321 /* AbstractFunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractFunctionCall.h; path = ../../Down/AbstractFunctionCall.h; sourceTree = "<group>"; };
-		517935FB1C0C99CB002AF321 /* ActionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionNode.h; path = ../../Down/ActionNode.h; sourceTree = "<group>"; };
-		517935FC1C0C99CB002AF321 /* BaseCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseCommand.h; path = ../../Down/BaseCommand.h; sourceTree = "<group>"; };
-		517935FD1C0C99CB002AF321 /* CommandDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandDictionary.h; path = ../../Down/CommandDictionary.h; sourceTree = "<group>"; };
-		517935FE1C0C99CB002AF321 /* CommandList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandList.h; path = ../../Down/CommandList.h; sourceTree = "<group>"; };
-		517935FF1C0C99CB002AF321 /* CommandVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandVisitor.h; path = ../../Down/CommandVisitor.h; sourceTree = "<group>"; };
-		517936001C0C99CB002AF321 /* CompileComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileComparison.h; path = ../../Down/CompileComparison.h; sourceTree = "<group>"; };
-		517936011C0C99CB002AF321 /* CompileCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileCondition.h; path = ../../Down/CompileCondition.h; sourceTree = "<group>"; };
-		517936021C0C99CB002AF321 /* CompileDoWhile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileDoWhile.h; path = ../../Down/CompileDoWhile.h; sourceTree = "<group>"; };
-		517936031C0C99CB002AF321 /* CompileElseIf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileElseIf.h; path = ../../Down/CompileElseIf.h; sourceTree = "<group>"; };
-		517936041C0C99CB002AF321 /* CompileEquals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileEquals.h; path = ../../Down/CompileEquals.h; sourceTree = "<group>"; };
-		517936051C0C99CB002AF321 /* CompileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileFactory.h; path = ../../Down/CompileFactory.h; sourceTree = "<group>"; };
-		517936061C0C99CB002AF321 /* CompileFor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileFor.h; path = ../../Down/CompileFor.h; sourceTree = "<group>"; };
-		517936071C0C99CB002AF321 /* CompileFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileFunction.h; path = ../../Down/CompileFunction.h; sourceTree = "<group>"; };
-		517936081C0C99CB002AF321 /* CompileGetFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileGetFunction.h; path = ../../Down/CompileGetFunction.h; sourceTree = "<group>"; };
-		517936091C0C99CB002AF321 /* CompileIf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileIf.h; path = ../../Down/CompileIf.h; sourceTree = "<group>"; };
-		5179360A1C0C99CB002AF321 /* CompileLValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileLValue.h; path = ../../Down/CompileLValue.h; sourceTree = "<group>"; };
-		5179360B1C0C99CB002AF321 /* CompileNextLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileNextLevel.h; path = ../../Down/CompileNextLevel.h; sourceTree = "<group>"; };
-		5179360C1C0C99CB002AF321 /* CompileOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileOperator.h; path = ../../Down/CompileOperator.h; sourceTree = "<group>"; };
-		5179360D1C0C99CB002AF321 /* CompilePlusMinus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompilePlusMinus.h; path = ../../Down/CompilePlusMinus.h; sourceTree = "<group>"; };
-		5179360E1C0C99CB002AF321 /* Compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Compiler.h; path = ../../Down/Compiler.h; sourceTree = "<group>"; };
-		5179360F1C0C99CB002AF321 /* CompilerHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompilerHeader.h; path = ../../Down/CompilerHeader.h; sourceTree = "<group>"; };
-		517936101C0C99CB002AF321 /* CompileSingleStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileSingleStatement.h; path = ../../Down/CompileSingleStatement.h; sourceTree = "<group>"; };
-		517936111C0C99CB002AF321 /* CompileSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileSwitch.h; path = ../../Down/CompileSwitch.h; sourceTree = "<group>"; };
-		517936121C0C99CB002AF321 /* CompileTimesDivideModulo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileTimesDivideModulo.h; path = ../../Down/CompileTimesDivideModulo.h; sourceTree = "<group>"; };
-		517936131C0C99CB002AF321 /* CompileUnary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileUnary.h; path = ../../Down/CompileUnary.h; sourceTree = "<group>"; };
-		517936141C0C99CB002AF321 /* CompileUserFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileUserFunction.h; path = ../../Down/CompileUserFunction.h; sourceTree = "<group>"; };
-		517936151C0C99CB002AF321 /* CompileWhile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileWhile.h; path = ../../Down/CompileWhile.h; sourceTree = "<group>"; };
-		517936161C0C99CB002AF321 /* Compute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Compute.h; path = ../../Down/Compute.h; sourceTree = "<group>"; };
-		517936171C0C99CB002AF321 /* ConditionalJumpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConditionalJumpNode.h; path = ../../Down/ConditionalJumpNode.h; sourceTree = "<group>"; };
-		517936181C0C99CB002AF321 /* ConstantToReturnValueCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConstantToReturnValueCommand.h; path = ../../Down/ConstantToReturnValueCommand.h; sourceTree = "<group>"; };
-		517936191C0C99CB002AF321 /* DirectFunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectFunctionCall.h; path = ../../Down/DirectFunctionCall.h; sourceTree = "<group>"; };
-		5179361A1C0C99CB002AF321 /* DivideCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DivideCommand.h; path = ../../Down/DivideCommand.h; sourceTree = "<group>"; };
-		5179361B1C0C99CB002AF321 /* DoNothingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoNothingNode.h; path = ../../Down/DoNothingNode.h; sourceTree = "<group>"; };
-		5179361C1C0C99CB002AF321 /* EqualsCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EqualsCommand.h; path = ../../Down/EqualsCommand.h; sourceTree = "<group>"; };
-		5179361D1C0C99CB002AF321 /* EqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EqualsToCommand.h; path = ../../Down/EqualsToCommand.h; sourceTree = "<group>"; };
-		5179361E1C0C99CB002AF321 /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Error.h; path = ../../Down/Error.h; sourceTree = "<group>"; };
-		5179361F1C0C99CB002AF321 /* ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorHandler.h; path = ../../Down/ErrorHandler.h; sourceTree = "<group>"; };
-		517936201C0C99CB002AF321 /* FileStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileStreamer.h; path = ../../Down/FileStreamer.h; sourceTree = "<group>"; };
-		517936211C0C99CB002AF321 /* Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Format.h; path = ../../Down/Format.h; sourceTree = "<group>"; };
-		517936221C0C99CB002AF321 /* FunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionCall.h; path = ../../Down/FunctionCall.h; sourceTree = "<group>"; };
-		517936231C0C99CB002AF321 /* FunctionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionHandler.h; path = ../../Down/FunctionHandler.h; sourceTree = "<group>"; };
-		517936241C0C99CB002AF321 /* GetFromValueCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetFromValueCommand.h; path = ../../Down/GetFromValueCommand.h; sourceTree = "<group>"; };
-		517936251C0C99CB002AF321 /* GreaterEqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GreaterEqualsToCommand.h; path = ../../Down/GreaterEqualsToCommand.h; sourceTree = "<group>"; };
-		517936261C0C99CB002AF321 /* GreaterThanCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GreaterThanCommand.h; path = ../../Down/GreaterThanCommand.h; sourceTree = "<group>"; };
-		517936271C0C99CB002AF321 /* IdentifierToReturnValueCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IdentifierToReturnValueCommand.h; path = ../../Down/IdentifierToReturnValueCommand.h; sourceTree = "<group>"; };
-		517936281C0C99CB002AF321 /* JumpGotoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JumpGotoNode.h; path = ../../Down/JumpGotoNode.h; sourceTree = "<group>"; };
-		517936291C0C99CB002AF321 /* LinkedActionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkedActionList.h; path = ../../Down/LinkedActionList.h; sourceTree = "<group>"; };
-		5179362A1C0C99CB002AF321 /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkedList.h; path = ../../Down/LinkedList.h; sourceTree = "<group>"; };
-		5179362B1C0C99CB002AF321 /* MinusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MinusCommand.h; path = ../../Down/MinusCommand.h; sourceTree = "<group>"; };
-		5179362C1C0C99CB002AF321 /* MinusMinusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MinusMinusCommand.h; path = ../../Down/MinusMinusCommand.h; sourceTree = "<group>"; };
-		5179362D1C0C99CB002AF321 /* ModuloCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModuloCommand.h; path = ../../Down/ModuloCommand.h; sourceTree = "<group>"; };
-		5179362E1C0C99CB002AF321 /* NodeVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeVisitor.h; path = ../../Down/NodeVisitor.h; sourceTree = "<group>"; };
-		5179362F1C0C99CB002AF321 /* NotEqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotEqualsToCommand.h; path = ../../Down/NotEqualsToCommand.h; sourceTree = "<group>"; };
-		517936301C0C99CB002AF321 /* PlusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlusCommand.h; path = ../../Down/PlusCommand.h; sourceTree = "<group>"; };
-		517936311C0C99CB002AF321 /* PlusPlusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlusPlusCommand.h; path = ../../Down/PlusPlusCommand.h; sourceTree = "<group>"; };
-		517936321C0C99CB002AF321 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = ../../Down/resource.h; sourceTree = "<group>"; };
-		517936331C0C99CB002AF321 /* ShowFunctionCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFunctionCommand.h; path = ../../Down/ShowFunctionCommand.h; sourceTree = "<group>"; };
-		517936341C0C99CB002AF321 /* SmallerEqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmallerEqualsToCommand.h; path = ../../Down/SmallerEqualsToCommand.h; sourceTree = "<group>"; };
-		517936351C0C99CB002AF321 /* SmallerThanCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmallerThanCommand.h; path = ../../Down/SmallerThanCommand.h; sourceTree = "<group>"; };
-		517936361C0C99CB002AF321 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../Down/stdafx.h; sourceTree = "<group>"; };
-		517936371C0C99CB002AF321 /* SwitchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchNode.h; path = ../../Down/SwitchNode.h; sourceTree = "<group>"; };
-		517936381C0C99CB002AF321 /* targetver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = targetver.h; path = ../../Down/targetver.h; sourceTree = "<group>"; };
-		517936391C0C99CB002AF321 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = ../../Down/Text.h; sourceTree = "<group>"; };
-		5179363A1C0C99CB002AF321 /* TimesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimesCommand.h; path = ../../Down/TimesCommand.h; sourceTree = "<group>"; };
-		5179363B1C0C99CB002AF321 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Token.h; path = ../../Down/Token.h; sourceTree = "<group>"; };
-		5179363C1C0C99CB002AF321 /* TokenExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenExpectation.h; path = ../../Down/TokenExpectation.h; sourceTree = "<group>"; };
-		5179363D1C0C99CB002AF321 /* Tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenizer.h; path = ../../Down/Tokenizer.h; sourceTree = "<group>"; };
-		5179363E1C0C99CB002AF321 /* Tokenmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenmap.h; path = ../../Down/Tokenmap.h; sourceTree = "<group>"; };
-		5179363F1C0C99CB002AF321 /* Tokenregex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenregex.h; path = ../../Down/Tokenregex.h; sourceTree = "<group>"; };
-		517936401C0C99CB002AF321 /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = ../../Down/Variable.h; sourceTree = "<group>"; };
-		517936411C0C99CB002AF321 /* VariableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VariableType.h; path = ../../Down/VariableType.h; sourceTree = "<group>"; };
-		517936421C0C99CB002AF321 /* VirtualMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualMachine.h; path = ../../Down/VirtualMachine.h; sourceTree = "<group>"; };
-		517936431C0C99CB002AF321 /* AbstractFunctionCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractFunctionCall.cpp; path = ../../Down/AbstractFunctionCall.cpp; sourceTree = "<group>"; };
-		517936441C0C99CB002AF321 /* ActionNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActionNode.cpp; path = ../../Down/ActionNode.cpp; sourceTree = "<group>"; };
-		517936451C0C99CB002AF321 /* BaseCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCommand.cpp; path = ../../Down/BaseCommand.cpp; sourceTree = "<group>"; };
-		517936461C0C99CB002AF321 /* CommandDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandDictionary.cpp; path = ../../Down/CommandDictionary.cpp; sourceTree = "<group>"; };
-		517936471C0C99CB002AF321 /* CommandVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandVisitor.cpp; path = ../../Down/CommandVisitor.cpp; sourceTree = "<group>"; };
-		517936481C0C99CB002AF321 /* CompileComparison.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileComparison.cpp; path = ../../Down/CompileComparison.cpp; sourceTree = "<group>"; };
-		517936491C0C99CB002AF321 /* CompileCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileCondition.cpp; path = ../../Down/CompileCondition.cpp; sourceTree = "<group>"; };
-		5179364A1C0C99CB002AF321 /* CompileDoWhile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileDoWhile.cpp; path = ../../Down/CompileDoWhile.cpp; sourceTree = "<group>"; };
-		5179364B1C0C99CB002AF321 /* CompileElseIf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileElseIf.cpp; path = ../../Down/CompileElseIf.cpp; sourceTree = "<group>"; };
-		5179364C1C0C99CB002AF321 /* CompileEquals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileEquals.cpp; path = ../../Down/CompileEquals.cpp; sourceTree = "<group>"; };
-		5179364D1C0C99CB002AF321 /* CompileFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileFactory.cpp; path = ../../Down/CompileFactory.cpp; sourceTree = "<group>"; };
-		5179364E1C0C99CB002AF321 /* CompileFor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileFor.cpp; path = ../../Down/CompileFor.cpp; sourceTree = "<group>"; };
-		5179364F1C0C99CB002AF321 /* CompileFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileFunction.cpp; path = ../../Down/CompileFunction.cpp; sourceTree = "<group>"; };
-		517936501C0C99CB002AF321 /* CompileGetFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileGetFunction.cpp; path = ../../Down/CompileGetFunction.cpp; sourceTree = "<group>"; };
-		517936511C0C99CB002AF321 /* CompileIf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileIf.cpp; path = ../../Down/CompileIf.cpp; sourceTree = "<group>"; };
-		517936521C0C99CB002AF321 /* CompileLValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileLValue.cpp; path = ../../Down/CompileLValue.cpp; sourceTree = "<group>"; };
-		517936531C0C99CB002AF321 /* CompileNextLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileNextLevel.cpp; path = ../../Down/CompileNextLevel.cpp; sourceTree = "<group>"; };
-		517936541C0C99CB002AF321 /* CompileOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileOperator.cpp; path = ../../Down/CompileOperator.cpp; sourceTree = "<group>"; };
-		517936551C0C99CB002AF321 /* CompilePlusMinus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompilePlusMinus.cpp; path = ../../Down/CompilePlusMinus.cpp; sourceTree = "<group>"; };
-		517936561C0C99CB002AF321 /* Compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Compiler.cpp; path = ../../Down/Compiler.cpp; sourceTree = "<group>"; };
-		517936571C0C99CB002AF321 /* CompileSingleStatement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileSingleStatement.cpp; path = ../../Down/CompileSingleStatement.cpp; sourceTree = "<group>"; };
-		517936581C0C99CB002AF321 /* CompileSwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileSwitch.cpp; path = ../../Down/CompileSwitch.cpp; sourceTree = "<group>"; };
-		517936591C0C99CB002AF321 /* CompileTimesDivideModulo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileTimesDivideModulo.cpp; path = ../../Down/CompileTimesDivideModulo.cpp; sourceTree = "<group>"; };
-		5179365A1C0C99CB002AF321 /* CompileUnary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileUnary.cpp; path = ../../Down/CompileUnary.cpp; sourceTree = "<group>"; };
-		5179365B1C0C99CB002AF321 /* CompileUserFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileUserFunction.cpp; path = ../../Down/CompileUserFunction.cpp; sourceTree = "<group>"; };
-		5179365C1C0C99CB002AF321 /* CompileWhile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileWhile.cpp; path = ../../Down/CompileWhile.cpp; sourceTree = "<group>"; };
-		5179365D1C0C99CB002AF321 /* Compute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Compute.cpp; path = ../../Down/Compute.cpp; sourceTree = "<group>"; };
-		5179365E1C0C99CB002AF321 /* ConditionalJumpNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionalJumpNode.cpp; path = ../../Down/ConditionalJumpNode.cpp; sourceTree = "<group>"; };
-		5179365F1C0C99CC002AF321 /* ConstantToReturnValueCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConstantToReturnValueCommand.cpp; path = ../../Down/ConstantToReturnValueCommand.cpp; sourceTree = "<group>"; };
-		517936601C0C99CC002AF321 /* DirectFunctionCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DirectFunctionCall.cpp; path = ../../Down/DirectFunctionCall.cpp; sourceTree = "<group>"; };
-		517936611C0C99CC002AF321 /* DivideCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DivideCommand.cpp; path = ../../Down/DivideCommand.cpp; sourceTree = "<group>"; };
-		517936621C0C99CC002AF321 /* DoNothingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DoNothingNode.cpp; path = ../../Down/DoNothingNode.cpp; sourceTree = "<group>"; };
-		517936631C0C99CC002AF321 /* Down.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Down.cpp; path = ../../Down/Down.cpp; sourceTree = "<group>"; };
-		517936641C0C99CC002AF321 /* EqualsCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualsCommand.cpp; path = ../../Down/EqualsCommand.cpp; sourceTree = "<group>"; };
-		517936651C0C99CC002AF321 /* EqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualsToCommand.cpp; path = ../../Down/EqualsToCommand.cpp; sourceTree = "<group>"; };
-		517936661C0C99CC002AF321 /* Error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Error.cpp; path = ../../Down/Error.cpp; sourceTree = "<group>"; };
-		517936671C0C99CC002AF321 /* ErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ErrorHandler.cpp; path = ../../Down/ErrorHandler.cpp; sourceTree = "<group>"; };
-		517936681C0C99CC002AF321 /* FileStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileStreamer.cpp; path = ../../Down/FileStreamer.cpp; sourceTree = "<group>"; };
-		517936691C0C99CC002AF321 /* Format.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Format.cpp; path = ../../Down/Format.cpp; sourceTree = "<group>"; };
-		5179366A1C0C99CC002AF321 /* FunctionCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FunctionCall.cpp; path = ../../Down/FunctionCall.cpp; sourceTree = "<group>"; };
-		5179366B1C0C99CC002AF321 /* FunctionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FunctionHandler.cpp; path = ../../Down/FunctionHandler.cpp; sourceTree = "<group>"; };
-		5179366C1C0C99CC002AF321 /* GetFromValueCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GetFromValueCommand.cpp; path = ../../Down/GetFromValueCommand.cpp; sourceTree = "<group>"; };
-		5179366D1C0C99CC002AF321 /* GreaterEqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GreaterEqualsToCommand.cpp; path = ../../Down/GreaterEqualsToCommand.cpp; sourceTree = "<group>"; };
-		5179366E1C0C99CC002AF321 /* GreaterThanCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GreaterThanCommand.cpp; path = ../../Down/GreaterThanCommand.cpp; sourceTree = "<group>"; };
-		5179366F1C0C99CC002AF321 /* IdentifierToReturnValueCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IdentifierToReturnValueCommand.cpp; path = ../../Down/IdentifierToReturnValueCommand.cpp; sourceTree = "<group>"; };
-		517936701C0C99CC002AF321 /* JumpGotoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JumpGotoNode.cpp; path = ../../Down/JumpGotoNode.cpp; sourceTree = "<group>"; };
-		517936711C0C99CC002AF321 /* LinkedActionList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LinkedActionList.cpp; path = ../../Down/LinkedActionList.cpp; sourceTree = "<group>"; };
-		517936721C0C99CC002AF321 /* LinkedList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LinkedList.cpp; path = ../../Down/LinkedList.cpp; sourceTree = "<group>"; };
-		517936731C0C99CC002AF321 /* MinusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MinusCommand.cpp; path = ../../Down/MinusCommand.cpp; sourceTree = "<group>"; };
-		517936741C0C99CC002AF321 /* MinusMinusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MinusMinusCommand.cpp; path = ../../Down/MinusMinusCommand.cpp; sourceTree = "<group>"; };
-		517936751C0C99CC002AF321 /* ModuloCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModuloCommand.cpp; path = ../../Down/ModuloCommand.cpp; sourceTree = "<group>"; };
-		517936761C0C99CC002AF321 /* NodeVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeVisitor.cpp; path = ../../Down/NodeVisitor.cpp; sourceTree = "<group>"; };
-		517936771C0C99CC002AF321 /* NotEqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NotEqualsToCommand.cpp; path = ../../Down/NotEqualsToCommand.cpp; sourceTree = "<group>"; };
-		517936781C0C99CC002AF321 /* PlusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlusCommand.cpp; path = ../../Down/PlusCommand.cpp; sourceTree = "<group>"; };
-		517936791C0C99CC002AF321 /* PlusPlusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlusPlusCommand.cpp; path = ../../Down/PlusPlusCommand.cpp; sourceTree = "<group>"; };
-		5179367A1C0C99CC002AF321 /* ShowFunctionCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShowFunctionCommand.cpp; path = ../../Down/ShowFunctionCommand.cpp; sourceTree = "<group>"; };
-		5179367B1C0C99CC002AF321 /* SmallerEqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmallerEqualsToCommand.cpp; path = ../../Down/SmallerEqualsToCommand.cpp; sourceTree = "<group>"; };
-		5179367C1C0C99CC002AF321 /* SmallerThanCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmallerThanCommand.cpp; path = ../../Down/SmallerThanCommand.cpp; sourceTree = "<group>"; };
-		5179367D1C0C99CC002AF321 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../Down/stdafx.cpp; sourceTree = "<group>"; };
-		5179367E1C0C99CC002AF321 /* SwitchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SwitchNode.cpp; path = ../../Down/SwitchNode.cpp; sourceTree = "<group>"; };
-		5179367F1C0C99CC002AF321 /* Text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Text.cpp; path = ../../Down/Text.cpp; sourceTree = "<group>"; };
-		517936801C0C99CC002AF321 /* TimesCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimesCommand.cpp; path = ../../Down/TimesCommand.cpp; sourceTree = "<group>"; };
-		517936811C0C99CC002AF321 /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Token.cpp; path = ../../Down/Token.cpp; sourceTree = "<group>"; };
-		517936821C0C99CC002AF321 /* Tokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tokenizer.cpp; path = ../../Down/Tokenizer.cpp; sourceTree = "<group>"; };
-		517936831C0C99CC002AF321 /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Variable.cpp; path = ../../Down/Variable.cpp; sourceTree = "<group>"; };
-		517936841C0C99CC002AF321 /* VirtualMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualMachine.cpp; path = ../../Down/VirtualMachine.cpp; sourceTree = "<group>"; };
+		51DA587D1C1F1B1300069367 /* AbstractFunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractFunctionCall.h; path = ../../Down/AbstractFunctionCall.h; sourceTree = "<group>"; };
+		51DA587E1C1F1B1300069367 /* ActionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionNode.h; path = ../../Down/ActionNode.h; sourceTree = "<group>"; };
+		51DA587F1C1F1B1300069367 /* AddArrayToDictionaryCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddArrayToDictionaryCommand.h; path = ../../Down/AddArrayToDictionaryCommand.h; sourceTree = "<group>"; };
+		51DA58801C1F1B1300069367 /* AddItemToArrayAtCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddItemToArrayAtCommand.h; path = ../../Down/AddItemToArrayAtCommand.h; sourceTree = "<group>"; };
+		51DA58811C1F1B1300069367 /* AddLengthToArrayCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddLengthToArrayCommand.h; path = ../../Down/AddLengthToArrayCommand.h; sourceTree = "<group>"; };
+		51DA58821C1F1B1300069367 /* BaseCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseCommand.h; path = ../../Down/BaseCommand.h; sourceTree = "<group>"; };
+		51DA58831C1F1B1300069367 /* CommandDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandDictionary.h; path = ../../Down/CommandDictionary.h; sourceTree = "<group>"; };
+		51DA58841C1F1B1300069367 /* CommandList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandList.h; path = ../../Down/CommandList.h; sourceTree = "<group>"; };
+		51DA58851C1F1B1300069367 /* CommandVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommandVisitor.h; path = ../../Down/CommandVisitor.h; sourceTree = "<group>"; };
+		51DA58861C1F1B1300069367 /* CompileAddArrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileAddArrayItem.h; path = ../../Down/CompileAddArrayItem.h; sourceTree = "<group>"; };
+		51DA58871C1F1B1300069367 /* CompileArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileArray.h; path = ../../Down/CompileArray.h; sourceTree = "<group>"; };
+		51DA58881C1F1B1300069367 /* CompileComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileComparison.h; path = ../../Down/CompileComparison.h; sourceTree = "<group>"; };
+		51DA58891C1F1B1300069367 /* CompileCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileCondition.h; path = ../../Down/CompileCondition.h; sourceTree = "<group>"; };
+		51DA588A1C1F1B1300069367 /* CompileDoWhile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileDoWhile.h; path = ../../Down/CompileDoWhile.h; sourceTree = "<group>"; };
+		51DA588B1C1F1B1300069367 /* CompileElseIf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileElseIf.h; path = ../../Down/CompileElseIf.h; sourceTree = "<group>"; };
+		51DA588C1C1F1B1300069367 /* CompileEquals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileEquals.h; path = ../../Down/CompileEquals.h; sourceTree = "<group>"; };
+		51DA588D1C1F1B1300069367 /* CompileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileFactory.h; path = ../../Down/CompileFactory.h; sourceTree = "<group>"; };
+		51DA588E1C1F1B1300069367 /* CompileFor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileFor.h; path = ../../Down/CompileFor.h; sourceTree = "<group>"; };
+		51DA588F1C1F1B1300069367 /* CompileGetArrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileGetArrayItem.h; path = ../../Down/CompileGetArrayItem.h; sourceTree = "<group>"; };
+		51DA58901C1F1B1300069367 /* CompileGetFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileGetFunction.h; path = ../../Down/CompileGetFunction.h; sourceTree = "<group>"; };
+		51DA58911C1F1B1300069367 /* CompileIf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileIf.h; path = ../../Down/CompileIf.h; sourceTree = "<group>"; };
+		51DA58921C1F1B1300069367 /* CompileNextLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileNextLevel.h; path = ../../Down/CompileNextLevel.h; sourceTree = "<group>"; };
+		51DA58931C1F1B1300069367 /* CompileOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileOperator.h; path = ../../Down/CompileOperator.h; sourceTree = "<group>"; };
+		51DA58941C1F1B1300069367 /* CompilePlusMinus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompilePlusMinus.h; path = ../../Down/CompilePlusMinus.h; sourceTree = "<group>"; };
+		51DA58951C1F1B1300069367 /* Compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Compiler.h; path = ../../Down/Compiler.h; sourceTree = "<group>"; };
+		51DA58961C1F1B1300069367 /* CompilerHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompilerHeader.h; path = ../../Down/CompilerHeader.h; sourceTree = "<group>"; };
+		51DA58971C1F1B1300069367 /* CompileSingleStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileSingleStatement.h; path = ../../Down/CompileSingleStatement.h; sourceTree = "<group>"; };
+		51DA58981C1F1B1300069367 /* CompileSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileSwitch.h; path = ../../Down/CompileSwitch.h; sourceTree = "<group>"; };
+		51DA58991C1F1B1300069367 /* CompileTimesDivideModulo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileTimesDivideModulo.h; path = ../../Down/CompileTimesDivideModulo.h; sourceTree = "<group>"; };
+		51DA589A1C1F1B1300069367 /* CompileUnary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileUnary.h; path = ../../Down/CompileUnary.h; sourceTree = "<group>"; };
+		51DA589B1C1F1B1300069367 /* CompileUserFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileUserFunction.h; path = ../../Down/CompileUserFunction.h; sourceTree = "<group>"; };
+		51DA589C1C1F1B1300069367 /* CompileWhile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompileWhile.h; path = ../../Down/CompileWhile.h; sourceTree = "<group>"; };
+		51DA589D1C1F1B1300069367 /* Compute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Compute.h; path = ../../Down/Compute.h; sourceTree = "<group>"; };
+		51DA589E1C1F1B1300069367 /* ConditionalJumpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConditionalJumpNode.h; path = ../../Down/ConditionalJumpNode.h; sourceTree = "<group>"; };
+		51DA589F1C1F1B1300069367 /* ConstantToReturnValueCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConstantToReturnValueCommand.h; path = ../../Down/ConstantToReturnValueCommand.h; sourceTree = "<group>"; };
+		51DA58A01C1F1B1300069367 /* CountCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CountCommand.h; path = ../../Down/CountCommand.h; sourceTree = "<group>"; };
+		51DA58A11C1F1B1300069367 /* DirectFunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectFunctionCall.h; path = ../../Down/DirectFunctionCall.h; sourceTree = "<group>"; };
+		51DA58A21C1F1B1300069367 /* dirent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dirent.h; path = ../../Down/dirent.h; sourceTree = "<group>"; };
+		51DA58A31C1F1B1300069367 /* DivideCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DivideCommand.h; path = ../../Down/DivideCommand.h; sourceTree = "<group>"; };
+		51DA58A41C1F1B1300069367 /* DoNothingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoNothingNode.h; path = ../../Down/DoNothingNode.h; sourceTree = "<group>"; };
+		51DA58A51C1F1B1300069367 /* EqualsCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EqualsCommand.h; path = ../../Down/EqualsCommand.h; sourceTree = "<group>"; };
+		51DA58A61C1F1B1300069367 /* EqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EqualsToCommand.h; path = ../../Down/EqualsToCommand.h; sourceTree = "<group>"; };
+		51DA58A71C1F1B1300069367 /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Error.h; path = ../../Down/Error.h; sourceTree = "<group>"; };
+		51DA58A81C1F1B1300069367 /* ErrorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorCommand.h; path = ../../Down/ErrorCommand.h; sourceTree = "<group>"; };
+		51DA58A91C1F1B1300069367 /* ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorHandler.h; path = ../../Down/ErrorHandler.h; sourceTree = "<group>"; };
+		51DA58AA1C1F1B1300069367 /* FileStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileStreamer.h; path = ../../Down/FileStreamer.h; sourceTree = "<group>"; };
+		51DA58AB1C1F1B1300069367 /* Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Format.h; path = ../../Down/Format.h; sourceTree = "<group>"; };
+		51DA58AC1C1F1B1300069367 /* FunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionCall.h; path = ../../Down/FunctionCall.h; sourceTree = "<group>"; };
+		51DA58AD1C1F1B1300069367 /* FunctionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionHandler.h; path = ../../Down/FunctionHandler.h; sourceTree = "<group>"; };
+		51DA58AE1C1F1B1300069367 /* GetAllFilesInDirectoryCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetAllFilesInDirectoryCommand.h; path = ../../Down/GetAllFilesInDirectoryCommand.h; sourceTree = "<group>"; };
+		51DA58AF1C1F1B1300069367 /* GetFromValueCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetFromValueCommand.h; path = ../../Down/GetFromValueCommand.h; sourceTree = "<group>"; };
+		51DA58B01C1F1B1300069367 /* GetItemFromArrayCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetItemFromArrayCommand.h; path = ../../Down/GetItemFromArrayCommand.h; sourceTree = "<group>"; };
+		51DA58B11C1F1B1300069367 /* GreaterEqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GreaterEqualsToCommand.h; path = ../../Down/GreaterEqualsToCommand.h; sourceTree = "<group>"; };
+		51DA58B21C1F1B1300069367 /* GreaterThanCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GreaterThanCommand.h; path = ../../Down/GreaterThanCommand.h; sourceTree = "<group>"; };
+		51DA58B31C1F1B1300069367 /* IdentifierToReturnValueCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IdentifierToReturnValueCommand.h; path = ../../Down/IdentifierToReturnValueCommand.h; sourceTree = "<group>"; };
+		51DA58B41C1F1B1300069367 /* JumpGotoNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JumpGotoNode.h; path = ../../Down/JumpGotoNode.h; sourceTree = "<group>"; };
+		51DA58B51C1F1B1300069367 /* LinkedActionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkedActionList.h; path = ../../Down/LinkedActionList.h; sourceTree = "<group>"; };
+		51DA58B61C1F1B1300069367 /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkedList.h; path = ../../Down/LinkedList.h; sourceTree = "<group>"; };
+		51DA58B71C1F1B1300069367 /* MinusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MinusCommand.h; path = ../../Down/MinusCommand.h; sourceTree = "<group>"; };
+		51DA58B81C1F1B1300069367 /* MinusMinusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MinusMinusCommand.h; path = ../../Down/MinusMinusCommand.h; sourceTree = "<group>"; };
+		51DA58B91C1F1B1300069367 /* ModuloCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModuloCommand.h; path = ../../Down/ModuloCommand.h; sourceTree = "<group>"; };
+		51DA58BA1C1F1B1300069367 /* NodeVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeVisitor.h; path = ../../Down/NodeVisitor.h; sourceTree = "<group>"; };
+		51DA58BB1C1F1B1300069367 /* NotEqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotEqualsToCommand.h; path = ../../Down/NotEqualsToCommand.h; sourceTree = "<group>"; };
+		51DA58BC1C1F1B1300069367 /* PlusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlusCommand.h; path = ../../Down/PlusCommand.h; sourceTree = "<group>"; };
+		51DA58BD1C1F1B1300069367 /* PlusPlusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlusPlusCommand.h; path = ../../Down/PlusPlusCommand.h; sourceTree = "<group>"; };
+		51DA58BE1C1F1B1300069367 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = ../../Down/resource.h; sourceTree = "<group>"; };
+		51DA58BF1C1F1B1300069367 /* ShowFunctionCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFunctionCommand.h; path = ../../Down/ShowFunctionCommand.h; sourceTree = "<group>"; };
+		51DA58C01C1F1B1300069367 /* SmallerEqualsToCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmallerEqualsToCommand.h; path = ../../Down/SmallerEqualsToCommand.h; sourceTree = "<group>"; };
+		51DA58C11C1F1B1300069367 /* SmallerThanCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmallerThanCommand.h; path = ../../Down/SmallerThanCommand.h; sourceTree = "<group>"; };
+		51DA58C21C1F1B1300069367 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../Down/stdafx.h; sourceTree = "<group>"; };
+		51DA58C31C1F1B1300069367 /* SwitchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchNode.h; path = ../../Down/SwitchNode.h; sourceTree = "<group>"; };
+		51DA58C41C1F1B1300069367 /* targetver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = targetver.h; path = ../../Down/targetver.h; sourceTree = "<group>"; };
+		51DA58C51C1F1B1300069367 /* TestIt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestIt.h; path = ../../Down/TestIt.h; sourceTree = "<group>"; };
+		51DA58C61C1F1B1300069367 /* TestText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestText.h; path = ../../Down/TestText.h; sourceTree = "<group>"; };
+		51DA58C71C1F1B1300069367 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = ../../Down/Text.h; sourceTree = "<group>"; };
+		51DA58C81C1F1B1300069367 /* TimesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimesCommand.h; path = ../../Down/TimesCommand.h; sourceTree = "<group>"; };
+		51DA58C91C1F1B1300069367 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Token.h; path = ../../Down/Token.h; sourceTree = "<group>"; };
+		51DA58CA1C1F1B1300069367 /* TokenExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenExpectation.h; path = ../../Down/TokenExpectation.h; sourceTree = "<group>"; };
+		51DA58CB1C1F1B1300069367 /* Tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenizer.h; path = ../../Down/Tokenizer.h; sourceTree = "<group>"; };
+		51DA58CC1C1F1B1300069367 /* Tokenmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenmap.h; path = ../../Down/Tokenmap.h; sourceTree = "<group>"; };
+		51DA58CD1C1F1B1300069367 /* Tokenregex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenregex.h; path = ../../Down/Tokenregex.h; sourceTree = "<group>"; };
+		51DA58CE1C1F1B1300069367 /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = ../../Down/Variable.h; sourceTree = "<group>"; };
+		51DA58CF1C1F1B1300069367 /* VariableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VariableType.h; path = ../../Down/VariableType.h; sourceTree = "<group>"; };
+		51DA58D01C1F1B1300069367 /* VirtualMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualMachine.h; path = ../../Down/VirtualMachine.h; sourceTree = "<group>"; };
+		51DA58D11C1F1B1300069367 /* AbstractFunctionCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractFunctionCall.cpp; path = ../../Down/AbstractFunctionCall.cpp; sourceTree = "<group>"; };
+		51DA58D21C1F1B1300069367 /* ActionNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActionNode.cpp; path = ../../Down/ActionNode.cpp; sourceTree = "<group>"; };
+		51DA58D31C1F1B1300069367 /* AddArrayToDictionaryCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AddArrayToDictionaryCommand.cpp; path = ../../Down/AddArrayToDictionaryCommand.cpp; sourceTree = "<group>"; };
+		51DA58D41C1F1B1300069367 /* AddItemToArrayAtCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AddItemToArrayAtCommand.cpp; path = ../../Down/AddItemToArrayAtCommand.cpp; sourceTree = "<group>"; };
+		51DA58D51C1F1B1300069367 /* AddLengthToArrayCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AddLengthToArrayCommand.cpp; path = ../../Down/AddLengthToArrayCommand.cpp; sourceTree = "<group>"; };
+		51DA58D61C1F1B1300069367 /* BaseCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCommand.cpp; path = ../../Down/BaseCommand.cpp; sourceTree = "<group>"; };
+		51DA58D71C1F1B1300069367 /* CommandDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandDictionary.cpp; path = ../../Down/CommandDictionary.cpp; sourceTree = "<group>"; };
+		51DA58D81C1F1B1300069367 /* CommandVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandVisitor.cpp; path = ../../Down/CommandVisitor.cpp; sourceTree = "<group>"; };
+		51DA58D91C1F1B1300069367 /* CompileAddArrayItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileAddArrayItem.cpp; path = ../../Down/CompileAddArrayItem.cpp; sourceTree = "<group>"; };
+		51DA58DA1C1F1B1300069367 /* CompileArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileArray.cpp; path = ../../Down/CompileArray.cpp; sourceTree = "<group>"; };
+		51DA58DB1C1F1B1300069367 /* CompileComparison.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileComparison.cpp; path = ../../Down/CompileComparison.cpp; sourceTree = "<group>"; };
+		51DA58DC1C1F1B1300069367 /* CompileCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileCondition.cpp; path = ../../Down/CompileCondition.cpp; sourceTree = "<group>"; };
+		51DA58DD1C1F1B1300069367 /* CompileDoWhile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileDoWhile.cpp; path = ../../Down/CompileDoWhile.cpp; sourceTree = "<group>"; };
+		51DA58DE1C1F1B1300069367 /* CompileElseIf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileElseIf.cpp; path = ../../Down/CompileElseIf.cpp; sourceTree = "<group>"; };
+		51DA58DF1C1F1B1300069367 /* CompileEquals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileEquals.cpp; path = ../../Down/CompileEquals.cpp; sourceTree = "<group>"; };
+		51DA58E01C1F1B1300069367 /* CompileFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileFactory.cpp; path = ../../Down/CompileFactory.cpp; sourceTree = "<group>"; };
+		51DA58E11C1F1B1300069367 /* CompileFor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileFor.cpp; path = ../../Down/CompileFor.cpp; sourceTree = "<group>"; };
+		51DA58E21C1F1B1300069367 /* CompileGetArrayItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileGetArrayItem.cpp; path = ../../Down/CompileGetArrayItem.cpp; sourceTree = "<group>"; };
+		51DA58E31C1F1B1300069367 /* CompileGetFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileGetFunction.cpp; path = ../../Down/CompileGetFunction.cpp; sourceTree = "<group>"; };
+		51DA58E41C1F1B1300069367 /* CompileIf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileIf.cpp; path = ../../Down/CompileIf.cpp; sourceTree = "<group>"; };
+		51DA58E51C1F1B1300069367 /* CompileNextLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileNextLevel.cpp; path = ../../Down/CompileNextLevel.cpp; sourceTree = "<group>"; };
+		51DA58E61C1F1B1300069367 /* CompileOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileOperator.cpp; path = ../../Down/CompileOperator.cpp; sourceTree = "<group>"; };
+		51DA58E71C1F1B1300069367 /* CompilePlusMinus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompilePlusMinus.cpp; path = ../../Down/CompilePlusMinus.cpp; sourceTree = "<group>"; };
+		51DA58E81C1F1B1300069367 /* Compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Compiler.cpp; path = ../../Down/Compiler.cpp; sourceTree = "<group>"; };
+		51DA58E91C1F1B1300069367 /* CompileSingleStatement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileSingleStatement.cpp; path = ../../Down/CompileSingleStatement.cpp; sourceTree = "<group>"; };
+		51DA58EA1C1F1B1300069367 /* CompileSwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileSwitch.cpp; path = ../../Down/CompileSwitch.cpp; sourceTree = "<group>"; };
+		51DA58EB1C1F1B1300069367 /* CompileTimesDivideModulo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileTimesDivideModulo.cpp; path = ../../Down/CompileTimesDivideModulo.cpp; sourceTree = "<group>"; };
+		51DA58EC1C1F1B1300069367 /* CompileUnary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileUnary.cpp; path = ../../Down/CompileUnary.cpp; sourceTree = "<group>"; };
+		51DA58ED1C1F1B1300069367 /* CompileUserFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileUserFunction.cpp; path = ../../Down/CompileUserFunction.cpp; sourceTree = "<group>"; };
+		51DA58EE1C1F1B1300069367 /* CompileWhile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompileWhile.cpp; path = ../../Down/CompileWhile.cpp; sourceTree = "<group>"; };
+		51DA58EF1C1F1B1300069367 /* Compute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Compute.cpp; path = ../../Down/Compute.cpp; sourceTree = "<group>"; };
+		51DA58F01C1F1B1300069367 /* ConditionalJumpNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionalJumpNode.cpp; path = ../../Down/ConditionalJumpNode.cpp; sourceTree = "<group>"; };
+		51DA58F11C1F1B1300069367 /* ConstantToReturnValueCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConstantToReturnValueCommand.cpp; path = ../../Down/ConstantToReturnValueCommand.cpp; sourceTree = "<group>"; };
+		51DA58F21C1F1B1300069367 /* CountCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CountCommand.cpp; path = ../../Down/CountCommand.cpp; sourceTree = "<group>"; };
+		51DA58F31C1F1B1300069367 /* DirectFunctionCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DirectFunctionCall.cpp; path = ../../Down/DirectFunctionCall.cpp; sourceTree = "<group>"; };
+		51DA58F41C1F1B1300069367 /* DivideCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DivideCommand.cpp; path = ../../Down/DivideCommand.cpp; sourceTree = "<group>"; };
+		51DA58F51C1F1B1300069367 /* DoNothingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DoNothingNode.cpp; path = ../../Down/DoNothingNode.cpp; sourceTree = "<group>"; };
+		51DA58F61C1F1B1300069367 /* Down.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Down.cpp; path = ../../Down/Down.cpp; sourceTree = "<group>"; };
+		51DA58F71C1F1B1300069367 /* EqualsCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualsCommand.cpp; path = ../../Down/EqualsCommand.cpp; sourceTree = "<group>"; };
+		51DA58F81C1F1B1300069367 /* EqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualsToCommand.cpp; path = ../../Down/EqualsToCommand.cpp; sourceTree = "<group>"; };
+		51DA58F91C1F1B1300069367 /* Error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Error.cpp; path = ../../Down/Error.cpp; sourceTree = "<group>"; };
+		51DA58FA1C1F1B1300069367 /* ErrorCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ErrorCommand.cpp; path = ../../Down/ErrorCommand.cpp; sourceTree = "<group>"; };
+		51DA58FB1C1F1B1300069367 /* ErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ErrorHandler.cpp; path = ../../Down/ErrorHandler.cpp; sourceTree = "<group>"; };
+		51DA58FC1C1F1B1300069367 /* FileStreamer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileStreamer.cpp; path = ../../Down/FileStreamer.cpp; sourceTree = "<group>"; };
+		51DA58FD1C1F1B1300069367 /* Format.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Format.cpp; path = ../../Down/Format.cpp; sourceTree = "<group>"; };
+		51DA58FE1C1F1B1300069367 /* FunctionCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FunctionCall.cpp; path = ../../Down/FunctionCall.cpp; sourceTree = "<group>"; };
+		51DA58FF1C1F1B1300069367 /* FunctionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FunctionHandler.cpp; path = ../../Down/FunctionHandler.cpp; sourceTree = "<group>"; };
+		51DA59001C1F1B1300069367 /* GetAllFilesInDirectoryCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GetAllFilesInDirectoryCommand.cpp; path = ../../Down/GetAllFilesInDirectoryCommand.cpp; sourceTree = "<group>"; };
+		51DA59011C1F1B1300069367 /* GetFromValueCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GetFromValueCommand.cpp; path = ../../Down/GetFromValueCommand.cpp; sourceTree = "<group>"; };
+		51DA59021C1F1B1300069367 /* GetItemFromArrayCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GetItemFromArrayCommand.cpp; path = ../../Down/GetItemFromArrayCommand.cpp; sourceTree = "<group>"; };
+		51DA59031C1F1B1300069367 /* GreaterEqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GreaterEqualsToCommand.cpp; path = ../../Down/GreaterEqualsToCommand.cpp; sourceTree = "<group>"; };
+		51DA59041C1F1B1300069367 /* GreaterThanCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GreaterThanCommand.cpp; path = ../../Down/GreaterThanCommand.cpp; sourceTree = "<group>"; };
+		51DA59051C1F1B1300069367 /* IdentifierToReturnValueCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IdentifierToReturnValueCommand.cpp; path = ../../Down/IdentifierToReturnValueCommand.cpp; sourceTree = "<group>"; };
+		51DA59061C1F1B1300069367 /* JumpGotoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JumpGotoNode.cpp; path = ../../Down/JumpGotoNode.cpp; sourceTree = "<group>"; };
+		51DA59071C1F1B1300069367 /* LinkedActionList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LinkedActionList.cpp; path = ../../Down/LinkedActionList.cpp; sourceTree = "<group>"; };
+		51DA59081C1F1B1300069367 /* LinkedList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LinkedList.cpp; path = ../../Down/LinkedList.cpp; sourceTree = "<group>"; };
+		51DA59091C1F1B1300069367 /* MinusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MinusCommand.cpp; path = ../../Down/MinusCommand.cpp; sourceTree = "<group>"; };
+		51DA590A1C1F1B1300069367 /* MinusMinusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MinusMinusCommand.cpp; path = ../../Down/MinusMinusCommand.cpp; sourceTree = "<group>"; };
+		51DA590B1C1F1B1300069367 /* ModuloCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModuloCommand.cpp; path = ../../Down/ModuloCommand.cpp; sourceTree = "<group>"; };
+		51DA590C1C1F1B1300069367 /* NodeVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeVisitor.cpp; path = ../../Down/NodeVisitor.cpp; sourceTree = "<group>"; };
+		51DA590D1C1F1B1300069367 /* NotEqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NotEqualsToCommand.cpp; path = ../../Down/NotEqualsToCommand.cpp; sourceTree = "<group>"; };
+		51DA590E1C1F1B1300069367 /* PlusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlusCommand.cpp; path = ../../Down/PlusCommand.cpp; sourceTree = "<group>"; };
+		51DA590F1C1F1B1300069367 /* PlusPlusCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlusPlusCommand.cpp; path = ../../Down/PlusPlusCommand.cpp; sourceTree = "<group>"; };
+		51DA59101C1F1B1300069367 /* ShowFunctionCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShowFunctionCommand.cpp; path = ../../Down/ShowFunctionCommand.cpp; sourceTree = "<group>"; };
+		51DA59111C1F1B1300069367 /* SmallerEqualsToCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmallerEqualsToCommand.cpp; path = ../../Down/SmallerEqualsToCommand.cpp; sourceTree = "<group>"; };
+		51DA59121C1F1B1300069367 /* SmallerThanCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmallerThanCommand.cpp; path = ../../Down/SmallerThanCommand.cpp; sourceTree = "<group>"; };
+		51DA59131C1F1B1300069367 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../Down/stdafx.cpp; sourceTree = "<group>"; };
+		51DA59141C1F1B1300069367 /* SwitchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SwitchNode.cpp; path = ../../Down/SwitchNode.cpp; sourceTree = "<group>"; };
+		51DA59151C1F1B1300069367 /* TestIt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestIt.cpp; path = ../../Down/TestIt.cpp; sourceTree = "<group>"; };
+		51DA59161C1F1B1300069367 /* Text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Text.cpp; path = ../../Down/Text.cpp; sourceTree = "<group>"; };
+		51DA59171C1F1B1300069367 /* TimesCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimesCommand.cpp; path = ../../Down/TimesCommand.cpp; sourceTree = "<group>"; };
+		51DA59181C1F1B1300069367 /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Token.cpp; path = ../../Down/Token.cpp; sourceTree = "<group>"; };
+		51DA59191C1F1B1300069367 /* Tokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tokenizer.cpp; path = ../../Down/Tokenizer.cpp; sourceTree = "<group>"; };
+		51DA591A1C1F1B1300069367 /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Variable.cpp; path = ../../Down/Variable.cpp; sourceTree = "<group>"; };
+		51DA591B1C1F1B1300069367 /* VirtualMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualMachine.cpp; path = ../../Down/VirtualMachine.cpp; sourceTree = "<group>"; };
+		51DA59671C1F1CE500069367 /* custom.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = custom.txt; path = ../../Down/custom.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,145 +290,166 @@
 		517935F21C0C99BC002AF321 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				517935FA1C0C99CB002AF321 /* AbstractFunctionCall.h */,
-				517935FB1C0C99CB002AF321 /* ActionNode.h */,
-				517935FC1C0C99CB002AF321 /* BaseCommand.h */,
-				517935FD1C0C99CB002AF321 /* CommandDictionary.h */,
-				517935FE1C0C99CB002AF321 /* CommandList.h */,
-				517935FF1C0C99CB002AF321 /* CommandVisitor.h */,
-				517936001C0C99CB002AF321 /* CompileComparison.h */,
-				517936011C0C99CB002AF321 /* CompileCondition.h */,
-				517936021C0C99CB002AF321 /* CompileDoWhile.h */,
-				517936031C0C99CB002AF321 /* CompileElseIf.h */,
-				517936041C0C99CB002AF321 /* CompileEquals.h */,
-				517936051C0C99CB002AF321 /* CompileFactory.h */,
-				517936061C0C99CB002AF321 /* CompileFor.h */,
-				517936071C0C99CB002AF321 /* CompileFunction.h */,
-				517936081C0C99CB002AF321 /* CompileGetFunction.h */,
-				517936091C0C99CB002AF321 /* CompileIf.h */,
-				5179360A1C0C99CB002AF321 /* CompileLValue.h */,
-				5179360B1C0C99CB002AF321 /* CompileNextLevel.h */,
-				5179360C1C0C99CB002AF321 /* CompileOperator.h */,
-				5179360D1C0C99CB002AF321 /* CompilePlusMinus.h */,
-				5179360E1C0C99CB002AF321 /* Compiler.h */,
-				5179360F1C0C99CB002AF321 /* CompilerHeader.h */,
-				517936101C0C99CB002AF321 /* CompileSingleStatement.h */,
-				517936111C0C99CB002AF321 /* CompileSwitch.h */,
-				517936121C0C99CB002AF321 /* CompileTimesDivideModulo.h */,
-				517936131C0C99CB002AF321 /* CompileUnary.h */,
-				517936141C0C99CB002AF321 /* CompileUserFunction.h */,
-				517936151C0C99CB002AF321 /* CompileWhile.h */,
-				517936161C0C99CB002AF321 /* Compute.h */,
-				517936171C0C99CB002AF321 /* ConditionalJumpNode.h */,
-				517936181C0C99CB002AF321 /* ConstantToReturnValueCommand.h */,
-				517936191C0C99CB002AF321 /* DirectFunctionCall.h */,
-				5179361A1C0C99CB002AF321 /* DivideCommand.h */,
-				5179361B1C0C99CB002AF321 /* DoNothingNode.h */,
-				5179361C1C0C99CB002AF321 /* EqualsCommand.h */,
-				5179361D1C0C99CB002AF321 /* EqualsToCommand.h */,
-				5179361E1C0C99CB002AF321 /* Error.h */,
-				5179361F1C0C99CB002AF321 /* ErrorHandler.h */,
-				517936201C0C99CB002AF321 /* FileStreamer.h */,
-				517936211C0C99CB002AF321 /* Format.h */,
-				517936221C0C99CB002AF321 /* FunctionCall.h */,
-				517936231C0C99CB002AF321 /* FunctionHandler.h */,
-				517936241C0C99CB002AF321 /* GetFromValueCommand.h */,
-				517936251C0C99CB002AF321 /* GreaterEqualsToCommand.h */,
-				517936261C0C99CB002AF321 /* GreaterThanCommand.h */,
-				517936271C0C99CB002AF321 /* IdentifierToReturnValueCommand.h */,
-				517936281C0C99CB002AF321 /* JumpGotoNode.h */,
-				517936291C0C99CB002AF321 /* LinkedActionList.h */,
-				5179362A1C0C99CB002AF321 /* LinkedList.h */,
-				5179362B1C0C99CB002AF321 /* MinusCommand.h */,
-				5179362C1C0C99CB002AF321 /* MinusMinusCommand.h */,
-				5179362D1C0C99CB002AF321 /* ModuloCommand.h */,
-				5179362E1C0C99CB002AF321 /* NodeVisitor.h */,
-				5179362F1C0C99CB002AF321 /* NotEqualsToCommand.h */,
-				517936301C0C99CB002AF321 /* PlusCommand.h */,
-				517936311C0C99CB002AF321 /* PlusPlusCommand.h */,
-				517936321C0C99CB002AF321 /* resource.h */,
-				517936331C0C99CB002AF321 /* ShowFunctionCommand.h */,
-				517936341C0C99CB002AF321 /* SmallerEqualsToCommand.h */,
-				517936351C0C99CB002AF321 /* SmallerThanCommand.h */,
-				517936361C0C99CB002AF321 /* stdafx.h */,
-				517936371C0C99CB002AF321 /* SwitchNode.h */,
-				517936381C0C99CB002AF321 /* targetver.h */,
-				517936391C0C99CB002AF321 /* Text.h */,
-				5179363A1C0C99CB002AF321 /* TimesCommand.h */,
-				5179363B1C0C99CB002AF321 /* Token.h */,
-				5179363C1C0C99CB002AF321 /* TokenExpectation.h */,
-				5179363D1C0C99CB002AF321 /* Tokenizer.h */,
-				5179363E1C0C99CB002AF321 /* Tokenmap.h */,
-				5179363F1C0C99CB002AF321 /* Tokenregex.h */,
-				517936401C0C99CB002AF321 /* Variable.h */,
-				517936411C0C99CB002AF321 /* VariableType.h */,
-				517936421C0C99CB002AF321 /* VirtualMachine.h */,
-				517936431C0C99CB002AF321 /* AbstractFunctionCall.cpp */,
-				517936441C0C99CB002AF321 /* ActionNode.cpp */,
-				517936451C0C99CB002AF321 /* BaseCommand.cpp */,
-				517936461C0C99CB002AF321 /* CommandDictionary.cpp */,
-				517936471C0C99CB002AF321 /* CommandVisitor.cpp */,
-				517936481C0C99CB002AF321 /* CompileComparison.cpp */,
-				517936491C0C99CB002AF321 /* CompileCondition.cpp */,
-				5179364A1C0C99CB002AF321 /* CompileDoWhile.cpp */,
-				5179364B1C0C99CB002AF321 /* CompileElseIf.cpp */,
-				5179364C1C0C99CB002AF321 /* CompileEquals.cpp */,
-				5179364D1C0C99CB002AF321 /* CompileFactory.cpp */,
-				5179364E1C0C99CB002AF321 /* CompileFor.cpp */,
-				5179364F1C0C99CB002AF321 /* CompileFunction.cpp */,
-				517936501C0C99CB002AF321 /* CompileGetFunction.cpp */,
-				517936511C0C99CB002AF321 /* CompileIf.cpp */,
-				517936521C0C99CB002AF321 /* CompileLValue.cpp */,
-				517936531C0C99CB002AF321 /* CompileNextLevel.cpp */,
-				517936541C0C99CB002AF321 /* CompileOperator.cpp */,
-				517936551C0C99CB002AF321 /* CompilePlusMinus.cpp */,
-				517936561C0C99CB002AF321 /* Compiler.cpp */,
-				517936571C0C99CB002AF321 /* CompileSingleStatement.cpp */,
-				517936581C0C99CB002AF321 /* CompileSwitch.cpp */,
-				517936591C0C99CB002AF321 /* CompileTimesDivideModulo.cpp */,
-				5179365A1C0C99CB002AF321 /* CompileUnary.cpp */,
-				5179365B1C0C99CB002AF321 /* CompileUserFunction.cpp */,
-				5179365C1C0C99CB002AF321 /* CompileWhile.cpp */,
-				5179365D1C0C99CB002AF321 /* Compute.cpp */,
-				5179365E1C0C99CB002AF321 /* ConditionalJumpNode.cpp */,
-				5179365F1C0C99CC002AF321 /* ConstantToReturnValueCommand.cpp */,
-				517936601C0C99CC002AF321 /* DirectFunctionCall.cpp */,
-				517936611C0C99CC002AF321 /* DivideCommand.cpp */,
-				517936621C0C99CC002AF321 /* DoNothingNode.cpp */,
-				517936631C0C99CC002AF321 /* Down.cpp */,
-				517936641C0C99CC002AF321 /* EqualsCommand.cpp */,
-				517936651C0C99CC002AF321 /* EqualsToCommand.cpp */,
-				517936661C0C99CC002AF321 /* Error.cpp */,
-				517936671C0C99CC002AF321 /* ErrorHandler.cpp */,
-				517936681C0C99CC002AF321 /* FileStreamer.cpp */,
-				517936691C0C99CC002AF321 /* Format.cpp */,
-				5179366A1C0C99CC002AF321 /* FunctionCall.cpp */,
-				5179366B1C0C99CC002AF321 /* FunctionHandler.cpp */,
-				5179366C1C0C99CC002AF321 /* GetFromValueCommand.cpp */,
-				5179366D1C0C99CC002AF321 /* GreaterEqualsToCommand.cpp */,
-				5179366E1C0C99CC002AF321 /* GreaterThanCommand.cpp */,
-				5179366F1C0C99CC002AF321 /* IdentifierToReturnValueCommand.cpp */,
-				517936701C0C99CC002AF321 /* JumpGotoNode.cpp */,
-				517936711C0C99CC002AF321 /* LinkedActionList.cpp */,
-				517936721C0C99CC002AF321 /* LinkedList.cpp */,
-				517936731C0C99CC002AF321 /* MinusCommand.cpp */,
-				517936741C0C99CC002AF321 /* MinusMinusCommand.cpp */,
-				517936751C0C99CC002AF321 /* ModuloCommand.cpp */,
-				517936761C0C99CC002AF321 /* NodeVisitor.cpp */,
-				517936771C0C99CC002AF321 /* NotEqualsToCommand.cpp */,
-				517936781C0C99CC002AF321 /* PlusCommand.cpp */,
-				517936791C0C99CC002AF321 /* PlusPlusCommand.cpp */,
-				5179367A1C0C99CC002AF321 /* ShowFunctionCommand.cpp */,
-				5179367B1C0C99CC002AF321 /* SmallerEqualsToCommand.cpp */,
-				5179367C1C0C99CC002AF321 /* SmallerThanCommand.cpp */,
-				5179367D1C0C99CC002AF321 /* stdafx.cpp */,
-				5179367E1C0C99CC002AF321 /* SwitchNode.cpp */,
-				5179367F1C0C99CC002AF321 /* Text.cpp */,
-				517936801C0C99CC002AF321 /* TimesCommand.cpp */,
-				517936811C0C99CC002AF321 /* Token.cpp */,
-				517936821C0C99CC002AF321 /* Tokenizer.cpp */,
-				517936831C0C99CC002AF321 /* Variable.cpp */,
-				517936841C0C99CC002AF321 /* VirtualMachine.cpp */,
+				51DA59671C1F1CE500069367 /* custom.txt */,
+				51DA587D1C1F1B1300069367 /* AbstractFunctionCall.h */,
+				51DA587E1C1F1B1300069367 /* ActionNode.h */,
+				51DA587F1C1F1B1300069367 /* AddArrayToDictionaryCommand.h */,
+				51DA58801C1F1B1300069367 /* AddItemToArrayAtCommand.h */,
+				51DA58811C1F1B1300069367 /* AddLengthToArrayCommand.h */,
+				51DA58821C1F1B1300069367 /* BaseCommand.h */,
+				51DA58831C1F1B1300069367 /* CommandDictionary.h */,
+				51DA58841C1F1B1300069367 /* CommandList.h */,
+				51DA58851C1F1B1300069367 /* CommandVisitor.h */,
+				51DA58861C1F1B1300069367 /* CompileAddArrayItem.h */,
+				51DA58871C1F1B1300069367 /* CompileArray.h */,
+				51DA58881C1F1B1300069367 /* CompileComparison.h */,
+				51DA58891C1F1B1300069367 /* CompileCondition.h */,
+				51DA588A1C1F1B1300069367 /* CompileDoWhile.h */,
+				51DA588B1C1F1B1300069367 /* CompileElseIf.h */,
+				51DA588C1C1F1B1300069367 /* CompileEquals.h */,
+				51DA588D1C1F1B1300069367 /* CompileFactory.h */,
+				51DA588E1C1F1B1300069367 /* CompileFor.h */,
+				51DA588F1C1F1B1300069367 /* CompileGetArrayItem.h */,
+				51DA58901C1F1B1300069367 /* CompileGetFunction.h */,
+				51DA58911C1F1B1300069367 /* CompileIf.h */,
+				51DA58921C1F1B1300069367 /* CompileNextLevel.h */,
+				51DA58931C1F1B1300069367 /* CompileOperator.h */,
+				51DA58941C1F1B1300069367 /* CompilePlusMinus.h */,
+				51DA58951C1F1B1300069367 /* Compiler.h */,
+				51DA58961C1F1B1300069367 /* CompilerHeader.h */,
+				51DA58971C1F1B1300069367 /* CompileSingleStatement.h */,
+				51DA58981C1F1B1300069367 /* CompileSwitch.h */,
+				51DA58991C1F1B1300069367 /* CompileTimesDivideModulo.h */,
+				51DA589A1C1F1B1300069367 /* CompileUnary.h */,
+				51DA589B1C1F1B1300069367 /* CompileUserFunction.h */,
+				51DA589C1C1F1B1300069367 /* CompileWhile.h */,
+				51DA589D1C1F1B1300069367 /* Compute.h */,
+				51DA589E1C1F1B1300069367 /* ConditionalJumpNode.h */,
+				51DA589F1C1F1B1300069367 /* ConstantToReturnValueCommand.h */,
+				51DA58A01C1F1B1300069367 /* CountCommand.h */,
+				51DA58A11C1F1B1300069367 /* DirectFunctionCall.h */,
+				51DA58A21C1F1B1300069367 /* dirent.h */,
+				51DA58A31C1F1B1300069367 /* DivideCommand.h */,
+				51DA58A41C1F1B1300069367 /* DoNothingNode.h */,
+				51DA58A51C1F1B1300069367 /* EqualsCommand.h */,
+				51DA58A61C1F1B1300069367 /* EqualsToCommand.h */,
+				51DA58A71C1F1B1300069367 /* Error.h */,
+				51DA58A81C1F1B1300069367 /* ErrorCommand.h */,
+				51DA58A91C1F1B1300069367 /* ErrorHandler.h */,
+				51DA58AA1C1F1B1300069367 /* FileStreamer.h */,
+				51DA58AB1C1F1B1300069367 /* Format.h */,
+				51DA58AC1C1F1B1300069367 /* FunctionCall.h */,
+				51DA58AD1C1F1B1300069367 /* FunctionHandler.h */,
+				51DA58AE1C1F1B1300069367 /* GetAllFilesInDirectoryCommand.h */,
+				51DA58AF1C1F1B1300069367 /* GetFromValueCommand.h */,
+				51DA58B01C1F1B1300069367 /* GetItemFromArrayCommand.h */,
+				51DA58B11C1F1B1300069367 /* GreaterEqualsToCommand.h */,
+				51DA58B21C1F1B1300069367 /* GreaterThanCommand.h */,
+				51DA58B31C1F1B1300069367 /* IdentifierToReturnValueCommand.h */,
+				51DA58B41C1F1B1300069367 /* JumpGotoNode.h */,
+				51DA58B51C1F1B1300069367 /* LinkedActionList.h */,
+				51DA58B61C1F1B1300069367 /* LinkedList.h */,
+				51DA58B71C1F1B1300069367 /* MinusCommand.h */,
+				51DA58B81C1F1B1300069367 /* MinusMinusCommand.h */,
+				51DA58B91C1F1B1300069367 /* ModuloCommand.h */,
+				51DA58BA1C1F1B1300069367 /* NodeVisitor.h */,
+				51DA58BB1C1F1B1300069367 /* NotEqualsToCommand.h */,
+				51DA58BC1C1F1B1300069367 /* PlusCommand.h */,
+				51DA58BD1C1F1B1300069367 /* PlusPlusCommand.h */,
+				51DA58BE1C1F1B1300069367 /* resource.h */,
+				51DA58BF1C1F1B1300069367 /* ShowFunctionCommand.h */,
+				51DA58C01C1F1B1300069367 /* SmallerEqualsToCommand.h */,
+				51DA58C11C1F1B1300069367 /* SmallerThanCommand.h */,
+				51DA58C21C1F1B1300069367 /* stdafx.h */,
+				51DA58C31C1F1B1300069367 /* SwitchNode.h */,
+				51DA58C41C1F1B1300069367 /* targetver.h */,
+				51DA58C51C1F1B1300069367 /* TestIt.h */,
+				51DA58C61C1F1B1300069367 /* TestText.h */,
+				51DA58C71C1F1B1300069367 /* Text.h */,
+				51DA58C81C1F1B1300069367 /* TimesCommand.h */,
+				51DA58C91C1F1B1300069367 /* Token.h */,
+				51DA58CA1C1F1B1300069367 /* TokenExpectation.h */,
+				51DA58CB1C1F1B1300069367 /* Tokenizer.h */,
+				51DA58CC1C1F1B1300069367 /* Tokenmap.h */,
+				51DA58CD1C1F1B1300069367 /* Tokenregex.h */,
+				51DA58CE1C1F1B1300069367 /* Variable.h */,
+				51DA58CF1C1F1B1300069367 /* VariableType.h */,
+				51DA58D01C1F1B1300069367 /* VirtualMachine.h */,
+				51DA58D11C1F1B1300069367 /* AbstractFunctionCall.cpp */,
+				51DA58D21C1F1B1300069367 /* ActionNode.cpp */,
+				51DA58D31C1F1B1300069367 /* AddArrayToDictionaryCommand.cpp */,
+				51DA58D41C1F1B1300069367 /* AddItemToArrayAtCommand.cpp */,
+				51DA58D51C1F1B1300069367 /* AddLengthToArrayCommand.cpp */,
+				51DA58D61C1F1B1300069367 /* BaseCommand.cpp */,
+				51DA58D71C1F1B1300069367 /* CommandDictionary.cpp */,
+				51DA58D81C1F1B1300069367 /* CommandVisitor.cpp */,
+				51DA58D91C1F1B1300069367 /* CompileAddArrayItem.cpp */,
+				51DA58DA1C1F1B1300069367 /* CompileArray.cpp */,
+				51DA58DB1C1F1B1300069367 /* CompileComparison.cpp */,
+				51DA58DC1C1F1B1300069367 /* CompileCondition.cpp */,
+				51DA58DD1C1F1B1300069367 /* CompileDoWhile.cpp */,
+				51DA58DE1C1F1B1300069367 /* CompileElseIf.cpp */,
+				51DA58DF1C1F1B1300069367 /* CompileEquals.cpp */,
+				51DA58E01C1F1B1300069367 /* CompileFactory.cpp */,
+				51DA58E11C1F1B1300069367 /* CompileFor.cpp */,
+				51DA58E21C1F1B1300069367 /* CompileGetArrayItem.cpp */,
+				51DA58E31C1F1B1300069367 /* CompileGetFunction.cpp */,
+				51DA58E41C1F1B1300069367 /* CompileIf.cpp */,
+				51DA58E51C1F1B1300069367 /* CompileNextLevel.cpp */,
+				51DA58E61C1F1B1300069367 /* CompileOperator.cpp */,
+				51DA58E71C1F1B1300069367 /* CompilePlusMinus.cpp */,
+				51DA58E81C1F1B1300069367 /* Compiler.cpp */,
+				51DA58E91C1F1B1300069367 /* CompileSingleStatement.cpp */,
+				51DA58EA1C1F1B1300069367 /* CompileSwitch.cpp */,
+				51DA58EB1C1F1B1300069367 /* CompileTimesDivideModulo.cpp */,
+				51DA58EC1C1F1B1300069367 /* CompileUnary.cpp */,
+				51DA58ED1C1F1B1300069367 /* CompileUserFunction.cpp */,
+				51DA58EE1C1F1B1300069367 /* CompileWhile.cpp */,
+				51DA58EF1C1F1B1300069367 /* Compute.cpp */,
+				51DA58F01C1F1B1300069367 /* ConditionalJumpNode.cpp */,
+				51DA58F11C1F1B1300069367 /* ConstantToReturnValueCommand.cpp */,
+				51DA58F21C1F1B1300069367 /* CountCommand.cpp */,
+				51DA58F31C1F1B1300069367 /* DirectFunctionCall.cpp */,
+				51DA58F41C1F1B1300069367 /* DivideCommand.cpp */,
+				51DA58F51C1F1B1300069367 /* DoNothingNode.cpp */,
+				51DA58F61C1F1B1300069367 /* Down.cpp */,
+				51DA58F71C1F1B1300069367 /* EqualsCommand.cpp */,
+				51DA58F81C1F1B1300069367 /* EqualsToCommand.cpp */,
+				51DA58F91C1F1B1300069367 /* Error.cpp */,
+				51DA58FA1C1F1B1300069367 /* ErrorCommand.cpp */,
+				51DA58FB1C1F1B1300069367 /* ErrorHandler.cpp */,
+				51DA58FC1C1F1B1300069367 /* FileStreamer.cpp */,
+				51DA58FD1C1F1B1300069367 /* Format.cpp */,
+				51DA58FE1C1F1B1300069367 /* FunctionCall.cpp */,
+				51DA58FF1C1F1B1300069367 /* FunctionHandler.cpp */,
+				51DA59001C1F1B1300069367 /* GetAllFilesInDirectoryCommand.cpp */,
+				51DA59011C1F1B1300069367 /* GetFromValueCommand.cpp */,
+				51DA59021C1F1B1300069367 /* GetItemFromArrayCommand.cpp */,
+				51DA59031C1F1B1300069367 /* GreaterEqualsToCommand.cpp */,
+				51DA59041C1F1B1300069367 /* GreaterThanCommand.cpp */,
+				51DA59051C1F1B1300069367 /* IdentifierToReturnValueCommand.cpp */,
+				51DA59061C1F1B1300069367 /* JumpGotoNode.cpp */,
+				51DA59071C1F1B1300069367 /* LinkedActionList.cpp */,
+				51DA59081C1F1B1300069367 /* LinkedList.cpp */,
+				51DA59091C1F1B1300069367 /* MinusCommand.cpp */,
+				51DA590A1C1F1B1300069367 /* MinusMinusCommand.cpp */,
+				51DA590B1C1F1B1300069367 /* ModuloCommand.cpp */,
+				51DA590C1C1F1B1300069367 /* NodeVisitor.cpp */,
+				51DA590D1C1F1B1300069367 /* NotEqualsToCommand.cpp */,
+				51DA590E1C1F1B1300069367 /* PlusCommand.cpp */,
+				51DA590F1C1F1B1300069367 /* PlusPlusCommand.cpp */,
+				51DA59101C1F1B1300069367 /* ShowFunctionCommand.cpp */,
+				51DA59111C1F1B1300069367 /* SmallerEqualsToCommand.cpp */,
+				51DA59121C1F1B1300069367 /* SmallerThanCommand.cpp */,
+				51DA59131C1F1B1300069367 /* stdafx.cpp */,
+				51DA59141C1F1B1300069367 /* SwitchNode.cpp */,
+				51DA59151C1F1B1300069367 /* TestIt.cpp */,
+				51DA59161C1F1B1300069367 /* Text.cpp */,
+				51DA59171C1F1B1300069367 /* TimesCommand.cpp */,
+				51DA59181C1F1B1300069367 /* Token.cpp */,
+				51DA59191C1F1B1300069367 /* Tokenizer.cpp */,
+				51DA591A1C1F1B1300069367 /* Variable.cpp */,
+				51DA591B1C1F1B1300069367 /* VirtualMachine.cpp */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -459,72 +510,81 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5179368F1C0C99CC002AF321 /* CompileFactory.cpp in Sources */,
-				517936971C0C99CC002AF321 /* CompilePlusMinus.cpp in Sources */,
-				517936BD1C0C99CC002AF321 /* SmallerEqualsToCommand.cpp in Sources */,
-				517936AB1C0C99CC002AF321 /* Format.cpp in Sources */,
-				517936AD1C0C99CC002AF321 /* FunctionHandler.cpp in Sources */,
-				5179368C1C0C99CC002AF321 /* CompileDoWhile.cpp in Sources */,
-				517936951C0C99CC002AF321 /* CompileNextLevel.cpp in Sources */,
-				517936991C0C99CC002AF321 /* CompileSingleStatement.cpp in Sources */,
-				517936B61C0C99CC002AF321 /* MinusMinusCommand.cpp in Sources */,
-				517936BB1C0C99CC002AF321 /* PlusPlusCommand.cpp in Sources */,
-				5179368D1C0C99CC002AF321 /* CompileElseIf.cpp in Sources */,
-				517936C61C0C99CC002AF321 /* VirtualMachine.cpp in Sources */,
-				517936B31C0C99CC002AF321 /* LinkedActionList.cpp in Sources */,
-				517936AA1C0C99CC002AF321 /* FileStreamer.cpp in Sources */,
-				517936851C0C99CC002AF321 /* AbstractFunctionCall.cpp in Sources */,
-				517936941C0C99CC002AF321 /* CompileLValue.cpp in Sources */,
-				517936861C0C99CC002AF321 /* ActionNode.cpp in Sources */,
-				517936AC1C0C99CC002AF321 /* FunctionCall.cpp in Sources */,
-				517936B71C0C99CC002AF321 /* ModuloCommand.cpp in Sources */,
-				517936B51C0C99CC002AF321 /* MinusCommand.cpp in Sources */,
-				517936BE1C0C99CC002AF321 /* SmallerThanCommand.cpp in Sources */,
-				517936A11C0C99CC002AF321 /* ConstantToReturnValueCommand.cpp in Sources */,
-				517936B21C0C99CC002AF321 /* JumpGotoNode.cpp in Sources */,
-				517936A91C0C99CC002AF321 /* ErrorHandler.cpp in Sources */,
-				5179369A1C0C99CC002AF321 /* CompileSwitch.cpp in Sources */,
-				517936C31C0C99CC002AF321 /* Token.cpp in Sources */,
-				517936A01C0C99CC002AF321 /* ConditionalJumpNode.cpp in Sources */,
-				517936B91C0C99CC002AF321 /* NotEqualsToCommand.cpp in Sources */,
-				517936A81C0C99CC002AF321 /* Error.cpp in Sources */,
-				517936981C0C99CC002AF321 /* Compiler.cpp in Sources */,
-				517936BF1C0C99CC002AF321 /* stdafx.cpp in Sources */,
-				517936B01C0C99CC002AF321 /* GreaterThanCommand.cpp in Sources */,
-				5179368B1C0C99CC002AF321 /* CompileCondition.cpp in Sources */,
-				517936AE1C0C99CC002AF321 /* GetFromValueCommand.cpp in Sources */,
-				517936B11C0C99CC002AF321 /* IdentifierToReturnValueCommand.cpp in Sources */,
-				5179368A1C0C99CC002AF321 /* CompileComparison.cpp in Sources */,
-				5179369D1C0C99CC002AF321 /* CompileUserFunction.cpp in Sources */,
-				5179368E1C0C99CC002AF321 /* CompileEquals.cpp in Sources */,
-				517936C11C0C99CC002AF321 /* Text.cpp in Sources */,
-				517936AF1C0C99CC002AF321 /* GreaterEqualsToCommand.cpp in Sources */,
-				5179369E1C0C99CC002AF321 /* CompileWhile.cpp in Sources */,
-				517936A41C0C99CC002AF321 /* DoNothingNode.cpp in Sources */,
-				517936911C0C99CC002AF321 /* CompileFunction.cpp in Sources */,
-				517936A71C0C99CC002AF321 /* EqualsToCommand.cpp in Sources */,
-				5179369B1C0C99CC002AF321 /* CompileTimesDivideModulo.cpp in Sources */,
-				517936B41C0C99CC002AF321 /* LinkedList.cpp in Sources */,
-				517936C21C0C99CC002AF321 /* TimesCommand.cpp in Sources */,
-				517936C01C0C99CC002AF321 /* SwitchNode.cpp in Sources */,
-				517936A21C0C99CC002AF321 /* DirectFunctionCall.cpp in Sources */,
-				517936871C0C99CC002AF321 /* BaseCommand.cpp in Sources */,
-				517936BA1C0C99CC002AF321 /* PlusCommand.cpp in Sources */,
-				5179369C1C0C99CC002AF321 /* CompileUnary.cpp in Sources */,
-				517936A51C0C99CC002AF321 /* Down.cpp in Sources */,
-				517936891C0C99CC002AF321 /* CommandVisitor.cpp in Sources */,
-				517936961C0C99CC002AF321 /* CompileOperator.cpp in Sources */,
-				517936881C0C99CC002AF321 /* CommandDictionary.cpp in Sources */,
-				517936A61C0C99CC002AF321 /* EqualsCommand.cpp in Sources */,
-				517936C51C0C99CC002AF321 /* Variable.cpp in Sources */,
-				517936B81C0C99CC002AF321 /* NodeVisitor.cpp in Sources */,
-				517936C41C0C99CC002AF321 /* Tokenizer.cpp in Sources */,
-				5179369F1C0C99CC002AF321 /* Compute.cpp in Sources */,
-				517936931C0C99CC002AF321 /* CompileIf.cpp in Sources */,
-				517936921C0C99CC002AF321 /* CompileGetFunction.cpp in Sources */,
-				517936A31C0C99CC002AF321 /* DivideCommand.cpp in Sources */,
-				517936BC1C0C99CC002AF321 /* ShowFunctionCommand.cpp in Sources */,
-				517936901C0C99CC002AF321 /* CompileFor.cpp in Sources */,
+				51DA59281C1F1B1300069367 /* CompileDoWhile.cpp in Sources */,
+				51DA59591C1F1B1300069367 /* PlusCommand.cpp in Sources */,
+				51DA59341C1F1B1300069367 /* CompileSingleStatement.cpp in Sources */,
+				51DA595F1C1F1B1300069367 /* SwitchNode.cpp in Sources */,
+				51DA59611C1F1B1300069367 /* Text.cpp in Sources */,
+				51DA59481C1F1B1300069367 /* Format.cpp in Sources */,
+				51DA593F1C1F1B1300069367 /* DivideCommand.cpp in Sources */,
+				51DA594A1C1F1B1300069367 /* FunctionHandler.cpp in Sources */,
+				51DA59661C1F1B1300069367 /* VirtualMachine.cpp in Sources */,
+				51DA591E1C1F1B1300069367 /* AddArrayToDictionaryCommand.cpp in Sources */,
+				51DA59581C1F1B1300069367 /* NotEqualsToCommand.cpp in Sources */,
+				51DA592F1C1F1B1300069367 /* CompileIf.cpp in Sources */,
+				51DA594F1C1F1B1300069367 /* GreaterThanCommand.cpp in Sources */,
+				51DA59221C1F1B1300069367 /* CommandDictionary.cpp in Sources */,
+				51DA593A1C1F1B1300069367 /* Compute.cpp in Sources */,
+				51DA59401C1F1B1300069367 /* DoNothingNode.cpp in Sources */,
+				51DA59371C1F1B1300069367 /* CompileUnary.cpp in Sources */,
+				51DA593C1C1F1B1300069367 /* ConstantToReturnValueCommand.cpp in Sources */,
+				51DA59491C1F1B1300069367 /* FunctionCall.cpp in Sources */,
+				51DA59301C1F1B1300069367 /* CompileNextLevel.cpp in Sources */,
+				51DA59411C1F1B1300069367 /* Down.cpp in Sources */,
+				51DA59321C1F1B1300069367 /* CompilePlusMinus.cpp in Sources */,
+				51DA59601C1F1B1300069367 /* TestIt.cpp in Sources */,
+				51DA595D1C1F1B1300069367 /* SmallerThanCommand.cpp in Sources */,
+				51DA59521C1F1B1300069367 /* LinkedActionList.cpp in Sources */,
+				51DA59461C1F1B1300069367 /* ErrorHandler.cpp in Sources */,
+				51DA595C1C1F1B1300069367 /* SmallerEqualsToCommand.cpp in Sources */,
+				51DA59511C1F1B1300069367 /* JumpGotoNode.cpp in Sources */,
+				51DA59231C1F1B1300069367 /* CommandVisitor.cpp in Sources */,
+				51DA592B1C1F1B1300069367 /* CompileFactory.cpp in Sources */,
+				51DA59571C1F1B1300069367 /* NodeVisitor.cpp in Sources */,
+				51DA59471C1F1B1300069367 /* FileStreamer.cpp in Sources */,
+				51DA594C1C1F1B1300069367 /* GetFromValueCommand.cpp in Sources */,
+				51DA59361C1F1B1300069367 /* CompileTimesDivideModulo.cpp in Sources */,
+				51DA592E1C1F1B1300069367 /* CompileGetFunction.cpp in Sources */,
+				51DA59621C1F1B1300069367 /* TimesCommand.cpp in Sources */,
+				51DA591C1C1F1B1300069367 /* AbstractFunctionCall.cpp in Sources */,
+				51DA59241C1F1B1300069367 /* CompileAddArrayItem.cpp in Sources */,
+				51DA592D1C1F1B1300069367 /* CompileGetArrayItem.cpp in Sources */,
+				51DA59351C1F1B1300069367 /* CompileSwitch.cpp in Sources */,
+				51DA59271C1F1B1300069367 /* CompileCondition.cpp in Sources */,
+				51DA594B1C1F1B1300069367 /* GetAllFilesInDirectoryCommand.cpp in Sources */,
+				51DA59381C1F1B1300069367 /* CompileUserFunction.cpp in Sources */,
+				51DA593E1C1F1B1300069367 /* DirectFunctionCall.cpp in Sources */,
+				51DA595A1C1F1B1300069367 /* PlusPlusCommand.cpp in Sources */,
+				51DA59531C1F1B1300069367 /* LinkedList.cpp in Sources */,
+				51DA59441C1F1B1300069367 /* Error.cpp in Sources */,
+				51DA59291C1F1B1300069367 /* CompileElseIf.cpp in Sources */,
+				51DA59431C1F1B1300069367 /* EqualsToCommand.cpp in Sources */,
+				51DA59211C1F1B1300069367 /* BaseCommand.cpp in Sources */,
+				51DA59451C1F1B1300069367 /* ErrorCommand.cpp in Sources */,
+				51DA591F1C1F1B1300069367 /* AddItemToArrayAtCommand.cpp in Sources */,
+				51DA59631C1F1B1300069367 /* Token.cpp in Sources */,
+				51DA594E1C1F1B1300069367 /* GreaterEqualsToCommand.cpp in Sources */,
+				51DA595B1C1F1B1300069367 /* ShowFunctionCommand.cpp in Sources */,
+				51DA59391C1F1B1300069367 /* CompileWhile.cpp in Sources */,
+				51DA59561C1F1B1300069367 /* ModuloCommand.cpp in Sources */,
+				51DA59331C1F1B1300069367 /* Compiler.cpp in Sources */,
+				51DA59651C1F1B1300069367 /* Variable.cpp in Sources */,
+				51DA59251C1F1B1300069367 /* CompileArray.cpp in Sources */,
+				51DA59551C1F1B1300069367 /* MinusMinusCommand.cpp in Sources */,
+				51DA592C1C1F1B1300069367 /* CompileFor.cpp in Sources */,
+				51DA594D1C1F1B1300069367 /* GetItemFromArrayCommand.cpp in Sources */,
+				51DA592A1C1F1B1300069367 /* CompileEquals.cpp in Sources */,
+				51DA591D1C1F1B1300069367 /* ActionNode.cpp in Sources */,
+				51DA595E1C1F1B1300069367 /* stdafx.cpp in Sources */,
+				51DA59311C1F1B1300069367 /* CompileOperator.cpp in Sources */,
+				51DA59541C1F1B1300069367 /* MinusCommand.cpp in Sources */,
+				51DA59261C1F1B1300069367 /* CompileComparison.cpp in Sources */,
+				51DA593B1C1F1B1300069367 /* ConditionalJumpNode.cpp in Sources */,
+				51DA59641C1F1B1300069367 /* Tokenizer.cpp in Sources */,
+				51DA59201C1F1B1300069367 /* AddLengthToArrayCommand.cpp in Sources */,
+				51DA59421C1F1B1300069367 /* EqualsCommand.cpp in Sources */,
+				51DA593D1C1F1B1300069367 /* CountCommand.cpp in Sources */,
+				51DA59501C1F1B1300069367 /* IdentifierToReturnValueCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +703,7 @@
 				517935F91C0C99BC002AF321 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

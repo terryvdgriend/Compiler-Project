@@ -1,5 +1,5 @@
-_number_ **g** is 10
+_number_ **i** is 7 
 
-**g** is **g** divide -2
+**i** is **i** minus 3
 
-[ printdown **g** ]
+[ printdown **i** ]

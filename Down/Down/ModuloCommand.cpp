@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ModuloCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void ModuloCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -10,9 +10,11 @@ void ModuloCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
-	if (variable1.getTokenType() == Token::TYPE_NUMBER && variable2.getTokenType() == Token::TYPE_NUMBER)
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER)
 	{
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());
@@ -27,6 +29,7 @@ void ModuloCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	}
 }
 
-std::pair<string, string> ModuloCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> ModuloCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

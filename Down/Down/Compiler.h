@@ -1,20 +1,22 @@
 #pragma once
-#include "LinkedList.h"
 #include "LinkedActionList.h"
-#include "ActionNode.h"
+#include "LinkedTokenList.h"
 
 class Compiler
 {
-public:
-	virtual void Compile(LinkedList& tokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& before) = 0;
-	std::string getNextLocalVariableName(std::string& buffer);
-	std::string getPreviousLocalVariableName(std::string& buffer);
-	virtual Compiler* Create() = 0;
-	Token* Current = nullptr;
+	public:
+		Compiler();
 
-	string getCurrentLocalVariableName();
+		virtual void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+							 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore) = 0;
 
-private:
-	int nValueCount;
+		string getPreviousLocalVariableName(string& buffer);
+		string getCurrentLocalVariableName();
+		string getNextLocalVariableName(string& buffer);
+		shared_ptr<Token> getCurrentToken();
+		void setCurrentToken(shared_ptr<Token>& nextToken);
+
+	private:
+		shared_ptr<Token> currentToken;
+		int nValueCount;
 };
-

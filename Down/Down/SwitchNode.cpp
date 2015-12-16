@@ -1,27 +1,39 @@
 #include "stdafx.h"
 #include "SwitchNode.h"
-
+#include "MandatoryNodeIncludes.h"
 
 SwitchNode::SwitchNode()
 {
-	defaultNodeList = new LinkedActionList();
-	switchCondition = nullptr;
+	defaultNodeList		= make_shared<LinkedActionList>();
+	switchConditionList = nullptr;
 }
 
 void SwitchNode::show() 
 {
-	cout << "Switch jump. \n";
+	cout << "Switch Jump." << endl;
 }
 
-void SwitchNode::accept(NodeVisitor & visitor)
+void SwitchNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	visitor.visit(*this);
+	visitor->visit(*this);
 }
 
-void SwitchNode::action()
+shared_ptr<LinkedActionList> SwitchNode::getDefaultNodeList()
 {
+	return defaultNodeList;
 }
 
-SwitchNode::~SwitchNode()
+shared_ptr<LinkedActionList> SwitchNode::getSwitchConditionList()
 {
+	return switchConditionList;
+}
+
+void SwitchNode::setSwitchConditionList(shared_ptr<LinkedActionList> value)
+{
+	switchConditionList = value;
+}
+
+map<shared_ptr<LinkedActionList>, shared_ptr<LinkedActionList>>& SwitchNode::getJumpMap()
+{
+	return jumpMap;
 }

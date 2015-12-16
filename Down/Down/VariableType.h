@@ -2,8 +2,8 @@
 
 enum VariableType
 {
-	NUMBER,
-	TEXT,
-	FACT,
-	NULLTYPE
+	number,
+	text,
+	fact,
+	nulltype
 };

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MinusMinusCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -8,13 +8,13 @@ void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	Variable variable = *vm.getVariable(parameters[1]);
 
-	if (variable.getType() == VariableType::NULLTYPE)
+	if (variable.getType() == VariableType::nulltype)
 	{
 		variable = *vm.getVariable(parameters[2]);
 		parameters[1] = parameters[2];
 	}
 
-	if (variable.getType() != VariableType::NULLTYPE && variable.getTokenType() == Token::TYPE_NUMBER)
+	if (variable.getType() != VariableType::nulltype && variable.getTokenType() == IToken::TYPE_NUMBER)
 	{
 		double number1 = atof(variable.getValue().c_str()) - 1;
 
@@ -24,6 +24,7 @@ void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	}
 }
 
-std::pair<string, string> MinusMinusCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> MinusMinusCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

@@ -5,122 +5,116 @@
 
 #define szGetFromReturnValue "getFromReturnValue"
 
-CompileOperator::CompileOperator(Compiler* pNextLevel)
-	: pNextLevel(pNextLevel)
+CompileOperator::CompileOperator(shared_ptr<Compiler> nextlevel)
 {
+	pNextLevel = nextlevel;
 }
 
-void CompileOperator::Compile(LinkedList& tokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& before)
+void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	std::map<Token::iToken, string>::iterator iFind;
-	Token* current = &begin;
-	std::vector<ActionNode*> beforeArray;
+	shared_ptr<Token> current = begin;
+	map<IToken, string>::iterator iFind;
+	vector<shared_ptr<ActionNode>> beforeArray;
 	CompileNextLevel nextLevel;
 	CompileNextLevelList nextLevelList;
 
-	nextLevel.begin = &begin;
+	nextLevel.setBegin(begin);
 
-	while (current != nullptr && *current != end)
+	while (current != nullptr && *current != *end)
 	{
-		if (current->getEnum() == Token::NEWLINE)
+		if (current->getType() == IToken::NEWLINE)
+		{
 			break;
-		if (current->getPartner() != nullptr) {
+		}
+
+		if (current->getPartner() != nullptr)
+		{
 			current = current->getPartner();
-			if(current == &end) {
+
+			if (current == end)
+			{
 				break;
 			}
 		}
-			
+		iFind = tokenMap.find(current->getType());
 
-		iFind = tokenMap.find(current->getEnum());
 		if (iFind != tokenMap.end())
 		{
-			fillRunList(iFind->second, listActionNodes, before, &beforeArray, *current);
-			fillNextLevelList(&beforeArray, *current, nextLevel, nextLevelList);
+			fillRunList(iFind->second, listActionNodes, actionBefore, beforeArray, current);
+			fillNextLevelList(beforeArray, current, nextLevel, nextLevelList);
 		}
-		current = current->next;
+		current = current->getNext();
 	}
-
-	insertLastNextLevel(end, before, nextLevel, nextLevelList);
+	insertLastNextLevel(end, actionBefore, nextLevel, nextLevelList);
 	compileNextLevel(tokenList, listActionNodes, nextLevelList);
-	begin = *current;
+	begin = current;
 }
 
-void CompileOperator::fillRunList(const std::string& sFunctionName, LinkedActionList& listActionNodes, ActionNode& iBefore,
-	std::vector<ActionNode*>* beforeList, Token& token)
+void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& iBefore, 
+								  vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& token)
 {
-	std::string             saArguments[3];
-	std::string             sBuffer;
-	FunctionCall           *pFunction = nullptr;
-	DirectFunctionCall     *pDirectFunction = nullptr;
-	int                     maxN = 2;
+	string saArguments[3];
+	string sBuffer;
+	int maxN = 2;
 
 	saArguments[0] = sFunctionName;
-	
 	saArguments[1] = getNextLocalVariableName(sBuffer);
 	saArguments[2] = getNextLocalVariableName(sBuffer);
 
-	for (int n = 0; n<maxN; n++)
+	for (int n = 0; n < maxN; n++)
 	{
-		pDirectFunction = new DirectFunctionCall(*new Token(token));
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(token));
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
-		beforeList->push_back(listActionNodes.insertBefore(&iBefore, pDirectFunction));
+		beforeArray.push_back(listActionNodes->insertBefore(iBefore, pDirectFunction));
 	}
-
-	pFunction = new FunctionCall;
+	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(3);
-	for (int n = 0; n<3; n++)
+
+	for (int n = 0; n < 3; n++)
+	{
 		pFunction->setAt(n, saArguments[n].c_str());
-	listActionNodes.insertBefore(&iBefore, pFunction);
+	}
+	listActionNodes->insertBefore(iBefore, pFunction);
 }
 
-void CompileOperator::fillNextLevelList(std::vector<ActionNode*>* beforeArray, Token& current, CompileNextLevel& nextLevel,
-	CompileNextLevelList& nextLevelList)
+void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeArray, shared_ptr<Token>& current, CompileNextLevel& nextLevel, 
+										CompileNextLevelList& nextLevelList)
 {
 	if (nextLevelList.size() == 0)
-		nextLevel.before = beforeArray->at(0);
-
-	nextLevel.end = &current;
+	{
+		nextLevel.setBefore(beforeArray.at(0));
+	}
+	nextLevel.setEnd(current);
 
 	nextLevelList.push_back(nextLevel);
 
-	nextLevel.before = beforeArray->at(1);
-	nextLevel.begin = current.next;
+	nextLevel.setBefore(beforeArray.at(1));
+	nextLevel.setBegin(current->getNext());
 }
 
-void CompileOperator::insertLastNextLevel(Token& end, ActionNode& before, CompileNextLevel& nextLevel, CompileNextLevelList& nextLevelList)
+void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, CompileNextLevel& nextLevel, 
+										  CompileNextLevelList& nextLevelList)
 {
-	//var level = new CompileNextLevel(nextLevel);
-
 	if (nextLevelList.size() == 0)
-		nextLevel.before = &before;
-
-	nextLevel.end = &end;
-
+	{
+		nextLevel.setBefore(before);
+	}
+	nextLevel.setEnd(end);
 	nextLevelList.push_back(nextLevel);
 }
 
-void CompileOperator::compileNextLevel(LinkedList& tokenList, LinkedActionList& runList, CompileNextLevelList& nextLevelList)
+void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& listActionNodes,
+									   CompileNextLevelList& nextLevelList)
 {
-	CompileNextLevelList::iterator  step = nextLevelList.begin();
+	CompileNextLevelList::iterator step = nextLevelList.begin();
 
 	while (step != nextLevelList.end())
 	{
-		CompileNextLevel   &nextLevelList = *step;
-
-		pNextLevel->Compile(tokenList, *nextLevelList.begin, *nextLevelList.end, runList, *nextLevelList.before);
+		CompileNextLevel& nextLevelList = *step;
+		pNextLevel->compile(tokenList, nextLevelList.getBegin(), nextLevelList.getEnd(), listActionNodes, nextLevelList.getBefore());
 		++step;
 	}
-}
-
-CompileOperator::TokenMap& CompileOperator::getTokenMap()
-{
-	return tokenMap;
-}
-
-CompileOperator::~CompileOperator()
-{
-	delete pNextLevel;
 }

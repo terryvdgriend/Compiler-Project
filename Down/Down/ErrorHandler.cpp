@@ -1,54 +1,35 @@
 #include "stdafx.h"
+#include "Tokenizer.h"
 
+// Singleton prep : required!
+shared_ptr<ErrorHandler> ErrorHandler::handler = nullptr;
 
-ErrorHandler* ErrorHandler::handler = NULL;
-std::list<Error> ErrorHandler::errors = std::list<Error>();
-
-
-ErrorHandler* ErrorHandler::getInstance()
+ErrorHandler::ErrorHandler()
 {
-    return handler;
+	//
 }
 
-void ErrorHandler::addError()
+shared_ptr<ErrorHandler> ErrorHandler::getInstance()
 {
-	Error::location t = Error::tokenizer;
-	std::string s = "Not Defined Error";
-	Error erre = Error{s,t};
-	errors.push_back(erre);
+	if (handler == nullptr)
+	{
+		handler = shared_ptr<ErrorHandler>(new ErrorHandler());
+	}
+
+	return handler;
 }
 
-void ErrorHandler::addError(Error::location t, std::string s)
+list<shared_ptr<Error>>& ErrorHandler::getErrors()
 {
-    Error err = Error{ s, t };
-    errors.push_back(err);
+	return errors;
 }
 
-void ErrorHandler::addError(Error e)
+void ErrorHandler::printErrors()
 {
-    errors.push_back(e);
-}
-
-void ErrorHandler::addThrownError(std::string s)
-{
-
-	Error err{ "Thrown Error: " + s ,Error::location::compiler };
-	errors.push_back(err);
-	
-}
-
-void ErrorHandler::addError(Error e, Token::iToken expected, Token::iToken result )
-{
-	Tokenizer tokert{};
-	std::string expt =  tokert.getKeyByValueMappert(expected);
-	std::string res = tokert.getKeyByValueMappert(result);
-	e.setName("Incorrect token! Expected: '" + expt + "' Result: '" + res + "'");
-	errors.push_back(e);
-}
-
-void ErrorHandler::addError(std::string s, Token * t)
-{
-	errors.push_back(Error{ s, ".MD", t->getLevel(), t->getPositie(), Error::error });
+	for (list<shared_ptr<Error>>::iterator it = errors.begin(); it != errors.end(); ++it)
+	{
+		(*it)->print();
+	}
 }
 
 void ErrorHandler::clearErrors()
@@ -56,39 +37,61 @@ void ErrorHandler::clearErrors()
 	errors.clear();
 }
 
-std::list<Error> ErrorHandler::getErrors()
+string ErrorHandler::asJson()
 {
-    return errors;
-};
+	if (errors.size() == 0)
+	{
+		return "No errors found";
+	}
+	string JSON = "[";
 
-std::string ErrorHandler::asJson()
-{
-    if (errors.size() == 0)
-        return "No errors found";
+	for (list<shared_ptr<Error>>::iterator it = errors.begin(); it != errors.end(); ++it)
+	{
+		JSON += (*it)->asJsonObject();
+		JSON += ",";
+	}
+	JSON = JSON.substr(0, JSON.size() - 1);
+	JSON += "]";
 
-	
-
-    std::string JSON = "[";
-    for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
-    {
-        JSON += (*it).asJsonObject();
-        JSON += ",";
-    }
-    
-    JSON = JSON.substr(0, JSON.size()-1);
-    
-    JSON += "]";
-    return JSON;
-};
-
-void ErrorHandler::printErrors()
-{
-    for (std::list<Error>::iterator it = errors.begin(); it != errors.end(); ++it)
-    {
-        (*it).print();
-    }
+	return JSON;
 }
 
-ErrorHandler::~ErrorHandler()
+void ErrorHandler::addError()
 {
+	ErrorLocation errorLocation = ErrorLocation::TOKENIZER;
+	string errorMessage = "Undefined Error";
+	shared_ptr<Error> error = make_shared<Error>(errorMessage, errorLocation);
+	errors.push_back(error);
+}
+
+void ErrorHandler::addError(string errorName, ErrorLocation errorLocation)
+{
+	shared_ptr<Error> error = make_shared<Error>(errorName, errorLocation);
+    errors.push_back(error);
+}
+
+void ErrorHandler::addError(shared_ptr<Error>& error)
+{
+    errors.push_back(error);
+}
+
+void ErrorHandler::addError(string errorName, shared_ptr<Token>& token)
+{
+	shared_ptr<Error> error = make_shared<Error>(errorName, ".MD", token->getLineNumber(), token->getPosition(), ErrorType::ERROR);
+	errors.push_back(error);
+}
+
+void ErrorHandler::addError(shared_ptr<Error>& error, IToken expected, IToken result)
+{
+	Tokenizer tokenizer;
+	string exptation = tokenizer.getKeyByValueTokenMap(expected);
+	string actualResult = tokenizer.getKeyByValueTokenMap(result);
+	error->setName("Incorrect token! Expected: '" + exptation + "' Result: '" + actualResult + "'");
+	errors.push_back(error);
+}
+
+void ErrorHandler::addThrownError(string errorName)
+{
+	shared_ptr<Error> error = make_shared<Error>("Thrown Error: " + errorName, ErrorLocation::COMPILER);
+	errors.push_back(error);
 }

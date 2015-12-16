@@ -1,17 +1,33 @@
 #include "stdafx.h"
 #include "ConditionalJumpNode.h"
+#include "MandatoryNodeIncludes.h"
 
 void ConditionalJumpNode::show()
 {
-	cout << "Conditional jump. \n";
+	cout << "Conditional Jump." << endl;
 }
 
-void ConditionalJumpNode::action()
+void ConditionalJumpNode::accept(shared_ptr<NodeVisitor>& visitor)
 {
-	//
+	visitor->visit(*this);
 }
 
-void ConditionalJumpNode::accept(NodeVisitor& visitor)
+shared_ptr<ActionNode> ConditionalJumpNode::getOnTrue()
 {
-	visitor.visit(*this);
+	return nextOnTrue;
+}
+
+void ConditionalJumpNode::setOnTrue(shared_ptr<ActionNode> value)
+{
+	nextOnTrue = value;
+}
+
+shared_ptr<ActionNode> ConditionalJumpNode::getOnFalse()
+{
+	return nextOnFalse;
+}
+
+void ConditionalJumpNode::setOnFalse(shared_ptr<ActionNode> value)
+{
+	nextOnFalse = value;
 }

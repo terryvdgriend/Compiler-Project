@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SmallerThanCommand.h"
-#include "CommandVisitor.h"
+#include "MandatoryCommandIncludes.h"
 
 void SmallerThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
@@ -10,11 +10,14 @@ void SmallerThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	Variable variable2 = *vm.getVariable(parameters.at(2));
 
 	if (isUndefined(variable1, variable2, vm))
+	{
 		return;
+	}
 
-	if (variable1.getTokenType() == Token::TYPE_NUMBER && variable2.getTokenType() == Token::TYPE_NUMBER) {
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) {
 		double number1 = atof(variable1.getValue().c_str());
 		double number2 = atof(variable2.getValue().c_str());
+
 		if (number1 < number2)
 		{
 			vm.setReturnValue("true");
@@ -23,15 +26,18 @@ void SmallerThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		{
 			vm.setReturnValue("false");
 		}
-		vm.setReturnToken(Token::TYPE_FACT);
+		vm.setReturnToken(IToken::TYPE_FACT);
 	}
-	else {
+	else
+	{
 		// Exception "cannot compare different types than numbers"
 		throwTypeError(variable1, variable2, vm);
+
 		return;
 	}
 }
 
-std::pair<string, string> SmallerThanCommand::accept(CommandVisitor& commandVisitor) {
+pair<string, string> SmallerThanCommand::accept(CommandVisitor& commandVisitor) 
+{
 	return commandVisitor.visit(*this);
 }

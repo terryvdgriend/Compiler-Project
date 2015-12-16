@@ -1,17 +1,14 @@
 #pragma once
 #include "Compiler.h"
 #include "Token.h"
-#include <map>
-#include <functional>
+
 class CompileFactory
 {
-private:
-	std::map<Token::iToken, function<Compiler*()>> mappert;
-public:
-	CompileFactory();
-	
-	Compiler * CreateCompileStatement(Token& tknzr);
+	public:
+		CompileFactory();
 
-	~CompileFactory();
+		shared_ptr<Compiler> createCompileStatement(shared_ptr<Token>& token);
+
+	private:
+		map<IToken, function<shared_ptr<Compiler>()>> tokenCompileDictionary;
 };
-

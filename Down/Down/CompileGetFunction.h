@@ -1,37 +1,33 @@
 #pragma once
 #include "Compiler.h"
-#include "TokenExpectation.h"
-#include "FunctionHandler.h"
-#include "CompilerHeader.h"
-#include <vector>
-class CompileGetFunction :
-	public Compiler
+
+class CompileGetFunction : public Compiler
 {
-private:
-	LinkedActionList* _compiledStatement;
-	std::string _params;
-	std::string _name;
-	LinkedActionList* _body;
-	Token* _returnToken;
-	LinkedList* _bodyTokens;
-	std::vector<Token*> _paramTokens;
-	LinkedActionList* _parameters;
-	LinkedActionList* _functionParams;
-	LinkedActionList* _functionCall;
-	std::map<string, string> variableMap;
-	bool userdef;
-public:
-	CompileGetFunction();
-	void ConnectLists();
-	void Compile(LinkedList& cTokenList, Token& begin, Token& end, LinkedActionList& listActionNodes, ActionNode& actionBefore);
-	void CompileNotUserDefined(LinkedList& cTokenList, Token& begin, Token& end);
-	void CompileUserDefined(LinkedList & cTokenList, Token & begin, Token & end);
-	void ChangeVariables(LinkedList & list);
-	void ChangeVariable(Token & token);
-	void ConnectParams(Token * param, LinkedList& paramlist);
-	Compiler * Create() { return new CompileGetFunction(); };
+	public:
+		CompileGetFunction();
 
+		void compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
+					 shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore);
 
-	~CompileGetFunction();
+	private:
+		string _params;
+		string _name;
+		bool userDefined;
+		vector<shared_ptr<Token>> _paramTokens;
+		map<string, string> variableMap;
+		shared_ptr<Token> _returnToken;
+		shared_ptr<LinkedTokenList> _bodyTokens;
+		shared_ptr<LinkedActionList> _compiledStatement;
+		shared_ptr<LinkedActionList> _body;
+		shared_ptr<LinkedActionList> _parameters;
+		shared_ptr<LinkedActionList> _functionParams;
+		shared_ptr<LinkedActionList> _functionCall;
+
+		void compileNotUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void compileUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
+		void changeVariables(const shared_ptr<LinkedTokenList>& tokenList);
+		void changeVariable(shared_ptr<Token>& token);
+		void connectParams(shared_ptr<Token> param, shared_ptr<LinkedTokenList>& paramlist);
+
+		void connectLists();
 };
-

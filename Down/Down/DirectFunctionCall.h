@@ -4,9 +4,9 @@
 class DirectFunctionCall : public AbstractFunctionCall
 {
 	public:
-		DirectFunctionCall(Token& token);
-		void show();
-		void action();
-		void accept(NodeVisitor& visitor);
+		DirectFunctionCall();
+		DirectFunctionCall(shared_ptr<Token>& token);
 
+		void show();
+		void accept(shared_ptr<NodeVisitor>& visitor);
 };
