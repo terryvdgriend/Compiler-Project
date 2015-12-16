@@ -14,6 +14,7 @@
 #include "RandomFunctionCommand.h"
 #include "GetAllFilesInDirectoryCommand.h"
 #include "CountCommand.h"
+#include "GetFileExtensionCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"

@@ -444,6 +444,9 @@
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="GetFileExtensionCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -736,6 +739,9 @@
     </ClInclude>
     <ClInclude Include="BaseCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GetFileExtensionCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

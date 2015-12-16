@@ -51,6 +51,7 @@ map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary["ThrowError"]				= make_shared<ErrorCommand>();
 	customFunctionDictionary["getAllFilesInDirectory"]	= make_shared<GetAllFilesInDirectoryCommand>();
 	customFunctionDictionary["count"]					= make_shared<CountCommand>();
+	customFunctionDictionary["getFileExtension"]		= make_shared<GetFileExtensionCommand>();
 	/*
 		READ:
 		If you want to define your own function(s), provide a name for the function and 

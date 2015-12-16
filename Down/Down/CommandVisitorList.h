@@ -11,6 +11,7 @@ class ShowUpFunctionCommand;
 class RandomFunctionCommand;
 class GetAllFilesInDirectoryCommand;
 class CountCommand;
+class GetFileExtensionCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

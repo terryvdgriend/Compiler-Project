@@ -145,6 +145,7 @@
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="GetAllFilesInDirectoryCommand.h" />
+    <ClInclude Include="GetFileExtensionCommand.h" />
     <ClInclude Include="GetFromValueCommand.h" />
     <ClInclude Include="GetItemFromArrayCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp" />
+    <ClCompile Include="GetFileExtensionCommand.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />
     <ClCompile Include="GetItemFromArrayCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
