@@ -91,14 +91,16 @@ void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Tok
 
 		if (current->getType() == IToken::IDENTIFIER)
 		{
-			if (current->getPrevious() != nullptr && current->getPrevious()->getType() == IToken::RETURNVALUE)
+			if (current->getPrevious() != nullptr)
 			{
-				_returnToken = make_shared<Token>(current);
-			}
-			else 
-			{
-				switch (current->getSubType()) 
+				if(current->getPrevious()->getType() == IToken::RETURNVALUE)
+					_returnToken = make_shared<Token>(current);
+				else if (current->getPrevious()->getType() == IToken::ARRAY_CLOSE && current->getPrevious()->getPartner()->getPrevious() != nullptr && current->getPrevious()->getPartner()->getPrevious()->getType() == IToken::RETURNVALUE)
+					_returnToken = make_shared<Token>(current);
+				else
 				{
+					switch (current->getSubType())
+					{
 					case IToken::TYPE_NUMBER:
 					{
 						_params += 'i';
@@ -117,15 +119,17 @@ void CompileUserFunction::compileParams(shared_ptr<Token>& begin, shared_ptr<Tok
 
 						break;
 					}
-					default: 
+					default:
 					{
 						_params += 'a';
 
 						break;
 					}
+					}
+					_paramTokens.push_back(make_shared<Token>(current));
 				}
-				_paramTokens.push_back(make_shared<Token>(current));
 			}
+			
 		}
 		current = current->getNext();
 	}
