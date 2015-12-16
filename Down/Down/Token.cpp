@@ -51,7 +51,8 @@ void Token::print(map<string, IToken>& tokenMap)
 void Token::addError()
 {
 	string description = "Syntax error: '" + _text + "'";
-	ErrorHandler::getInstance()->addError(make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::ERROR));
+    auto error = make_shared<Error>(description, "Unknown.MD", _lineNumber, _position, ErrorType::ERROR);
+	ErrorHandler::getInstance()->addError(error);
 }
 
 bool Token::operator!=(const Token& other) const

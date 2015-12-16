@@ -43,7 +43,8 @@ void CompileWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("while statement not completed", ".md", -1, -1, ErrorType::ERROR));
+                auto error = make_shared<Error>("while statement not completed", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 				begin = end;
 
 				break;
@@ -51,7 +52,8 @@ void CompileWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 			if (current->getType() != expectation.getTokenType())
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
+                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -78,7 +80,9 @@ void CompileWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 				{
 					condition = make_shared<CompileSingleStatement>();
 				}
-				condition->compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+                auto eNode = current->getPrevious()->getPartner();
+                auto eBefore = _condition->getLast();
+                condition->compile(tokenList, current, eNode, _condition, eBefore);
 
 				if (!multiIndex) 
 				{ 
@@ -114,7 +118,8 @@ void CompileWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 					if (compiledBodyPart != nullptr)
 					{
-						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+                        auto eBefore = _body->getLast();
+						compiledBodyPart->compile(tokenList, current, previous, _body, eBefore);
 
 						if (!multiIndex) 
 						{ 

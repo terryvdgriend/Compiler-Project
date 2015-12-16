@@ -72,7 +72,8 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 		if (current == nullptr)
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("making array not completed", ".md", -1, -1, ErrorType::ERROR));
+            auto error = make_shared<Error>("making array not completed", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 			begin = end;
 
 			break;
@@ -83,7 +84,8 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 		{
 			if (current->getType() != expectation.getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
+                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -92,9 +94,10 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 			
 			else if (current->getType() == IToken::FUNCTION_DECLARE_OPEN && current->getType() == expectation.getTokenType()) {
 				CompileEquals copiler;
-				copiler.compile(tokenList, identifier, current->getPartner(), listActionNodes, actionBefore);
-
-				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
+                auto eNode = current->getPartner();
+				copiler.compile(tokenList, identifier, eNode, listActionNodes, actionBefore);
+                auto tempToken = make_shared<Token>(current);
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -105,9 +108,11 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 			else if (current->getType() == IToken::IDENTIFIER)
 			{
 				CompileSingleStatement compiledBodyPart;
-				compiledBodyPart.compile(tokenList, current, current->getNext(), listActionNodes, listActionNodes->getLast());
-
-				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
+                auto eNode = current->getNext();
+                auto eBefore = listActionNodes->getLast();
+                compiledBodyPart.compile(tokenList, current, eNode, listActionNodes, eBefore);
+                auto tempToken = make_shared<Token>(current);
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
@@ -154,7 +159,8 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 		{
 			if (current->getType() == IToken::ARRAY_CLOSE) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
+                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), IToken::NONE);
 				begin = end;
 
@@ -195,8 +201,9 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 							}
 							else 
 							{
-								ErrorHandler::getInstance()->addError(make_shared<Error>("no assignment is array", ".md", current->getLineNumber(), 
-																	  current->getPosition(), ErrorType::ERROR));
+                                auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
+                                                                current->getPosition(), ErrorType::ERROR);
+								ErrorHandler::getInstance()->addError(error);
 							}
 							param = make_shared<LinkedTokenList>();
 						}
@@ -215,8 +222,9 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 						}
 						else 
 						{
-							ErrorHandler::getInstance()->addError(make_shared<Error>("no assignment is array", ".md", current->getLineNumber(), 
-																  current->getPosition(), ErrorType::ERROR));
+                            auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
+                                                            current->getPosition(), ErrorType::ERROR);
+							ErrorHandler::getInstance()->addError(error);
 						}
 						param = make_shared<LinkedTokenList>();
 
@@ -233,8 +241,11 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 					compiledBodyPart.setFromArray(true);
 					compiledBodyPart.setFromArrayLength(filledLength++);
 					compiledBodyPart.setCurrentArray(currentArrayTempVar);
-
-					compiledBodyPart.compile(tokenList, p->getFirst(), p->getLast(), listActionNodes, listActionNodes->getLast());
+                    
+                    auto fNode =  p->getFirst();
+                    auto eNode = p->getLast();
+                    auto eBefore =listActionNodes->getLast();
+					compiledBodyPart.compile(tokenList,fNode, eNode, listActionNodes, eBefore);
 
 					if (current->getType() == IToken::AND_PARA) 
 					{ 
@@ -263,9 +274,11 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 				{ 
 					compiledBodyPart = make_shared<CompileSingleStatement>(); 
 				}
-				compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, listActionNodes->getLast());
+                auto eBefore = listActionNodes->getLast();
+				compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, eBefore);
 
-				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
+                auto tempToken = make_shared<Token>(current);
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 				directFunctionCall->setArraySize(2);
 				directFunctionCall->setAt(0, SET_GET_FROM_RT);
 				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());

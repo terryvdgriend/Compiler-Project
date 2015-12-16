@@ -26,7 +26,7 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		}
 		else 
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("Divide by 0", ".md", -1, -1, ErrorType::ERROR));
+            throwTypeError(*variable1, *variable2, vm);
 			vm.triggerRunFailure();
 
 			return;
