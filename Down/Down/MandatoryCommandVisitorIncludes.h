@@ -36,3 +36,6 @@
 #include "SmallerEqualsToCommand.h"
 #include "SmallerThanCommand.h"
 #include "TimesCommand.h"
+
+// Token
+#include "IToken.h"

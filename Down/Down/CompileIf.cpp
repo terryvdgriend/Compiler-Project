@@ -52,7 +52,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 		{
 			if (current == nullptr) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::ERROR));
+                auto error = make_shared<Error>("if statement not completed", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 				begin = end;
 
 				break;
@@ -60,8 +61,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
-													  expectation.getTokenType(), current->getType());
+                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -87,7 +88,9 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 				{
 					condition = make_shared<CompileSingleStatement>();
 				}
-				condition->compile(tokenList, current, current->getPrevious()->getPartner(), _condition, _condition->getLast());
+                auto endNode = current->getPrevious()->getPartner();
+                auto eBefore = _condition->getLast();
+				condition->compile(tokenList, current, endNode, _condition,eBefore);
 
 				if (!multiIndex) 
 				{
@@ -123,7 +126,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 
 					if (compiledBodyPart != nullptr) 
 					{
-						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+                        auto eBefore = _body->getLast();
+						compiledBodyPart->compile(tokenList, current, previous, _body, eBefore);
 						
 						if (!multiIndex) 
 						{ 
@@ -159,7 +163,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 			CompileElseIf compileElseIf;
 			shared_ptr<LinkedActionList> newBody = make_shared<LinkedActionList>();
 			newBody->add(make_shared<DoNothingNode>());
-			compileElseIf.compile(tokenList, current, end, newBody, newBody->getLast(), _conditionBodyMap);
+            auto nBody = newBody->getLast();
+			compileElseIf.compile(tokenList, current, end, newBody, nBody, _conditionBodyMap);
 
 			if (current->getNext() != nullptr) 
 			{
@@ -200,7 +205,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 				{
 					if (current == nullptr) 
 					{
-						ErrorHandler::getInstance()->addError(make_shared<Error>("else statement not completed", ".md", -1, -1, ErrorType::ERROR));
+                        auto error = make_shared<Error>("else statement not completed", ".md", -1, -1, ErrorType::ERROR);
+						ErrorHandler::getInstance()->addError(error);
 						begin = end;
 
 						break;
@@ -208,8 +214,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 
 					if (current->getType() != expectation.getTokenType()) 
 					{
-						ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
-															  expectation.getTokenType(), current->getType());
+                        auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+						ErrorHandler::getInstance()->addError(error,expectation.getTokenType(), current->getType());
 						begin = end;
 
 						break;
@@ -246,7 +252,8 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 
 						if (compiledBodyPart != nullptr) 
 						{
-							compiledBodyPart->compile(tokenList, current, previous, _bodyElse, _bodyElse->getLast());
+                            auto eBefore = _bodyElse->getLast();
+							compiledBodyPart->compile(tokenList, current, previous, _bodyElse, eBefore);
 							
 							if (!multiIndex) 
 							{ 

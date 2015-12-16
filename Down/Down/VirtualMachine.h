@@ -30,7 +30,7 @@ class VirtualMachine
 		void addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value);
 		shared_ptr<Variable> getItemFromVariableArray(string key, int index);
 		void addArrayTypeToArrayTypes(string arrayName, IToken tokenType);
-		pair<string, string> VirtualMachine::getVariableTypeSameAsArrayType(string arrayName, IToken tokenType);	
+		pair<string, string> getVariableTypeSameAsArrayType(string arrayName, IToken tokenType);	
 
 		bool hasValueInVariableDictionary(map<string, shared_ptr<Variable>>::iterator& it);
 		bool hasValueInVariableArrayDictionary(map<string, vector<shared_ptr<Variable>>>::iterator& it);

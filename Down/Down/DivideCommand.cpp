@@ -14,18 +14,19 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		return;
 	}
 
-	if (variable1->getType() == VariableType::number && variable2->getType() == VariableType::number)
-	{
-		int number1 = atoi(variable1->getValue().c_str());
-		int number2 = atoi(variable2->getValue().c_str());
+	if (variable1->getTokenType() == IToken::TYPE_NUMBER && variable2->getTokenType() == IToken::TYPE_NUMBER) {
+
+		double number1 = atof(variable1->getValue().c_str());
+		double number2 = atof(variable2->getValue().c_str());
 
 		if (number2 != 0) 
 		{
 			vm.setReturnValue(to_string(number1 / number2));
+			vm.setReturnToken(variable1->getTokenType());
 		}
 		else 
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("Divide by 0", ".md", -1, -1, ErrorType::ERROR));
+            throwTypeError(*variable1, *variable2, vm);
 			vm.triggerRunFailure();
 
 			return;

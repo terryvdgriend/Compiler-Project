@@ -14,17 +14,17 @@ void ModuloCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		return;
 	}
 
-	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number) 
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER)
 	{
 		int number1 = atoi(variable1.getValue().c_str());
 		int number2 = atoi(variable2.getValue().c_str());
 
 		vm.setReturnValue(to_string(number1 % number2));
+		vm.setReturnToken(variable1.getTokenType());
 	}
 	else 
 	{
 		throwTypeError(variable1, variable2, vm);
-
 		return;
 	}
 }

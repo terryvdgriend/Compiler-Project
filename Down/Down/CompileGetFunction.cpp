@@ -69,7 +69,8 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR), 
+                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -127,7 +128,8 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			seperator = seperator->getNext();
 		}
 		CompileCondition condition;
-		condition.compile(tokenList, current, seperator, _functionParams, _functionParams->getLast());
+        auto eBefore = _functionParams->getLast();
+        condition.compile(tokenList, current, seperator, _functionParams, eBefore);
 
 		// Create direct function call
 		string sBuffer;
@@ -150,14 +152,16 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 
 	if (parameters.size() > _params.size()) 
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPosition(), ErrorType::ERROR));
+        auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
+                                        current->getPosition(), ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 	}
 
 	if (parameters.size() < _params.size()) 
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
-											 current->getPosition(), ErrorType::ERROR));
+        auto error = make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(),
+                                        current->getPosition(), ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 	}
 	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(parameters.size()+1);
@@ -198,8 +202,9 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 
 			if ((size_t)count > _params.size() - 1)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-													  current->getPosition(), ErrorType::ERROR));
+                auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
+                                                current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 
 				break;
 			}
@@ -218,8 +223,8 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 					}
 					else 
 					{
-						ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
-															  current->getPosition(), ErrorType::ERROR));
+                        auto error = make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
+						ErrorHandler::getInstance()->addError(error);
 					}
 					param = make_shared<LinkedTokenList>();
 					count++;
@@ -242,8 +247,9 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 				}
 				else 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::ERROR));
+                    auto error = make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(),
+                                                    current->getPosition(), ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 				}
 				param = make_shared<LinkedTokenList>();
 
@@ -256,19 +262,24 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 
 	if (paramList.size() < _params.size()) 
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPosition(), ErrorType::ERROR));
+        auto error = make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(),
+                                        current->getPosition(), ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 	}
 	else if (paramList.size() > _params.size()) 
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(), 
-											  current->getPosition(), ErrorType::ERROR));
+        auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
+                                        current->getPosition(), ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 	}
 
 	for (shared_ptr<LinkedTokenList> p : paramList)
 	{
 		CompileEquals condition;
-		condition.compile(p, p->getFirst(), p->getLast(), _parameters, _parameters->getLast());
+        auto firstNode= p->getFirst();
+        auto endNode = p->getLast();
+        auto eBefore=  _parameters->getLast();
+		condition.compile(p,firstNode, endNode, _parameters,eBefore);
 	}
 
 	if (_returnToken) 
@@ -276,11 +287,13 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 		_returnToken = make_shared<Token>(_returnToken);
 		shared_ptr<LinkedActionList> rValue = make_shared<LinkedActionList>();
 		CompileCondition condition;
-		condition.compile(tokenList, _returnToken, _returnToken, rValue, rValue->getLast());
+        auto eBefore = rValue->getLast();
+		condition.compile(tokenList, _returnToken, _returnToken, rValue, eBefore);
 
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
-		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
+        auto tempToken= make_shared<Token>(_returnToken);
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(tempToken);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, tempVar.c_str());
@@ -316,7 +329,9 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 
 		if (compiledBodyPart != nullptr) 
 		{
-			compiledBodyPart->compile(_bodyTokens, currentBody, body->getLast(), _body, _body->getLast());
+            auto eNode = body->getLast();
+            auto eBefore = _body->getLast();
+			compiledBodyPart->compile(_bodyTokens, currentBody, eNode, _body, eBefore);
 
 			if (!multiIndex)
 			{
@@ -334,7 +349,8 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 		string sBuffer;
 		string tempVar = getNextLocalVariableName(sBuffer);
 		changeVariable(_returnToken);
-		shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(_returnToken));
+        auto tempToken= make_shared<Token>(_returnToken);
+		shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 		directFunctionCall->setArraySize(2);
 		directFunctionCall->setAt(0, SET_ID_TO_RT);
 		directFunctionCall->setAt(1, _returnToken->getText().c_str());

@@ -17,7 +17,8 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 		case IToken::IDENTIFIER:
 		{
 			shared_ptr<Token> next = begin->getNext();
-			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
+            shared_ptr<Token> tempToken = make_shared<Token>(begin);
+			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 			shared_ptr<ActionNode> beforeFunction = nullptr;
 			string sBuffer, saArguments[2];
 			
@@ -38,7 +39,9 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
 				CompileCondition condition;
-				condition.compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, beforeFunction);
+                shared_ptr<Token> nextToken = next->getNext();
+                shared_ptr<Token> nextTokenPartner = next->getPartner();
+				condition.compile(tokenList, nextToken, nextTokenPartner, listActionNodes, beforeFunction);
 			}
 			else
 			{
@@ -57,7 +60,9 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 		{
 			shared_ptr<Token> next = begin;
 			CompileCondition condition;
-			condition.compile(tokenList, next->getNext(), next->getPartner(), listActionNodes, actionBefore);
+            shared_ptr<Token> nextToken = next->getNext();
+            shared_ptr<Token> nextTokenPartner = next->getPartner();
+			condition.compile(tokenList, nextToken, nextTokenPartner, listActionNodes, actionBefore);
 
             break;
 		}
@@ -72,7 +77,8 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 			}
 			else {
 				CompileGetFunction function;
-				function.compile(tokenList, next, next->getPartner(), listActionNodes, actionBefore);
+                shared_ptr<Token> nextTokenPartner = next->getPartner();
+				function.compile(tokenList, next, nextTokenPartner, listActionNodes, actionBefore);
 			}
 
 
@@ -82,7 +88,8 @@ void CompileSingleStatement::compile(const shared_ptr<LinkedTokenList>& tokenLis
 		case IToken::TEXT:
 		case IToken::FACT:
 		{
-			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(begin));
+            shared_ptr<Token> tempToken = make_shared<Token>(begin);
+			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_CONST_TO_RT);
 			directFunctionCall->setAt(1, begin->getText().c_str());

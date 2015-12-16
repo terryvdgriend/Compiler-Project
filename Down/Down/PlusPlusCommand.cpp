@@ -14,13 +14,12 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		parameters[1] = parameters[2];
 	}
 
-	if (variable.getType() != VariableType::nulltype && variable.getType() == VariableType::number)
+	if (variable.getType() != VariableType::nulltype && variable.getTokenType() == IToken::TYPE_NUMBER)
 	{
-		int number1 = atoi(variable.getValue().c_str()) + 1;
+		double number1 = atof(variable.getValue().c_str()) + 1;
 		
-		for (string& item : vm.getFunctionParametersByKey(parameters.at(1))) 
-		{
-			vm.setVariable(item, to_string(number1), node.getToken()->getSubType());
+		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
+			vm.setVariable(item, to_string(number1), variable.getTokenType());
 		}
 	}
 }

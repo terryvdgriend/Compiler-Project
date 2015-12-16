@@ -22,6 +22,7 @@ void NotEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	{
 		vm.setReturnValue("false");
 	}
+	vm.setReturnToken(IToken::TYPE_FACT);
 }
 
 pair<string, string> NotEqualsToCommand::accept(CommandVisitor& commandVisitor) 

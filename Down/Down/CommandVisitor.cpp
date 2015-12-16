@@ -77,14 +77,12 @@ pair<string, string> CommandVisitor::visit(GreaterThanCommand& command)
 	return pair<string, string>("compare (>)", "to");
 }
 
-pair<string, string> CommandVisitor::visit(MinusCommand& command) 
-{
-	return pair<string, string>("subtract", "from");
+pair<string, string> CommandVisitor::visit(MinusCommand& command) {
+	return std::pair<string, string>("subtract", "by");
 }
 
-pair<string, string> CommandVisitor::visit(MinusMinusCommand& command) 
-{
-	return pair<string, string>("subtract", "from");
+pair<string, string> CommandVisitor::visit(MinusMinusCommand& command) {
+	return std::pair<string, string>("subtract", "by");
 }
 
 pair<string, string> CommandVisitor::visit(ModuloCommand& command) 

@@ -58,7 +58,8 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		else 
 		{
 			string index = variable1->getValue().c_str();
-			ErrorHandler::getInstance()->addError(make_shared<Error>("array index "+ index +" is undefined", ".md", -1, -1, ErrorType::ERROR));
+            auto error =  make_shared<Error>("array index "+ index +" is undefined", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 
 			return;
@@ -67,7 +68,8 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	}
 	else
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR));
+        auto error = make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 		vm.triggerRunFailure();
 	}
 }

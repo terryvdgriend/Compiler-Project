@@ -69,6 +69,4 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 	else {
 		throwCustomError("index out of bounds array", vm);
 	}
-
-
 }

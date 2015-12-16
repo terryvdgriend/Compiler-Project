@@ -41,7 +41,8 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		// No token found, so add error
 		if (currentToken == IToken::NONE)
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("Token not found &#9785; ", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+            auto error = make_shared<Error>("Token not found &#9785; ", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 		}
 
 		if (tokenList->getLast() != nullptr && tokenList->getLast()->getType() == IToken::NEWLINE && currentToken == IToken::IDENTIFIER)
@@ -84,7 +85,8 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 			if (tokenMap.count(part) != 0)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+                auto error = make_shared<Error>("identifier '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 			}
 			tokenMap[part] = IToken::IDENTIFIER;
 			varTokenMap[part] = token->getSubType();
@@ -108,8 +110,10 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		else if (currentToken == IToken::FUNCTION_DECLARE)
 		{
 			auto it = tokenMap.find(part.substr(4, part.length() - 1));
-			if (it != tokenMap.end())
-				ErrorHandler::getInstance()->addError(make_shared<Error>("function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+            if (it != tokenMap.end()){
+                auto error= make_shared<Error>("function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+                ErrorHandler::getInstance()->addError(error);
+            }
 			else {
 				tokenMap[part.substr(4, part.length() - 1)] = IToken::FUNCTION_CALL;
 				part = part.substr(4, part.length() - 1);
@@ -119,7 +123,8 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		{
 			if (tokenMap.count(part) != 0)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+                auto error = make_shared<Error>("function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 			}
 		}
 		else if (currentToken == IToken::IDENTIFIER)
@@ -130,7 +135,8 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 				if (tokenMap.count(part) == 0)
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+                    auto error = make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 				}
 				map<string, IToken>::iterator it = varTokenMap.find(part);
 
@@ -502,7 +508,8 @@ void Tokenizer::lookAheadMethod(smatch& match, string& codePart, shared_ptr<Toke
 
 		if (tokenMap.count(lookaheadResult) != 0)
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("identifier '" + lookaheadResult + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+            auto error = make_shared<Error>("identifier '" + lookaheadResult + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 		}
 		token->setSubType(currentToken);
 		currentToken = lookaheadToken;
@@ -545,7 +552,8 @@ void Tokenizer::lookAheadMethod(smatch& match, string& codePart, shared_ptr<Toke
 	{
 		if (arrayOpen)
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("Expected an identifier", "unknown.MD", rowNr, colNr, ErrorType::ERROR));
+            auto error = make_shared<Error>("Expected an identifier", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 		}
 	}
 }

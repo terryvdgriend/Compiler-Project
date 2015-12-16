@@ -64,7 +64,8 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 
 	for (int n = 0; n < maxN; n++)
 	{
-		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(token));
+        auto tempToken = make_shared<Token>(token);
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(tempToken);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
@@ -92,7 +93,8 @@ void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeAr
 	nextLevelList.push_back(nextLevel);
 
 	nextLevel.setBefore(beforeArray.at(1));
-	nextLevel.setBegin(current->getNext());
+    auto next = current->getNext();
+	nextLevel.setBegin(next);
 }
 
 void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, CompileNextLevel& nextLevel, 
@@ -114,7 +116,10 @@ void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenL
 	while (step != nextLevelList.end())
 	{
 		CompileNextLevel& nextLevelList = *step;
-		pNextLevel->compile(tokenList, nextLevelList.getBegin(), nextLevelList.getEnd(), listActionNodes, nextLevelList.getBefore());
+        auto fNode = nextLevelList.getBegin();
+        auto eNode = nextLevelList.getEnd();
+        auto eBefore = nextLevelList.getBefore();
+		pNextLevel->compile(tokenList, fNode, eNode, listActionNodes, eBefore);
 		++step;
 	}
 }

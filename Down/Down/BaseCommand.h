@@ -5,6 +5,8 @@ class CommandVisitor;
 class VirtualMachine;
 class Variable;
 
+using namespace std;
+
 class BaseCommand
 {
 	public:
@@ -13,4 +15,5 @@ class BaseCommand
 		bool isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm);
 		void throwTypeError(Variable& var1, Variable& var2, VirtualMachine& vm);
 		void throwCustomError(string error, VirtualMachine & vm);
+		string removeUnnecessaryDotsAndZeros(string input);
 };
