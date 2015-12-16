@@ -439,10 +439,10 @@
       <Filter>Source Files\Utilities\Test</Filter>
     </ClCompile>
     <ClCompile Include="CountCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

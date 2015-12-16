@@ -37,6 +37,8 @@ class VirtualMachine
 		bool hasValueInFunctionParameters(string parameter);
 		bool isAnIdentifier(string name);
 
+		bool isAnArrayIdentifier(string name);
+
 	private:
 		string returnValue;
 		bool errorsDetected;

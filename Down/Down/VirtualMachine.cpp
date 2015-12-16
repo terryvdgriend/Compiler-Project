@@ -353,3 +353,9 @@ bool VirtualMachine::isAnIdentifier(string name)
 {
 	return find(identifierList.begin(), identifierList.end(), name) != identifierList.end();
 }
+
+
+bool VirtualMachine::isAnArrayIdentifier(string name)
+{
+	return (variableArrayDictionary.find(name) != variableArrayDictionary.end());
+}

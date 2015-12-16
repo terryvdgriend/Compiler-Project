@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CompileArray.h"
 #include "CompileAddArrayItem.h"
-#include "CompilePlusMinus.h"
+#include "CompilerHeader.h"
 #include "CompileSingleStatement.h"
 #include "DirectFunctionCall.h"
 #include "FunctionCall.h"
@@ -25,13 +25,18 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 	expected.push_back(TokenExpectation(level, IToken::IDENTIFIER));
 
 	bool hasEquals = false;
+	bool hasEqualsWithFunc = false;
+	shared_ptr<Token> identifier;
 	shared_ptr<Token> seeker = current;
 
 	while (seeker->getType() != IToken::NEWLINE)
 	{
 		if (seeker->getType() == IToken::EQUALS)
 		{
-			hasEquals = true;
+			if (seeker->getNext() != nullptr && seeker->getNext()->getType() == IToken::FUNCTION_DECLARE_OPEN)
+				hasEqualsWithFunc = true;
+			else
+				hasEquals = true;
 
 			break;
 		}
@@ -44,6 +49,11 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 		expected.push_back(TokenExpectation(level, IToken::ARRAY_OPEN));
 		expected.push_back(TokenExpectation(level + 1, IToken::ANY));
 		expected.push_back(TokenExpectation(level, IToken::ARRAY_CLOSE));
+	}
+	else if (hasEqualsWithFunc) {
+		expected.push_back(TokenExpectation(level, IToken::EQUALS));
+		expected.push_back(TokenExpectation(level, IToken::FUNCTION_DECLARE_OPEN));
+		expected.push_back(TokenExpectation(level, IToken::FUNCTION_DECLARE_CLOSE));
 	}
 
 	for (TokenExpectation expectation : expected)
@@ -79,8 +89,20 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 				break;
 			}
+			
+			else if (current->getType() == IToken::FUNCTION_DECLARE_OPEN && current->getType() == expectation.getTokenType()) {
+				CompileEquals copiler;
+				copiler.compile(tokenList, identifier, current->getPartner(), listActionNodes, actionBefore);
 
-			if (current->getType() == IToken::IDENTIFIER)
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(make_shared<Token>(current));
+				directFunctionCall->setArraySize(2);
+				directFunctionCall->setAt(0, SET_GET_FROM_RT);
+				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
+				current = identifier;
+			}
+
+			else if (current->getType() == IToken::IDENTIFIER)
 			{
 				CompileSingleStatement compiledBodyPart;
 				compiledBodyPart.compile(tokenList, current, current->getNext(), listActionNodes, listActionNodes->getLast());
@@ -118,8 +140,15 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 					pFunction->setAt(n, saArguments[n].c_str());
 				}
 				listActionNodes->insertBefore(actionBefore, pFunction);
+				if (hasEqualsWithFunc) {
+					identifier = current;
+				}
+				current = current->getNext();
 			}
-			current = current->getNext();
+			else {
+				current = current->getNext();
+			}
+			
 		}
 		else if (expectation.getLevel() >= level)
 		{

@@ -64,3 +64,9 @@ string BaseCommand::removeUnnecessaryDotsAndZeros(string input) {
 	}
 	return input;
 }
+
+void BaseCommand::throwCustomError(string error, VirtualMachine& vm)
+{
+	ErrorHandler::getInstance()->addError(make_shared<Error>(error, ".md", -1, -1, ErrorType::ERROR));
+	vm.triggerRunFailure();
+}
