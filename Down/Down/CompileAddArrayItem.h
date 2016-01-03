@@ -14,9 +14,20 @@ class CompileAddArrayItem : public Compiler
 		int getFromArrayLength();
 		void setFromArrayLength(int newFromArrayLength);
 
+		int *getFromMultiArrayLength();
+		void setFromMultiArrayLength(int firstFromMultiArrayLength, int secondFromMultiArrayLength);
+
+		void setMultiArray(bool newIsMultiDimensional) { isMultiDimensional = newIsMultiDimensional; };
+
+		void setItemPositionInMultiArray(int firstItemPositionInMultiArray, int secondItemPositionInMultiArray);
+
 	private:
 		string currentArray;
 		string currentArrayTempVar;
 		bool fromArray;
 		int fromArrayLength;
+
+		int fromMultiArrayLength[2];
+		bool isMultiDimensional;
+		int itemPositionInMultiArray[2];
 };

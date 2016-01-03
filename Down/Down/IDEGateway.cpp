@@ -102,12 +102,14 @@ string IDEGateway::getCode()
 
 bool IDEGateway::doPrintTokenList()
 {
-	return printTokenList;
+	//return printTokenList;
+	return true;
 }
 
 bool IDEGateway::doPrintCompiledList()
 {
-	return printCompiledList;
+	//return printCompiledList;
+	return true;
 }
 
 bool IDEGateway::doPrintElapsedTime()

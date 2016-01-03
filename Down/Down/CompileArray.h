@@ -11,6 +11,11 @@ class CompileArray : public Compiler
 		string currentArrayTempVar;
 		string previousArrayTempVar;
 		int filledLength;
+		int filledMultiLength[2];
+
+		bool isArrayLengthFilled;
 
 		void createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list);
+
+		bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNodes, shared_ptr<LinkedTokenList> tokenList, shared_ptr<ActionNode> &actionBefore, shared_ptr<Token> &current, string sBuffer, int countOfRows, bool isMultiDimensional);
 };

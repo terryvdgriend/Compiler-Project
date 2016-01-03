@@ -112,6 +112,10 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 
 		while (stack.size() >= 0)
 		{
+			if (seperator->getNext() == nullptr || seperator == end)
+			{
+				cout << "";
+			}
 			if (seperator->getType() == IToken::FUNCTION_DECLARE_OPEN)
 			{
 				stack.push(seperator->getType());

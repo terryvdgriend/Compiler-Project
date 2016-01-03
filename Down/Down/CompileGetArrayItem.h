@@ -11,4 +11,6 @@ class CompileGetArrayItem : public Compiler
 	private:
 		string currentArray;
 		string currentArrayItemTempVar;
+
+		bool isMultiDimensional;
 };

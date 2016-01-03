@@ -739,9 +739,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="custom.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="Snippets.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -756,6 +753,12 @@
     </Text>
     <Text Include="test_ifelse.md">
       <Filter>Resource Files\TestScripts</Filter>
+    </Text>
+    <Text Include="custom2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="custom.txt">
+      <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

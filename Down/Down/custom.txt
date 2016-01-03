@@ -1,137 +1,37 @@
-> Print 1 t/m # w/e om te testen of alles nog werkt ;)
+> Multidimensionale arrays
+> _number_{ 10 } **multiArray** is { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+_number_{ 10 } **multiArray** is { 1, 2, 3, 4, 5, 6, 7 }
+> _number_{ 2, 5 } **multiArray** is { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } }
+> _number_{ 2, 5 } **multiArray** is { { 1, 3, 5 }, { 2, 4, 6 } }
+> _number_{ 2, 5 } **multiArray**
 
-[ printdown 1 ]
-
-
----
-### Loopy gets _number_ **x** and gives _number_ **result**
-    #### for ( _number_ **i** is 3 , **i** smaller than **x** , **i** is **i** plus 1 )
-    --
-        [ printdown **i** ]
-    __
-    **result** is **x** 
-___
-
-
-[ printdown 2 ]
-
+> _number_ **item** is **multiArray** { 1, 0 }
+> _number_ **item** is **multiArray** { 1 }
 
 ---
-    ### Switchy gets _number_ **xx** and gives _number_ **result2**
-    
-    #### switch ( **xx** )
-    case ( 1 )
-    --
-        **result2** is 1337
-    __
-    case ( 2 )
-    --
-        **result2** is 10
-    __
-	    case ( 16 )
-    --
-        **result2** is 32
-    __
-    default
-    --
-        **result2** is 2337
-    __ 
+### CalcyArray gets _number_ { } **input** and gives _number_ { } **result** 
+**input** { 1 } is 3
+> **input** { 0, 0 } is 1
+> **input** { 0, 1 } is 3
+> **input** { 0, 2 } is 5
+> **input** { 1, 0 } is 2
+> **input** { 1, 1 } is 4
+> **input** { 1, 2 } is 6
+**result** is **input**
 ___
 
-_number_ **retVal** is [ Loopy 8 plus 8 ]
-[ printdown **retVal** ]
-[ printdown 9 ]
-**retVal** is [ Switchy 2 ]
-[ printdown **retVal** ]
-
-
-
----
-### Calcy gets _number_ **age** and gives _number_ **result** 
-**age** is **age** plus 1
-**result**is**age**
-___
-[printdown[Calcy[Calcy[Calcy 1]]]]
-_number_ **age**
-
->Bubble Sort
-[ printdown "" ]
-[printdown "Bubble Sort"]
+_number_ { 10 } **number**
+> _number_ { 2, 3 } **number**
 [ printdown "" ]
 
+**number** is [ CalcyArray **multiArray** ]
 
-_number_ **size** is 7
-_number_ { **size** } **number** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
-_number_ **temp**
- _number_ **x**
+> [ printdown **number** { 1, 1 } ]
 
-#### for ( **x** is 0 , **x** smaller than **size** , **x** is **x** plus 1)
---
-	[ printdown **number** { **x** } ]
-__
-
-[ printdown "" ]
+_number_ **number2**
 [ printdown "" ]
 
-#### for ( _number_ **i** is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
---
-	#### for ( _number_ **j** is 0 , **j** like or smaller than  **i** minus 1, **j** is **j** plus 1 )
-	--
-		#### if ( **number** { **j** } larger than **number** { **j**  plus 1 } )
-		--
-			**temp** is **number** { **j** }
-			**number** { **j** } is **number** { **j** plus 1 }
-			**number** { **j** plus 1 } is **temp**
-		__
-	__
-__
+**number2** is [ CalcyArray **multiArray** ] { 1 }
+> **number2** is [ CalcyArray **multiArray** ] { 0, 2 }
 
-
-
-#### for ( **x** is 0 , **x** smaller than **size** , **x** is **x** plus 1)
---
-	[ printdown **number** { **x** } ]
-__
-
-
-#### if (1 like 2)
---
-
-[ printdown "mkay" ]
-
-__
-
-[ printdown "" ]
-[ printdown "" ]
-
-_number_ { 7 } **numbers** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
-
----
-### CalcyArray gets _number_ { } **age** and gives _number_ { } **result** 
-**age** { 1 } is 15
-**result** is **age**
-___
-
-#### for (**i** is 0 , **i** smaller than [count **numbers**] , **i** is **i** plus 1 )
---
-    [ printdown **numbers** { **i** } ]
-__
-
-_number_ { 7 } **number2**
-[ printdown "" ]
-
-**number2** is [CalcyArray **numbers** ]
-
-#### for ( **i** is 0 , **i** smaller than [count **number2**] , **i** is **i** plus 1 )
---
-    [ printdown **number2** { **i** } ]
-__
-
-_text_ **fileDir** is "."
-
-_text_ { [count [getAllFilesInDirectory **fileDir**]] } **files** is [getAllFilesInDirectory **fileDir**]
-
-#### for(**i** is  0 , **i** smaller than [count **files**], **i** is **i** plus 1)
---
-[printdown **files** { **i** }]
-__
+[ printdown **number2** ]

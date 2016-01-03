@@ -15,6 +15,18 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
+	shared_ptr<Token> seeker = current;
+
+	while (seeker->getType() != IToken::NEWLINE)
+	{
+		if (seeker->getPrevious()->getType() == IToken::NUMBER && seeker->getType() == IToken::AND_PARA && seeker->getNext()->getType() == IToken::NUMBER)
+		{
+			isMultiDimensional = true;
+			break;
+		}
+		seeker = seeker->getNext();
+	}
+
 	list<TokenExpectation> expected = list<TokenExpectation>();
 	expected.push_back(TokenExpectation(level, IToken::ANY));
 	expected.push_back(TokenExpectation(level, IToken::ARRAY_OPEN));
@@ -127,31 +139,72 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 			{ 
 				compiledBodyPart = make_shared<CompileSingleStatement>(); 
 			}
-			compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, actionBefore);
-            auto error = make_shared<Token>(current);
-			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(error);
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes->insertBefore(actionBefore, directFunctionCall);
-
-			string saArguments[3];
-			saArguments[0] = "$GetItemFromArray";
-			saArguments[1] = currentArray;
-			saArguments[2] = getCurrentLocalVariableName();
-
-			shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
-			pFunction->setArraySize(3);
-
-			for (int n = 0; n < 3; n++)
+			
+			if (isMultiDimensional)
 			{
-				pFunction->setAt(n, saArguments[n].c_str());
+				while (current->getType() != IToken::ARRAY_CLOSE)
+				{
+					auto tempToken = make_shared<Token>(current);
+					shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, SET_CONST_TO_RT);
+					directFunctionCall->setAt(1, current->getText().c_str());
+					listActionNodes->insertBefore(actionBefore, directFunctionCall);
+
+					directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, SET_GET_FROM_RT);
+					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+					listActionNodes->insertBefore(actionBefore, directFunctionCall);
+
+					if (current->getNext()->getType() == IToken::AND_PARA) { current = current->getNext(); }
+					current = current->getNext();
+				}
+
+				string currArray = getCurrentLocalVariableName();
+				string saArguments[4];
+				saArguments[0] = "$GetItemFromArray";
+				saArguments[1] = currentArray;
+				saArguments[2] = getPreviousLocalVariableName(sBuffer);
+				saArguments[3] = currArray;
+
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				pFunction->setArraySize(4);
+
+				for (int n = 0; n < 4; n++)
+				{
+					pFunction->setAt(n, saArguments[n].c_str());
+				}
+				listActionNodes->insertBefore(actionBefore, pFunction);
 			}
-			listActionNodes->insertBefore(actionBefore, pFunction);
-
-			while (current->getType() != IToken::ARRAY_CLOSE) 
+			else
 			{
-				current = current->getNext();
+				compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, actionBefore);
+				auto error = make_shared<Token>(current);
+				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(error);
+				directFunctionCall->setArraySize(2);
+				directFunctionCall->setAt(0, SET_GET_FROM_RT);
+				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+				listActionNodes->insertBefore(actionBefore, directFunctionCall);
+
+				string saArguments[3];
+				saArguments[0] = "$GetItemFromArray";
+				saArguments[1] = currentArray;
+				saArguments[2] = getCurrentLocalVariableName();
+
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				pFunction->setArraySize(3);
+
+				for (int n = 0; n < 3; n++)
+				{
+					pFunction->setAt(n, saArguments[n].c_str());
+				}
+				listActionNodes->insertBefore(actionBefore, pFunction);
+
+				while (current->getType() != IToken::ARRAY_CLOSE)
+				{
+					current = current->getNext();
+				}
 			}
 		}
 	}

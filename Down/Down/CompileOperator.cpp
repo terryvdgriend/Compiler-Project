@@ -30,7 +30,11 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 
 		if (current->getPartner() != nullptr)
 		{
-			current = current->getPartner();
+			// TODO: Fix endless loop
+			if (current->getType() != IToken::ARRAY_CLOSE && current->getType() != IToken::FUNCTION_CLOSE && current->getType() != IToken::FUNCTION_DECLARE_CLOSE)
+			{
+				current = current->getPartner();
+			}
 
 			if (current == end)
 			{
