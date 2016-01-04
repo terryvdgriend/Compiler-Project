@@ -1,11 +1,16 @@
-
-_text_ **folderName** is "."
-
-_text_ { [count [getAllFilesInDirectory **folderName**]] } **files** is [getAllFilesInDirectory **folderName**]
-
-#### for(_number_ **i** is  0 , **i** smaller than [count **files**], **i** is **i** plus 1)
+#### if (1 like 2)	
+--	
+	[ ThrowError "1 can never be 2.." ]
+__	
+#### else if (2 like 1)	
 --
-[printdown [getFileExtension  **files** { **i** }]]
+	[ ThrowError "2 can never be 1.." ]
+__	
+#### else if (3 like 1)	
+--
+	[ ThrowError "3 can never be 1.." ]
+__	
+#### else
+--
+	> Hier komt ie uit
 __
-
->[printdown [getFileExtension  **files** { **i** }]]

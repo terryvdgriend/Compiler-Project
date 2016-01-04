@@ -27,7 +27,7 @@ void GetFileExtensionCommand::execute(VirtualMachine & vm, AbstractFunctionCall 
 
 		if (idx != std::string::npos)
 		{
-			fileExtension = fileName.substr(idx + 1);
+			fileExtension = "\""+fileName.substr(idx + 1)+"\"";
 		}
 
 		vm.setReturnValue(fileExtension);

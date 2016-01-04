@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CompileOperator.h"
+#include "CompileEquals.h"
 #include "FunctionCall.h"
 #include "DirectFunctionCall.h"
 
@@ -13,6 +14,8 @@ CompileOperator::CompileOperator(shared_ptr<Compiler> nextlevel)
 void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
+	int i = 2;
+	int derp = i = i + 3;
 	shared_ptr<Token> current = begin;
 	map<IToken, string>::iterator iFind;
 	vector<shared_ptr<ActionNode>> beforeArray;
@@ -43,6 +46,14 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 		{
 			fillRunList(iFind->second, listActionNodes, actionBefore, beforeArray, current);
 			fillNextLevelList(beforeArray, current, nextLevel, nextLevelList);
+			while (current != nullptr  && *current != *end) {
+				if (current->getType() == IToken::NEWLINE)
+				{
+					break;
+				}
+				current = current->getNext();
+			}
+			break;
 		}
 		current = current->getNext();
 	}
@@ -121,5 +132,6 @@ void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenL
         auto eBefore = nextLevelList.getBefore();
 		pNextLevel->compile(tokenList, fNode, eNode, listActionNodes, eBefore);
 		++step;
+		pNextLevel = make_shared<CompileEquals>();
 	}
 }
