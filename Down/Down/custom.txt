@@ -1,14 +1,4 @@
-_number_ **aaa** is 5 
-_number_ **bbb** is 10
-		
-_number_ **pls** is **aaa** plus **bbb**
-
-_number_ **min** is **aaa** minus **bbb**
-
-_number_ **multi1** is 2 multiply 5 
-_number_ **multi2** is 2 multiplied by 5 
-
-_number_ **div** is 10 divide 2 
-
-_number_ **inc** is 5 decreased
-_number_ **dec** is 5 increased
+#### for ( _number_ **i** is 0 , **i** smaller than 10 , **i** increased )
+--
+    [ printdown **i** ]
+__
