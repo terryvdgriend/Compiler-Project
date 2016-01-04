@@ -7,7 +7,7 @@ IDEGateway::IDEGateway()
 {
 	code				= "";
 	printTokenList		= false;
-	printCompiledList	= false;
+	printCompiledList	= true;
 	printElapsedTime	= false;
 	build				= false;
 	runTest				= false;
@@ -102,14 +102,12 @@ string IDEGateway::getCode()
 
 bool IDEGateway::doPrintTokenList()
 {
-	//return printTokenList;
-	return true;
+	return printTokenList;
 }
 
 bool IDEGateway::doPrintCompiledList()
 {
-	//return printCompiledList;
-	return true;
+	return printCompiledList;
 }
 
 bool IDEGateway::doPrintElapsedTime()
