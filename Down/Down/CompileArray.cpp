@@ -28,7 +28,7 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 	while (seeker->getType() != IToken::NEWLINE)
 	{
-		if (seeker->getType() == IToken::NUMBER || seeker->getType() == IToken::TEXT || seeker->getType() == IToken::FACT)
+		if (seeker->getType() == IToken::NUMBER || seeker->getType() == IToken::TEXT || seeker->getType() == IToken::FACT || seeker->getType() == IToken::IDENTIFIER)
 		{
 			if (seeker->getPrevious()->getPrevious()->getType() == IToken::NEWLINE && seeker->getPrevious()->getType() == IToken::ARRAY_OPEN && seeker->getNext()->getType() == IToken::AND_PARA)
 			{
@@ -419,8 +419,9 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 
 	if (isMultiDimensional && !isArrayLengthFilled) { return true; }
 	countOfRows++;
-	do
+	if (current->getType() == IToken::ARRAY_CLOSE && current->getNext()->getType() != IToken::NEWLINE) { return false; };
+	/*do
 	{
 		current = current->getNext();
-	} while (current->getType() != IToken::ARRAY_OPEN && current->getType() != IToken::NEWLINE);
+	} while (current->getType() != IToken::ARRAY_OPEN && current->getType() != IToken::NEWLINE);*/
 }

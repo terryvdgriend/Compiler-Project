@@ -186,82 +186,83 @@ void CompileGetFunction::compileUserDefined(const shared_ptr<LinkedTokenList>& t
 	shared_ptr<Token> last = end;
 	vector<shared_ptr<LinkedTokenList>> paramList;
 	int count = 0;
-
 	if (_params.size() > 0) 
 	{
-		_parameters->add(make_shared<DoNothingNode>());
-		shared_ptr<LinkedTokenList> param = make_shared<LinkedTokenList>();
-		stack<IToken> stack;
+		if (current->getType() != IToken::FUNCTION_DECLARE_CLOSE) {
+			_parameters->add(make_shared<DoNothingNode>());
+			shared_ptr<LinkedTokenList> param = make_shared<LinkedTokenList>();
+			stack<IToken> stack;
 
-		do 
-		{
-			if (current->getType() == IToken::FUNCTION_DECLARE_OPEN)
+			do 
 			{
-				stack.push(current->getType());
-			}
-			else if (current->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.size() > 0)
-			{
-				stack.pop();
-			}
+				if (current->getType() == IToken::FUNCTION_DECLARE_OPEN)
+				{
+					stack.push(current->getType());
+				}
+				else if (current->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.size() > 0)
+				{
+					stack.pop();
+				}
 
-			if ((size_t)count > _params.size() - 1)
-			{
-                auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
-                                                current->getPosition(), ErrorType::ERROR);
-				ErrorHandler::getInstance()->addError(error);
+				if ((size_t)count > _params.size() - 1)
+				{
+					auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
+													current->getPosition(), ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 
-				break;
-			}
+					break;
+				}
 
-			if (stack.size() >= 0) 
-			{
-				if (stack.size() == 0 && current->getType() == IToken::AND_PARA)
+				if (stack.size() >= 0) 
+				{
+					if (stack.size() == 0 && current->getType() == IToken::AND_PARA)
+					{
+						if (param->getLast() != nullptr) 
+						{
+							param->getLast()->setNext(nullptr);
+							param->getFirst()->setPrevious(nullptr);
+
+							connectParams(_paramTokens.at(count), param);
+							paramList.push_back(param);
+						}
+						else 
+						{
+							auto error = make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
+							ErrorHandler::getInstance()->addError(error);
+						}
+						param = make_shared<LinkedTokenList>();
+						count++;
+					}
+					else 
+					{
+						param->add(make_shared<Token>(current));
+					}
+				}
+				current = current->getNext();
+
+				if (stack.size() == 0 && current->getType() == IToken::FUNCTION_DECLARE_CLOSE)
 				{
 					if (param->getLast() != nullptr) 
 					{
 						param->getLast()->setNext(nullptr);
 						param->getFirst()->setPrevious(nullptr);
-
 						connectParams(_paramTokens.at(count), param);
 						paramList.push_back(param);
 					}
 					else 
 					{
-                        auto error = make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
+						auto error = make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(),
+														current->getPosition(), ErrorType::ERROR);
 						ErrorHandler::getInstance()->addError(error);
 					}
 					param = make_shared<LinkedTokenList>();
-					count++;
-				}
-				else 
-				{
-					param->add(make_shared<Token>(current));
-				}
-			}
-			current = current->getNext();
 
-			if (stack.size() == 0 && current->getType() == IToken::FUNCTION_DECLARE_CLOSE)
-			{
-				if (param->getLast() != nullptr) 
-				{
-					param->getLast()->setNext(nullptr);
-					param->getFirst()->setPrevious(nullptr);
-					connectParams(_paramTokens.at(count), param);
-					paramList.push_back(param);
+					break;
 				}
-				else 
-				{
-                    auto error = make_shared<Error>(_name + " expected filling for the parameter", ".md", current->getLineNumber(),
-                                                    current->getPosition(), ErrorType::ERROR);
-					ErrorHandler::getInstance()->addError(error);
-				}
-				param = make_shared<LinkedTokenList>();
 
-				break;
-			}
-
-		} 
-		while (current != end);
+			} 
+			while (current != end);
+		}
 	}
 
 	if (paramList.size() < _params.size()) 

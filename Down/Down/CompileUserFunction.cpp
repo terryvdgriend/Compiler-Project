@@ -60,7 +60,7 @@ void CompileUserFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 		else 
 		{
 			// Check if the coming param is an enum, else body;
-			if (current->getType() == IToken::START_PARAMETERS)
+			if (current->getType() == IToken::START_PARAMETERS || current->getType() == IToken::RETURNVALUE)
 			{
 				compileParams(current, end);
 				compileBody(current, bodyEnd);

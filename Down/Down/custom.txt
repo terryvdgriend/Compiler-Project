@@ -1,37 +1,13 @@
-> Multidimensionale arrays
-> _number_{ 10 } **multiArray** is { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
-_number_{ 10 } **multiArray** is { 1, 2, 3, 4, 5, 6, 7 }
-> _number_{ 2, 5 } **multiArray** is { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } }
-> _number_{ 2, 5 } **multiArray** is { { 1, 3, 5 }, { 2, 4, 6 } }
-> _number_{ 2, 5 } **multiArray**
+_number_ **ein** is 1
+_number_ **zwei** is 2
 
-> _number_ **item** is **multiArray** { 1, 0 }
-> _number_ **item** is **multiArray** { 1 }
+_number_ { **ein** , **zwei** } **numbers** is { {1,1} }
+
 
 ---
-### CalcyArray gets _number_ { } **input** and gives _number_ { } **result** 
-**input** { 1 } is 3
-> **input** { 0, 0 } is 1
-> **input** { 0, 1 } is 3
-> **input** { 0, 2 } is 5
-> **input** { 1, 0 } is 2
-> **input** { 1, 1 } is 4
-> **input** { 1, 2 } is 6
-**result** is **input**
+### CalcyArray gets _number_ {} **age** and gives _number_ {} **result** 
+**age** { 1,2 } is 20
+**result** is **age**
 ___
 
-_number_ { 10 } **number**
-> _number_ { 2, 3 } **number**
-[ printdown "" ]
-
-**number** is [ CalcyArray **multiArray** ]
-
-> [ printdown **number** { 1, 1 } ]
-
-_number_ **number2**
-[ printdown "" ]
-
-**number2** is [ CalcyArray **multiArray** ] { 1 }
-> **number2** is [ CalcyArray **multiArray** ] { 0, 2 }
-
-[ printdown **number2** ]
+**numbers** is [CalcyArray **numbers**]
