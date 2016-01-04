@@ -1,16 +1,14 @@
-#### if (1 like 2)	
---	
-	[ ThrowError "1 can never be 2.." ]
-__	
-#### else if (2 like 1)	
---
-	[ ThrowError "2 can never be 1.." ]
-__	
-#### else if (3 like 1)	
---
-	[ ThrowError "3 can never be 1.." ]
-__	
-#### else
---
-	> Hier komt ie uit
-__
+_number_ **aaa** is 5 
+_number_ **bbb** is 10
+		
+_number_ **pls** is **aaa** plus **bbb**
+
+_number_ **min** is **aaa** minus **bbb**
+
+_number_ **multi1** is 2 multiply 5 
+_number_ **multi2** is 2 multiplied by 5 
+
+_number_ **div** is 10 divide 2 
+
+_number_ **inc** is 5 decreased
+_number_ **dec** is 5 increased

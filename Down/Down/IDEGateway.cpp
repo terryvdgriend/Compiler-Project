@@ -6,7 +6,7 @@
 IDEGateway::IDEGateway()
 {
 	code				= "";
-	printTokenList		= false;
+	printTokenList		= true;
 	printCompiledList	= false;
 	printElapsedTime	= false;
 	build				= false;
