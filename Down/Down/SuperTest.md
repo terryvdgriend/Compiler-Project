@@ -74,7 +74,7 @@ __
 [ printdown "" ]
 [ printdown "" ]
 
-#### for (**i** is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
+#### for ( _number_ **i**  is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
 --
 	#### for ( _number_ **j** is 0 , **j** like or smaller than  **i** minus 1, **j** is **j** plus 1 )
 	--
