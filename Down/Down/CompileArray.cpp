@@ -23,19 +23,31 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 	bool isMultiDimensional = false;
 	shared_ptr<Token> identifier;
 	shared_ptr<Token> seeker = current;
+	shared_ptr<Token> paraChecker = current;
 
 	isArrayLengthFilled = false;
 
+	while (paraChecker->getType() != IToken::ARRAY_OPEN) {
+		paraChecker = paraChecker->getPrevious();
+	}
+	shared_ptr<Token> paraCheckerEnd = paraChecker->getPartner();
+	stack<IToken> stack;
+
+	while (paraChecker != paraCheckerEnd) {
+		if (paraChecker->getType() == IToken::FUNCTION_DECLARE_OPEN)
+			stack.push(paraChecker->getType());
+		else if (paraChecker->getType() == IToken::FUNCTION_DECLARE_CLOSE)
+			stack.pop();
+		else if (stack.size() == 0 && paraChecker->getType() == IToken::AND_PARA) {
+			isMultiDimensional = true;
+			break;
+		}
+		paraChecker = paraChecker->getNext();
+	}
+
 	while (seeker->getType() != IToken::NEWLINE)
 	{
-		if (seeker->getType() == IToken::NUMBER || seeker->getType() == IToken::TEXT || seeker->getType() == IToken::FACT || seeker->getType() == IToken::IDENTIFIER)
-		{
-			if (seeker->getPrevious()->getPrevious()->getType() == IToken::NEWLINE && seeker->getPrevious()->getType() == IToken::ARRAY_OPEN && seeker->getNext()->getType() == IToken::AND_PARA)
-			{
-				isMultiDimensional = true;
-			}
-		}
-		else if (seeker->getType() == IToken::EQUALS)
+		if (seeker->getType() == IToken::EQUALS)
 		{
 			if (seeker->getNext() != nullptr && seeker->getNext()->getType() == IToken::FUNCTION_DECLARE_OPEN)
 				hasEqualsWithFunc = true;
@@ -308,11 +320,11 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 
 	do
 	{
-		if (current->getType() == IToken::ARRAY_OPEN)
+		if (current->getType() == IToken::ARRAY_OPEN || current->getType() == IToken::FUNCTION_DECLARE_OPEN)
 		{
 			stack.push(current->getType());
 		}
-		else if (current->getType() == IToken::ARRAY_CLOSE && stack.size() > 0)
+		else if ((current->getType() == IToken::ARRAY_CLOSE || current->getType() == IToken::FUNCTION_DECLARE_CLOSE) && stack.size() > 0)
 		{
 			stack.pop();
 		}
@@ -360,24 +372,46 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 
 	if (!isArrayLengthFilled && isMultiDimensional)
 	{
-		filledMultiLength[0] = atoi(paramList.at(0)->getFirst()->getText().c_str());
-		filledMultiLength[1] = atoi(paramList.at(1)->getFirst()->getText().c_str());
-
-		for (int i = 0; i < 2; i++)
-		{
+		for (int i = 0; i < 2; i++) {
+			shared_ptr<Compiler> compileParam;
+			if (paramList.at(i)->getSize() > 1) 
+			{
+				compileParam = make_shared<CompilePlusMinus>();
+			}
+			else
+			{
+				compileParam = make_shared<CompileSingleStatement>();
+			}
+			auto eFirst = paramList.at(i)->getFirst();
+			auto eLast = paramList.at(i)->getLast();
+			auto eBefore = actionBefore;
+			compileParam->compile(tokenList, eFirst, eLast, listActionNodes, eBefore);
 			auto tempToken = make_shared<Token>(current);
 			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_CONST_TO_RT);
-			directFunctionCall->setAt(1, to_string(filledMultiLength[i]).c_str());
-			listActionNodes->insertBefore(actionBefore, directFunctionCall);
-			tempToken = make_shared<Token>(current);
-			directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
 			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 			listActionNodes->insertBefore(actionBefore, directFunctionCall);
+			listActionNodes->printList();
 		}
+		//filledMultiLength[0] = atoi(paramList.at(0)->getFirst()->getText().c_str());
+		//filledMultiLength[1] = atoi(paramList.at(1)->getFirst()->getText().c_str());
+
+		//for (int i = 0; i < 2; i++)
+		//{
+		//	auto tempToken = make_shared<Token>(current);
+		//	shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+		//	directFunctionCall->setArraySize(2);
+		//	directFunctionCall->setAt(0, SET_CONST_TO_RT);
+		//	directFunctionCall->setAt(1, to_string(filledMultiLength[i]).c_str());
+		//	listActionNodes->insertBefore(actionBefore, directFunctionCall);
+		//	tempToken = make_shared<Token>(current);
+		//	directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+		//	directFunctionCall->setArraySize(2);
+		//	directFunctionCall->setAt(0, SET_GET_FROM_RT);
+		//	directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+		//	listActionNodes->insertBefore(actionBefore, directFunctionCall);
+		//}
 	}
 	else
 	{
