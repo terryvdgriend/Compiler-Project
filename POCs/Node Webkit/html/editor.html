@@ -35,6 +35,9 @@ $(function() {
     $('#markdown #markdownCode').contextmenu({
         "Variable": function() {
             pasteHtmlAtCaret('<b>VARIABLE</b>', false);
+        },
+        "Type": function() {
+            pasteHtmlAtCaret('<i>VARIABLE</i>', false);
         }
     }, 'right', 0);
 
