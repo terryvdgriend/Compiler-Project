@@ -21,6 +21,13 @@ Function::Function(string name, string params, shared_ptr<LinkedTokenList> body,
 	_userDefined	= userDefined;
 }
 
+Function::Function(string name, string params, shared_ptr<BaseCommand> c , vector<shared_ptr<Token>>& paramTokens)
+{
+	_name = name;
+	_params = params;
+	_bc = c;
+}
+
 string Function::getName()
 {
 	return _name;

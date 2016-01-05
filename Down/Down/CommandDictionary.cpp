@@ -2,6 +2,7 @@
 #include "CommandDictionary.h"
 #include "MandatoryCommandVisitorIncludes.h"
 
+
 CommandDictionary::CommandDictionary()
 {
 	// Array
@@ -31,9 +32,9 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$<"]							= make_shared<SmallerThanCommand>();
 	commandDictionary["$*"]							= make_shared<TimesCommand>();
 
-	for (pair<string, shared_ptr<BaseCommand>> cf : getCustomFunctions())
+	for (auto ff : getCustomFunctions())
 	{
-		commandDictionary[cf.first] = cf.second;
+		commandDictionary[ff->getName()] =ff->getCommand();
 	}
 }
 
@@ -42,19 +43,25 @@ map<string, shared_ptr<BaseCommand>>& CommandDictionary::getMap()
 	return commandDictionary;
 }
 
-map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
+list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 {
-	map<string, shared_ptr<BaseCommand>> customFunctionDictionary;
-	customFunctionDictionary["printdown"]						= make_shared<ShowFunctionCommand>();
-	customFunctionDictionary["printup"]							= make_shared<ShowUpFunctionCommand>();
-	customFunctionDictionary["random"]							= make_shared<RandomFunctionCommand>();
-	customFunctionDictionary["ThrowError"]						= make_shared<ErrorCommand>();
-	customFunctionDictionary["getAllFilesInDirectory"]			= make_shared<GetAllFilesInDirectoryCommand>();
-	customFunctionDictionary["getFilesInDirectoryByExtension"]	= make_shared<GetFilesInDirectoryByExtensionCommand>();
-	customFunctionDictionary["getAudioFilesInDirectory"]		= make_shared<GetAudioFilesInDirectoryCommand>();
-	customFunctionDictionary["getVideoFilesInDirectory"]		= make_shared<GetVideoFilesInDirectoryCommand>();
-	customFunctionDictionary["count"]							= make_shared<CountCommand>();
-	customFunctionDictionary["getFileExtension"]		= make_shared<GetFileExtensionCommand>();
+	//map<string, shared_ptr<BaseCommand>> customFunctionDictionary;
+	//customFunctionDictionary["printdown"] = make_shared<ShowFunctionCommand>();
+
+	list<shared_ptr<Function>> customFunctionDictionary;
+	auto vecToken = vector<shared_ptr<Token>>();
+
+	customFunctionDictionary.push_back(make_shared<Function>("printdown", "aa", make_shared<ShowFunctionCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("printdown", "a", make_shared<ShowFunctionCommand>(), vecToken));
+
+	customFunctionDictionary.push_back(make_shared<Function>("printup", "a", make_shared<ShowUpFunctionCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("random", "a", make_shared<RandomFunctionCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("ThrowError", "a", make_shared<ErrorCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("getAllFilesInDirectory", "a", make_shared<GetAllFilesInDirectoryCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("count", "a", make_shared<CountCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("getFileExtension", "a", make_shared<GetFileExtensionCommand>(), vecToken));
+	
+
 	/*
 		READ:
 		If you want to define your own function(s), provide a name for the function and 

@@ -136,3 +136,6 @@ _text_ { [count [getAllFilesInDirectory **folderName**]] } **files** is [getAllF
 --
 [printdown **files** { **i** } plus " : " plus [getFileExtension  **files** { **i** }]]
 __
+
+[ printdown "kippen" ]
+[printdown "kippen","soep"]
