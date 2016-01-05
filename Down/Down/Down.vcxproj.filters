@@ -447,12 +447,6 @@
     <ClCompile Include="GetFileExtensionCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GetFilesInDirectoryByExtensionCommand.cpp">
-      <Filter>Source Files\VM\Commands\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="GetAudioFilesInDirectoryCommand.cpp">
-      <Filter>Source Files\VM\Commands\Functions</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -746,11 +740,6 @@
     <ClInclude Include="BaseCommand.h">
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="GetFilesInDirectoryByExtensionCommand.h">
-      <Filter>Header Files\VM\Commands\Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="GetAudioFilesInDirectoryCommand.h">
-      <Filter>Header Files\VM\Commands\Functions</Filter>
     <ClInclude Include="GetFileExtensionCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
