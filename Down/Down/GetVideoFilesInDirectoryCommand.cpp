@@ -25,7 +25,10 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
 
-	string extensions[8] = { ".flv", ".gif", ".avi", ".mov", ".wmv", ".mp4", ".mpg", ".m4v"};
+	// These 2 numbers must remain the same!
+	int numberOfExtensions = 8;
+	string extensions[8] = { ".flv", ".gif", ".avi", ".mov", ".wmv", ".mp4", ".mpg", ".m4v" };
+
 	std::vector<string> out;
 	DIR *dir;
 	struct dirent *de;
@@ -43,7 +46,7 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 		de = readdir(dir);
 		if (!de) break;
 		string extension = getExtension(de->d_name);
-		for (int i = 0; i < extensions->length(); i++) {
+		for (int i = 0; i < 8; i++) {
 			if (extension == extensions[i]) {
 				out.push_back(de->d_name);
 				break;

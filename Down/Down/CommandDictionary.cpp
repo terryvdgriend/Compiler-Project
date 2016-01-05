@@ -52,6 +52,7 @@ map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary["getAllFilesInDirectory"]			= make_shared<GetAllFilesInDirectoryCommand>();
 	customFunctionDictionary["getFilesInDirectoryByExtension"]	= make_shared<GetFilesInDirectoryByExtensionCommand>();
 	customFunctionDictionary["getAudioFilesInDirectory"]		= make_shared<GetAudioFilesInDirectoryCommand>();
+	customFunctionDictionary["getVideoFilesInDirectory"]		= make_shared<GetVideoFilesInDirectoryCommand>();
 	customFunctionDictionary["count"]							= make_shared<CountCommand>();
 	customFunctionDictionary["getFileExtension"]		= make_shared<GetFileExtensionCommand>();
 	/*

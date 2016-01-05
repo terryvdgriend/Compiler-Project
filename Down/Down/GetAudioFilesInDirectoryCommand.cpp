@@ -25,7 +25,10 @@ void GetAudioFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
 
+	// These 2 numbers must remain the same!
+	int numberOfExtensions = 9;
 	string extensions[9] = { ".mp3", ".wav", ".flac", ".m4a", ".ogg", ".raw", ".wma", ".mid", ".gsm" };
+	cout << extensions->size();
 	std::vector<string> out;
 	DIR *dir;
 	struct dirent *de;
@@ -43,7 +46,7 @@ void GetAudioFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 		de = readdir(dir);
 		if (!de) break;
 		string extension = getExtension(de->d_name); 
-		for (int i = 0; i < extensions->length(); i++) {
+		for (int i = 0; i < numberOfExtensions; i++) {
 			if (extension == extensions[i]) {
 				out.push_back(de->d_name);
 				break;

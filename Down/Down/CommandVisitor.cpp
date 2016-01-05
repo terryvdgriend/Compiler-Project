@@ -137,6 +137,11 @@ pair<string, string> CommandVisitor::visit(GetAudioFilesInDirectoryCommand & com
 	return pair<string, string>("", "");
 }
 
+pair<string, string> CommandVisitor::visit(GetVideoFilesInDirectoryCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
 pair<string, string> CommandVisitor::visit(GetFileExtensionCommand& command) {
 	return pair<string, string>("", "");
 }
