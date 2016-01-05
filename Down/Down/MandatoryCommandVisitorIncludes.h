@@ -17,6 +17,7 @@
 #include "GetAudioFilesInDirectoryCommand.h"
 #include "GetVideoFilesInDirectoryCommand.h"
 #include "CountCommand.h"
+#include "GetFileExtensionCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"
@@ -38,3 +39,6 @@
 #include "SmallerEqualsToCommand.h"
 #include "SmallerThanCommand.h"
 #include "TimesCommand.h"
+
+// Token
+#include "IToken.h"

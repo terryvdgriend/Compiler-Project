@@ -14,6 +14,7 @@ class GetFilesInDirectoryByExtensionCommand;
 class GetAudioFilesInDirectoryCommand;
 class GetVideoFilesInDirectoryCommand;
 class CountCommand;
+class GetFileExtensionCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

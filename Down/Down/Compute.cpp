@@ -28,7 +28,9 @@ void Compute::checkNewCompile(const shared_ptr<LinkedTokenList>& tokenList, shar
 		if (compiler != nullptr)
 		{
 			compiledList->add(make_shared<DoNothingNode>());
-			compiler->compile(tokenList, token, tokenList->getLast(), compiledList, compiledList->getLast());
+            auto endNode = tokenList->getLast();
+            auto eBefore = compiledList->getLast();
+			compiler->compile(tokenList, token, endNode, compiledList, eBefore);
 		}
 		checkNewCompile(tokenList, compiledList, token->getNext());
 	}

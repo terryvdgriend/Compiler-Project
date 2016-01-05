@@ -41,10 +41,7 @@ shared_ptr<Compiler> CompileFactory::createCompileStatement(shared_ptr<Token>& t
 					return make_shared<CompileAddArrayItem>();
 				}
 			}
-			else 
-			{
-				return it->second();
-			}
+			return it->second();
 		}
 
 		return nullptr;

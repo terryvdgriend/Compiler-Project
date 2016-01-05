@@ -14,10 +14,9 @@ void SmallerEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 		return;
 	}
 
-	if (variable1.getType() == VariableType::number && variable2.getType() == VariableType::number)
-	{
-		int number1 = atoi(variable1.getValue().c_str());
-		int number2 = atoi(variable2.getValue().c_str());
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) {
+		double number1 = atof(variable1.getValue().c_str());
+		double number2 = atof(variable2.getValue().c_str());
 
 		if (number1 <= number2)
 		{
@@ -27,6 +26,7 @@ void SmallerEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 		{
 			vm.setReturnValue("false");
 		}
+		vm.setReturnToken(IToken::TYPE_FACT);
 	}
 	else 
 	{

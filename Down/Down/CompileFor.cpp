@@ -50,7 +50,8 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 		{
 			if (current == nullptr)
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("for statement not completed", ".md", -1, -1, ErrorType::ERROR));
+                auto error = make_shared<Error>("for statement not completed", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 				begin = end;
 
 				break;
@@ -63,7 +64,8 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 
 			if (current->getType() != expectation.getTokenType())
 			{
-				ErrorHandler::getInstance()->addError(make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR),
+                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -95,8 +97,9 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				// This means the declaration is empty
 				if (next->getPrevious()->getType() == IToken::CONDITION_OPEN)
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no declaration!", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::ERROR));
+                    auto error = make_shared<Error>("For statement has no declaration!", ".md", current->getLineNumber(),
+                                                    current->getPosition(), ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 					begin = end;
 
 					return;
@@ -119,7 +122,8 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 
 					if (compiledBodyPart != nullptr)
 					{
-						compiledBodyPart->compile(tokenList, current, next, _declaration, _declaration->getLast());
+                        auto eBefore = _declaration->getLast();
+						compiledBodyPart->compile(tokenList, current, next, _declaration, eBefore);
 
 						// If the list still is empty, fill with an DoNothingNode 
 						if (_declaration->getCount() == 0)
@@ -158,7 +162,8 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				{
 					condition = make_shared<CompileSingleStatement>();
 				}
-				condition->compile(tokenList, current, next, _condition, _condition->getLast());
+                auto eBefore = _condition->getLast();
+				condition->compile(tokenList, current, next, _condition, eBefore);
 
 				if (!multiIndex) 
 				{
@@ -168,8 +173,9 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 				// If condition still is empty, throw error (we need a condition)
 				if (_condition->getCount() == 0) 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no condition!", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::ERROR));
+                    auto error = make_shared<Error>("For statement has no condition!", ".md", current->getLineNumber(),
+                                                    current->getPosition(), ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 					begin = end;
 
 					break;
@@ -179,8 +185,9 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 			{
 				if (current->getType() == IToken::CONDITION_CLOSE) 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("For statement has no increment!", ".md", current->getLineNumber(), 
-														  current->getPosition(), ErrorType::ERROR));
+                    auto error = make_shared<Error>("For statement has no increment!", ".md", current->getLineNumber(),
+                                                    current->getPosition(), ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 					begin = end;
 
 					return;
@@ -202,7 +209,8 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 
 				if (compiledBodyPart != nullptr)
 				{
-					compiledBodyPart->compile(tokenList, current, conClose, _increment, _increment->getLast());
+                    auto eBefore = _increment->getLast();
+					compiledBodyPart->compile(tokenList, current, conClose, _increment, eBefore);
 
 					// If the list still is empty, fill with an DoNothingNode 
 					if (_declaration->getCount() == 0)
@@ -249,7 +257,8 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 
 					if (compiledBodyPart != nullptr) 
 					{
-						compiledBodyPart->compile(tokenList, current, previous, _body, _body->getLast());
+                        auto eBefore = _body->getLast();
+						compiledBodyPart->compile(tokenList, current, previous, _body, eBefore);
 						
 						if (!multiIndex) 
 						{ 

@@ -9,7 +9,8 @@ FunctionHandler::FunctionHandler()
 {
 	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
 	{
-		addFunction(make_shared<Function>(cf.first, "a", nullptr, vector<shared_ptr<Token>>(), nullptr));
+        auto vecToken = vector<shared_ptr<Token>>();
+		addFunction(make_shared<Function>(cf.first, "a", nullptr, vecToken, nullptr));
 	}
 }
 

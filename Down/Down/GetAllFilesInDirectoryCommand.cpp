@@ -41,7 +41,13 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 	{
 		de = readdir(dir);
 		if (!de) break;
-		out.push_back(de->d_name);
+		string direct = de->d_name;
+		direct = directory +"\\"+ direct;
+		if (!opendir(direct.c_str())) {
+			std::string fileName = de->d_name;
+			out.push_back("\"" + fileName + "\"");
+		}
+		
 	}
 	closedir(dir);
 	

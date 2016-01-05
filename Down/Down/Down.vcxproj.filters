@@ -439,10 +439,13 @@
       <Filter>Source Files\Utilities\Test</Filter>
     </ClCompile>
     <ClCompile Include="CountCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp">
-      <Filter>Source Files\VM\Commands</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="GetFileExtensionCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GetFilesInDirectoryByExtensionCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
@@ -748,6 +751,8 @@
     </ClInclude>
     <ClInclude Include="GetAudioFilesInDirectoryCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
+    <ClInclude Include="GetFileExtensionCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

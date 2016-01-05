@@ -19,5 +19,5 @@ void RandomFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& no
 
 pair<string, string> RandomFunctionCommand::accept(CommandVisitor& cmdVisitor)
 {
-	return pair<string, string>();
+	return cmdVisitor.visit(*this);
 }

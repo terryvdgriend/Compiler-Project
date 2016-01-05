@@ -37,7 +37,8 @@ void NodeVisitor::visit(ConditionalJumpNode& node)
 				}
 				else 
 				{
-					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR));
+                    auto error = make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 					vm->triggerRunFailure();
 
 					return;
@@ -102,7 +103,8 @@ void NodeVisitor::visit(SwitchNode& node)
 			else 
 			{
 				vm->triggerRunFailure();
-				ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR));
+                auto error = make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
 
 				return;
 			}
@@ -128,7 +130,8 @@ void NodeVisitor::visit(SwitchNode& node)
 				else
 				{
 					vm->triggerRunFailure();
-					ErrorHandler::getInstance()->addError(make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR));
+                    auto error = make_shared<Error>("identifier not found", ".md", -1, -1, ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
 
 					return;
 				}

@@ -17,12 +17,12 @@ void EqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	if (variable1.getValue() == variable2.getValue())
 	{
 		vm.setReturnValue("true");
-		vm.setReturnToken(variable1.getTokenType());
+		vm.setReturnToken(IToken::TYPE_FACT);
 	}
 	else
 	{
 		vm.setReturnValue("false");
-		vm.setReturnToken(variable1.getTokenType());
+		vm.setReturnToken(IToken::TYPE_FACT);
 	}
 }
 

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CompileOperator.h"
+#include "CompileEquals.h"
 #include "FunctionCall.h"
 #include "DirectFunctionCall.h"
 
@@ -13,6 +14,8 @@ CompileOperator::CompileOperator(shared_ptr<Compiler> nextlevel)
 void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
+	int i = 2;
+	int derp = i = i + 3;
 	shared_ptr<Token> current = begin;
 	map<IToken, string>::iterator iFind;
 	vector<shared_ptr<ActionNode>> beforeArray;
@@ -43,6 +46,14 @@ void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shar
 		{
 			fillRunList(iFind->second, listActionNodes, actionBefore, beforeArray, current);
 			fillNextLevelList(beforeArray, current, nextLevel, nextLevelList);
+			while (current != nullptr  && *current != *end) {
+				if (current->getType() == IToken::NEWLINE)
+				{
+					break;
+				}
+				current = current->getNext();
+			}
+			break;
 		}
 		current = current->getNext();
 	}
@@ -64,7 +75,8 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 
 	for (int n = 0; n < maxN; n++)
 	{
-		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(make_shared<Token>(token));
+        auto tempToken = make_shared<Token>(token);
+		shared_ptr<DirectFunctionCall> pDirectFunction = make_shared<DirectFunctionCall>(tempToken);
 		pDirectFunction->setArraySize(2);
 		pDirectFunction->setAt(0, szGetFromReturnValue);
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
@@ -92,7 +104,8 @@ void CompileOperator::fillNextLevelList(vector<shared_ptr<ActionNode>>& beforeAr
 	nextLevelList.push_back(nextLevel);
 
 	nextLevel.setBefore(beforeArray.at(1));
-	nextLevel.setBegin(current->getNext());
+    auto next = current->getNext();
+	nextLevel.setBegin(next);
 }
 
 void CompileOperator::insertLastNextLevel(shared_ptr<Token>& end, shared_ptr<ActionNode>& before, CompileNextLevel& nextLevel, 
@@ -114,7 +127,11 @@ void CompileOperator::compileNextLevel(const shared_ptr<LinkedTokenList>& tokenL
 	while (step != nextLevelList.end())
 	{
 		CompileNextLevel& nextLevelList = *step;
-		pNextLevel->compile(tokenList, nextLevelList.getBegin(), nextLevelList.getEnd(), listActionNodes, nextLevelList.getBefore());
+        auto fNode = nextLevelList.getBegin();
+        auto eNode = nextLevelList.getEnd();
+        auto eBefore = nextLevelList.getBefore();
+		pNextLevel->compile(tokenList, fNode, eNode, listActionNodes, eBefore);
 		++step;
+		pNextLevel = make_shared<CompileEquals>();
 	}
 }

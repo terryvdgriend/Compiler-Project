@@ -23,7 +23,9 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 
 		if (arrayTypes.first != arrayTypes.second)
 		{
-			throwTypeError(Variable(arrayTypes.second), Variable(arrayTypes.first), vm);
+            auto var1  = Variable(arrayTypes.second);
+            auto var2   = Variable(arrayTypes.first);
+			throwTypeError(var1,var2 , vm);
 		}
 		else
 		{
@@ -51,7 +53,8 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 
 					if (arrayWithItems.size() > (size_t)0 && (size_t)atoi(key.c_str()) >= arrayWithItems.size())
 					{
-						ErrorHandler::getInstance()->addError(make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR));
+                        auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+						ErrorHandler::getInstance()->addError(error);
 						vm.triggerRunFailure();
 
 						return;
@@ -78,23 +81,27 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	else
 	{
 		if (key == "") 
-		{ 
-			ErrorHandler::getInstance()->addError(make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", -1, -1, ErrorType::ERROR)); 
+		{
+            auto error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure(); 
 		}
 		else if (value == "") 
-		{ 
-			ErrorHandler::getInstance()->addError(make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", -1, -1, ErrorType::ERROR));
+		{
+            auto error = make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure(); 
 		}
 		else if (arrayKey == "") 
-		{ 
-			ErrorHandler::getInstance()->addError(make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", -1, -1, ErrorType::ERROR)); 
+		{
+            auto error = make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}
 		else if (param2->getType() != VariableType::number) 
 		{
-			ErrorHandler::getInstance()->addError(make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", -1, -1, ErrorType::ERROR));
+            auto error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure(); 
 		}
 	}

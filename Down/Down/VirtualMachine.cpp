@@ -191,7 +191,8 @@ vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
 	}
 	else 
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>("you want to get an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR));
+        auto error = make_shared<Error>("you want to get an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 
 		return vector<shared_ptr<Variable>>();
 	}
@@ -245,7 +246,8 @@ shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int in
 	}
 	else
 	{
-		ErrorHandler::getInstance()->addError(make_shared<Error>("you want to get an item from an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR));
+        auto error = make_shared<Error>("you want to get an item from an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR);
+		ErrorHandler::getInstance()->addError(error);
 
 		return nullptr;
 	}
@@ -352,4 +354,10 @@ bool VirtualMachine::hasValueInFunctionParameters(string key)
 bool VirtualMachine::isAnIdentifier(string name)
 {
 	return find(identifierList.begin(), identifierList.end(), name) != identifierList.end();
+}
+
+
+bool VirtualMachine::isAnArrayIdentifier(string name)
+{
+	return (variableArrayDictionary.find(name) != variableArrayDictionary.end());
 }
