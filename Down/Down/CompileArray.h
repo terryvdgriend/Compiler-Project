@@ -12,6 +12,7 @@ class CompileArray : public Compiler
 		string previousArrayTempVar;
 		int filledLength;
 		int filledMultiLength[2];
+		vector<string> multiParam;
 
 		bool isArrayLengthFilled;
 

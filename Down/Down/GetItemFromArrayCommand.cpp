@@ -5,9 +5,9 @@
 void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
-	vector<shared_ptr<Variable>> varArray = vm.getVariableArray(parameters.at(1));
+	shared_ptr<Array> varArray = vm.getVariableArray(parameters.at(1));
 
-	if (varArray.size() <= 0)
+	if (varArray->variableArrayDictionary.size() <= 0)
 	{
 		string functParamByKey = vm.getFunctionParameterValueByKey(parameters.at(1));
 		string tempKey;
@@ -15,7 +15,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 
 		for (string functParamByValue : vm.getFunctionParametersByValue(functParamByKey))
 		{
-			for (shared_ptr<Variable> var : vm.getVariableArray(functParamByValue))
+			for (shared_ptr<Variable> var : vm.getVariableArray(functParamByValue)->variableArrayDictionary)
 			{
 				if (var->getType() != VariableType::nulltype && var->getValue() != "")
 				{
@@ -30,35 +30,42 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 			}
 			tempSizeCurr = 0;
 		}
-		vector<shared_ptr<Variable>> functParam = vm.getVariableArray(tempKey);
+		vector<shared_ptr<Variable>> functParam = vm.getVariableArray(tempKey)->variableArrayDictionary;
 		int index = 0;
 
 		if (functParam.size() > 0)
 		{
-			vm.addArrayToDictionary(parameters.at(1), functParam.size());
+			vm.addArrayToDictionary(parameters.at(1), vector<int>({ functParam.size() }));
 
 			for (shared_ptr<Variable> var : functParam)
 			{
-				vm.addItemToVariableArrayAt(parameters.at(1), to_string(index), var);
+				vm.addItemToVariableArrayAt(parameters.at(1), vector<string>({ to_string(index) }), var);
 				index++;
 			}
 			varArray = vm.getVariableArray(parameters.at(1));
 		}
 	}
 
-	if (varArray.size() > 0)
+	if (varArray->variableArrayDictionary.size() > 0)
 	{
-		shared_ptr<Variable> variable1 = vm.getVariable(parameters.at(2));
 
-		if (varArray.at(atoi(variable1->getValue().c_str()))) 
+		vector<int> indexArray;
+		for (size_t i = 2; i < parameters.size(); i++)
 		{
-			vm.setReturnValue(varArray.at(atoi(variable1->getValue().c_str()))->getValue());
-			vm.setReturnToken(varArray.at(atoi(variable1->getValue().c_str()))->getTokenType());
+			indexArray.push_back(atoi(vm.getVariable(parameters.at(i))->getValue().c_str()));
+		}
+
+		shared_ptr<Variable> variable = vm.getItemFromVariableArray(parameters.at(1),indexArray);
+
+		if (variable) 
+		{
+			vm.setReturnValue(variable->getValue());
+			vm.setReturnToken(variable->getTokenType());
 		}
 		else 
 		{
-			string index = variable1->getValue().c_str();
-            auto error =  make_shared<Error>("array index "+ index +" is undefined", ".md", -1, -1, ErrorType::ERROR);
+			string index = variable->getValue().c_str();
+            auto error =  make_shared<Error>("array index out of bounds", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 
@@ -68,7 +75,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	}
 	else
 	{
-        auto error = make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR);
+        auto error = make_shared<Error>("the array is still empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 		vm.triggerRunFailure();
 	}

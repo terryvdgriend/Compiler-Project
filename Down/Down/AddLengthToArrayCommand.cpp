@@ -5,7 +5,11 @@
 void AddLengthToArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
-	vm.setReturnValue(vm.getVariable(parameters[1])->getValue());
+	if (parameters.size() == 4) {
+		vm.setReturnValue((vm.getVariable(parameters.at(1))->getValue() + ";" + vm.getVariable(parameters.at(2))->getValue()));
+	}
+	else
+		vm.setReturnValue(vm.getVariable(parameters[1])->getValue());
 }
 
 pair<string, string> AddLengthToArrayCommand::accept(CommandVisitor& commandVisitor) 

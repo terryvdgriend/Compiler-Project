@@ -5,22 +5,37 @@
 void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
+	string arrayIdentifier = vm.getFunctionParameterValueByKey(parameters[1]);
+	shared_ptr<Variable> valueParam = vm.getVariable(parameters.at(parameters.size() - 1));
+	vector<shared_ptr<Variable>> arrayIndexesVariables;
+	vector<string> arrayIndexes;
+	shared_ptr<Variable> param2;
+	for (size_t i = 2; i < parameters.size()-1; i++)
+	{
+		arrayIndexesVariables.push_back(vm.getVariable(parameters[i]));
+		arrayIndexes.push_back(vm.getVariable(parameters[i])->getValue());
+	}
 
-	string param1 = vm.getFunctionParameterValueByKey(parameters[1]);
-	shared_ptr<Variable> param2 = vm.getVariable(parameters[2]);
-	shared_ptr<Variable> param3 = vm.getVariable(parameters[3]);
 
 	list<string> functionParams = vm.getFunctionParametersByKey(parameters[1]);
-
-	string key = param2->getValue();
-	string value = param3->getValue();
+	string value = valueParam->getValue();
 	string arrayKey = functionParams.back();
-
-	if (key != "" && value != "" && arrayKey != "" && param2->getType() == VariableType::number)
+	for (auto it : arrayIndexesVariables) {
+		if (it->getType() != VariableType::number) {
+			auto error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
+			vm.triggerRunFailure();
+		}
+		if (it->getValue() == "") {
+			auto error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
+			vm.triggerRunFailure();
+		}
+	}
+	if (value != "" && arrayKey != "")
 	{
-		VariableType arrayType = param3->getType();
-		pair<string, string> arrayTypes = vm.getVariableTypeSameAsArrayType(param1, param3->getTokenType());
-
+		VariableType arrayType = valueParam->getType();
+		pair<string, string> arrayTypes = vm.getVariableTypeSameAsArrayType(arrayIdentifier, valueParam->getTokenType());
 		if (arrayTypes.first != arrayTypes.second)
 		{
             auto var1  = Variable(arrayTypes.second);
@@ -29,64 +44,62 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		}
 		else
 		{
-			for (string& temp : functionParams)
-			{
-				if (temp == parameters[1])
-				{
-					bool isAnArrayWithItems = false;
-					vector<shared_ptr<Variable>> arrayWithItems;
+			//for (string& temp : functionParams)
+			//{
+			//	if (temp == parameters[1])
+			//	{
+			//		bool isAnArrayWithItems = false;
+			//		shared_ptr<Array> multiArray;
+			//		shared_ptr<Array> arrayWithItems;
+			//		if (vm.getVariableArray(temp)) {
+			//			for (shared_ptr<Variable> v : vm.getVariableArray(temp)->variableArrayDictionary)
+			//			{
+			//				if (v)
+			//				{
+			//					isAnArrayWithItems = true;
 
-					for (shared_ptr<Variable> v : vm.getVariableArray(temp))
-					{
-						if (v)
-						{
-							isAnArrayWithItems = true;
+			//					break;
+			//				}
+			//			}
+			//		}
+			//		
 
-							break;
-						}
-					}
+			//		if (isAnArrayWithItems) 
+			//		{ 
+			//			arrayWithItems = vm.getVariableArray(temp); 
+			//			if (arrayWithItems->variableArrayDictionary.size() > (size_t)0 && (size_t)atoi(arrayIndexes.at(0).c_str()) >= arrayWithItems->variableArrayDictionary.size())
+			//			{
+			//				auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+			//				ErrorHandler::getInstance()->addError(error);
+			//				vm.triggerRunFailure();
 
-					if (isAnArrayWithItems) 
-					{ 
-						arrayWithItems = vm.getVariableArray(temp); 
-					}
+			//				return;
+			//			}
 
-					if (arrayWithItems.size() > (size_t)0 && (size_t)atoi(key.c_str()) >= arrayWithItems.size())
-					{
-                        auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
-						ErrorHandler::getInstance()->addError(error);
-						vm.triggerRunFailure();
+			//			for (int i = 0; (size_t)i < arrayWithItems->variableArrayDictionary.size(); i++)
+			//			{
+			//				if (arrayWithItems->variableArrayDictionary[i])
+			//				{
+			//					vm.addItemToVariableArrayAt(arrayKey, vector<string>({ to_string(i) }), arrayWithItems->variableArrayDictionary[i]);
+			//				}
+			//			}
+			//		}
 
-						return;
-					}
+			//		
 
-					for (int i = 0; (size_t)i < arrayWithItems.size(); i++)
-					{
-						if (arrayWithItems[i])
-						{
-							vm.addItemToVariableArrayAt(arrayKey, to_string(i), arrayWithItems[i]);
-						}
-					}
-
-					break;
-				}
-			}
+			//		break;
+			//	}
+			//}
 
 			for (string& item : functionParams)
 			{
-				vm.addItemToVariableArrayAt(item, key, param3);
+				vm.addItemToVariableArrayAt(item, arrayIndexes, valueParam);
 			}
 		}
 	}
 	else
 	{
-		if (key == "") 
-		{
-            auto error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", -1, -1, ErrorType::ERROR);
-			ErrorHandler::getInstance()->addError(error);
-			vm.triggerRunFailure(); 
-		}
-		else if (value == "") 
+		if (value == "") 
 		{
             auto error = make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", -1, -1, ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
@@ -97,12 +110,6 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
             auto error = make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", -1, -1, ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
-		}
-		else if (param2->getType() != VariableType::number) 
-		{
-            auto error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", -1, -1, ErrorType::ERROR);
-			ErrorHandler::getInstance()->addError(error);
-			vm.triggerRunFailure(); 
 		}
 	}
 	}

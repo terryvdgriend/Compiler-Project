@@ -116,11 +116,11 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			{
 				cout << "";
 			}
-			if (seperator->getType() == IToken::FUNCTION_DECLARE_OPEN)
+			if (seperator->getType() == IToken::FUNCTION_DECLARE_OPEN || seperator->getType() == IToken::ARRAY_OPEN)
 			{
 				stack.push(seperator->getType());
 			}
-			else if (seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE && stack.size() > 0)
+			else if ((seperator->getType() == IToken::FUNCTION_DECLARE_CLOSE || seperator->getType() == IToken::ARRAY_CLOSE) && stack.size() > 0)
 			{
 				stack.pop();
 			}

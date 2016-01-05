@@ -149,10 +149,9 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 				if (isMultiDimensional)
 				{
 					currentArrayTempVar = getCurrentLocalVariableName();
-					previousArrayTempVar = getPreviousLocalVariableName(sBuffer);
 					saArguments[0] = "$AddLengthToArray";
-					saArguments[1] = getPreviousLocalVariableName(sBuffer);
-					saArguments[2] = previousArrayTempVar;
+					saArguments[1] = multiParam.at(0);
+					saArguments[2] = multiParam.at(1);
 					saArguments[3] = currentArrayTempVar;
 
 					pFunction->setArraySize(4);
@@ -284,6 +283,7 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 			}
 		}
 	}
+	listActionNodes->printList();
 	begin = current;
 }
 
@@ -310,7 +310,6 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 	{
 		arrayClose = arrayClose->getPrevious();
 	}
-	//arrayClose = current->getPartner();
 	arrayClose = arrayClose->getPartner();
 	vector<shared_ptr<LinkedTokenList>> paramList;
 	shared_ptr<LinkedTokenList> param = make_shared<LinkedTokenList>();
@@ -388,11 +387,12 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 			compileParam->compile(tokenList, eFirst, eLast, listActionNodes, eBefore);
 			auto tempToken = make_shared<Token>(current);
 			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+			string param = getNextLocalVariableName(sBuffer).c_str();
+			multiParam.push_back(param);
 			directFunctionCall->setArraySize(2);
 			directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+			directFunctionCall->setAt(1, param.c_str());
 			listActionNodes->insertBefore(actionBefore, directFunctionCall);
-			listActionNodes->printList();
 		}
 		//filledMultiLength[0] = atoi(paramList.at(0)->getFirst()->getText().c_str());
 		//filledMultiLength[1] = atoi(paramList.at(1)->getFirst()->getText().c_str());

@@ -15,16 +15,24 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
 
-	shared_ptr<Token> seeker = current;
+	shared_ptr<Token> paraChecker = current;
 
-	while (seeker->getType() != IToken::NEWLINE)
-	{
-		if (seeker->getPrevious()->getType() == IToken::NUMBER && seeker->getType() == IToken::AND_PARA && seeker->getNext()->getType() == IToken::NUMBER)
-		{
+	while (paraChecker->getType() != IToken::ARRAY_OPEN) {
+		paraChecker = paraChecker->getNext();
+	}
+	shared_ptr<Token> paraCheckerEnd = paraChecker->getPartner();
+	stack<IToken> stack;
+
+	while (paraChecker != paraCheckerEnd) {
+		if (paraChecker->getType() == IToken::FUNCTION_DECLARE_OPEN)
+			stack.push(paraChecker->getType());
+		else if (paraChecker->getType() == IToken::FUNCTION_DECLARE_CLOSE)
+			stack.pop();
+		else if (stack.size() == 0 && paraChecker->getType() == IToken::AND_PARA) {
 			isMultiDimensional = true;
 			break;
 		}
-		seeker = seeker->getNext();
+		paraChecker = paraChecker->getNext();
 	}
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
