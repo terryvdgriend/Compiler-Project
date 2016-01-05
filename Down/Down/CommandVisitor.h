@@ -37,4 +37,7 @@ public:
 	pair<string, string> visit(TimesCommand& command);
 	pair<string, string> visit(CountCommand & command);
 	pair<string, string> visit(GetAllFilesInDirectoryCommand & command);
+	pair<string, string> visit(GetFilesInDirectoryByExtensionCommand & command);
+	pair<string, string> visit(GetAudioFilesInDirectoryCommand & command);
+	pair<string, string> visit(GetVideoFilesInDirectoryCommand & command);
 };

@@ -144,6 +144,8 @@
     <ClInclude Include="FileStreamer.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
+    <ClInclude Include="GetAudioFilesInDirectoryCommand.h" />
+    <ClInclude Include="GetFilesInDirectoryByExtensionCommand.h" />
     <ClInclude Include="GetAllFilesInDirectoryCommand.h" />
     <ClInclude Include="GetFromValueCommand.h" />
     <ClInclude Include="GetItemFromArrayCommand.h" />
@@ -241,6 +243,8 @@
     <ClCompile Include="FileStreamer.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
+    <ClCompile Include="GetAudioFilesInDirectoryCommand.cpp" />
+    <ClCompile Include="GetFilesInDirectoryByExtensionCommand.cpp" />
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />
     <ClCompile Include="GetItemFromArrayCommand.cpp" />

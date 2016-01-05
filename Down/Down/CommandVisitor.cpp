@@ -128,3 +128,13 @@ pair<string, string> CommandVisitor::visit(CountCommand& command) {
 pair<string, string> CommandVisitor::visit(GetAllFilesInDirectoryCommand& command) {
 	return pair<string, string>("", "");
 }
+
+pair<string, string> CommandVisitor::visit(GetFilesInDirectoryByExtensionCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(GetAudioFilesInDirectoryCommand & command)
+{
+	return pair<string, string>("", "");
+}

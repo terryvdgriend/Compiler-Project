@@ -45,12 +45,14 @@ map<string, shared_ptr<BaseCommand>>& CommandDictionary::getMap()
 map<string, shared_ptr<BaseCommand>>  CommandDictionary::getCustomFunctions()
 {
 	map<string, shared_ptr<BaseCommand>> customFunctionDictionary;
-	customFunctionDictionary["printdown"]				= make_shared<ShowFunctionCommand>();
-	customFunctionDictionary["printup"]					= make_shared<ShowUpFunctionCommand>();
-	customFunctionDictionary["random"]					= make_shared<RandomFunctionCommand>();
-	customFunctionDictionary["ThrowError"]				= make_shared<ErrorCommand>();
-	customFunctionDictionary["getAllFilesInDirectory"]	= make_shared<GetAllFilesInDirectoryCommand>();
-	customFunctionDictionary["count"]					= make_shared<CountCommand>();
+	customFunctionDictionary["printdown"]						= make_shared<ShowFunctionCommand>();
+	customFunctionDictionary["printup"]							= make_shared<ShowUpFunctionCommand>();
+	customFunctionDictionary["random"]							= make_shared<RandomFunctionCommand>();
+	customFunctionDictionary["ThrowError"]						= make_shared<ErrorCommand>();
+	customFunctionDictionary["getAllFilesInDirectory"]			= make_shared<GetAllFilesInDirectoryCommand>();
+	customFunctionDictionary["getFilesInDirectoryByExtension"]	= make_shared<GetFilesInDirectoryByExtensionCommand>();
+	customFunctionDictionary["getAudioFilesInDirectory"]		= make_shared<GetAudioFilesInDirectoryCommand>();
+	customFunctionDictionary["count"]							= make_shared<CountCommand>();
 	/*
 		READ:
 		If you want to define your own function(s), provide a name for the function and 
