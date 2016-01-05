@@ -13,6 +13,9 @@
 #include "ShowUpFunctionCommand.h"
 #include "RandomFunctionCommand.h"
 #include "GetAllFilesInDirectoryCommand.h"
+#include "GetFilesInDirectoryByExtensionCommand.h"
+#include "GetAudioFilesInDirectoryCommand.h"
+#include "GetVideoFilesInDirectoryCommand.h"
 #include "CountCommand.h"
 #include "GetFileExtensionCommand.h"
 

@@ -10,6 +10,9 @@ class ShowFunctionCommand;
 class ShowUpFunctionCommand;
 class RandomFunctionCommand;
 class GetAllFilesInDirectoryCommand;
+class GetFilesInDirectoryByExtensionCommand;
+class GetAudioFilesInDirectoryCommand;
+class GetVideoFilesInDirectoryCommand;
 class CountCommand;
 class GetFileExtensionCommand;
 
