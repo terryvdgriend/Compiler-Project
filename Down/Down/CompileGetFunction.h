@@ -1,5 +1,6 @@
 #pragma once
 #include "Compiler.h"
+#include "Function.h"
 
 class CompileGetFunction : public Compiler
 {
@@ -22,6 +23,7 @@ class CompileGetFunction : public Compiler
 		shared_ptr<LinkedActionList> _parameters;
 		shared_ptr<LinkedActionList> _functionParams;
 		shared_ptr<LinkedActionList> _functionCall;
+		vector<shared_ptr<Function>> _foundFunctions;
 
 		void compileNotUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);
 		void compileUserDefined(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end);

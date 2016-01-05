@@ -55,14 +55,13 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 				{
 					if (p->getName() == current->getText()) 
 					{
+						_foundFunctions.emplace_back(p);
 						_name			= p->getName();
 						_params			= p->getParams();
 						_paramTokens	= p->getParamTokens();
 						_bodyTokens		= p->getBody();
 						_returnToken	= p->getReturn();
 						userDefined		= p->isUserDefined();
-
-						break;
 					}
 				}
 			}
@@ -149,20 +148,39 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			current = current->getNext();
 		}
 	}
+	bool found = false;
+	for (auto it : _foundFunctions) {
+		if (it->getParams().size() == parameters.size()) {
+			found = true;
+			_name = it->getName();
+			_name			= it->getName();
+			_params			= it->getParams();
+			_paramTokens	= it->getParamTokens();
+			_bodyTokens		= it->getBody();
+			_returnToken	= it->getReturn();
+			break;
+		}
+	}
 
-	if (parameters.size() > _params.size()) 
-	{
-        auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
-                                        current->getPosition(), ErrorType::ERROR);
+	if (!found) {
+		auto error = make_shared<Error>(_name + " not found with this amount of paramaeters", ".md", current->getLineNumber(),
+			current->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 	}
 
-	if (parameters.size() < _params.size()) 
-	{
-        auto error = make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(),
-                                        current->getPosition(), ErrorType::ERROR);
-		ErrorHandler::getInstance()->addError(error);
-	}
+	//if (parameters.size() > _params.size()) 
+	//{
+ //       auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
+ //                                       current->getPosition(), ErrorType::ERROR);
+	//	ErrorHandler::getInstance()->addError(error);
+	//}
+
+	//if (parameters.size() < _params.size()) 
+	//{
+ //       auto error = make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(),
+ //                                       current->getPosition(), ErrorType::ERROR);
+	//	ErrorHandler::getInstance()->addError(error);
+	//}
 	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(parameters.size()+1);
 	pFunction->setAt(0, _name.c_str());

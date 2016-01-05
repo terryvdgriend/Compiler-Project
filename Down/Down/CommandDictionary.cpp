@@ -51,7 +51,9 @@ list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 	list<shared_ptr<Function>> customFunctionDictionary;
 	auto vecToken = vector<shared_ptr<Token>>();
 
+	customFunctionDictionary.push_back(make_shared<Function>("printdown", "aa", make_shared<ShowFunctionCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("printdown", "a", make_shared<ShowFunctionCommand>(), vecToken));
+
 	customFunctionDictionary.push_back(make_shared<Function>("printup", "a", make_shared<ShowUpFunctionCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("random", "a", make_shared<RandomFunctionCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("ThrowError", "a", make_shared<ErrorCommand>(), vecToken));

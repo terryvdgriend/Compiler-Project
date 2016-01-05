@@ -1,2 +1,3 @@
 
-[ printdown "kippensoep" ]
+[ printdown "kippen" ]
+[printdown "kippen","soep"]
