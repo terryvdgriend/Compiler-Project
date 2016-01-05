@@ -68,9 +68,9 @@ const map<string, IToken> TokenMap::getTokenMap()
 	tokenMap["_number_"]				= IToken::TYPE_NUMBER;
 	tokenMap["_text_"]					= IToken::TYPE_TEXT;
 
-	for (pair<string, shared_ptr<BaseCommand>> cf : CommandDictionary::getCustomFunctions())
+	for (auto cf : CommandDictionary::getCustomFunctions())
 	{
-		tokenMap[cf.first] = IToken::FUNCTION_CALL;
+		tokenMap[cf->getName()] = IToken::FUNCTION_CALL;
 	}
 
 	return tokenMap;

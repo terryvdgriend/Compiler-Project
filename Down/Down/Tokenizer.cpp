@@ -260,12 +260,12 @@ string Tokenizer::getFunctionsAsJson()
 {
 	string JSON = "[";
 	int i = 0;
-	map<string, shared_ptr<BaseCommand>> customFunction = CommandDictionary::getCustomFunctions();
+	auto customFunction = CommandDictionary::getCustomFunctions();
 	int size = customFunction.size();
 
-	for (pair<string, shared_ptr<BaseCommand>> cf : customFunction)
+	for (auto cf : customFunction)
 	{
-		JSON += "{\"function\":\"" + cf.first + "\"}";
+		JSON += "{\"function\":\"" + cf->getName() + "\"}";
 
 		if (i < size - 1)
 		{
