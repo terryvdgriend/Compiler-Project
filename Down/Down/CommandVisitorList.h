@@ -13,6 +13,7 @@ class GetAllFilesInDirectoryCommand;
 class GetFilesInDirectoryByExtensionCommand;
 class GetAudioFilesInDirectoryCommand;
 class GetVideoFilesInDirectoryCommand;
+class RenameFileCommand;
 class CountCommand;
 class GetFileExtensionCommand;
 

@@ -456,6 +456,9 @@
     <ClCompile Include="GetFilesInDirectoryByExtensionCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="RenameFileCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -759,6 +762,9 @@
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="GetFilesInDirectoryByExtensionCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="RenameFileCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
   </ItemGroup>

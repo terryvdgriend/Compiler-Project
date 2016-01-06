@@ -41,4 +41,5 @@ public:
 	pair<string, string> visit(GetAudioFilesInDirectoryCommand & command);
 	pair<string, string> visit(GetVideoFilesInDirectoryCommand & command);
 	pair<string, string> visit(GetFileExtensionCommand & command);
+	pair<string, string> visit(RenameFileCommand & command);
 };
