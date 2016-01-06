@@ -53,7 +53,8 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 	vm.setVariable(arrayDictionary, "", IToken::TYPE_TEXT_ARRAY);
 	auto arrayVar = vm.getVariable(arrayDictionary);
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
-	vm.addArrayToDictionary(arrayDictionary, vector<int>({ out.size() }));
+	int Size = out.size();
+	vm.addArrayToDictionary(arrayDictionary, vector<int>({ Size }));
 	vm.addIdentifer(arrayIdentifier);
 
 	for (size_t i = 0; i < out.size(); i++)

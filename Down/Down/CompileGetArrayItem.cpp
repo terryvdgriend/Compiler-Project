@@ -132,25 +132,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				seperator = seperator->getPrevious();
 			}
 			seperator = seperator->getPartner();
-			shared_ptr<Compiler> compiledBodyPart;
-			bool multiIndex = false;
 
-			if (current->getNext()->getType() != IToken::ARRAY_CLOSE)
-			{
-				multiIndex = true;
-			}
-
-			if (multiIndex) 
-			{ 
-				compiledBodyPart = make_shared<CompilePlusMinus>(); 
-			}
-			else 
-			{ 
-				compiledBodyPart = make_shared<CompileSingleStatement>(); 
-			}
-			
-			if (isMultiDimensional)
-			{
 				shared_ptr<Token> arrayClose = current;
 
 				while (arrayClose->getType() != IToken::ARRAY_OPEN)
@@ -243,25 +225,6 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				}
 
 
-				while (current->getType() != IToken::ARRAY_CLOSE)
-				{
-					auto tempToken = make_shared<Token>(current);
-					shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
-					directFunctionCall->setArraySize(2);
-					directFunctionCall->setAt(0, SET_CONST_TO_RT);
-					directFunctionCall->setAt(1, current->getText().c_str());
-					listActionNodes->insertBefore(actionBefore, directFunctionCall);
-
-					directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
-					directFunctionCall->setArraySize(2);
-					directFunctionCall->setAt(0, SET_GET_FROM_RT);
-					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-					listActionNodes->insertBefore(actionBefore, directFunctionCall);
-
-					if (current->getNext()->getType() == IToken::AND_PARA) { current = current->getNext(); }
-					current = current->getNext();
-				}
-
 				string currArray = getCurrentLocalVariableName();
 				vector<string> saArguments(2+arrayIndexes.size());
 				saArguments[0] = "$GetItemFromArray";
@@ -270,8 +233,6 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				{
 					saArguments[i + 2] = arrayIndexes.at(i);
 				}
-				saArguments[2] = getPreviousLocalVariableName(sBuffer);
-				saArguments[3] = currArray;
 
 				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 				pFunction->setArraySize(saArguments.size());
@@ -281,36 +242,6 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 					pFunction->setAt(n, saArguments[n].c_str());
 				}
 				listActionNodes->insertBefore(actionBefore, pFunction);
-			}
-			else
-			{
-				compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, actionBefore);
-				auto error = make_shared<Token>(current);
-				shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(error);
-				directFunctionCall->setArraySize(2);
-				directFunctionCall->setAt(0, SET_GET_FROM_RT);
-				directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-				listActionNodes->insertBefore(actionBefore, directFunctionCall);
-
-				string saArguments[3];
-				saArguments[0] = "$GetItemFromArray";
-				saArguments[1] = currentArray;
-				saArguments[2] = getCurrentLocalVariableName();
-
-				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
-				pFunction->setArraySize(3);
-
-				for (int n = 0; n < 3; n++)
-				{
-					pFunction->setAt(n, saArguments[n].c_str());
-				}
-				listActionNodes->insertBefore(actionBefore, pFunction);
-
-				while (current->getType() != IToken::ARRAY_CLOSE)
-				{
-					current = current->getNext();
-				}
-			}
 		}
 	}
 	begin = current;

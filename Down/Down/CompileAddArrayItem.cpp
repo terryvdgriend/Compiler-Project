@@ -86,8 +86,8 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				if (fromArray)
 				{
 					auto tempToken = make_shared<Token>(current);
-					if (isMultiDimensional)
-					{
+					//if (isMultiDimensional)
+					//{
 
 						
 						for (auto it : itemPositionInMultiArray) {
@@ -105,23 +105,23 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 
 							arrayIndexes.push_back(getCurrentLocalVariableName());
 						}
-					}
-					else
-					{
-						shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
-						directFunctionCall->setArraySize(2);
-						directFunctionCall->setAt(0, SET_CONST_TO_RT);
-						directFunctionCall->setAt(1, to_string(getFromArrayLength()).c_str());
-						listActionNodes->insertBefore(actionBefore, directFunctionCall);
-						tempToken = make_shared<Token>(current);
-						directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
-						directFunctionCall->setArraySize(2);
-						directFunctionCall->setAt(0, SET_GET_FROM_RT);
-						directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-						listActionNodes->insertBefore(actionBefore, directFunctionCall);
+					//}
+					//else
+					//{
+					//	shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+					//	directFunctionCall->setArraySize(2);
+					//	directFunctionCall->setAt(0, SET_CONST_TO_RT);
+					//	directFunctionCall->setAt(1, to_string(getFromArrayLength()).c_str());
+					//	listActionNodes->insertBefore(actionBefore, directFunctionCall);
+					//	tempToken = make_shared<Token>(current);
+					//	directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+					//	directFunctionCall->setArraySize(2);
+					//	directFunctionCall->setAt(0, SET_GET_FROM_RT);
+					//	directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+					//	listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
-						arrayIndexes.push_back(getCurrentLocalVariableName());
-					}
+					//	arrayIndexes.push_back(getCurrentLocalVariableName());
+					//}
 				}
 				auto eBefore = listActionNodes->getLast();
 				auto tempToken = make_shared<Token>(current);
@@ -160,35 +160,7 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 					pFunction->setAt(n, saArguments[n].c_str());
 				}
 				
-				/*if (isMultiDimensional)
-				{
-					saArguments[0] = "$AddItemToArrayAt";
-					saArguments[1] = currentArray;
-					saArguments[2] = currentArrayTempVar;
-					saArguments[3] = getPreviousLocalVariableName(sBuffer);
-					saArguments[4] = current;
-
-					pFunction->setArraySize(5);
-
-					for (int n = 0; n < 5; n++)
-					{
-						pFunction->setAt(n, saArguments[n].c_str());
-					}
-				}
-				else
-				{
-					saArguments[0] = "$AddItemToArrayAt";
-					saArguments[1] = currentArray;
-					saArguments[2] = currentArrayTempVar;
-					saArguments[3] = current;
-
-					pFunction->setArraySize(4);
-
-					for (int n = 0; n < 4; n++)
-					{
-						pFunction->setAt(n, saArguments[n].c_str());
-					}
-				}*/
+				
 
 				listActionNodes->insertBefore(actionBefore, pFunction);
 			}
@@ -225,49 +197,6 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 
 				break;
 			}
-			//shared_ptr<Token> seperator = current;
-
-			//while (seperator->getType() != IToken::ARRAY_OPEN)
-			//{
-			//	seperator = seperator->getPrevious();
-			//}
-			//seperator = seperator->getPartner();
-			//shared_ptr<Compiler> compiledBodyPart;
-			//bool multiIndex = false;
-
-			//if (current->getNext()->getType() != IToken::ARRAY_CLOSE)
-			//{
-			//	multiIndex = true;
-			//}
-			//if (!pastIndex && !isMultiDimensional) {
-			//	isMultiDimensional = multiIndex;
-			//	pastIndex = true;
-			//}
-
-			//if (multiIndex) 
-			//{ 
-			//	compiledBodyPart = make_shared<CompilePlusMinus>(); 
-			//}
-			//else 
-			//{ 
-			//	compiledBodyPart = make_shared<CompileSingleStatement>();
-			//}
-			//auto tempToken = make_shared<Token>(current);
-			//auto eBefore = listActionNodes->getLast();
-   //         
-			//compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, eBefore);
-   //         
-			//shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
-			//directFunctionCall->setArraySize(2);
-			//directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			//directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			//listActionNodes->insertBefore(actionBefore, directFunctionCall);
-			//currentArrayTempVar = getCurrentLocalVariableName();
-
-			//if (!multiIndex) 
-			//{ 
-			//	current = current->getNext(); 
-			//}
 
 			shared_ptr<Token> arrayClose = current;
 

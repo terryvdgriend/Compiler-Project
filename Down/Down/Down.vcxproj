@@ -284,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
+    <None Include="Array.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
     <Text Include="test_ifelse.md">

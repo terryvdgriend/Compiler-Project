@@ -64,8 +64,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		}
 		else 
 		{
-			string index = variable->getValue().c_str();
-            auto error =  make_shared<Error>("array index out of bounds", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+            auto error =  make_shared<Error>("array index out of bounds", ".md", -1, -1, ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 
@@ -75,7 +74,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	}
 	else
 	{
-        auto error = make_shared<Error>("the array is still empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+        auto error = make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 		vm.triggerRunFailure();
 	}

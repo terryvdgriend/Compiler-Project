@@ -771,5 +771,8 @@
     <None Include="functionTest.md">
       <Filter>Resource Files\TestScripts</Filter>
     </None>
+    <None Include="Array.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

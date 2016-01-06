@@ -13,6 +13,7 @@ class Token
 
 		bool operator!=(const Token& other)const;
 		bool operator!=(Token other);
+		bool operator==(Token other);
 		static bool compare(shared_ptr<Token> first, shared_ptr<Token> other);
 
 		string getStringbyType(map<string, IToken>& map, IToken token);

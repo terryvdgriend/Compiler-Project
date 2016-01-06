@@ -233,7 +233,6 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> ke
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
-		vector<int> indexArray;
 		int index = 0;
 		bool isMulti = (it->second->arraySizes.size() > 1);
 		for (size_t i = 0; i < it->second->arraySizes.size(); i++)
@@ -244,7 +243,17 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> ke
 						index += atoi(key.at(i).c_str());
 					}
 					else {
-						index += (atoi(key.at(i).c_str())* it->second->arraySizes.at(i));
+						int size = 0;
+						for (size_t j = i+1; j < it->second->arraySizes.size(); j++)
+						{
+							if (size == 0) {
+								size += it->second->arraySizes.at(j);
+							}
+							else {
+								size *= it->second->arraySizes.at(j);
+							}
+						}
+						index += (atoi(key.at(i).c_str())* size);
 					}
 
 				}
@@ -253,24 +262,24 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> ke
 				}
 			}
 			else {
-				if (isMulti) {
-					if (i == it->second->arraySizes.size() - 1) {
-						index += atoi(key.at(i).c_str());
-					}
-					else {
-						index += (atoi(key.at(i).c_str())* it->second->arraySizes.at(i));
-					}
 
-				}
-				else {
-					auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
-					ErrorHandler::getInstance()->addError(error);
-					triggerRunFailure();
-					return;
-				}
-			}
-			
-			
+				auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
+				triggerRunFailure();
+				return;
+				//if (isMulti) {
+				//	if (i == it->second->arraySizes.size() - 1) {
+				//		index += atoi(key.at(i).c_str());
+				//	}
+				//	else {
+				//		index += (atoi(key.at(i).c_str())* it->second->arraySizes.at(i));
+				//	}
+
+				//}
+				//else {
+				//	
+				//}
+			}			
 		}
 
 
@@ -289,19 +298,47 @@ shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, vector
 		bool isMulti = (it->arraySizes.size() > 1);
 		for (size_t i = 0; i < it->arraySizes.size(); i++)
 		{
-			if (isMulti) {
-				if (i == it->arraySizes.size()-1) {
-					index += indexArray.at(i);
+			if (indexArray.at(i) < it->arraySizes.at(i)) {
+				if (isMulti) {
+					if (i == it->arraySizes.size() - 1) {
+						index += indexArray.at(i);
+					}
+					else {
+						int size = 0;
+						for (size_t j = i + 1; j < it->arraySizes.size(); j++)
+						{
+							if (size == 0) {
+								size += it->arraySizes.at(j);
+							}
+							else {
+								size *= it->arraySizes.at(j);
+							}
+						}
+						index += (indexArray.at(i)* size);
+					}
+
 				}
 				else {
-					index += (indexArray.at(i)* it->arraySizes.at(i));
+					index += (indexArray.at(i));
 				}
-				
 			}
 			else {
-				index += indexArray.at(i);
+				if (isMulti) {
+					if (i == it->arraySizes.size() - 1) {
+						index += indexArray.at(i);
+					}
+					else {
+						index += (indexArray.at(i)* it->arraySizes.at(i));
+					}
+
+				}
+				else {
+					auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
+					triggerRunFailure();
+					return nullptr;
+				}
 			}
-			
 		}
 		return it->variableArrayDictionary[index];
 	}

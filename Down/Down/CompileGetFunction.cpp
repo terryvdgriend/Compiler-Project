@@ -104,7 +104,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 	vector<string> parameters;
 	_functionParams->add(make_shared<DoNothingNode>());
 
-	while (current != end)
+	while (*current != *end)
 	{
 		// Compile condition
 		shared_ptr<Token> seperator = current;
@@ -125,7 +125,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 				stack.pop();
 			}
 
-			if (stack.size() == 0 && (seperator->getType() == IToken::AND_PARA || seperator == end))
+			if (stack.size() == 0 && seperator->getType() == IToken::AND_PARA || stack.size() == 0 && *seperator == *end)
 			{
 				break;
 			}
