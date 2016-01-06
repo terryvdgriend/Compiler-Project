@@ -142,6 +142,11 @@ pair<string, string> CommandVisitor::visit(GetVideoFilesInDirectoryCommand & com
 	return pair<string, string>("", "");
 }
 
+pair<string, string> CommandVisitor::visit(RenameFileCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
 pair<string, string> CommandVisitor::visit(GetFileExtensionCommand& command) {
 	return pair<string, string>("", "");
 }
