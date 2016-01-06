@@ -21,6 +21,9 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
 			vm.setVariable(item, to_string(number1), variable.getTokenType());
 		}
+		vm.setReturnValue(to_string(number1));
+		vm.setReturnToken(variable.getTokenType());
+
 	}
 }
 

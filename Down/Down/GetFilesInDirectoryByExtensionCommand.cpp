@@ -1,30 +1,31 @@
 #include "stdafx.h"
-#include "GetAllFilesInDirectoryCommand.h"
+#include "GetFilesInDirectoryByExtensionCommand.h"
 #include "MandatoryCommandIncludes.h"
 #include "CompileSingleStatement.h"
 
 #ifdef _WIN32
-    #include "dirent.h"
+#include "dirent.h"
 #else
-    #include <dirent.h>
+#include <dirent.h>
 #endif
 
 
-GetAllFilesInDirectoryCommand::GetAllFilesInDirectoryCommand()
+GetFilesInDirectoryByExtensionCommand::GetFilesInDirectoryByExtensionCommand()
 {
 }
 
 
-GetAllFilesInDirectoryCommand::~GetAllFilesInDirectoryCommand()
+GetFilesInDirectoryByExtensionCommand::~GetFilesInDirectoryByExtensionCommand()
 {
 }
 
-void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
+void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+	// TODO: DO EXTENSION STUFF
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
 
-	string extension = "*.*";
+	string extension = ".cpp";
 	std::vector<string> out;
 	DIR *dir;
 	struct dirent *de;
@@ -41,16 +42,12 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 	{
 		de = readdir(dir);
 		if (!de) break;
-		string direct = de->d_name;
-		direct = directory +"\\"+ direct;
-		if (!opendir(direct.c_str())) {
-			std::string fileName = de->d_name;
-			out.push_back("\"" + fileName + "\"");
+		if (getExtension(de->d_name) == extension) {
+			out.push_back(de->d_name);
 		}
-		
 	}
 	closedir(dir);
-	
+
 	string buffer;
 	CompileSingleStatement varGetter = CompileSingleStatement();
 	string localVariable;
@@ -59,21 +56,33 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 	vm.setVariable(arrayDictionary, "", IToken::TYPE_TEXT_ARRAY);
 	auto arrayVar = vm.getVariable(arrayDictionary);
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
-	int Size = out.size();
-	vm.addArrayToDictionary(arrayDictionary, vector<int>({ Size }));
+	vm.addArrayToDictionary(arrayDictionary, out.size());
 	vm.addIdentifer(arrayIdentifier);
 
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
 		vm.setVariable(localVariable, out.at(i), IToken::TYPE_TEXT);
-		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
+		cout << out.at(i) << endl;
+		vm.addItemToVariableArrayAt(arrayDictionary, to_string(i), vm.getVariable(localVariable));
 	}
 	vm.setReturnValue(arrayIdentifier);
 	vm.setReturnToken(IToken::TYPE_TEXT_ARRAY);
 }
 
-pair<string, string> GetAllFilesInDirectoryCommand::accept(CommandVisitor & cmdVisitor)
+string GetFilesInDirectoryByExtensionCommand::getExtension(const string filename)
+{
+	int pos;
+	string ext;
+	pos = filename.find_last_of('.');
+	if (pos == -1) // There was no '.' in the file name
+		return ""; // Return an empty string
+	
+	return filename.substr(pos, -1);
+}
+
+
+pair<string, string> GetFilesInDirectoryByExtensionCommand::accept(CommandVisitor & cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
 }

@@ -74,7 +74,7 @@ __
 [ printdown "" ]
 [ printdown "" ]
 
-#### for ( _number_ **i** is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
+#### for ( _number_ **i**  is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
 --
 	#### for ( _number_ **j** is 0 , **j** like or smaller than  **i** minus 1, **j** is **j** plus 1 )
 	--
@@ -129,9 +129,11 @@ _number_ { 7 } **number2**
 __
 
 
-_text_ { [count [getAllFilesInDirectory "C:\\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include"]] } **files** is [getAllFilesInDirectory "C:\\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include"]
+_text_ **folderName** is "."
+
+_text_ { [count [getAllFilesInDirectory **folderName**]] } **files** is [getAllFilesInDirectory **folderName**]
 
 #### for(**i** is  0 , **i** smaller than [count **files**], **i** is **i** plus 1)
 --
-[printdown **files** { **i** }]
+[printdown **files** { **i** } plus " : " plus [getFileExtension  **files** { **i** }]]
 __

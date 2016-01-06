@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseCommand.h"
+#include "Function.h"
 
 class CommandDictionary
 {
@@ -7,7 +8,7 @@ class CommandDictionary
 		CommandDictionary();
 
 		map<string, shared_ptr<BaseCommand>>& getMap();
-		static map<string, shared_ptr<BaseCommand>> getCustomFunctions();
+		static list<shared_ptr<Function>>   getCustomFunctions();
 
 	private:
 		map<string, shared_ptr<BaseCommand>> commandDictionary;
