@@ -14,12 +14,12 @@ class CompileAddArrayItem : public Compiler
 		int getFromArrayLength();
 		void setFromArrayLength(int newFromArrayLength);
 
-		int *getFromMultiArrayLength();
-		void setFromMultiArrayLength(int firstFromMultiArrayLength, int secondFromMultiArrayLength);
+		vector<int>getFromMultiArrayLength();
+		void setFromMultiArrayLength(vector<int> setIndexFromMulti);
+
+		void setItemPositionInMultiArray(vector<int> PositionInMultiArray);
 
 		void setMultiArray(bool newIsMultiDimensional) { isMultiDimensional = newIsMultiDimensional; };
-
-		void setItemPositionInMultiArray(int firstItemPositionInMultiArray, int secondItemPositionInMultiArray);
 
 		void createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list);
 
@@ -29,7 +29,7 @@ class CompileAddArrayItem : public Compiler
 		bool fromArray;
 		int fromArrayLength;
 
-		int fromMultiArrayLength[2];
+		vector<int> fromMultiArrayLength;
 		bool isMultiDimensional;
-		int itemPositionInMultiArray[2];
+		vector<int> itemPositionInMultiArray;
 };

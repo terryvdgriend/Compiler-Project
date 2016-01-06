@@ -1,6 +1,14 @@
 #pragma once
 #include "Compiler.h"
 
+struct Param {
+	vector<int> paramIndexes;
+	shared_ptr<LinkedTokenList> params;
+	Param() {
+		params = make_shared<LinkedTokenList>();
+	}
+};
+
 class CompileArray : public Compiler
 {
 	public:
@@ -11,12 +19,12 @@ class CompileArray : public Compiler
 		string currentArrayTempVar;
 		string previousArrayTempVar;
 		int filledLength;
-		int filledMultiLength[2];
+		vector<int> filledMultiLength;
 		vector<string> multiParam;
 
 		bool isArrayLengthFilled;
 
-		void createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list);
+		void createNewLineToken(shared_ptr<Param>& param, vector<shared_ptr<Param>>& list);
 
 		bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNodes, shared_ptr<LinkedTokenList> tokenList, shared_ptr<ActionNode> &actionBefore, shared_ptr<Token> &current, string sBuffer, int countOfRows, bool isMultiDimensional);
 };
