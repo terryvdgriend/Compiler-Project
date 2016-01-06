@@ -37,7 +37,34 @@ $(function() {
             pasteHtmlAtCaret('<b>VARIABLE</b>', false);
         },
         "Type": function() {
-            pasteHtmlAtCaret('<i>VARIABLE</i>', false);
+            pasteHtmlAtCaret('<i>TYPE</i>', false);
+        },
+        "Function": function() {
+            pasteHtmlAtCaret('<hr data-code="---"><h3 id="calcy">METHOD_NAME</h3><hr data-code="___">', false);
+        },
+        "Comment": function() {
+            pasteHtmlAtCaret('<blockquote><p>Comment</p></blockquote>', false);
+        },
+        "Switch": function() {
+            pasteHtmlAtCaret('<h4 id="switch-value-">switch ( VALUE )</h4><h2 id="case-case-_value-">case ( CASE_VALUE )</h2><p>__</p><h2 id="default">default</h2><p>__</p>', false);
+        },
+        "For-loop": function() {
+
+        },
+        "While-loop": function() {
+            pasteHtmlAtCaret('<h4 id="while-i-smaller-than-5-">while ( CONDITION )</h4><p>--<br> <br>__</p>', false);
+        },
+        "Do-while": function() {
+
+        },
+        "If": function() {
+
+        },
+        "If/Else": function() {
+
+        },
+        "If/Else/Else If": function() {
+
         }
     }, 'right', 0);
 
