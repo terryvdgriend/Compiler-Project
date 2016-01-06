@@ -48,7 +48,12 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 			toIdentifier = identifier;
 		}
 	}
-
+	if (toArray == nullptr) {
+		auto arrayVar = vm.getVariable(toIdentifier);
+		vm.setFunctionParameter(toIdentifier, functParamByKey);
+		toArray = vm.addArrayToDictionary(toIdentifier, fromArray->arraySizes);
+		vm.addIdentifer(functParamByKey);
+	}
 	
 	if (toArray->variableArrayDictionary.size() == 0) {
 		toArray = vm.addArrayToDictionary(toIdentifier, vector<int>({ fromArray->variableArrayDictionary.size() }));

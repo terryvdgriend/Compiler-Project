@@ -14,8 +14,6 @@ CompileOperator::CompileOperator(shared_ptr<Compiler> nextlevel)
 void CompileOperator::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 							  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
-	int i = 2;
-	int derp = i = i + 3;
 	shared_ptr<Token> current = begin;
 	map<IToken, string>::iterator iFind;
 	vector<shared_ptr<ActionNode>> beforeArray;

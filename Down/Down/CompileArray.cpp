@@ -203,7 +203,7 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 	shared_ptr<Token> arrayClose;
 	while (seeker)
 	{
-		if (seeker->getType() == IToken::NEWLINE || seeker->getType() == IToken::IDENTIFIER)
+		if (arrayClose != nullptr && seeker->getType() == IToken::NEWLINE || arrayClose != nullptr &&  seeker->getType() == IToken::IDENTIFIER)
 			break;
 		if (seeker->getType() == IToken::ARRAY_OPEN)
 			arrayClose = seeker;

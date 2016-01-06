@@ -44,52 +44,6 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		}
 		else
 		{
-			//for (string& temp : functionParams)
-			//{
-			//	if (temp == parameters[1])
-			//	{
-			//		bool isAnArrayWithItems = false;
-			//		shared_ptr<Array> multiArray;
-			//		shared_ptr<Array> arrayWithItems;
-			//		if (vm.getVariableArray(temp)) {
-			//			for (shared_ptr<Variable> v : vm.getVariableArray(temp)->variableArrayDictionary)
-			//			{
-			//				if (v)
-			//				{
-			//					isAnArrayWithItems = true;
-
-			//					break;
-			//				}
-			//			}
-			//		}
-			//		
-
-			//		if (isAnArrayWithItems) 
-			//		{ 
-			//			arrayWithItems = vm.getVariableArray(temp); 
-			//			if (arrayWithItems->variableArrayDictionary.size() > (size_t)0 && (size_t)atoi(arrayIndexes.at(0).c_str()) >= arrayWithItems->variableArrayDictionary.size())
-			//			{
-			//				auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
-			//				ErrorHandler::getInstance()->addError(error);
-			//				vm.triggerRunFailure();
-
-			//				return;
-			//			}
-
-			//			for (int i = 0; (size_t)i < arrayWithItems->variableArrayDictionary.size(); i++)
-			//			{
-			//				if (arrayWithItems->variableArrayDictionary[i])
-			//				{
-			//					vm.addItemToVariableArrayAt(arrayKey, vector<string>({ to_string(i) }), arrayWithItems->variableArrayDictionary[i]);
-			//				}
-			//			}
-			//		}
-
-			//		
-
-			//		break;
-			//	}
-			//}
 
 			for (string& item : functionParams)
 			{

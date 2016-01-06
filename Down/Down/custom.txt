@@ -1,13 +1,5 @@
-_number_ **ein** is 1
-_number_ **zwei** is 2
-
-_number_ { **ein** , **zwei** } **numbers** is { {1,1} }
 
 
----
-### CalcyArray gets _number_ {} **age** and gives _number_ {} **result** 
-**age** { 1,2 } is 20
-**result** is **age**
-___
+_text_  { 1 } **files** is { "temp" }
 
-**numbers** is [CalcyArray **numbers**]
+_text_ **temp** is **files** { 1 } plus ":"
