@@ -12,7 +12,7 @@ class AbstractFunctionCall : public ActionNode
 	protected:
 		typedef vector<string> contentArray;
 		const contentArray& getContentArray() const;
-		shared_ptr<Token> _token;
+		weak_ptr<Token> _token;
 
 	private:
 		contentArray m_sContentArray;

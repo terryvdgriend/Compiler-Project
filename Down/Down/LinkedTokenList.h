@@ -19,5 +19,5 @@ class LinkedTokenList
 	private:
 		int _count;
 		shared_ptr<Token> _first;
-		shared_ptr<Token> _last;
+		weak_ptr<Token> _last;
 };

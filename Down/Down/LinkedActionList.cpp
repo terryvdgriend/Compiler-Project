@@ -4,8 +4,8 @@
 LinkedActionList::LinkedActionList()
 {
 	count		= 0;
-	firstNode	= nullptr;
-	lastNode	= nullptr;
+	_firstNode	= nullptr;
+	_lastNode.reset();
 }
 
 shared_ptr<ActionNode> LinkedActionList::add(shared_ptr<ActionNode> value)
@@ -17,7 +17,7 @@ shared_ptr<ActionNode> LinkedActionList::add(shared_ptr<LinkedActionList> list)
 {
 	if (list != nullptr)
 	{
-		shared_ptr<ActionNode> current = list->firstNode;
+		shared_ptr<ActionNode> current = list->_firstNode;
 
 		if (current == nullptr)
 		{
@@ -32,7 +32,12 @@ shared_ptr<ActionNode> LinkedActionList::add(shared_ptr<LinkedActionList> list)
 			}
 		}
 
-		return lastNode;
+		if (shared_ptr<ActionNode> n = _lastNode.lock())
+		{
+			return n;
+		}
+
+		return nullptr;
 	}
 	else
 	{
@@ -55,7 +60,7 @@ shared_ptr<ActionNode> LinkedActionList::insertBefore(shared_ptr<ActionNode> rig
 
 		if (left == nullptr)
 		{
-			firstNode = value;
+			_firstNode = value;
 		}
 		else
 		{
@@ -75,7 +80,7 @@ shared_ptr<ActionNode> LinkedActionList::insertBefore(shared_ptr<ActionNode> rig
 	{
 		if (right == nullptr) 
 		{
-			current = list->firstNode;
+			current = list->_firstNode;
 
 			while (current != nullptr) 
 			{
@@ -83,11 +88,16 @@ shared_ptr<ActionNode> LinkedActionList::insertBefore(shared_ptr<ActionNode> rig
 				current = current->getNext();
 			}
 
-			return lastNode;
+			if (shared_ptr<ActionNode> n = _lastNode.lock())
+			{
+				return n;
+			}
+
+			return nullptr;
 		}
 		else 
 		{
-			current = list->firstNode;
+			current = list->_firstNode;
 			shared_ptr<ActionNode> value;
 			shared_ptr<ActionNode> left;
 
@@ -102,7 +112,7 @@ shared_ptr<ActionNode> LinkedActionList::insertBefore(shared_ptr<ActionNode> rig
 
 				if (left == nullptr)
 				{
-					firstNode = value;
+					_firstNode = value;
 				}
 				else 
 				{
@@ -126,15 +136,19 @@ shared_ptr<ActionNode> LinkedActionList::insertLast(shared_ptr<ActionNode> value
 	{
 		count++;
 
-		if (firstNode == nullptr)
+		if (_firstNode == nullptr)
 		{
-			firstNode = lastNode = value;
+			_firstNode = value;
+			_lastNode = value;
 		}
 		else
 		{
-			lastNode->setNext(value);
-			value->setPrevious(lastNode);
-			lastNode = value;
+			if (shared_ptr<ActionNode> n = _lastNode.lock())
+			{
+				n->setNext(value);
+				value->setPrevious(n);
+				_lastNode = value;
+			}
 		}
 	}
 
@@ -143,7 +157,7 @@ shared_ptr<ActionNode> LinkedActionList::insertLast(shared_ptr<ActionNode> value
 
 void LinkedActionList::printList()
 {
-	shared_ptr<ActionNode> currentNode = firstNode;
+	shared_ptr<ActionNode> currentNode = _firstNode;
 
 	while (currentNode != nullptr)
 	{
@@ -159,10 +173,15 @@ int LinkedActionList::getCount()
 
 shared_ptr<ActionNode> LinkedActionList::getFirst()
 {
-	return firstNode;
+	return _firstNode;
 }
 
 shared_ptr<ActionNode> LinkedActionList::getLast()
 {
-	return lastNode;
+	if (shared_ptr<ActionNode> n = _lastNode.lock())
+	{
+		return n;
+	}
+
+	return nullptr;
 }

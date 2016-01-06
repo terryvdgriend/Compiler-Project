@@ -43,7 +43,7 @@ int ProgramHandler::runDown(IDEGateway& ideGateway)
 	{
 		return -1;
 	}
-
+	
 	//=============COMPILER=============
 	shared_ptr<LinkedActionList> compiledList = runCompiler(tokenList, ideGateway.doPrintCompiledList());
 
@@ -51,7 +51,7 @@ int ProgramHandler::runDown(IDEGateway& ideGateway)
 	{
 		return -1;
 	}
-
+	return 0;
 	//=============VM=============
 	if (!ideGateway.doBuild())
 	{

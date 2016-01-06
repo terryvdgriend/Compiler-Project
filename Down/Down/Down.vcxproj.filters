@@ -16,9 +16,6 @@
     <Filter Include="Source Files\Tokenizer">
       <UniqueIdentifier>{a869aea0-138d-4728-8895-1c4a2ac2024c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Tokenizer">
-      <UniqueIdentifier>{990d6c60-b0b7-40e7-9db3-3e715a59520f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Libs">
       <UniqueIdentifier>{565d4ecc-7028-422a-bb32-88245a473653}</UniqueIdentifier>
     </Filter>
@@ -94,9 +91,6 @@
     <Filter Include="Source Files\VM\Visitors">
       <UniqueIdentifier>{74feabd5-a62b-45ef-864d-010c0287103f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Tokenizer\Token">
-      <UniqueIdentifier>{dc6ef6b2-8c87-4e62-950d-395d41bee88a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tokenizer\Token">
       <UniqueIdentifier>{65cad6d6-b545-4d54-b04c-7b44abd3ff8a}</UniqueIdentifier>
     </Filter>
@@ -148,9 +142,6 @@
     <Filter Include="Header Files\Utilities\Miscellaneous">
       <UniqueIdentifier>{6241761d-7aab-45aa-8f61-81d376def772}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Tokenizer\Utilities">
-      <UniqueIdentifier>{30126ca1-e454-44ff-94e0-cc9c6744d89f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tokenizer\Utilities">
       <UniqueIdentifier>{9c90861a-1538-4383-9580-2076484a6bee}</UniqueIdentifier>
     </Filter>
@@ -189,6 +180,15 @@
     </Filter>
     <Filter Include="Header Files\Utilities\Test">
       <UniqueIdentifier>{8c76fb5a-411c-4582-b942-7a7bf2ddbec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer">
+      <UniqueIdentifier>{990d6c60-b0b7-40e7-9db3-3e715a59520f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer\Token">
+      <UniqueIdentifier>{dc6ef6b2-8c87-4e62-950d-395d41bee88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tokenizer\Utilities">
+      <UniqueIdentifier>{30126ca1-e454-44ff-94e0-cc9c6744d89f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -445,7 +445,7 @@
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="GetFileExtensionCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -741,7 +741,7 @@
       <Filter>Header Files\VM\Commands</Filter>
     </ClInclude>
     <ClInclude Include="GetFileExtensionCommand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
