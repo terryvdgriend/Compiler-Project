@@ -462,6 +462,9 @@
     <ClCompile Include="MoveFileCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MoveFilesCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -771,6 +774,9 @@
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="MoveFileCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveFilesCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
