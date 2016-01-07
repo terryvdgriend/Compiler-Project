@@ -282,7 +282,7 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	{
 		begin = current;
 	}
-	listActionNodes->printList();
+	
 }
 
 string CompileAddArrayItem::getCurrentArray()

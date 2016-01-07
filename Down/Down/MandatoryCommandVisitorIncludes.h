@@ -20,6 +20,7 @@
 #include "CountCommand.h"
 #include "GetFileExtensionCommand.h"
 #include "MoveFileCommand.h"
+#include "MoveFilesCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"
