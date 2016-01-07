@@ -35,7 +35,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 
 		if (functParam.size() > 0)
 		{
-			vm.addArrayToDictionary(parameters.at(1), vector<int>({ functParam.size() }));
+			vm.addArrayToDictionary(parameters.at(1), vector<int>({ static_cast<int>(functParam.size()) }));
 
 			for (shared_ptr<Variable> var : functParam)
 			{

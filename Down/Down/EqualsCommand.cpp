@@ -56,7 +56,7 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 	}
 	
 	if (toArray->variableArrayDictionary.size() == 0) {
-		toArray = vm.addArrayToDictionary(toIdentifier, vector<int>({ fromArray->variableArrayDictionary.size() }));
+		toArray = vm.addArrayToDictionary(toIdentifier, vector<int>({ static_cast<int>(fromArray->variableArrayDictionary.size()) }));
 		
 	}
 	if (toArray->variableArrayDictionary.size() >= fromArray->variableArrayDictionary.size()) {
