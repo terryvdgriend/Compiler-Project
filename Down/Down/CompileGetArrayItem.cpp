@@ -212,7 +212,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 					auto tempToken = make_shared<Token>(current);
 					auto eFirst = params->getFirst();
 					auto eLast = params->getLast();
-					auto eBefore = listActionNodes->getLast();
+					auto eBefore = actionBefore;
 
 					compiledBodyPart->compile(tokenList, eFirst, eLast, listActionNodes, eBefore);
 
@@ -222,6 +222,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
 					listActionNodes->insertBefore(actionBefore, directFunctionCall);
 					arrayIndexes.push_back(getCurrentLocalVariableName());
+
 				}
 
 
