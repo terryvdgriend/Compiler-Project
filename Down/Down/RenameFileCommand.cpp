@@ -22,6 +22,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 	string newFile = vm.getVariable(parameters[2])->getValue();
 	if (getExtension(oldFile) != getExtension(newFile)) {
 		throwCustomError("Input does not have matching extensions", vm);
+		return;
 	}
 
 	oldFile.erase(remove(oldFile.begin(), oldFile.end(), '\"'), oldFile.end());

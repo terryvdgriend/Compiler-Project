@@ -42,4 +42,6 @@ public:
 	pair<string, string> visit(GetVideoFilesInDirectoryCommand & command);
 	pair<string, string> visit(GetFileExtensionCommand & command);
 	pair<string, string> visit(RenameFileCommand & command);
+	pair<string, string> visit(RemoveFileCommand & command);
+	pair<string, string> visit(RemoveDirectoryCommand & command);
 };

@@ -61,7 +61,9 @@ list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary.push_back(make_shared<Function>("getVideoFilesInDirectory", "a", make_shared<GetVideoFilesInDirectoryCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getAudioFilesInDirectory", "a", make_shared<GetAudioFilesInDirectoryCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("count", "a", make_shared<CountCommand>(), vecToken));
-	customFunctionDictionary.push_back(make_shared<Function>("renameFile", "aa", make_shared<RenameFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("rename", "aa", make_shared<RenameFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("removeFile", "a", make_shared<RemoveFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("removeDirectory", "a", make_shared<RemoveDirectoryCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getFileExtension", "a", make_shared<GetFileExtensionCommand>(), vecToken));
 	
 

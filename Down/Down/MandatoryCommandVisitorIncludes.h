@@ -17,6 +17,8 @@
 #include "GetAudioFilesInDirectoryCommand.h"
 #include "GetVideoFilesInDirectoryCommand.h"
 #include "RenameFileCommand.h"
+#include "RemoveFileCommand.h"
+#include "RemoveDirectoryCommand.h"
 #include "CountCommand.h"
 #include "GetFileExtensionCommand.h"
 
