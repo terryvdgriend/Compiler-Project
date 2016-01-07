@@ -18,6 +18,8 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 {
 	shared_ptr<Token> token;
 	string code = "\n" + codefromfile; // Add an \n (new line) to prevent errors with first line comments
+
+	std::replace(code.begin(), code.end(), '\t', ' ');
 	smatch match;
 	int rowNr = 0;
 	int colNr = 1;

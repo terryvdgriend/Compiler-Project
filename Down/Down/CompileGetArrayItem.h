@@ -11,8 +11,8 @@ class CompileGetArrayItem : public Compiler
 		void createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list);
 
 	private:
-		string currentArray;
-		string currentArrayItemTempVar;
+		string currentArray = "";
+			string currentArrayItemTempVar = "";
 
-		bool isMultiDimensional;
+		bool isMultiDimensional = false;
 };
