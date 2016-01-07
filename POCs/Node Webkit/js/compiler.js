@@ -19,7 +19,7 @@ exports.getCompilerFile = function() {
 	return compilerFilePath;
 }
 
-exports.run = function(code) {
+exports.run = function(code, execute) {
 	global.editor.getSession().clearAnnotations();
 	exports.clearLogResult();
 	exports.clearErrorLog();
@@ -36,7 +36,13 @@ exports.run = function(code) {
 		} else {
 			var spawn = require('child_process').spawn;
 			var compilerFilePath = exports.getCompilerFile();
-			var arguments = ["-r"];
+			var arguments = [];
+
+			if(execute) {
+				arguments.push("-r");
+			} else {
+				arguments.push("-b");
+			}
 
 			if (global.settings.printTokenList) {
 				arguments.push("-t");

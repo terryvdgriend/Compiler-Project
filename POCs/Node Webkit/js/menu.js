@@ -112,7 +112,7 @@ exports.initMenu = function() {
         key: "b",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
-            
+            compiler.run(global.editor.getValue(), false);
         }
     }));
     programMenu.append(new global.gui.MenuItem({
@@ -120,7 +120,7 @@ exports.initMenu = function() {
         key: "r",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
-            compiler.run(global.editor.getValue());
+            compiler.run(global.editor.getValue(), true);
         }
     }));
 
