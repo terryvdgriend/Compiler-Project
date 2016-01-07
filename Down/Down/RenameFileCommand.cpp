@@ -42,6 +42,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
         #endif
         
 		throwCustomError(buff, vm);
+		vm.triggerRunFailure();
 	}
 }
 
