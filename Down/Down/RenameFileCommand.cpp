@@ -22,6 +22,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 	string newFile = vm.getVariable(parameters[2])->getValue();
 	if (getExtension(oldFile) != getExtension(newFile)) {
 		throwCustomError("Input does not have matching extensions", vm);
+		vm.triggerRunFailure();
 	}
 
 	oldFile.erase(remove(oldFile.begin(), oldFile.end(), '\"'), oldFile.end());
@@ -40,7 +41,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
             strerror_r(100, buff, errno);
         #endif
         
-		std::cout << "Error: " << buff << std::endl;
+		throwCustomError(buff, vm);
 	}
 }
 
