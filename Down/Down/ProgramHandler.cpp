@@ -108,7 +108,7 @@ void ProgramHandler::runVirtualMachine(const shared_ptr<LinkedActionList>& compi
 void ProgramHandler::printElapsedTime()
 {
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
-	cout << "Time elapsed: " + to_string(elapsed_secs);
+	cout << "Time elapsed: " + to_string(elapsed_secs) + "s";
 }
 
 bool ProgramHandler::errors()
