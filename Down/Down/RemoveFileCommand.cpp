@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "RemoveFileCommand.h"
 #include "MandatoryCommandIncludes.h"
-#include <cstdint>
-#include <experimental/filesystem>
 
+#ifdef _WIN32
+#include "dirent.h"
+#else
+#include <dirent.h>
+#endif
 
 RemoveFileCommand::RemoveFileCommand()
 {
@@ -18,22 +21,22 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto variable1 = vm.getVariable(parameters[1]);
-	string file = vm.getVariable(parameters[1])->getValue();
-	file.erase(remove(file.begin(), file.end(), '\"'), file.end());
-	
-	if (getExtension(file) == "") {
-		throwCustomError("Missing file extension (use removeDirectory to delete directories)", vm);
-		return;
-	}
-	int result = remove(file.c_str());
-	if (result == 0) {
-		cout << "File " << file << " removed."<< endl;
-	}
-	else {
-		char buff[256];
+	if (variable1 != nullptr) {
+		if (variable1->getTokenType() == IToken::TYPE_TEXT) {
+			string file = vm.getVariable(parameters[1])->getValue();
+			file.erase(remove(file.begin(), file.end(), '\"'), file.end());
 
-		strerror_s(buff, 100, errno);
-		throwCustomError("Error: " + file + ": " + buff, vm);
+			if (opendir(file.c_str()) == nullptr){
+				throwCustomError("Cannot remove directories (use removeDirectory to delete directories)", vm);
+			}
+			int result = remove(file.c_str());
+			if (result != 0) {
+				char buff[256];
+
+				strerror_s(buff, 100, errno);
+				throwCustomError("Error: " + file + ": " + buff, vm);
+			}
+		}
 	}
 }
 

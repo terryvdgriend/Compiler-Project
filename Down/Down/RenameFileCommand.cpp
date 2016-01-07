@@ -32,12 +32,18 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				if (getExtension(oldFile) != getExtension(newFile)) {
 					throwCustomError("Input does not have matching extensions", vm);
 				}
-				if (opendir(oldFile.c_str()) == nullptr) {
-					throwCustomError("Cannot rename directories", vm);
-				}
 
 				oldFile.erase(remove(oldFile.begin(), oldFile.end(), '\"'), oldFile.end());
 				newFile.erase(remove(newFile.begin(), newFile.end(), '\"'), newFile.end());
+
+				DIR *dir;
+				dir = opendir(oldFile.c_str());
+
+				if (dir != nullptr) {
+					throwCustomError("Cannot rename directories", vm);
+					return;
+				}
+
 				int result = rename(oldFile.c_str(), newFile.c_str());
 				if (result != 0) {
 					cout << "Error renaming file! Code: " << result << endl;
@@ -51,9 +57,11 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 
 					throwCustomError(buff, vm);
 				}
+				return;
 			}
 			else {
 				throwCustomError("Parameters must be of type 'text'", vm);
+				return;
 			}
 		}
 	}
