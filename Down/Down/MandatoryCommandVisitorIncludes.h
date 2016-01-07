@@ -21,6 +21,7 @@
 #include "RemoveDirectoryCommand.h"
 #include "CountCommand.h"
 #include "GetFileExtensionCommand.h"
+#include "MoveFileCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"

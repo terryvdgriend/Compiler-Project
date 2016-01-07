@@ -60,6 +60,7 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, AbstractFunctionCa
 			{
                 auto error = make_shared<Error>("the array is empty", ".md", -1, -1, ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error);
+				vm.triggerRunFailure();
 			}
 		}
 	}
