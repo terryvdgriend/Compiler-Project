@@ -20,7 +20,7 @@ void CountCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 		return;
 	}
 	auto array =  vm.getVariableArray(parameters[1]);
-	vm.setReturnValue(to_string(array.size()));
+	vm.setReturnValue(to_string(array->variableArrayDictionary.size()));
 	vm.setReturnToken(IToken::TYPE_NUMBER);
 }
 

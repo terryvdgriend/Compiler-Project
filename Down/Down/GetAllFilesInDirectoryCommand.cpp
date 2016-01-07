@@ -59,15 +59,15 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctio
 	vm.setVariable(arrayDictionary, "", IToken::TYPE_TEXT_ARRAY);
 	auto arrayVar = vm.getVariable(arrayDictionary);
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
-	vm.addArrayToDictionary(arrayDictionary, out.size());
+	int Size = out.size();
+	vm.addArrayToDictionary(arrayDictionary, vector<int>({ Size }));
 	vm.addIdentifer(arrayIdentifier);
 
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
 		vm.setVariable(localVariable, out.at(i), IToken::TYPE_TEXT);
-		cout << out.at(i) << endl;
-		vm.addItemToVariableArrayAt(arrayDictionary, to_string(i), vm.getVariable(localVariable));
+		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}
 	vm.setReturnValue(arrayIdentifier);
 	vm.setReturnToken(IToken::TYPE_TEXT_ARRAY);

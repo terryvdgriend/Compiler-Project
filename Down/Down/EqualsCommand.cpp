@@ -48,22 +48,27 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 			toIdentifier = identifier;
 		}
 	}
-
+	if (toArray == nullptr) {
+		auto arrayVar = vm.getVariable(toIdentifier);
+		vm.setFunctionParameter(toIdentifier, functParamByKey);
+		toArray = vm.addArrayToDictionary(toIdentifier, fromArray->arraySizes);
+		vm.addIdentifer(functParamByKey);
+	}
 	
-	if (toArray.size() == 0) {
-		toArray = vm.addArrayToDictionary(toIdentifier, fromArray.size());
+	if (toArray->variableArrayDictionary.size() == 0) {
+		toArray = vm.addArrayToDictionary(toIdentifier, vector<int>({ static_cast<int>(fromArray->variableArrayDictionary.size()) }));
 		
 	}
-	if (toArray.size() >= fromArray.size()) {
+	if (toArray->variableArrayDictionary.size() >= fromArray->variableArrayDictionary.size()) {
 		string buffer;
 		string localVariable;
 		CompileSingleStatement varGetter = CompileSingleStatement();
-		for (size_t i = 0; i < fromArray.size(); i++)
+		for (size_t i = 0; i < fromArray->variableArrayDictionary.size(); i++)
 		{
 			
 			localVariable = varGetter.getNextLocalVariableName(buffer);
-			vm.setVariable(localVariable, fromArray.at(i)->getValue(), fromArray.at(i)->getTokenType());
-			vm.addItemToVariableArrayAt(toIdentifier, to_string(i), vm.getVariable(localVariable));
+			vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), fromArray->variableArrayDictionary.at(i)->getTokenType());
+			vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 		}
 	}
 	else {

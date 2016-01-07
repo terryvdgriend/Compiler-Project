@@ -5,32 +5,53 @@
 void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
-
+	string delimeter = ";";
+	vector<int> multiLength;
 	for (string& item : vm.getFunctionParametersByKey(parameters[1])) 
 	{
-		vector<shared_ptr<Variable>> tempArray = vm.getVariableArray(item);
-
-		if (item != parameters[1] && (size_t)atoi(vm.getReturnValue().c_str()) < tempArray.size())
+		shared_ptr<Array> tempArray = vm.getVariableArray(item);
+		int length = 0;
+		size_t pos = 0;
+		string returnVal = vm.getReturnValue();
+		int count = 0;
+		while ((pos = returnVal.find(delimeter)) != std::string::npos) {
+			if (count == 0) {
+				length = atoi(returnVal.substr(0, pos).c_str());
+				count++;
+			}
+			else
+				length = length * atoi(returnVal.substr(0, pos).c_str());
+			multiLength.push_back(atoi(returnVal.substr(0, pos).c_str()));
+			returnVal.erase(0, pos + delimeter.length());
+		}
+		if (count == 0) {
+			length = atoi(returnVal.substr(0, pos).c_str());
+		}
+		else
+			length = length * atoi(returnVal.substr(0, pos).c_str());
+		multiLength.push_back(atoi(returnVal.c_str()));
+		vm.setReturnValue(to_string(length));
+		if (item != parameters[1] && (size_t)atoi(vm.getReturnValue().c_str()) < tempArray->variableArrayDictionary.size())
 		{
-			vm.setReturnValue(to_string(tempArray.size()));
+			vm.setReturnValue(to_string(tempArray->variableArrayDictionary.size()));
 		}
 	}
 
 	if (vm.getReturnValue() != "")
 	{
-		vm.addArrayToDictionary(parameters.at(1), atoi(vm.getReturnValue().c_str()));
+		vm.addArrayToDictionary(parameters.at(1), multiLength);
 	}
 	else
 	{
 		for (string& sItem : vm.getFunctionParametersByKey(parameters.at(1)))
 		{
-			vector<shared_ptr<Variable>> itemList = vm.getVariableArray(sItem);
+			shared_ptr<Array> itemList = vm.getVariableArray(sItem);
 
-			if (itemList.size() > 0)
+			if (itemList->variableArrayDictionary.size() > 0)
 			{
-				vm.addArrayToDictionary(parameters.at(1), itemList.size());
+				vm.addArrayToDictionary(parameters.at(1), itemList->arraySizes);
 
-				for (shared_ptr<Variable> var : itemList)
+				for (shared_ptr<Variable> var : itemList->variableArrayDictionary)
 				{
 					vm.addItemToVariableArray(parameters.at(1), var);
 				}

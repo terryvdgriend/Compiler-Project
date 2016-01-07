@@ -781,9 +781,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="custom.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="Snippets.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -799,6 +796,12 @@
     <Text Include="test_ifelse.md">
       <Filter>Resource Files\TestScripts</Filter>
     </Text>
+    <Text Include="custom2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="custom.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md">
@@ -808,6 +811,9 @@
       <Filter>Resource Files\TestScripts</Filter>
     </None>
     <None Include="functionTest.md">
+      <Filter>Resource Files\TestScripts</Filter>
+    </None>
+    <None Include="Array.md">
       <Filter>Resource Files\TestScripts</Filter>
     </None>
   </ItemGroup>

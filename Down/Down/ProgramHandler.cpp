@@ -72,7 +72,7 @@ int ProgramHandler::runDown(IDEGateway& ideGateway)
 	return 0;
 }
 
-shared_ptr<LinkedTokenList> ProgramHandler::runTokenizer(const string code, const  bool printTokenList)
+shared_ptr<LinkedTokenList> ProgramHandler::runTokenizer(const string code, const bool printTokenList)
 {
 	Tokenizer tokenizer;
 	shared_ptr<LinkedTokenList> tokenList = make_shared<LinkedTokenList>();

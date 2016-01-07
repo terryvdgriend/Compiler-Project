@@ -85,8 +85,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
+    <Text Include="Snippets.txt" />
+    <Text Include="custom2.txt" />
     <Text Include="Switch.md" />
     <Text Include="while.md" />
     <Text Include="while.txt" />
@@ -297,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
+    <None Include="Array.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
     <Text Include="test_ifelse.md">

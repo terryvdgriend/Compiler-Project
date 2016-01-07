@@ -1,9 +1,8 @@
+
 > Print 1 t/m # w/e om te testen of alles nog werkt ;)
 
 [ printdown 1 ]
 
-
 [ printdown "kippen" ]
 [printdown "kippen","soep"]
 
-[ removeDirectory "C:\Prostanden\Pictures\map"]

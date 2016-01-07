@@ -146,7 +146,7 @@ void VirtualMachine::addIdentifer(string name)
 	}
 }
 
-vector<shared_ptr<Variable>> VirtualMachine::addArrayToDictionary(string key, int length)
+shared_ptr<Array> VirtualMachine::addArrayToDictionary(string key, vector<int> length)
 {
 	map<string, string>::iterator iter;
 
@@ -154,29 +154,38 @@ vector<shared_ptr<Variable>> VirtualMachine::addArrayToDictionary(string key, in
 	{
 		if (iter->first == key)
 		{
-			vector<shared_ptr<Variable>> temp(length);
-			variableArrayDictionary.emplace(iter->first, temp);
+			int tempL = 0;
+			for (size_t i = 0; i < length.size(); i++)
+			{
+				if (i == 0)
+					tempL = length[i];
+				else
+					tempL = tempL * length[i];
+			}
+			vector<shared_ptr<Variable>> temp(tempL);
+			shared_ptr<Array> tempArray = make_shared<Array>(length, temp);
+			variableArrayDictionary.emplace(iter->first, tempArray);
 
-			return temp;
+			return tempArray;
 		}
 	}
 
-	return vector<shared_ptr<Variable>>();
+	return shared_ptr<Array>();
 }
 
-vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
+shared_ptr<Array> VirtualMachine::getVariableArray(string key)
 {
-	map<string, string>::iterator it = functionParameters.find(key);
+	auto it = functionParameters.find(key);
 
 	if (it != functionParameters.end()) 
 	{
-		vector<shared_ptr<Variable>> varArray;
+		shared_ptr<Array> varArray;
 
 		for (pair<string, string> p : functionParameters)
 		{
 			if (p.second == it->second) 
 			{
-				map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(p.first);
+				auto it = variableArrayDictionary.find(p.first);
 
 				if (hasValueInVariableArrayDictionary(it)) 
 				{
@@ -194,23 +203,23 @@ vector<shared_ptr<Variable>> VirtualMachine::getVariableArray(string key)
         auto error = make_shared<Error>("you want to get an array which doesn't exist", ".md", -1, -1, ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 
-		return vector<shared_ptr<Variable>>();
+		return shared_ptr<Array>();
 	}
-    return vector<shared_ptr<Variable>>();
+    return shared_ptr<Array>();
 }
 
 void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> value)
 {
-	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(key);
+	auto it = variableArrayDictionary.find(key);
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
-		for (int i = 0; (size_t)i < it->second.size(); i++)
+		for (int i = 0; (size_t)i < it->second->variableArrayDictionary.size(); i++)
 		{
-			shared_ptr<Variable> curr = it->second.at(i);
+			shared_ptr<Variable> curr = it->second->variableArrayDictionary.at(i);
 			if (curr->getValue() == "" && curr->getType() < 0)
 			{
-				it->second[i] = value;
+				it->second->variableArrayDictionary[i] = value;
 
 				break;
 			}
@@ -218,31 +227,120 @@ void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> val
 	}
 }
 
-void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string key, shared_ptr<Variable> value)
+void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> key, shared_ptr<Variable> value)
 {
-	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(arrayKey);
+	auto it = variableArrayDictionary.find(arrayKey);
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
-		for (int i = 0; (size_t)i < it->second.size(); i++)
+		int index = 0;
+		bool isMulti = (it->second->arraySizes.size() > 1);
+		for (size_t i = 0; i < it->second->arraySizes.size(); i++)
 		{
-			if (i == atoi(key.c_str()))
-			{
-				it->second[i] = value;
+			if (atoi(key.at(i).c_str()) < it->second->arraySizes.at(i)) {
+				if (isMulti) {
+					if (i == it->second->arraySizes.size() - 1) {
+						index += atoi(key.at(i).c_str());
+					}
+					else {
+						int size = 0;
+						for (size_t j = i+1; j < it->second->arraySizes.size(); j++)
+						{
+							if (size == 0) {
+								size += it->second->arraySizes.at(j);
+							}
+							else {
+								size *= it->second->arraySizes.at(j);
+							}
+						}
+						index += (atoi(key.at(i).c_str())* size);
+					}
 
-				break;
+				}
+				else {
+					index += (atoi(key.at(i).c_str()));
+				}
 			}
+			else {
+
+				auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
+				triggerRunFailure();
+				return;
+				//if (isMulti) {
+				//	if (i == it->second->arraySizes.size() - 1) {
+				//		index += atoi(key.at(i).c_str());
+				//	}
+				//	else {
+				//		index += (atoi(key.at(i).c_str())* it->second->arraySizes.at(i));
+				//	}
+
+				//}
+				//else {
+				//	
+				//}
+			}			
 		}
+
+
+		it->second->variableArrayDictionary.at(index) = value;
 	}
 }
 
-shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, int index)
+shared_ptr<Variable> VirtualMachine::getItemFromVariableArray(string key, vector<int> indexArray)
 {
-	map<string, vector<shared_ptr<Variable>>>::iterator it = variableArrayDictionary.find(key);
 
-	if (hasValueInVariableArrayDictionary(it))
+	auto it = getVariableArray(key);
+
+	if (it)
 	{
-		return it->second[index];
+		int index = 0;
+		bool isMulti = (it->arraySizes.size() > 1);
+		for (size_t i = 0; i < it->arraySizes.size(); i++)
+		{
+			if (indexArray.at(i) < it->arraySizes.at(i)) {
+				if (isMulti) {
+					if (i == it->arraySizes.size() - 1) {
+						index += indexArray.at(i);
+					}
+					else {
+						int size = 0;
+						for (size_t j = i + 1; j < it->arraySizes.size(); j++)
+						{
+							if (size == 0) {
+								size += it->arraySizes.at(j);
+							}
+							else {
+								size *= it->arraySizes.at(j);
+							}
+						}
+						index += (indexArray.at(i)* size);
+					}
+
+				}
+				else {
+					index += (indexArray.at(i));
+				}
+			}
+			else {
+				if (isMulti) {
+					if (i == it->arraySizes.size() - 1) {
+						index += indexArray.at(i);
+					}
+					else {
+						index += (indexArray.at(i)* it->arraySizes.at(i));
+					}
+
+				}
+				else {
+					auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+					ErrorHandler::getInstance()->addError(error);
+					triggerRunFailure();
+					return nullptr;
+				}
+			}
+		}
+		return it->variableArrayDictionary[index];
 	}
 	else
 	{
@@ -341,7 +439,7 @@ bool VirtualMachine::hasValueInVariableDictionary(map<string, shared_ptr<Variabl
 	return it != variableDictionary.end();
 }
 
-bool VirtualMachine::hasValueInVariableArrayDictionary(map<string, vector<shared_ptr<Variable>>>::iterator& it)
+bool VirtualMachine::hasValueInVariableArrayDictionary(map<string, shared_ptr<Array>>::iterator& it)
 {
 	return it != variableArrayDictionary.end();
 }

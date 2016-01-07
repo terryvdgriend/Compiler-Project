@@ -12,8 +12,29 @@
 void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr<Token>& begin, shared_ptr<Token>& end,
 								  shared_ptr<LinkedActionList>& listActionNodes, shared_ptr<ActionNode>& actionBefore)
 {
+	vector<string> arrayIndexes;
 	shared_ptr<Token> current = begin;
 	int level = begin->getLevel();
+
+	shared_ptr<Token> paraChecker = current;
+
+	while (paraChecker->getType() != IToken::ARRAY_OPEN) {
+		paraChecker = paraChecker->getNext();
+	}
+	shared_ptr<Token> paraCheckerEnd = paraChecker->getPartner();
+	stack<IToken> stack;
+
+	while (paraChecker != paraCheckerEnd) {
+		if (paraChecker->getType() == IToken::FUNCTION_DECLARE_OPEN)
+			stack.push(paraChecker->getType());
+		else if (paraChecker->getType() == IToken::FUNCTION_DECLARE_CLOSE)
+			stack.pop();
+		else if (stack.size() == 0 && paraChecker->getType() == IToken::AND_PARA) {
+			isMultiDimensional = true;
+			break;
+		}
+		paraChecker = paraChecker->getNext();
+	}
 
 	list<TokenExpectation> expected = list<TokenExpectation>();
 	expected.push_back(TokenExpectation(level, IToken::ANY));
@@ -111,49 +132,133 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				seperator = seperator->getPrevious();
 			}
 			seperator = seperator->getPartner();
-			shared_ptr<Compiler> compiledBodyPart;
-			bool multiIndex = false;
 
-			if (current->getNext()->getType() != IToken::ARRAY_CLOSE)
-			{
-				multiIndex = true;
-			}
+				shared_ptr<Token> arrayClose = current;
 
-			if (multiIndex) 
-			{ 
-				compiledBodyPart = make_shared<CompilePlusMinus>(); 
-			}
-			else 
-			{ 
-				compiledBodyPart = make_shared<CompileSingleStatement>(); 
-			}
-			compiledBodyPart->compile(tokenList, current, seperator, listActionNodes, actionBefore);
-            auto error = make_shared<Token>(current);
-			shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(error);
-			directFunctionCall->setArraySize(2);
-			directFunctionCall->setAt(0, SET_GET_FROM_RT);
-			directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
-			listActionNodes->insertBefore(actionBefore, directFunctionCall);
+				while (arrayClose->getType() != IToken::ARRAY_OPEN)
+				{
+					arrayClose = arrayClose->getPrevious();
+				}
+				arrayClose = arrayClose->getPartner();
 
-			string saArguments[3];
-			saArguments[0] = "$GetItemFromArray";
-			saArguments[1] = currentArray;
-			saArguments[2] = getCurrentLocalVariableName();
 
-			shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
-			pFunction->setArraySize(3);
+				vector<shared_ptr<LinkedTokenList>> paramList;
+				shared_ptr<LinkedTokenList> param = make_shared<LinkedTokenList>();
+				stack.empty();
 
-			for (int n = 0; n < 3; n++)
-			{
-				pFunction->setAt(n, saArguments[n].c_str());
-			}
-			listActionNodes->insertBefore(actionBefore, pFunction);
+				do
+				{
+					if (current->getType() == IToken::ARRAY_OPEN || current->getType() == IToken::FUNCTION_DECLARE_OPEN)
+					{
+						stack.push(current->getType());
+					}
+					else if ((current->getType() == IToken::ARRAY_CLOSE || current->getType() == IToken::FUNCTION_DECLARE_CLOSE) && stack.size() > 0)
+					{
+						stack.pop();
+					}
 
-			while (current->getType() != IToken::ARRAY_CLOSE) 
-			{
-				current = current->getNext();
-			}
+					if (stack.size() >= 0)
+					{
+						if (stack.size() == 0 && current->getType() == IToken::AND_PARA)
+						{
+							if (param->getLast() != nullptr)
+							{
+								createNewLineToken(param, paramList);
+							}
+							else
+							{
+								auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
+									current->getPosition(), ErrorType::ERROR);
+								ErrorHandler::getInstance()->addError(error);
+							}
+							param = make_shared<LinkedTokenList>();
+						}
+						else
+						{
+							param->add(make_shared<Token>(current));
+						}
+					}
+					current = current->getNext();
+
+					if (stack.size() == 0 && current->getType() == IToken::ARRAY_CLOSE)
+					{
+						if (param->getLast() != nullptr)
+						{
+							createNewLineToken(param, paramList);
+						}
+						else
+						{
+							auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
+								current->getPosition(), ErrorType::ERROR);
+							ErrorHandler::getInstance()->addError(error);
+						}
+						param = make_shared<LinkedTokenList>();
+
+						break;
+					}
+				} while (current != arrayClose);
+
+
+				shared_ptr<Compiler> compiledBodyPart;
+				for (auto params : paramList) {
+					if (params->getSize() >2)
+					{
+						compiledBodyPart = make_shared<CompilePlusMinus>();
+					}
+					else
+					{
+						compiledBodyPart = make_shared<CompileSingleStatement>();
+					}
+					auto tempToken = make_shared<Token>(current);
+					auto eFirst = params->getFirst();
+					auto eLast = params->getLast();
+					auto eBefore = actionBefore;
+
+					compiledBodyPart->compile(tokenList, eFirst, eLast, listActionNodes, eBefore);
+
+					shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+					directFunctionCall->setArraySize(2);
+					directFunctionCall->setAt(0, SET_GET_FROM_RT);
+					directFunctionCall->setAt(1, getNextLocalVariableName(sBuffer).c_str());
+					listActionNodes->insertBefore(actionBefore, directFunctionCall);
+					arrayIndexes.push_back(getCurrentLocalVariableName());
+
+				}
+
+
+				string currArray = getCurrentLocalVariableName();
+				vector<string> saArguments(2+arrayIndexes.size());
+				saArguments[0] = "$GetItemFromArray";
+				saArguments[1] = currentArray;
+				for (size_t i = 0; i < arrayIndexes.size(); i++)
+				{
+					saArguments[i + 2] = arrayIndexes.at(i);
+				}
+
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				pFunction->setArraySize(saArguments.size());
+
+				for (int n = 0; n < saArguments.size(); n++)
+				{
+					pFunction->setAt(n, saArguments[n].c_str());
+				}
+				listActionNodes->insertBefore(actionBefore, pFunction);
 		}
 	}
 	begin = current;
+}
+
+void CompileGetArrayItem::createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list)
+{
+	param->getLast()->setNext(nullptr);
+	param->getFirst()->setPrevious(nullptr);
+	shared_ptr<Token> connectToken = make_shared<Token>();
+	connectToken->setType(IToken::NEWLINE);
+	connectToken->setLevel(-1);
+	connectToken->setPosition(-1);
+	connectToken->setPositionInList(-1);
+	connectToken->setLineNumber(-1);
+	connectToken->setText("\n");
+	param->add(connectToken);
+	list.push_back(param);
 }
