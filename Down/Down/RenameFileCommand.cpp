@@ -34,8 +34,12 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 		cout << "Error renaming file! Code: " << result << endl;
 		char buff[256];
         
-        strerror_r(100, buff, errno);
-		//strerror_s(buff, 100, errno);
+        #ifdef _WIN32
+            strerror_s(buff, 100, errno);
+        #else
+            strerror_r(100, buff, errno);
+        #endif
+        
 		std::cout << "Error: " << buff << std::endl;
 	}
 }
