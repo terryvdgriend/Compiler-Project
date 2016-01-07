@@ -459,6 +459,9 @@
     <ClCompile Include="RenameFileCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="MoveFileCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -766,6 +769,9 @@
     </ClInclude>
     <ClInclude Include="RenameFileCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveFileCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
