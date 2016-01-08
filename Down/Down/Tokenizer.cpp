@@ -431,7 +431,8 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& level)
 	{
 		if (stack.size() > 0)
 		{
-			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel())
+			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel()
+				|| (token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::ELSEIF) && token->getLevel() == stack.top()->getLevel())
 			{
 				if (stack.size() > 1) {
 					auto topToken = stack.top();
