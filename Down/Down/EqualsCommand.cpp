@@ -16,11 +16,21 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 			setArrayToArray(vm, parameters);
 		}
 		else {
-			variable1 = variable2;
 
-			for (string& item : vm.getFunctionParametersByKey(parameters.at(1)))
+			if (variable1->getType() != VariableType::number && variable1->getType() != VariableType::text && variable1->getType() != VariableType::fact)
 			{
-				vm.setVariable(item, variable1->getValue(), variable1->getTokenType());
+				variable1 = variable2;
+
+				for (string& item : vm.getFunctionParametersByKey(parameters.at(1)))
+				{
+					vm.setVariable(item, variable1->getValue(), variable1->getTokenType());
+				}
+			}
+			else
+			{
+				auto error = make_shared<Error>("can't fill a constant with another constant", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
+				vm.triggerRunFailure();
 			}
 		}
 		
