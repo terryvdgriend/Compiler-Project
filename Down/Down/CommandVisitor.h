@@ -43,4 +43,5 @@ public:
 	pair<string, string> visit(GetFileExtensionCommand & command);
 	pair<string, string> visit(RenameFileCommand & command);
 	pair<string, string> visit(MoveFileCommand & command);
+	pair<string, string> visit(MoveFilesCommand & command);
 };

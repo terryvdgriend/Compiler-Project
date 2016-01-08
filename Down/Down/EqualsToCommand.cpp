@@ -14,16 +14,36 @@ void EqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		return;
 	}
 
-	if (variable1.getValue() == variable2.getValue())
-	{
-		vm.setReturnValue("true");
-		vm.setReturnToken(IToken::TYPE_FACT);
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) {
+		double number1 = atof(variable1.getValue().c_str());
+		double number2 = atof(variable2.getValue().c_str());
+
+
+		if (number1 == number2)
+		{
+			vm.setReturnValue("true");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
+		else
+		{
+			vm.setReturnValue("false");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
 	}
-	else
-	{
-		vm.setReturnValue("false");
-		vm.setReturnToken(IToken::TYPE_FACT);
+	else {
+		if (variable1.getValue() == variable2.getValue())
+		{
+			vm.setReturnValue("true");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
+		else
+		{
+			vm.setReturnValue("false");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
 	}
+
+	
 }
 
 pair<string, string> EqualsToCommand::accept(CommandVisitor& commandVisitor) 
