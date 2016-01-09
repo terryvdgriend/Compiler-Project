@@ -64,7 +64,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		}
 		else 
 		{
-            auto error =  make_shared<Error>("array index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+            auto error =  make_shared<Error>("variable is not set", ".md", -1, -1, ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 
