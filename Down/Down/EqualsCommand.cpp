@@ -75,10 +75,12 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 		CompileSingleStatement varGetter = CompileSingleStatement();
 		for (size_t i = 0; i < fromArray->variableArrayDictionary.size(); i++)
 		{
-			
-			localVariable = varGetter.getNextLocalVariableName(buffer);
-			vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), fromArray->variableArrayDictionary.at(i)->getTokenType());
-			vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
+			if (fromArray->variableArrayDictionary.at(i) != nullptr) {
+				localVariable = varGetter.getNextLocalVariableName(buffer);
+				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), fromArray->variableArrayDictionary.at(i)->getTokenType());
+				vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
+			}
+
 		}
 	}
 	else {

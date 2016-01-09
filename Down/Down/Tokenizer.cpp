@@ -207,7 +207,12 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 		if (currentToken == IToken::FUNCTION_CLOSE)
 		{
-			currentScope = token->getPartner()->getScope();
+			if (token->getPartner() == nullptr) {
+				auto error = make_shared<Error>("function body is not declared", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
+			}
+			else
+				currentScope = token->getPartner()->getScope();
 		}
 	}
 	checkRemainingStack();
