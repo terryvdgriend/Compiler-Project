@@ -92,9 +92,8 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 		{
 			if (current->getType() != expectation.getTokenType())
 			{
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
-				ErrorHandler::getInstance()->addError(error,
-													  expectation.getTokenType(), current->getType());
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error, expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -176,9 +175,8 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 		{
 			if (current->getType() == IToken::ARRAY_CLOSE || current->getNext()->getType() == IToken::NEWLINE) 
 			{
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
-				ErrorHandler::getInstance()->addError(error,
-													  expectation.getTokenType(), IToken::NONE);
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,expectation.getTokenType(), IToken::NONE);
 				begin = end;
 
 				break;
@@ -252,8 +250,7 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 				}
 				else
 				{
-					auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
-						current->getPosition(), ErrorType::ERROR);
+					auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
 					ErrorHandler::getInstance()->addError(error);
 				}
 				if (multiParam.size() > 0) 
@@ -278,8 +275,7 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 				}
 				else
 				{
-					auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
-						current->getPosition(), ErrorType::ERROR);
+					auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
 					ErrorHandler::getInstance()->addError(error);
 				}
 				param = make_shared<Param>();
@@ -294,8 +290,7 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 				}
 				else
 				{
-					auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
-						current->getPosition(), ErrorType::ERROR);
+					auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
 					ErrorHandler::getInstance()->addError(error);
 				}
 				param = make_shared<Param>();
@@ -365,11 +360,6 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 		}
 	}
 
-	//currentArrayTempVar = getCurrentLocalVariableName();
-
-	/*if (isMultiDimensional && !isArrayLengthFilled) { return true; }
-	countOfRows++;
-	if (current->getType() == IToken::ARRAY_CLOSE && current->getNext()->getType() != IToken::NEWLINE) { return false; };*/
 	return false;
 }
 
@@ -379,10 +369,10 @@ void CompileArray::createNewLineToken(shared_ptr<Param>& param, vector<shared_pt
 	param->params->getFirst()->setPrevious(nullptr);
 	shared_ptr<Token> connectToken = make_shared<Token>();
 	connectToken->setType(IToken::NEWLINE);
-	connectToken->setLevel(-1);
-	connectToken->setPosition(-1);
-	connectToken->setPositionInList(-1);
-	connectToken->setLineNumber(-1);
+	connectToken->setLevel(param->params->getLast()->getLevel());
+	connectToken->setPosition(param->params->getLast()->getPosition());
+	connectToken->setPositionInList(param->params->getLast()->getPosition());
+	connectToken->setLineNumber(param->params->getLast()->getLineNumber());
 	connectToken->setText("\n");
 	param->params->add(connectToken);
 	list.push_back(param);
