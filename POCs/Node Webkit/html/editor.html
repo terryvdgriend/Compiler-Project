@@ -68,7 +68,7 @@ $(function() {
         }
     }, 'right', 0);
 
-    var tabs = $("#log > div").tabs();
+    var tabs = $("#log > div.tabs").tabs();
     tabs.find(".ui-tabs-nav").sortable({
         axis: "x",
         stop: function() {
@@ -162,7 +162,7 @@ $(function() {
         // Enter key
         if(keycode == '13') {
             var val = $(this).val();
-            $(this).parent('.input').replaceWith(val + "<br />");
+            $(this).parent('.input').remove();
             compiler.write(val);
         }
     });
@@ -318,7 +318,7 @@ function adaptiveheight(a) {
 <div id="log">
     <a href="#" class="close">[X]</a>
     <a href="#" class="save">[Save]</a>
-    <div>
+    <div class="tabs">
         <ul>
             <li><a href="#output">Output</a></li>
             <li><a href="#errors">Errors</a></li>

@@ -41,6 +41,10 @@ exports.run = function(code, execute) {
 		if (err) {
 			console.log(err);
 		} else {
+			// Stop old process
+			exports.killCompiler();
+
+			// Create new process
 			var spawn = require('child_process').spawn;
 			var compilerFilePath = exports.getCompilerFile();
 			var arguments = [];
@@ -70,26 +74,24 @@ exports.run = function(code, execute) {
 
 			cmd.stdout.on('data', function (data) {
 				data = data.toString();
-
 				var resultWithBrs = data.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.appendLogResult(resultWithSpaces);
 
-				console.log(data);
-				if(!errorOccurred) {
-					var index = $('#log > div a[href="#output"]').parent().index();
-					$("#log > div").tabs("option", "active", index);
-				}
-
 				// Show input field
 				var input = '<div class="input">><input type="text" /></div>';
-				exports.appendLogResult(input);
+				var logDiv = $('#log');
+				logDiv.html(logDiv.html() + input);
 				
 				setTimeout(function(){
 					$("#log div.input input[type=text]").focus();
 				}, 50);
 
-				
+				console.log(data);
+				if(!errorOccurred) {
+					var index = $('#log > div.tabs a[href="#output"]').parent().index();
+					$("#log > div.tabs").tabs().tabs("option", "active", index);
+				}
 			});
 
 			cmd.stderr.on('data', function (data) {
@@ -113,8 +115,8 @@ exports.run = function(code, execute) {
 				errorHtml += "</table>";
 				exports.appendErrorLog(errorHtml);
 
-				var index = $('#log > div a[href="#errors"]').parent().index();
-				$("#log > div").tabs("option", "active", index);
+				var index = $('#log > div.tabs a[href="#errors"]').parent().index();
+				$("#log > div.tabs").tabs().tabs("option", "active", index);
 
 				global.editor.getSession().setAnnotations(errors.map(function(error) {
 					return {
@@ -138,6 +140,12 @@ exports.run = function(code, execute) {
 		}
 	});
 };
+
+exports.killCompiler = function() {
+	if(global.compilerProcess != null) {
+		global.compilerProcess.kill('SIGINT');
+	}
+}
 
 exports.getTokenList = function(callback) {
 	var spawn = require('child_process').spawn;
