@@ -199,6 +199,7 @@ a {
     font-size: 14px;
     position: relative;
     overflow: hidden;
+    padding-bottom: 30px;
 }
 
 #log table.errors {
@@ -248,15 +249,21 @@ a {
 }
 
 #log .input {
-    margin-bottom: -32px;
-    width: auto !important;
-    height: auto !important;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 100%;
+    height: 22px !important;
+    padding-top: 4px;
+    padding-left: 8px;
+    background: #262626;
 }
 
 #log .input input[type=text] {
     width: calc(100% - 15px);
     margin: 0;
-    margin-top: -16px;
+    margin-top: -17px;
     margin-left: 15px;
     height: 17px;
     background: transparent;
