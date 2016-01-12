@@ -88,11 +88,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="custom.txt" />
-    <Text Include="Snippets.txt" />
     <Text Include="custom2.txt" />
     <Text Include="Switch.md" />
-    <Text Include="while.md" />
-    <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -299,7 +296,6 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
     <None Include="Array.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
