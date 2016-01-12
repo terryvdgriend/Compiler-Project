@@ -19,7 +19,7 @@ class Tokenizer
 
 	private: 
 		map<string, IToken> tokenMap;
-		map<string, IToken> tokenRegex;
+		unordered_map<string, IToken> tokenRegex;
 		map<string, IToken> varTokenMap;
 		regex actualRegex;
 		int currentScope;

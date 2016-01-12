@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ProgramHandler.h" 
+#include "ProgramHandler.h"
 
 int main(int argCounter, char* argValues[])
 {

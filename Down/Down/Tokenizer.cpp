@@ -11,15 +11,15 @@ Tokenizer::Tokenizer()
 	currentScope	= 0;
 	maxScope		= 0;
 	tokenError		= false;
-	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|-?\\d+(?:\\.\\d+)?|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
+	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|-?\\d+(?:\\.\\d+)?|\"(?:.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
 }
 
 void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const string codefromfile)
 {
 	shared_ptr<Token> token;
-	string code = "\n" + codefromfile; // Add an \n (new line) to prevent errors with first line comments
+	string code = codefromfile;
 
-	std::replace(code.begin(), code.end(), '\t', ' ');
+	replace(code.begin(), code.end(), '\t', ' ');
 	smatch match;
 	int rowNr = 0;
 	int colNr = 1;
@@ -290,7 +290,7 @@ string Tokenizer::getKeyByValueTokenMap(IToken tokenType)
 		}
 	}
 
-	for (map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); ++it)
+	for (unordered_map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); ++it)
 	{
 		if (it->second == tokenType)
 		{
@@ -575,7 +575,7 @@ IToken Tokenizer::getToken(string token)
 {
 	smatch match;
 
-	for (map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); it++)
+	for (unordered_map<string, IToken>::iterator it = tokenRegex.begin(); it != tokenRegex.end(); it++)
 	{
 		regex e(it->first);
 		regex_search(token, match, e);

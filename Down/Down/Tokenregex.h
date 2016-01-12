@@ -2,5 +2,5 @@
 
 struct TokenRegex
 {
-	static const map<string, IToken> getTokenRegex();
+	static const unordered_map<string, IToken> getTokenRegex();
 };
