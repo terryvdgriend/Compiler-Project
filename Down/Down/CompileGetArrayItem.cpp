@@ -104,9 +104,8 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				current = current->getNext();
 			}
 			else if(current->getType() != expectation.getTokenType()){
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
-				ErrorHandler::getInstance()->addError(error,
-					expectation.getTokenType(), current->getType());
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error,expectation.getTokenType(), current->getType());
 				begin = end;
 
 				break;
@@ -168,8 +167,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 							}
 							else
 							{
-								auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
-									current->getPosition(), ErrorType::ERROR);
+								auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
 								ErrorHandler::getInstance()->addError(error);
 							}
 							param = make_shared<LinkedTokenList>();
@@ -189,8 +187,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 						}
 						else
 						{
-							auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),
-								current->getPosition(), ErrorType::ERROR);
+							auto error = make_shared<Error>("no assignment is array", ".md", current->getLineNumber(),current->getPosition(), ErrorType::ERROR);
 							ErrorHandler::getInstance()->addError(error);
 						}
 						param = make_shared<LinkedTokenList>();
@@ -235,8 +232,8 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				{
 					saArguments[i + 2] = arrayIndexes.at(i);
 				}
-
-				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				auto tempToken = make_shared<Token>(current);
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 				pFunction->setArraySize(saArguments.size());
 
 				for (int n = 0; n < saArguments.size(); n++)
@@ -255,10 +252,10 @@ void CompileGetArrayItem::createNewLineToken(shared_ptr<LinkedTokenList>& param,
 	param->getFirst()->setPrevious(nullptr);
 	shared_ptr<Token> connectToken = make_shared<Token>();
 	connectToken->setType(IToken::NEWLINE);
-	connectToken->setLevel(-1);
-	connectToken->setPosition(-1);
-	connectToken->setPositionInList(-1);
-	connectToken->setLineNumber(-1);
+	connectToken->setLevel(param->getLast()->getLevel());
+	connectToken->setPosition(param->getLast()->getPosition());
+	connectToken->setPositionInList(param->getLast()->getPosition());
+	connectToken->setLineNumber(param->getLast()->getLineNumber());
 	connectToken->setText("\n");
 	param->add(connectToken);
 	list.push_back(param);

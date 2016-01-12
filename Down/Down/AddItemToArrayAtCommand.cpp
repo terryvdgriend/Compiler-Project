@@ -24,14 +24,14 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	{
 		if (it->getType() != VariableType::number) 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", -1, -1, ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}
 
 		if (it->getValue() == "") 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", -1, -1, ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}
@@ -46,7 +46,8 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		{
             Variable var1 = Variable(arrayTypes.second);
             Variable var2 = Variable(arrayTypes.first);
-			throwTypeError(var1,var2 , vm);
+			//throwTypeError(var1,var2 , vm);
+			throwCustomError("cannot add " + var2.getValue() + " to array", vm,node.getToken());
 		}
 		else
 		{
@@ -60,13 +61,13 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	{
 		if (value == "") 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", -1, -1, ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure(); 
 		}
 		else if (arrayKey == "") 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", -1, -1, ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}

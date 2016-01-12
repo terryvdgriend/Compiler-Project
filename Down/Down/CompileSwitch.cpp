@@ -55,7 +55,7 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
                 ErrorHandler::getInstance()->addError(error,
                                                       expectation.getTokenType(), current->getType());
 				begin = end;
@@ -96,7 +96,7 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 				}
 				else 
 				{
-                    auto error = make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                    auto error = make_shared<Error>("an expression", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
                     ErrorHandler::getInstance()->addError(error,
                                                           expectation.getTokenType(), current->getType());
 					begin = end;
@@ -180,7 +180,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 					}
 					else 
 					{
-                        auto error = make_shared<Error>("an body", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                        auto error = make_shared<Error>("an body", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
                         ErrorHandler::getInstance()->addError(error,
                                                               expectation.getTokenType(), current->getType());
 						begin = end;
@@ -222,7 +222,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 					}
 					else 
 					{
-                        auto error = make_shared<Error>("an expression", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                        auto error = make_shared<Error>("an expression", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
 						ErrorHandler::getInstance()->addError(error,
 															  expectation.getTokenType(), current->getType());
 						begin = end;
@@ -351,7 +351,7 @@ void CompileSwitch::compileDefault(const shared_ptr<LinkedTokenList>& tokenList,
 
 			if (current->getType() != expectation.getTokenType())
 			{
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), current->getType());
 				begin = end;

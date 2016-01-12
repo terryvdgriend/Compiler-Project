@@ -23,7 +23,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 	replace(code.begin(), code.end(), '\t', ' ');
 	smatch match;
-	int rowNr = 0;
+	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
 

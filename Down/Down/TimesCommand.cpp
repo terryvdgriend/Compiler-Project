@@ -24,9 +24,10 @@ void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	}
 	else 
 	{
-		// Exception times requires 2 numbers
-		throwTypeError(variable1, variable2, vm);
-
+		Variable variable1 = *vm.getVariable(parameters.at(1));
+		Variable variable2 = *vm.getVariable(parameters.at(2));
+		// Exception division requires 2 numbers
+		throwCustomError("cannot multiply " + variable1.getValue() + " by " + variable2.getValue(), vm, node.getToken());
 		return;
 	}
 }

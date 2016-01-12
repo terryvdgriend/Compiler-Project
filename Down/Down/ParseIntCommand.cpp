@@ -25,15 +25,15 @@ void ParseIntCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				vm.setReturnValue(val);
 			}
 			else {
-				throwCustomError("given value was not a numeric value.", vm);
+				throwCustomError("given value was not a numeric value.", vm, node.getToken());
 			}
 		}
 		else {
-			throwCustomError("given value was not a string.", vm);
+			throwCustomError("given value was not a string.", vm, node.getToken());
 		}
 	}
 	else {
-		throwCustomError("given value was not set.", vm);
+		throwCustomError("given value was not set.", vm, node.getToken());
 	}
 }
 

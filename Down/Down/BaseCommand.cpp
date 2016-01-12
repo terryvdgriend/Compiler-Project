@@ -38,7 +38,7 @@ bool BaseCommand::isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm
 	return false;
 }
 
-void BaseCommand::throwTypeError(Variable& var1, Variable& var2, VirtualMachine& vm) 
+void BaseCommand::throwTypeError2(Variable& var1, Variable& var2, VirtualMachine& vm) 
 {
 	CommandVisitor cmdVisitor;
 	pair<string, string> words = accept(cmdVisitor);
@@ -72,6 +72,13 @@ string BaseCommand::removeUnnecessaryDotsAndZeros(string input) {
 void BaseCommand::throwCustomError(string error, VirtualMachine& vm)
 {
     auto err = make_shared<Error>(error, ".md", -1, -1, ErrorType::ERROR);
+	ErrorHandler::getInstance()->addError(err);
+	vm.triggerRunFailure();
+}
+
+void BaseCommand::throwCustomError(string error, VirtualMachine& vm, shared_ptr<Token> & token)
+{
+	auto err = make_shared<Error>(error, ".md", token->getLineNumber(), token->getPosition(), ErrorType::ERROR);
 	ErrorHandler::getInstance()->addError(err);
 	vm.triggerRunFailure();
 }
