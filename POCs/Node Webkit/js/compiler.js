@@ -140,10 +140,7 @@ exports.getTokenList = function(callback) {
 
 	var compilerFilePath = exports.getCompilerFile();
 	var cmd2 = spawn(compilerFilePath, ['getTokens']);
-
-	callback([]);
-	return;
-
+	
 	cmd2.stdout.on('data', function (data) {
 		var listString = data.toString();
 		var list = JSON.parse(listString);
