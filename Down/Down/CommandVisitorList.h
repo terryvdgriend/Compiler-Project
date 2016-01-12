@@ -15,6 +15,7 @@ class GetAudioFilesInDirectoryCommand;
 class GetVideoFilesInDirectoryCommand;
 class RenameFileCommand;
 class RemoveFileCommand;
+class RemoveFilesCommand;
 class RemoveDirectoryCommand;
 class CountCommand;
 class GetFileExtensionCommand;

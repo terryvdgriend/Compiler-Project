@@ -26,6 +26,7 @@ public:
 		pair<string, string> visit(CopyFileCommand & command);
 		pair<string, string> visit(CopyFilesCommand & command);
 		pair<string, string> visit(RemoveFileCommand & command);
+		pair<string, string> visit(RemoveFilesCommand & command);
 		pair<string, string> visit(RemoveDirectoryCommand & command);
 
 		// Miscellaneous

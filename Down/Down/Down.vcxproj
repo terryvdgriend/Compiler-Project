@@ -180,6 +180,7 @@
     <ClInclude Include="RandomFunctionCommand.h" />
     <ClInclude Include="RemoveDirectoryCommand.h" />
     <ClInclude Include="RemoveFileCommand.h" />
+    <ClInclude Include="RemoveFilesCommand.h" />
     <ClInclude Include="RenameFileCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
@@ -285,6 +286,7 @@
     <ClCompile Include="RandomFunctionCommand.cpp" />
     <ClCompile Include="RemoveDirectoryCommand.cpp" />
     <ClCompile Include="RemoveFileCommand.cpp" />
+    <ClCompile Include="RemoveFilesCommand.cpp" />
     <ClCompile Include="RenameFileCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
     <ClCompile Include="ShowUpFunctionCommand.cpp" />

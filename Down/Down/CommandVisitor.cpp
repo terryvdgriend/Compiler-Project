@@ -152,6 +152,11 @@ pair<string, string> CommandVisitor::visit(RemoveFileCommand & command)
 	return pair<string, string>();
 }
 
+pair<string, string> CommandVisitor::visit(RemoveFilesCommand & command)
+{
+	return pair<string, string>();
+}
+
 pair<string, string> CommandVisitor::visit(RemoveDirectoryCommand & command)
 {
 	return pair<string, string>();

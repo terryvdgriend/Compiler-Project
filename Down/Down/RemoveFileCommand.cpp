@@ -45,17 +45,6 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 	}
 }
 
-string RemoveFileCommand::getExtension(const string filename)
-{
-	int pos;
-	string ext;
-	pos = filename.find_last_of('.');
-	if (pos == -1) // There was no '.' in the file name
-		return ""; // Return an empty string
-
-	return filename.substr(pos, -1);
-}
-
 pair<string, string> RemoveFileCommand::accept(CommandVisitor & cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
