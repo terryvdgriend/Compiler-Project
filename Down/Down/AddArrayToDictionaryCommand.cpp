@@ -7,6 +7,7 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, AbstractFunctionCa
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	string delimeter = ";";
 	vector<int> multiLength;
+
 	for (string& item : vm.getFunctionParametersByKey(parameters[1])) 
 	{
 		shared_ptr<Array> tempArray = vm.getVariableArray(item);
@@ -14,23 +15,32 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, AbstractFunctionCa
 		size_t pos = 0;
 		string returnVal = vm.getReturnValue();
 		int count = 0;
-		while ((pos = returnVal.find(delimeter)) != std::string::npos) {
-			if (count == 0) {
+
+		while ((pos = returnVal.find(delimeter)) != string::npos) 
+		{
+			if (count == 0)
+			{
 				length = atoi(returnVal.substr(0, pos).c_str());
 				count++;
 			}
 			else
+			{
 				length = length * atoi(returnVal.substr(0, pos).c_str());
+			}
 			multiLength.push_back(atoi(returnVal.substr(0, pos).c_str()));
 			returnVal.erase(0, pos + delimeter.length());
 		}
-		if (count == 0) {
+		if (count == 0) 
+		{
 			length = atoi(returnVal.substr(0, pos).c_str());
 		}
 		else
+		{
 			length = length * atoi(returnVal.substr(0, pos).c_str());
+		}
 		multiLength.push_back(atoi(returnVal.c_str()));
 		vm.setReturnValue(to_string(length));
+
 		if (item != parameters[1] && (size_t)atoi(vm.getReturnValue().c_str()) < tempArray->variableArrayDictionary.size())
 		{
 			vm.setReturnValue(to_string(tempArray->variableArrayDictionary.size()));
@@ -58,7 +68,7 @@ void AddArrayToDictionaryCommand::execute(VirtualMachine& vm, AbstractFunctionCa
 			}
 			else
 			{
-                auto error = make_shared<Error>("the array is empty", ".md", -1, -1, ErrorType::ERROR);
+                shared_ptr<Error> error = make_shared<Error>("the array is empty", ".md", -1, -1, ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error);
 				vm.triggerRunFailure();
 			}

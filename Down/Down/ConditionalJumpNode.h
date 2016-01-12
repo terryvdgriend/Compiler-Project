@@ -13,6 +13,6 @@ class ConditionalJumpNode :	public ActionNode
 		void setOnFalse(shared_ptr<ActionNode> value);
 		
 	private:
-		shared_ptr<ActionNode> nextOnTrue;
-		shared_ptr<ActionNode> nextOnFalse;
+		weak_ptr<ActionNode> _nextOnTrue;
+		weak_ptr<ActionNode> _nextOnFalse;
 };

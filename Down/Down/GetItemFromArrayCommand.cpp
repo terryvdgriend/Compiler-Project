@@ -52,13 +52,12 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 
 	if (varArray->variableArrayDictionary.size() > 0)
 	{
-
 		vector<int> indexArray;
+
 		for (size_t i = 2; i < parameters.size(); i++)
 		{
 			indexArray.push_back(atoi(vm.getVariable(parameters.at(i))->getValue().c_str()));
 		}
-
 		shared_ptr<Variable> variable = vm.getItemFromVariableArray(parameters.at(1),indexArray);
 
 		if (variable) 
@@ -71,11 +70,10 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 			vm.setReturnValue("");
 			vm.setReturnToken(IToken::NONE);
 		}
-
 	}
 	else
 	{
-        auto error = make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR);
+		shared_ptr<Error> error = make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 		vm.triggerRunFailure();
 	}

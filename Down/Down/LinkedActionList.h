@@ -20,6 +20,6 @@ class LinkedActionList
 
 	private:
 		int count;
-		shared_ptr<ActionNode> firstNode;
-		shared_ptr<ActionNode> lastNode;
+		shared_ptr<ActionNode> _firstNode;
+		weak_ptr<ActionNode> _lastNode;
 };

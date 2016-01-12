@@ -5,7 +5,11 @@
 void  JumpGoToNode::show()
 {
 	cout << "JumpGoToNode. Jumps to ";
-	jumpToNode->show();
+
+	if (shared_ptr<ActionNode> n = _jumpToNode.lock())
+	{
+		n->show();
+	}
 }
 
 void JumpGoToNode::accept(shared_ptr<NodeVisitor>& visitor)
@@ -15,10 +19,15 @@ void JumpGoToNode::accept(shared_ptr<NodeVisitor>& visitor)
 
 shared_ptr<ActionNode> JumpGoToNode::getJumpToNode()
 {
-	return jumpToNode;
+	if (shared_ptr<ActionNode> n = _jumpToNode.lock())
+	{
+		return n;
+	}
+
+	return nullptr;
 }
 
 void JumpGoToNode::setJumpToNode(shared_ptr<ActionNode> value)
 {
-	jumpToNode = value;
+	_jumpToNode = value;
 }
