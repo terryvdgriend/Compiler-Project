@@ -147,6 +147,15 @@ pair<string, string> CommandVisitor::visit(RenameFileCommand & command)
 	return pair<string, string>("", "");
 }
 
+pair<string, string> CommandVisitor::visit(RemoveFileCommand & command)
+{
+	return pair<string, string>();
+}
+
+pair<string, string> CommandVisitor::visit(RemoveDirectoryCommand & command)
+{
+	return pair<string, string>();
+}
 pair<string, string> CommandVisitor::visit(MoveFileCommand & command)
 {
 	return pair<string, string>("","");
@@ -158,5 +167,14 @@ pair<string, string> CommandVisitor::visit(MoveFilesCommand & command)
 }
 
 pair<string, string> CommandVisitor::visit(GetFileExtensionCommand& command) {
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(OrCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(AndCommand& command) {
 	return pair<string, string>("", "");
 }

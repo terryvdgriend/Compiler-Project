@@ -97,6 +97,7 @@
     <ClInclude Include="AddArrayToDictionaryCommand.h" />
     <ClInclude Include="AddItemToArrayAtCommand.h" />
     <ClInclude Include="AddLengthToArrayCommand.h" />
+    <ClInclude Include="AndCommand.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandVisitor.h" />
@@ -170,10 +171,13 @@
     <ClInclude Include="ModuloCommand.h" />
     <ClInclude Include="NodeVisitor.h" />
     <ClInclude Include="NotEqualsToCommand.h" />
+    <ClInclude Include="OrCommand.h" />
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="ProgramHandler.h" />
     <ClInclude Include="RandomFunctionCommand.h" />
+    <ClInclude Include="RemoveDirectoryCommand.h" />
+    <ClInclude Include="RemoveFileCommand.h" />
     <ClInclude Include="RenameFileCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
@@ -203,6 +207,7 @@
     <ClCompile Include="AddArrayToDictionaryCommand.cpp" />
     <ClCompile Include="AddItemToArrayAtCommand.cpp" />
     <ClCompile Include="AddLengthToArrayCommand.cpp" />
+    <ClCompile Include="AndCommand.cpp" />
     <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CommandVisitor.cpp" />
@@ -269,10 +274,13 @@
     <ClCompile Include="MoveFilesCommand.cpp" />
     <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
+    <ClCompile Include="OrCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
     <ClCompile Include="ProgramHandler.cpp" />
     <ClCompile Include="RandomFunctionCommand.cpp" />
+    <ClCompile Include="RemoveDirectoryCommand.cpp" />
+    <ClCompile Include="RemoveFileCommand.cpp" />
     <ClCompile Include="RenameFileCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
     <ClCompile Include="ShowUpFunctionCommand.cpp" />
