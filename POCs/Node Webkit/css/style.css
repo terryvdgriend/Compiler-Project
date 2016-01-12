@@ -247,6 +247,27 @@ a {
     right: 35px;
 }
 
+#log .input {
+    margin-bottom: -32px;
+    width: auto !important;
+    height: auto !important;
+}
+
+#log .input input[type=text] {
+    width: calc(100% - 15px);
+    margin: 0;
+    margin-top: -16px;
+    margin-left: 15px;
+    height: 17px;
+    background: transparent;
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    color: #fff;
+    font-size: 14px;
+    padding: 0;
+    vertical-align: top;
+    border: 0;
+}
+
 .showLog #editor, .showLog #markdown {
     height: 70%;
 }

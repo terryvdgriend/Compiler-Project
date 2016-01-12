@@ -66,6 +66,14 @@ exports.run = function(code, execute) {
 				var resultWithBrs = data.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.appendLogResult(resultWithSpaces);
+
+				var input = '<br/><div class="input">><input type="text" /></div>';
+				exports.appendLogResult(input);
+				
+				setTimeout(function(){
+					$("#log div.input input[type=text]").focus();
+				}, 50);
+
 				console.log(data);
 				if(!errorOccurred) {
 					var index = $('#log > div a[href="#output"]').parent().index();

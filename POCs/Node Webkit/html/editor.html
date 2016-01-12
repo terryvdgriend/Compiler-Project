@@ -157,6 +157,17 @@ $(function() {
         global.editor.resize();
     });
 
+    $("#log").on('keyup', '.input input', function (e) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        // Enter key
+        if(keycode == '13') {
+            $(this).parent('.input').replaceWith('> ' + $(this).val());
+
+            
+
+        }
+    });
+
     window.ondragover = function(e) { e.preventDefault(); return false };
     window.ondrop = function(e) { e.preventDefault(); return false };
     $('body').get(0).ondrop = function (e) {
@@ -274,6 +285,26 @@ function pasteHtmlAtCaret(html, selectPastedContent) {
     updateCodeLeft();
 }
 
+i=0;
+j=0;
+function adaptiveheight(a) {
+    $(a).height(0);
+    var scrollval = $(a)[0].scrollHeight;
+    $(a).height(scrollval);
+    if (parseInt(a.style.height) > $(window).height()) {
+        if(j==0){
+            max=a.selectionEnd;
+        }
+        j++;
+        var i =a.selectionEnd;
+        console.log(i);
+        if(i >=max){
+            $(document).scrollTop(parseInt(a.style.height));
+        }else{
+            $(document).scrollTop(0);
+        }
+    }
+}
 </script>
 
 <div id="customCSS"></div>
