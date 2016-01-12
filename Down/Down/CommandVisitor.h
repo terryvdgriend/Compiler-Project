@@ -45,6 +45,8 @@ public:
 	pair<string, string> visit(SmallerEqualsToCommand& command);
 	pair<string, string> visit(SmallerThanCommand& command);
 	pair<string, string> visit(TimesCommand& command);
+	pair<string, string> visit(RemoveFileCommand & command);
+	pair<string, string> visit(RemoveDirectoryCommand & command);
 	pair<string, string> visit(OrCommand& command);
 	pair<string, string> visit(AndCommand& command);
 };

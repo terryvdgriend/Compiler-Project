@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "TokenRegex.h"
 
-const map<string, IToken> TokenRegex::getTokenRegex()
+const unordered_map<string, IToken> TokenRegex::getTokenRegex()
 {
-	map<string, IToken> tokenRegex;
+	unordered_map<string, IToken> tokenRegex;
 	tokenRegex["^-?\\d\.?\\d*$"]		= IToken::NUMBER;
 	tokenRegex["^\"(.*?)\"$"]			= IToken::TEXT;
 	tokenRegex["^\\*\\*(\\w*)?\\*\\*$"] = IToken::IDENTIFIER;

@@ -177,6 +177,8 @@
     <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="ProgramHandler.h" />
     <ClInclude Include="RandomFunctionCommand.h" />
+    <ClInclude Include="RemoveDirectoryCommand.h" />
+    <ClInclude Include="RemoveFileCommand.h" />
     <ClInclude Include="RenameFileCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
@@ -279,6 +281,8 @@
     <ClCompile Include="PlusPlusCommand.cpp" />
     <ClCompile Include="ProgramHandler.cpp" />
     <ClCompile Include="RandomFunctionCommand.cpp" />
+    <ClCompile Include="RemoveDirectoryCommand.cpp" />
+    <ClCompile Include="RemoveFileCommand.cpp" />
     <ClCompile Include="RenameFileCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
     <ClCompile Include="ShowUpFunctionCommand.cpp" />
