@@ -96,14 +96,31 @@ exports.initMenu = function() {
             global.saveSettings();
         }
     }));
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Print elapsed time',
+        type: 'checkbox',
+        checked: global.settings.printElapsedTime,
+        click: function() {
+            global.settings.printElapsedTime = this.checked;
+            global.saveSettings();
+        }
+    }));
 
     programMenu.append(new gui.MenuItem({ type: 'separator' }));
+    programMenu.append(new global.gui.MenuItem({
+        label: 'Build',
+        key: "b",
+        modifiers: (process.platform === "darwin") ? "cmd shift" : "ctrl shift",
+        click: function() {
+            compiler.run(global.editor.getValue(), false);
+        }
+    }));
     programMenu.append(new global.gui.MenuItem({
         label: 'Run',
         key: "r",
         modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
         click: function() {
-            compiler.run(global.editor.getValue());
+            compiler.run(global.editor.getValue(), true);
         }
     }));
 

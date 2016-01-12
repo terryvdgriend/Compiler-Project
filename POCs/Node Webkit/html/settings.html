@@ -45,18 +45,17 @@
 			$("select#theme").on("change", function() {
 				var value = $(this).val();
 				global.settings.theme = value;
-				global.editor.setTheme("ace/theme/" + value);
+				updateTheme();
 				global.saveSettings();
 			});
 
 			$("select#theme option[value=" + global.settings.theme + "]").attr('selected', 'selected');
 
-			
 			if(global.settings.customStyle != null) {
 				$('table.highlighting').html("");
 				for(var i in global.settings.customStyle) {
 	           		var object = global.settings.customStyle[i];
-	           		$('table.highlighting').append('<tr><td>' + object.description + '</td><td><input value="' + object.color + '" data-type="' + object.type + '" type="text" onchange="setColorHighlightingValue(this)" class="color jscolor {required:false, hash:true, padding:0, refine:false, shadow:false, borderWidth:0, backgroundColor:\'transparent\'}"></td></tr>');
+	           		$('table.highlighting').append('<tr><td>' + ++i + '. ' + object.description + '</td><td><input value="' + object.color + '" data-type="' + object.type + '" type="text" onchange="setColorHighlightingValue(this)" class="color jscolor {required:false, hash:true, padding:0, refine:false, shadow:false, borderWidth:0, backgroundColor:\'transparent\'}"></td></tr>');
 	        	}
 
 	        	$('body').on('keyup', 'input.color', function() {
@@ -64,6 +63,10 @@
 	        	});
 			}			
         });
+
+		function updateTheme() {
+			global.editor.setTheme("ace/theme/" + global.settings.theme);
+		}
 
 		function setColorHighlightingValue(element) {
 			var element = $(element); 
@@ -86,16 +89,15 @@
         }
 
         function resetAll() {
-        	global.settings.theme = "twilight";
-        	$('#theme').val("twilight");
-
         	resetCompilerFile();
 
+        	global.setDefaultSettings();
+        	global.saveSettings();
+        	
+        	$('select#theme').val(global.settings.theme);
+        	updateTheme();
+        	
         	if(global.settings.customStyle != null) {
-        		for(var i in global.settings.customStyle) {
-	       			global.settings.customStyle[i].color = "";
-	       		}
-
 	       		$('input.color').val("");
 	       		$('input.color').css("background-color", "white");
 	       		global.setCustomStyle();
