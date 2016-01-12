@@ -110,7 +110,7 @@ exports.initMenu = function() {
     programMenu.append(new global.gui.MenuItem({
         label: 'Build',
         key: "b",
-        modifiers: (process.platform === "darwin") ? "cmd" : "ctrl",
+        modifiers: (process.platform === "darwin") ? "cmd shift" : "ctrl shift",
         click: function() {
             compiler.run(global.editor.getValue(), false);
         }

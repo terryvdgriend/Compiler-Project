@@ -172,7 +172,7 @@ exports.appendLogResult = function(html) {
 
 exports.logToBottom = function() {
 	var outputDiv = $('#output');
-	outputDiv.animate({ scrollTop: outputDiv.prop("scrollHeight")}, 300);
+	outputDiv.stop(true, false).animate({ scrollTop: outputDiv.prop("scrollHeight")}, 300);
 }
 
 exports.clearErrorLog = function(html) {

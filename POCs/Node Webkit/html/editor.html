@@ -217,6 +217,9 @@ function updateCodeLeft() {
     global.htmlToMarkdown = 2;
     var md = to_markdown($('#markdown #markdownCode').html());
     md = md.replace(/\\_/g, "_");
+    md = md.replace(/\\\[/g, "[");
+    md = md.replace(/\\\]/g, "]");
+    md = md.replace(/\\\#/g, "#");
     md = md.replace(/^\#\# ([case|default](.*))$/gmi,"$1\n--   ");
     global.editor.setValue(md, 1);
 }
