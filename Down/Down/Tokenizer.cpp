@@ -43,7 +43,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		// No token found, so add error
 		if (currentToken == IToken::NONE)
 		{
-            auto error = make_shared<Error>("Token not found &#9785; ", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+            shared_ptr<Error> error = make_shared<Error>("Token not found &#9785; ", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 		}
 
@@ -112,11 +112,14 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		else if (currentToken == IToken::FUNCTION_DECLARE)
 		{
 			auto it = tokenMap.find(part.substr(4, part.length() - 1));
-            if (it != tokenMap.end()){
+
+            if (it != tokenMap.end())
+			{
                 auto error= make_shared<Error>("function '" + part + "' is already defined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
                 ErrorHandler::getInstance()->addError(error);
             }
-			else {
+			else 
+			{
 				tokenMap[part.substr(4, part.length() - 1)] = IToken::FUNCTION_CALL;
 				part = part.substr(4, part.length() - 1);
 			}
@@ -125,7 +128,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 		{
 			if (tokenMap.count(part) != 0)
 			{
-                auto error = make_shared<Error>("function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+				shared_ptr<Error> error = make_shared<Error>("function '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error);
 			}
 		}
@@ -137,7 +140,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 				if (tokenMap.count(part) == 0)
 				{
-                    auto error = make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+					shared_ptr<Error> error = make_shared<Error>("identifier '" + part + "' is undefined", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
 					ErrorHandler::getInstance()->addError(error);
 				}
 				map<string, IToken>::iterator it = varTokenMap.find(part);
@@ -192,27 +195,19 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 		// Check remaining stack
 		checkStack(token, lvl);
-
-		//if (tokenList->getLast()->getType() == IToken::BODY_CLOSE) 
-		//{
-		//	if (stack.size() > 0)
-		//	{
-		//		if ((stack.top()->getType() == IToken::IF || stack.top()->getType() == IToken::ELSEIF) && currentToken != IToken::ELSEIF)
-		//		{
-		//			checkRemainingStack();
-		//		}
-		//	}
-		//}
 		code = match.suffix().str();
 
 		if (currentToken == IToken::FUNCTION_CLOSE)
 		{
-			if (token->getPartner() == nullptr) {
-				auto error = make_shared<Error>("function body is not declared", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+			if (token->getPartner() == nullptr) 
+			{
+				shared_ptr<Error> error = make_shared<Error>("function body is not declared", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error);
 			}
 			else
+			{
 				currentScope = token->getPartner()->getScope();
+			}
 		}
 	}
 	checkRemainingStack();

@@ -27,7 +27,7 @@ Token::Token(const shared_ptr<Token>& other)
 void Token::print(map<string, IToken>& tokenMap)
 {
 	int space = 20;
-	string spacer = string(space - _text.size(), ' ');
+	string spacer = string(space - _text.substr(0, space).size(), ' ');
 
 	Text::print(to_string(_positionInList) + string(4, ' '));
 	Text::print(to_string(_lineNumber) + string(4, ' '));
@@ -36,7 +36,7 @@ void Token::print(map<string, IToken>& tokenMap)
 	Text::print(to_string(_level) + string(4, ' '));
 	Text::print(getStringbyType(tokenMap, getType()) + spacer);
 
-	if (this->getPartner() != nullptr)
+	if (getPartner() != nullptr)
 	{
 		if (shared_ptr<Token> t = _partner.lock())
 		{
@@ -49,7 +49,6 @@ void Token::print(map<string, IToken>& tokenMap)
 	}
 	Text::printLine("");
 }
-
 
 void Token::addError()
 {
