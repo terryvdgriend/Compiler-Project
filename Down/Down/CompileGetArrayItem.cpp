@@ -101,6 +101,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
 				currentArray = getCurrentLocalVariableName();
+				current = current->getNext();
 			}
 			else if(current->getType() != expectation.getTokenType()){
                 auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);

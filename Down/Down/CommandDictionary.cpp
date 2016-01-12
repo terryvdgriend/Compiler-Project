@@ -65,6 +65,7 @@ list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary.push_back(make_shared<Function>("removeFile", "a", make_shared<RemoveFileCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("removeDirectory", "a", make_shared<RemoveDirectoryCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("moveFile", "aa", make_shared<MoveFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("moveFiles", "aa", make_shared<MoveFilesCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getFileExtension", "a", make_shared<GetFileExtensionCommand>(), vecToken));
 	
 

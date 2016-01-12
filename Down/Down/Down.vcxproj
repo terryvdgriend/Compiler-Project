@@ -164,6 +164,7 @@
     <ClInclude Include="MandatoryCommandVisitorIncludes.h" />
     <ClInclude Include="MandatoryNodeIncludes.h" />
     <ClInclude Include="MoveFileCommand.h" />
+    <ClInclude Include="MoveFilesCommand.h" />
     <ClInclude Include="NodeVisitorList.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
@@ -268,6 +269,7 @@
     <ClCompile Include="MinusMinusCommand.cpp" />
     <ClCompile Include="ModuloCommand.cpp" />
     <ClCompile Include="MoveFileCommand.cpp" />
+    <ClCompile Include="MoveFilesCommand.cpp" />
     <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />

@@ -18,6 +18,8 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 {
 	shared_ptr<Token> token;
 	string code = "\n" + codefromfile; // Add an \n (new line) to prevent errors with first line comments
+
+	std::replace(code.begin(), code.end(), '\t', ' ');
 	smatch match;
 	int rowNr = 0;
 	int colNr = 1;
@@ -205,7 +207,12 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 		if (currentToken == IToken::FUNCTION_CLOSE)
 		{
-			currentScope = token->getPartner()->getScope();
+			if (token->getPartner() == nullptr) {
+				auto error = make_shared<Error>("function body is not declared", "unknown.MD", rowNr, colNr, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
+			}
+			else
+				currentScope = token->getPartner()->getScope();
 		}
 	}
 	checkRemainingStack();
@@ -429,7 +436,8 @@ void Tokenizer::checkBrackets(shared_ptr<Token>& token, int& level)
 	{
 		if (stack.size() > 0)
 		{
-			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel())
+			if ((token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::IF) && token->getLevel() == stack.top()->getLevel()
+				|| (token->getType() == IToken::BODY_CLOSE && stack.top()->getType() == IToken::ELSEIF) && token->getLevel() == stack.top()->getLevel())
 			{
 				if (stack.size() > 1) {
 					auto topToken = stack.top();

@@ -19,6 +19,7 @@ class RemoveDirectoryCommand;
 class CountCommand;
 class GetFileExtensionCommand;
 class MoveFileCommand;
+class MoveFilesCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

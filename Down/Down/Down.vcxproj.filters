@@ -466,7 +466,10 @@
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="MoveFileCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveFilesCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -783,7 +786,10 @@
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="MoveFileCommand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveFilesCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
