@@ -15,5 +15,6 @@ class BaseCommand
 		bool isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm);
 		void throwTypeError2(Variable& var1, Variable& var2, VirtualMachine& vm);
 		void throwCustomError(string error, VirtualMachine & vm);
+		void throwCustomError(string error, VirtualMachine & vm, shared_ptr<Token> & token);
 		string removeUnnecessaryDotsAndZeros(string input);
 };

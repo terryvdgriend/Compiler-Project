@@ -14,6 +14,11 @@ void FunctionCall::show()
 	cout << "Function: " << function << endl;
 }
 
+FunctionCall::FunctionCall(shared_ptr<Token>& token)
+{
+	_token = token;
+}
+
 void FunctionCall::accept(shared_ptr<NodeVisitor>& visitor)
 {
 	visitor->visit(*this);

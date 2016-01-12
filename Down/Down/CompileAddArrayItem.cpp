@@ -52,7 +52,7 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 
 		if (current == nullptr) 
 		{
-            auto error = make_shared<Error>("set an item not completed", ".md", "-1", "-1", ErrorType::ERROR);
+            auto error = make_shared<Error>("set an item not completed", ".md", -1, -1, ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			begin = end;
 
@@ -120,7 +120,7 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				Size = 3+(arrayIndexes.size());
 
 				vector<string> saArguments(Size);
-				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 				//HIER ARRAY INDEXES ERIN GOOIEN!!!!
 				saArguments[0] = "$AddItemToArrayAt";
 				saArguments[1] = currentArray;

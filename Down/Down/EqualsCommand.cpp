@@ -13,7 +13,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	if (variable1->getTokenType() == variable2->getTokenType()) 
 	{
 		if (variable1->getTokenType() == IToken::TYPE_FACT_ARRAY || variable1->getTokenType() == IToken::TYPE_NUMBER_ARRAY || variable1->getTokenType() == IToken::TYPE_TEXT_ARRAY) {
-			setArrayToArray(vm, parameters);
+			setArrayToArray(vm, node);
 		}
 		else 
 		{
@@ -29,7 +29,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	else 
 	{
 		//throwTypeError(*variable1, *variable2, vm);
-		throwCustomError("Cannot assign " + variable1->getValue() + " with " + variable2->getValue(), vm);
+		throwCustomError("Cannot assign " + variable1->getValue() + " with " + variable2->getValue(), vm,node.getToken());
 	}
 }
 
@@ -38,8 +38,9 @@ pair<string, string> EqualsCommand::accept(CommandVisitor& commandVisitor)
 	return commandVisitor.visit(*this);
 }
 
-void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& parameters)
+void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	vector<string>& parameters = node.getContentArrayNonConstant();
 	//get both array's
 	string toIdentifier = parameters[1];
 	shared_ptr<Array> toArray = vm.getVariableArray(toIdentifier);
@@ -48,7 +49,7 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 
 	if (fromArray == nullptr) 
 	{
-		throwCustomError("array from is not set.", vm);
+		throwCustomError("array from is not set.", vm, node.getToken());
 
 		return;
 	}
@@ -93,6 +94,6 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& paramete
 	}
 	else 
 	{
-		throwCustomError("index out of bounds array", vm);
+		throwCustomError("index out of bounds array", vm, node.getToken());
 	}
 }

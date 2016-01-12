@@ -84,7 +84,8 @@ void CompileOperator::fillRunList(const string& sFunctionName, shared_ptr<Linked
 		pDirectFunction->setAt(1, saArguments[n + 1].c_str());
 		beforeArray.push_back(listActionNodes->insertBefore(iBefore, pDirectFunction));
 	}
-	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+	auto tempToken = make_shared<Token>(token);
+	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 	pFunction->setArraySize(3);
 
 	for (int n = 0; n < 3; n++)

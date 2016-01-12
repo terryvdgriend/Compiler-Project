@@ -127,7 +127,7 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 				listActionNodes->insertBefore(actionBefore, directFunctionCall);
 
 				vector<string> saArguments(2+multiParam.size());
-				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 
 
 				currentArrayTempVar = getCurrentLocalVariableName();
@@ -153,7 +153,7 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 				saArguments[0] = "$AddArrayToDictionary";
 				saArguments[1] = currentArrayTempVar;
 
-				pFunction = make_shared<FunctionCall>();
+				pFunction = make_shared<FunctionCall>(tempToken);
 				pFunction->setArraySize(2);
 
 				for (int n = 0; n < 2; n++)

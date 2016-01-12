@@ -75,3 +75,10 @@ void BaseCommand::throwCustomError(string error, VirtualMachine& vm)
 	ErrorHandler::getInstance()->addError(err);
 	vm.triggerRunFailure();
 }
+
+void BaseCommand::throwCustomError(string error, VirtualMachine& vm, shared_ptr<Token> & token)
+{
+	auto err = make_shared<Error>(error, ".md", token->getLineNumber(), token->getPosition(), ErrorType::ERROR);
+	ErrorHandler::getInstance()->addError(err);
+	vm.triggerRunFailure();
+}

@@ -232,8 +232,8 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				{
 					saArguments[i + 2] = arrayIndexes.at(i);
 				}
-
-				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+				auto tempToken = make_shared<Token>(current);
+				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 				pFunction->setArraySize(saArguments.size());
 
 				for (int n = 0; n < saArguments.size(); n++)

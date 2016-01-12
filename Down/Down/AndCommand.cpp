@@ -32,11 +32,11 @@ void AndCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 			vm.setReturnToken(IToken::TYPE_FACT);
 		}
 		else {
-			throwCustomError("second variable is not a bool", vm);
+			throwCustomError("second variable is not a bool", vm, node.getToken());
 		}
 	}
 	else {
-		throwCustomError("first variable is not a bool", vm);
+		throwCustomError("first variable is not a bool", vm, node.getToken());
 	}
 }
 
