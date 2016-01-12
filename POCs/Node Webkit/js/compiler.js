@@ -19,6 +19,13 @@ exports.getCompilerFile = function() {
 	return compilerFilePath;
 }
 
+exports.write = function(input) {
+	if(global.compilerProcess != null) {
+		global.compilerProcess.stdin.setEncoding = 'utf-8';
+		global.compilerProcess.stdin.write(input + "\r");
+	}
+}
+
 exports.run = function(code, execute) {
 	global.editor.getSession().clearAnnotations();
 	exports.clearLogResult();
@@ -120,6 +127,8 @@ exports.run = function(code, execute) {
 			cmd.on('close', function (code) {
 				exports.appendLogResult("<br>Program exited with code " + code + " <br>");
 			});
+
+			global.compilerProcess = cmd;
 		}
 	});
 };
@@ -129,6 +138,9 @@ exports.getTokenList = function(callback) {
 
 	var compilerFilePath = exports.getCompilerFile();
 	var cmd2 = spawn(compilerFilePath, ['getTokens']);
+
+	callback([]);
+	return;
 
 	cmd2.stdout.on('data', function (data) {
 		var listString = data.toString();

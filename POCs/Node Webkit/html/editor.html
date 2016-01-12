@@ -161,10 +161,9 @@ $(function() {
         var keycode = (e.keyCode ? e.keyCode : e.which);
         // Enter key
         if(keycode == '13') {
-            $(this).parent('.input').replaceWith('> ' + $(this).val());
-
-            
-
+            var val = $(this).val();
+            $(this).parent('.input').replaceWith('> ' + val + "<br />");
+            compiler.write(val);
         }
     });
 

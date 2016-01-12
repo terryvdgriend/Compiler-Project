@@ -5,6 +5,7 @@ function init()
     global.gui = require('nw.gui');
     global.debug = false;
     global.htmlToMarkdown = 0;
+    global.compilerProcess = null;
 
     global.alert = function(text) {
         alert(text);
