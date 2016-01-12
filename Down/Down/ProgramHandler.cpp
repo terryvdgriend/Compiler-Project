@@ -30,44 +30,55 @@ int ProgramHandler::runProgram(int argCounter, char* argValues[])
 
 int ProgramHandler::runDown(IDEGateway& ideGateway)
 {
-	//=============START-CLOCK=============
-	if (ideGateway.doPrintElapsedTime())
+	shared_ptr<LinkedTokenList> tokenList = nullptr;
+	shared_ptr<LinkedActionList> compiledList = nullptr;
+
+	try
 	{
-		sttime = clock();
+		//=============START-CLOCK=============
+		if (ideGateway.doPrintElapsedTime())
+		{
+			sttime = clock();
+		}
+
+		//=============TOKENIZER=============
+		tokenList = runTokenizer(ideGateway.getCode(), ideGateway.doPrintTokenList());
+
+		if (errors())
+		{
+			return -1;
+		}
+
+		//=============COMPILER=============
+		compiledList = runCompiler(tokenList, ideGateway.doPrintCompiledList());
+
+		if (errors())
+		{
+			return -1;
+		}
+
+		//=============VM=============
+		if (!ideGateway.doBuild())
+		{
+			runVirtualMachine(compiledList);
+		}
+
+		if (errors())
+		{
+			return -1;
+		}
+
+		//=============END-CLOCK=============
+		if (ideGateway.doPrintElapsedTime())
+		{
+			printElapsedTime();
+		}
 	}
-
-	//=============TOKENIZER=============
-	shared_ptr<LinkedTokenList> tokenList = runTokenizer(ideGateway.getCode(), ideGateway.doPrintTokenList());
-
-	if (errors())
+	catch (...)
 	{
-		return -1;
+		cleanup(tokenList, compiledList);
 	}
-
-	//=============COMPILER=============
-	shared_ptr<LinkedActionList> compiledList = runCompiler(tokenList, ideGateway.doPrintCompiledList());
-
-	if (errors())
-	{
-		return -1;
-	}
-
-	//=============VM=============
-	if (!ideGateway.doBuild())
-	{
-		runVirtualMachine(compiledList);
-	}
-
-	if (errors())
-	{
-		return -1;
-	}
-
-	//=============END-CLOCK=============
-	if (ideGateway.doPrintElapsedTime())
-	{
-		printElapsedTime();
-	}
+	cleanup(tokenList, compiledList);
 
 	return 0;
 }
@@ -122,4 +133,29 @@ bool ProgramHandler::errors()
 	}
 
 	return false;
+}
+
+void ProgramHandler::cleanup(shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList)
+{
+	if (compiledList != nullptr)
+	{
+		shared_ptr<ActionNode> nextNode = compiledList->getFirst();
+		compiledList.reset();
+
+		while (nextNode)
+		{
+			nextNode = nextNode->getNext();
+		}
+	}
+
+	if (tokenList != nullptr)
+	{
+		shared_ptr<Token> next = tokenList->getFirst();
+		tokenList.reset();
+
+		while (next)
+		{
+			next = next->getNext();
+		}
+	}
 }

@@ -14,7 +14,8 @@ void SmallerEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 		return;
 	}
 
-	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) {
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) 
+	{
 		double number1 = atof(variable1.getValue().c_str());
 		double number2 = atof(variable2.getValue().c_str());
 

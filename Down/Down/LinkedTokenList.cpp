@@ -4,14 +4,14 @@
 LinkedTokenList::LinkedTokenList()
 {
 	_first	= nullptr;
-	_last	= nullptr;
+	_last.reset();
 	_count	= 0;
 }
 
 LinkedTokenList::LinkedTokenList(shared_ptr<LinkedTokenList>& other)
 {
 	_first	= nullptr;
-	_last	= nullptr;
+	_last.reset();
 	_count	= 0;
 	vector<shared_ptr<Token>> partners;
 	shared_ptr<Token> current = other->getFirst();
@@ -58,13 +58,17 @@ void LinkedTokenList::insertLast(shared_ptr<Token> token)
 
 		if (_first == nullptr)
 		{
-			_first = _last = token;
+			_first = token;
+			_last = token;
 		}
 		else
 		{
-			_last->setNext(token);
-			token->setPrevious(_last);
-			_last = token;
+			if (shared_ptr<Token> t = _last.lock())
+			{
+				t->setNext(token);
+				token->setPrevious(t);
+				_last = token;
+			}
 		}
 	}
 }
@@ -86,7 +90,12 @@ void LinkedTokenList::setFirst(shared_ptr<Token> first)
 
 shared_ptr<Token> LinkedTokenList::getLast()
 {
-	return _last;
+	if (shared_ptr<Token> t = _last.lock())
+	{
+		return t;
+	}
+
+	return nullptr;
 }
 
 void LinkedTokenList::setLast(shared_ptr<Token> last)

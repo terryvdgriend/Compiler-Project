@@ -14,20 +14,30 @@ void ConditionalJumpNode::accept(shared_ptr<NodeVisitor>& visitor)
 
 shared_ptr<ActionNode> ConditionalJumpNode::getOnTrue()
 {
-	return nextOnTrue;
+	if (shared_ptr<ActionNode> n = _nextOnTrue.lock())
+	{
+		return n;
+	}
+
+	return nullptr;
 }
 
 void ConditionalJumpNode::setOnTrue(shared_ptr<ActionNode> value)
 {
-	nextOnTrue = value;
+	_nextOnTrue = value;
 }
 
 shared_ptr<ActionNode> ConditionalJumpNode::getOnFalse()
 {
-	return nextOnFalse;
+	if (shared_ptr<ActionNode> n = _nextOnFalse.lock())
+	{
+		return n;
+	}
+
+	return nullptr;
 }
 
 void ConditionalJumpNode::setOnFalse(shared_ptr<ActionNode> value)
 {
-	nextOnFalse = value;
+	_nextOnFalse = value;
 }
