@@ -9,4 +9,5 @@ class TestCode
 		static const string GetWhile();
 		static const string GetFor();
 		static const string GetIdentifiers();
+		static const string GetDoubles();
 };
