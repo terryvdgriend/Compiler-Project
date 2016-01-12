@@ -17,10 +17,32 @@ ___
 [ printdown 2 ]
 
 
+---
+    ### Switchy gets _number_ **xx** and gives _number_ **result2**
+    
+    #### switch ( **xx** )
+    case ( 1 )
+    --
+        **result2** is 1337
+    __
+    case ( 2 )
+    --
+        **result2** is 10
+    __
+	    case ( 16 )
+    --
+        **result2** is 32
+    __
+    default
+    --
+        **result2** is 2337
+    __ 
+___
 
 _number_ **retVal** is [ Loopy 8 plus 8 ]
 [ printdown **retVal** ]
 [ printdown 9 ]
+**retVal** is [ Switchy 2 ]
 [ printdown **retVal** ]
 
 
@@ -104,4 +126,14 @@ _number_ { 7 } **number2**
 #### for ( **i** is 0 , **i** smaller than [count **number2**] , **i** is **i** plus 1 )
 --
     [ printdown **number2** { **i** } ]
+__
+
+
+_text_ **folderName** is "."
+
+_text_ { [count [getAllFilesInDirectory **folderName**]] } **files** is [getAllFilesInDirectory **folderName**]
+
+#### for(**i** is  0 , **i** smaller than [count **files**], **i** is **i** plus 1)
+--
+[printdown **files** { **i** } plus " : " plus [getFileExtension  **files** { **i** }]]
 __

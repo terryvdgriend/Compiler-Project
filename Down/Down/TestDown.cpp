@@ -34,16 +34,17 @@ void TestDown::run(string _name, string _code)
 // Komt de error niet, dan krijg je daarvoor weer een error
 void TestDown::run(string _name, string _code, list<string> expectedErrors)
 {
+	shared_ptr<LinkedTokenList> tokenList = nullptr;
+	shared_ptr<LinkedActionList> compiledList = nullptr;
+
 	try
 	{
 		//=========TOKENIZER==============
-		shared_ptr<LinkedTokenList> tokenList = make_shared<LinkedTokenList>();
+		tokenList = make_shared<LinkedTokenList>();
 		Tokenizer tokenizer;
 		tokenizer.createTokenList(tokenList, _code);
 
 		//=========COMPILER==============
-		shared_ptr<LinkedActionList> compiledList;
-
 		if (ErrorHandler::getInstance()->getErrors().empty())
 		{
 			Compute compute;
@@ -65,8 +66,10 @@ void TestDown::run(string _name, string _code, list<string> expectedErrors)
 	catch (...)
 	{
 		ErrorHandler::getInstance()->addThrownError("Try Catch Error: ...");
+		cleanup(tokenList, compiledList);
 	}
 	errors(_name, expectedErrors);
+	cleanup(tokenList, compiledList);
 }
 
 void TestDown::errors(string _name, list<string> expectedErrors)
@@ -107,5 +110,24 @@ void TestDown::errors(string _name, list<string> expectedErrors)
 	{
 		cout << string("  > Expected errors were not expected: ");
 		copy(expectedErrors.begin(), expectedErrors.end(), ostream_iterator<string>(cout, ", "));
+	}
+}
+
+void TestDown::cleanup(shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList)
+{
+	auto nextNode = compiledList->getFirst();
+	compiledList.reset();
+
+	while (nextNode)
+	{
+		nextNode = nextNode->getNext();
+	}
+
+	auto next = tokenList->getFirst();
+	tokenList.reset();
+
+	while (next)
+	{
+		next = next->getNext();
 	}
 }

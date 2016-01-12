@@ -30,44 +30,55 @@ int ProgramHandler::runProgram(int argCounter, char* argValues[])
 
 int ProgramHandler::runDown(IDEGateway& ideGateway)
 {
-	//=============START-CLOCK=============
-	if (ideGateway.doPrintElapsedTime())
-	{
-		sttime = clock();
-	}
+	shared_ptr<LinkedTokenList> tokenList = nullptr;
+	shared_ptr<LinkedActionList> compiledList = nullptr;
 
-	//=============TOKENIZER=============
-	shared_ptr<LinkedTokenList> tokenList = runTokenizer(ideGateway.getCode(), ideGateway.doPrintTokenList());
+	try
+	{
+		//=============START-CLOCK=============
+		if (ideGateway.doPrintElapsedTime())
+		{
+			sttime = clock();
+		}
 
-	if (errors())
-	{
-		return -1;
-	}
-	
-	//=============COMPILER=============
-	shared_ptr<LinkedActionList> compiledList = runCompiler(tokenList, ideGateway.doPrintCompiledList());
+		//=============TOKENIZER=============
+		tokenList = runTokenizer(ideGateway.getCode(), ideGateway.doPrintTokenList());
 
-	if (errors())
-	{
-		return -1;
-	}
-	return 0;
-	//=============VM=============
-	if (!ideGateway.doBuild())
-	{
-		runVirtualMachine(compiledList);
-	}
+		if (errors())
+		{
+			return -1;
+		}
 
-	if (errors())
-	{
-		return -1;
-	}
+		//=============COMPILER=============
+		compiledList = runCompiler(tokenList, ideGateway.doPrintCompiledList());
 
-	//=============END-CLOCK=============
-	if (ideGateway.doPrintElapsedTime())
-	{
-		printElapsedTime();
+		if (errors())
+		{
+			return -1;
+		}
+
+		//=============VM=============
+		if (!ideGateway.doBuild())
+		{
+			runVirtualMachine(compiledList);
+		}
+
+		if (errors())
+		{
+			return -1;
+		}
+
+		//=============END-CLOCK=============
+		if (ideGateway.doPrintElapsedTime())
+		{
+			printElapsedTime();
+		}
 	}
+	catch (...)
+	{
+		cleanup(tokenList, compiledList);
+	}
+	cleanup(tokenList, compiledList);
 
 	return 0;
 }
@@ -122,4 +133,23 @@ bool ProgramHandler::errors()
 	}
 
 	return false;
+}
+
+void ProgramHandler::cleanup(shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList)
+{
+	auto nextNode = compiledList->getFirst();
+	compiledList.reset();
+
+	while (nextNode)
+	{
+		nextNode = nextNode->getNext(); 
+	}
+
+	auto next = tokenList->getFirst();
+	tokenList.reset();
+
+	while (next)
+	{
+		next = next->getNext();
+	}
 }

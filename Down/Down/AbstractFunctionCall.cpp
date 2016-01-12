@@ -19,12 +19,7 @@ vector<string>& AbstractFunctionCall::getContentArrayNonConstant()
 
 shared_ptr<Token> AbstractFunctionCall::getToken()
 {
-	if (shared_ptr<Token> t = _token.lock())
-	{
-		return t;
-	}
-
-	return nullptr;
+	return _token;
 }
 
 const AbstractFunctionCall::contentArray& AbstractFunctionCall::getContentArray() const
