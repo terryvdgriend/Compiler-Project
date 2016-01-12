@@ -179,7 +179,7 @@ $(function() {
         global.editor.gotoLine($(this).data('line'), $(this).data('column')-1, true);
     });
 
-    $('#log a.save').on('click', function() {
+    $('#log').on('click', 'a.save', function() {
         editor.chooseFile("#saveOutputDialog", function(filename) {
             var fs = require('fs');
             var output = $("#output").html();
@@ -191,8 +191,6 @@ $(function() {
                 if (err) {
                     console.log(err);
                     alert("Could not save file to: " + filename);
-                } else {
-                    alert("File saved to: " + filename);
                 }
             });
         });

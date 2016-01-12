@@ -50,7 +50,9 @@ exports.chooseFile = function(name, callback) {
     $(name).on("change", function(e) {
         val = $(name).val();
         $(name).val(null); 
-        callback(val);
+        if(val != "") {
+            callback(val);
+        }
         return false;
     });
 
