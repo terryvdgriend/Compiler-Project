@@ -18,6 +18,7 @@ void TestDown::runAll()
 	run("Functions", TestCode::GetFunctions());
 	run("Switch Case", TestCode::GetSwitch());
 	run("Identifiers", TestCode::GetIdentifiers());
+	run("Doubles", TestCode::GetDoubles());
 	run("Identifier undefined/already defined", "**a** is 5 _number_ **b** _number_ **b**", list<string>{"already", "undefined"});
 
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
