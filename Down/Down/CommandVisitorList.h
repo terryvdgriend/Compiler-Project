@@ -23,6 +23,7 @@ class MoveFileCommand;
 class MoveFilesCommand;
 class CopyFileCommand;
 class CopyFilesCommand;
+class GetDownCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

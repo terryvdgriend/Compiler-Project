@@ -193,3 +193,7 @@ pair<string, string> CommandVisitor::visit(OrCommand & command)
 pair<string, string> CommandVisitor::visit(AndCommand& command) {
 	return pair<string, string>("", "");
 }
+
+pair<string, string> CommandVisitor::visit(GetDownCommand& command) {
+	return pair<string, string>("", "");
+}

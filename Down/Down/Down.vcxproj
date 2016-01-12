@@ -149,6 +149,7 @@
     <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="GetAllFilesInDirectoryCommand.h" />
     <ClInclude Include="GetAudioFilesInDirectoryCommand.h" />
+    <ClInclude Include="GetDownCommand.h" />
     <ClInclude Include="GetFileExtensionCommand.h" />
     <ClInclude Include="GetFilesInDirectoryByExtensionCommand.h" />
     <ClInclude Include="GetFromValueCommand.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp" />
     <ClCompile Include="GetAudioFilesInDirectoryCommand.cpp" />
+    <ClCompile Include="GetDownCommand.cpp" />
     <ClCompile Include="GetFileExtensionCommand.cpp" />
     <ClCompile Include="GetFilesInDirectoryByExtensionCommand.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />

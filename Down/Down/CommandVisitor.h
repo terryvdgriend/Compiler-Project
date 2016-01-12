@@ -28,6 +28,7 @@ public:
 		pair<string, string> visit(RemoveFileCommand & command);
 		pair<string, string> visit(RemoveFilesCommand & command);
 		pair<string, string> visit(RemoveDirectoryCommand & command);
+		pair<string, string> visit(GetDownCommand & command);
 
 		// Miscellaneous
 	pair<string, string> visit(ConstantToReturnValueCommand& command);

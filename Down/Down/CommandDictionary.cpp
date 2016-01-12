@@ -73,7 +73,7 @@ list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary.push_back(make_shared<Function>("copyFile", "aa", make_shared<CopyFileCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("copyFiles", "aa", make_shared<CopyFilesCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getFileExtension", "a", make_shared<GetFileExtensionCommand>(), vecToken));
-	
+	customFunctionDictionary.push_back(make_shared<Function>("getdown", "", make_shared<GetDownCommand>(), vecToken));
 
 	/*
 		READ:

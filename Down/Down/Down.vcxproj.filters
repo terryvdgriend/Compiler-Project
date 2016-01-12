@@ -480,6 +480,9 @@
     <ClCompile Include="RemoveFilesCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="GetDownCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -814,6 +817,9 @@
     </ClInclude>
     <ClInclude Include="RemoveFilesCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="GetDownCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
