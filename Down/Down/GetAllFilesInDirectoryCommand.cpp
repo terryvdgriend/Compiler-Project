@@ -27,7 +27,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 	{
 		//throwTypeError(*var, *var, vm);
 		//dir is null dir not found
-		throwCustomError("Directory not found! Cannot get all files in directory..", vm);
+		throwCustomError("Directory not found! Cannot get all files in directory..", vm, node.getToken());
 		return;
 	}
 

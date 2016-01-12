@@ -40,7 +40,7 @@ void GetAudioFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	if (dir == nullptr) {
 		//throwTypeError(*var, *var, vm);
 		//dir is null dir not found
-		throwCustomError("Directory not found! Cannot get audio files..", vm);
+		throwCustomError("Directory not found! Cannot get audio files..", vm, node.getToken());
 		return;
 	}
 	while (dir)

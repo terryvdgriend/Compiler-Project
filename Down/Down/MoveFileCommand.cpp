@@ -48,7 +48,7 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				if (dir == nullptr) {
 					//throwTypeError(*variable2, *variable2, vm);
 					//dir is null dir not found
-					throwCustomError("Directory not found! Cannot move file..", vm);
+					throwCustomError("Directory not found! Cannot move file..", vm, node.getToken());
 					return;
 				}
 
@@ -56,7 +56,7 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				if (dir != nullptr) {
 					//throwTypeError(*variable1, *variable1, vm);
 					//dir is null dir not found
-					throwCustomError("Directory not found! Cannot move file..", vm);
+					throwCustomError("Directory not found! Cannot move file..", vm, node.getToken());
 					return;
 				}
 
@@ -85,11 +85,11 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				}
 				return;
 			}
-			throwCustomError("Parameters must be of type text.", vm);
+			throwCustomError("Parameters must be of type text.", vm, node.getToken());
 			return;
 		}
 	}
-	throwCustomError("Can't find ", vm);
+	throwCustomError("Can't find ", vm, node.getToken());
 	
 }
 

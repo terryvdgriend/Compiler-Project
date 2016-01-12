@@ -27,7 +27,8 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 			file.erase(remove(file.begin(), file.end(), '\"'), file.end());
 
 			if (opendir(file.c_str()) == nullptr){
-				throwCustomError("Cannot remove directories (use removeDirectory to delete directories)", vm);
+				throwCustomError("Cannot remove directories (use removeDirectory to delete directories)", vm,node.getToken());
+				return;
 			}
 			int result = remove(file.c_str());
 			if (result != 0) {
@@ -39,7 +40,7 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
                     strerror_r(100,buff, errno);
                 #endif
 
-				throwCustomError("Error: " + file + ": " + buff, vm);
+				throwCustomError("Error: " + file + ": " + buff, vm, node.getToken());
 			}
 		}
 	}

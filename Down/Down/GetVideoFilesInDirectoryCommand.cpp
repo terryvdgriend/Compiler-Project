@@ -40,7 +40,7 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	if (dir == nullptr) {
 		//throwTypeError(*var, *var, vm);
 		//dir is null dir not found
-		throwCustomError("Directory not found! Cannot get video files..", vm);
+		throwCustomError("Directory not found! Cannot get video files..", vm, node.getToken());
 		return;
 	}
 	while (dir)

@@ -10,7 +10,7 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	if (var->getTokenType() != IToken::TYPE_FACT_ARRAY && var->getTokenType() != IToken::TYPE_NUMBER_ARRAY && var->getTokenType() != IToken::TYPE_TEXT_ARRAY) 
 	{
 		//throwTypeError(*var, *var, vm);
-		throwCustomError("cannot count array " + var->getValue(), vm);
+		throwCustomError("cannot count array " + var->getValue(), vm, node.getToken());
 		return;
 	}
 	shared_ptr<Array> array =  vm.getVariableArray(parameters[1]);
@@ -26,11 +26,11 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 				if (index < 0) 
 				{
-					throwCustomError("index is below zero.", vm);
+					throwCustomError("index is below zero.", vm, node.getToken());
 				}
 				else if (index > array->arraySizes.size() - 1) 
 				{
-					throwCustomError("index out of bounds range.", vm);
+					throwCustomError("index out of bounds range.", vm, node.getToken());
 				}
 				else 
 				{
@@ -40,7 +40,7 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 			}
 			else 
 			{
-				throwCustomError("input is not a number.", vm);
+				throwCustomError("input is not a number.", vm, node.getToken());
 			}
 		}
 		else
@@ -51,7 +51,7 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	}
 	else 
 	{
-		throwCustomError("array is not found.", vm);
+		throwCustomError("array is not found.", vm, node.getToken());
 	}
 }
 
