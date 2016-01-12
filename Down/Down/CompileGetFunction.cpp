@@ -168,7 +168,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 	}
 
 	if (!found) {
-		auto error = make_shared<Error>(_name + " not found with this amount of paramaeters", ".md", current->getLineNumber(),
+		auto error = make_shared<Error>(_name + " not found with this amount of parameters", ".md", current->getLineNumber(),
 			current->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 	}
