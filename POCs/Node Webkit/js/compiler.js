@@ -21,8 +21,9 @@ exports.getCompilerFile = function() {
 
 exports.write = function(input) {
 	if(global.compilerProcess != null) {
+		exports.appendLogResult(input + "<br/>");
 		global.compilerProcess.stdin.setEncoding = 'utf-8';
-		global.compilerProcess.stdin.write(input + "\r");
+		global.compilerProcess.stdin.write(input + "\r\n");
 	}
 }
 
@@ -79,7 +80,7 @@ exports.run = function(code, execute) {
 				exports.appendLogResult(resultWithSpaces);
 
 				// Show input field
-				var input = '<div class="input">><input type="text" /></div>';
+				var input = '<div class="input">><input type="text"/></div>';
 				var logDiv = $('#log');
 				logDiv.html(logDiv.html() + input);
 				
