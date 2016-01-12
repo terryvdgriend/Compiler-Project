@@ -87,8 +87,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="Snippets.txt" />
     <Text Include="custom.txt" />
+    <Text Include="Snippets.txt" />
+    <Text Include="custom2.txt" />
     <Text Include="Switch.md" />
     <Text Include="while.md" />
     <Text Include="while.txt" />
@@ -147,9 +148,12 @@
     <ClInclude Include="Format.h" />
     <ClInclude Include="FunctionCall.h" />
     <ClInclude Include="GetAllFilesInDirectoryCommand.h" />
+    <ClInclude Include="GetAudioFilesInDirectoryCommand.h" />
     <ClInclude Include="GetFileExtensionCommand.h" />
+    <ClInclude Include="GetFilesInDirectoryByExtensionCommand.h" />
     <ClInclude Include="GetFromValueCommand.h" />
     <ClInclude Include="GetItemFromArrayCommand.h" />
+    <ClInclude Include="GetVideoFilesInDirectoryCommand.h" />
     <ClInclude Include="GreaterEqualsToCommand.h" />
     <ClInclude Include="GreaterThanCommand.h" />
     <ClInclude Include="IDEGateway.h" />
@@ -161,6 +165,8 @@
     <ClInclude Include="MandatoryCommandIncludes.h" />
     <ClInclude Include="MandatoryCommandVisitorIncludes.h" />
     <ClInclude Include="MandatoryNodeIncludes.h" />
+    <ClInclude Include="MoveFileCommand.h" />
+    <ClInclude Include="MoveFilesCommand.h" />
     <ClInclude Include="NodeVisitorList.h" />
     <ClInclude Include="MinusCommand.h" />
     <ClInclude Include="MinusMinusCommand.h" />
@@ -171,6 +177,7 @@
     <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="ProgramHandler.h" />
     <ClInclude Include="RandomFunctionCommand.h" />
+    <ClInclude Include="RenameFileCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShowFunctionCommand.h" />
     <ClInclude Include="ShowUpFunctionCommand.h" />
@@ -245,9 +252,12 @@
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="FunctionCall.cpp" />
     <ClCompile Include="GetAllFilesInDirectoryCommand.cpp" />
+    <ClCompile Include="GetAudioFilesInDirectoryCommand.cpp" />
     <ClCompile Include="GetFileExtensionCommand.cpp" />
+    <ClCompile Include="GetFilesInDirectoryByExtensionCommand.cpp" />
     <ClCompile Include="GetFromValueCommand.cpp" />
     <ClCompile Include="GetItemFromArrayCommand.cpp" />
+    <ClCompile Include="GetVideoFilesInDirectoryCommand.cpp" />
     <ClCompile Include="GreaterEqualsToCommand.cpp" />
     <ClCompile Include="GreaterThanCommand.cpp" />
     <ClCompile Include="IDEGateway.cpp" />
@@ -258,12 +268,15 @@
     <ClCompile Include="MinusCommand.cpp" />
     <ClCompile Include="MinusMinusCommand.cpp" />
     <ClCompile Include="ModuloCommand.cpp" />
+    <ClCompile Include="MoveFileCommand.cpp" />
+    <ClCompile Include="MoveFilesCommand.cpp" />
     <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
     <ClCompile Include="ProgramHandler.cpp" />
     <ClCompile Include="RandomFunctionCommand.cpp" />
+    <ClCompile Include="RenameFileCommand.cpp" />
     <ClCompile Include="ShowFunctionCommand.cpp" />
     <ClCompile Include="ShowUpFunctionCommand.cpp" />
     <ClCompile Include="SmallerEqualsToCommand.cpp" />
@@ -287,6 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
+    <None Include="Array.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />
     <Text Include="test_ifelse.md">

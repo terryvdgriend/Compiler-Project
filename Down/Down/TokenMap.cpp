@@ -45,6 +45,7 @@ const map<string, IToken> TokenMap::getTokenMap()
 	tokenMap["true"]					= IToken::FACT;
 	tokenMap["\n"]						= IToken::NEWLINE;
 	tokenMap["and gives"]				= IToken::RETURNVALUE;
+	tokenMap["gives"]				= IToken::RETURNVALUE;
 	tokenMap["gets"]					= IToken::START_PARAMETERS;
 	
 	// Operators Tokens

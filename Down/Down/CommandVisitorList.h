@@ -10,8 +10,14 @@ class ShowFunctionCommand;
 class ShowUpFunctionCommand;
 class RandomFunctionCommand;
 class GetAllFilesInDirectoryCommand;
+class GetFilesInDirectoryByExtensionCommand;
+class GetAudioFilesInDirectoryCommand;
+class GetVideoFilesInDirectoryCommand;
+class RenameFileCommand;
 class CountCommand;
 class GetFileExtensionCommand;
+class MoveFileCommand;
+class MoveFilesCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

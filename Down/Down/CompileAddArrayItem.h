@@ -14,9 +14,22 @@ class CompileAddArrayItem : public Compiler
 		int getFromArrayLength();
 		void setFromArrayLength(int newFromArrayLength);
 
+		vector<int>getFromMultiArrayLength();
+		void setFromMultiArrayLength(vector<int> setIndexFromMulti);
+
+		void setItemPositionInMultiArray(vector<int> PositionInMultiArray);
+
+		void setMultiArray(bool newIsMultiDimensional) { isMultiDimensional = newIsMultiDimensional; };
+
+		void createNewLineToken(shared_ptr<LinkedTokenList>& param, vector<shared_ptr<LinkedTokenList>>& list);
+
 	private:
-		string currentArray;
-		string currentArrayTempVar;
-		bool fromArray;
-		int fromArrayLength;
+		string currentArray = "";
+		string currentArrayTempVar = "";
+		bool fromArray = false;
+		int fromArrayLength = 0;
+
+		vector<int> fromMultiArrayLength;
+		bool isMultiDimensional = false;
+		vector<int> itemPositionInMultiArray;
 };

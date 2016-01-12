@@ -91,6 +91,22 @@ bool Token::operator!=(Token other)
 	return false;
 }
 
+bool Token::operator==(Token other)
+{
+	if (_text == other._text &&
+		_level == other._level &&
+		_position == other._position &&
+		_positionInList == other._positionInList &&
+		_type == other._type &&
+		_subType == other._subType &&
+		_lineNumber == other._lineNumber)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool Token::compare(shared_ptr<Token> first, shared_ptr<Token> other)
 {
 	if (first->_text			== other->_text &&

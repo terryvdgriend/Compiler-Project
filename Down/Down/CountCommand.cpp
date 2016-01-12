@@ -13,8 +13,8 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 		return;
 	}
-	vector<shared_ptr<Variable>> array =  vm.getVariableArray(parameters[1]);
-	vm.setReturnValue(to_string(array.size()));
+	shared_ptr<Array> array =  vm.getVariableArray(parameters[1]);
+	vm.setReturnValue(to_string(array->variableArrayDictionary.size()));
 	vm.setReturnToken(IToken::TYPE_NUMBER);
 }
 

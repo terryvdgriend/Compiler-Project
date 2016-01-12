@@ -83,7 +83,7 @@ int ProgramHandler::runDown(IDEGateway& ideGateway)
 	return 0;
 }
 
-shared_ptr<LinkedTokenList> ProgramHandler::runTokenizer(const string code, const  bool printTokenList)
+shared_ptr<LinkedTokenList> ProgramHandler::runTokenizer(const string code, const bool printTokenList)
 {
 	Tokenizer tokenizer;
 	shared_ptr<LinkedTokenList> tokenList = make_shared<LinkedTokenList>();
@@ -119,7 +119,7 @@ void ProgramHandler::runVirtualMachine(const shared_ptr<LinkedActionList>& compi
 void ProgramHandler::printElapsedTime()
 {
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
-	cout << "Time elapsed: " + to_string(elapsed_secs);
+	cout << "Time elapsed: " + to_string(elapsed_secs) + "s";
 }
 
 bool ProgramHandler::errors()
@@ -137,19 +137,25 @@ bool ProgramHandler::errors()
 
 void ProgramHandler::cleanup(shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList)
 {
-	auto nextNode = compiledList->getFirst();
-	compiledList.reset();
-
-	while (nextNode)
+	if (compiledList != nullptr)
 	{
-		nextNode = nextNode->getNext(); 
+		shared_ptr<ActionNode> nextNode = compiledList->getFirst();
+		compiledList.reset();
+
+		while (nextNode)
+		{
+			nextNode = nextNode->getNext();
+		}
 	}
 
-	auto next = tokenList->getFirst();
-	tokenList.reset();
-
-	while (next)
+	if (tokenList != nullptr)
 	{
-		next = next->getNext();
+		shared_ptr<Token> next = tokenList->getFirst();
+		tokenList.reset();
+
+		while (next)
+		{
+			next = next->getNext();
+		}
 	}
 }

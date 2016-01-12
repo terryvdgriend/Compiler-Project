@@ -115,19 +115,25 @@ void TestDown::errors(string _name, list<string> expectedErrors)
 
 void TestDown::cleanup(shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList)
 {
-	auto nextNode = compiledList->getFirst();
-	compiledList.reset();
-
-	while (nextNode)
+	if (compiledList != nullptr)
 	{
-		nextNode = nextNode->getNext();
+		shared_ptr<ActionNode> nextNode = compiledList->getFirst();
+		compiledList.reset();
+
+		while (nextNode)
+		{
+			nextNode = nextNode->getNext();
+		}
 	}
 
-	auto next = tokenList->getFirst();
-	tokenList.reset();
-
-	while (next)
+	if (tokenList != nullptr)
 	{
-		next = next->getNext();
+		shared_ptr<Token> next = tokenList->getFirst();
+		tokenList.reset();
+
+		while (next)
+		{
+			next = next->getNext();
+		}
 	}
 }

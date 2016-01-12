@@ -127,6 +127,36 @@ pair<string, string> CommandVisitor::visit(GetAllFilesInDirectoryCommand& comman
 	return pair<string, string>("", "");
 }
 
+pair<string, string> CommandVisitor::visit(GetFilesInDirectoryByExtensionCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(GetAudioFilesInDirectoryCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(GetVideoFilesInDirectoryCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(RenameFileCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(MoveFileCommand & command)
+{
+	return pair<string, string>("","");
+}
+
+pair<string, string> CommandVisitor::visit(MoveFilesCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
 pair<string, string> CommandVisitor::visit(GetFileExtensionCommand& command) {
 	return pair<string, string>("", "");
 }

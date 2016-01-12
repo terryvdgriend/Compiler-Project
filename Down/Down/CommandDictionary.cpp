@@ -58,7 +58,12 @@ list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary.push_back(make_shared<Function>("random", "a", make_shared<RandomFunctionCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("ThrowError", "a", make_shared<ErrorCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getAllFilesInDirectory", "a", make_shared<GetAllFilesInDirectoryCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("getVideoFilesInDirectory", "a", make_shared<GetVideoFilesInDirectoryCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("getAudioFilesInDirectory", "a", make_shared<GetAudioFilesInDirectoryCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("count", "a", make_shared<CountCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("renameFile", "aa", make_shared<RenameFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("moveFile", "aa", make_shared<MoveFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("moveFiles", "aa", make_shared<MoveFilesCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getFileExtension", "a", make_shared<GetFileExtensionCommand>(), vecToken));
 	
 

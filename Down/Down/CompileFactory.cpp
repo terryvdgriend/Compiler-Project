@@ -7,7 +7,7 @@ CompileFactory::CompileFactory()
 	// Array
 	tokenCompileDictionary.emplace(IToken::ARRAY_OPEN,				[]()-> shared_ptr<Compiler> { return make_shared<CompileArray>(); });
 
-	// Coniditonal
+	// Conditional
 	tokenCompileDictionary.emplace(IToken::IF,						[]()-> shared_ptr<Compiler> { return make_shared<CompileIf>(); });
 	tokenCompileDictionary.emplace(IToken::SWITCH,					[]()-> shared_ptr<Compiler> { return make_shared<CompileSwitch>(); });
 

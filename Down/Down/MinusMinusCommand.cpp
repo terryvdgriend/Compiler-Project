@@ -18,7 +18,8 @@ void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	{
 		double number1 = atof(variable.getValue().c_str()) - 1;
 
-		for (std::string & item : vm.getFunctionParametersByKey(parameters.at(1))) {
+		for (string & item : vm.getFunctionParametersByKey(parameters.at(1))) 
+		{
 			vm.setVariable(item, to_string(number1), variable.getTokenType());
 		}
 		vm.setReturnValue(to_string(number1));

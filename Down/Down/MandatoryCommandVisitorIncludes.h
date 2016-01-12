@@ -13,8 +13,14 @@
 #include "ShowUpFunctionCommand.h"
 #include "RandomFunctionCommand.h"
 #include "GetAllFilesInDirectoryCommand.h"
+#include "GetFilesInDirectoryByExtensionCommand.h"
+#include "GetAudioFilesInDirectoryCommand.h"
+#include "GetVideoFilesInDirectoryCommand.h"
+#include "RenameFileCommand.h"
 #include "CountCommand.h"
 #include "GetFileExtensionCommand.h"
+#include "MoveFileCommand.h"
+#include "MoveFilesCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"

@@ -10,7 +10,7 @@ IDEGateway::IDEGateway()
 	printCompiledList	= false;
 	printElapsedTime	= false;
 	build				= false;
-	runTest				= true;
+	runTest				= false;
 }
 
 bool IDEGateway::handleIDEArguments(int argCounter, char* argValues[])
