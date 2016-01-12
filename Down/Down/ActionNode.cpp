@@ -3,26 +3,38 @@
 
 ActionNode::ActionNode()
 {
-	next		= nullptr;
-	previous	= nullptr;
+	_next		= nullptr;
+	_previous.reset();
 }
 
 shared_ptr<ActionNode> ActionNode::getNext()
 {
-	return next;
+	return _next;
 }
 
 shared_ptr<ActionNode> ActionNode::setNext(shared_ptr<ActionNode> value)
 {
-	return next = value;
+	return _next = value;
 }
 
 shared_ptr<ActionNode> ActionNode::getPrevious()
 {
-	return previous;
+	if (shared_ptr<ActionNode> n = _previous.lock())
+	{
+		return n;
+	}
+
+	return nullptr;
 }
 
 shared_ptr<ActionNode> ActionNode::setPrevious(shared_ptr<ActionNode> value)
 {
-	return previous = value;
+	_previous = value;
+
+	if (shared_ptr<ActionNode> n = _previous.lock())
+	{
+		return n;
+	}
+
+	return nullptr;
 }

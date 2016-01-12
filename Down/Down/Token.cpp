@@ -5,7 +5,7 @@ Token::Token()
 {
 	_level		= 1;
 	_next		= nullptr;
-	_previous	= nullptr;
+	_previous.reset();
 	_subType	= IToken::NONE;
 }
 
@@ -21,13 +21,13 @@ Token::Token(const shared_ptr<Token>& other)
 	_level			= other->_level;
 	_scope			= other->_scope;
 	_next			= nullptr;
-	_previous		= nullptr;
+	_previous.reset();
 }
 
 void Token::print(map<string, IToken>& tokenMap)
 {
 	int space = 20;
-	string spacer = string(space - _text.size(), ' ');
+	string spacer = string(space - _text.substr(0, space).size(), ' ');
 
 	Text::print(to_string(_positionInList) + string(4, ' '));
 	Text::print(to_string(_lineNumber) + string(4, ' '));
@@ -36,9 +36,12 @@ void Token::print(map<string, IToken>& tokenMap)
 	Text::print(to_string(_level) + string(4, ' '));
 	Text::print(getStringbyType(tokenMap, getType()) + spacer);
 
-	if (this->getPartner() != nullptr)
+	if (getPartner() != nullptr)
 	{
-		Text::print(to_string(_partner->_positionInList) + string(4, ' '));
+		if (shared_ptr<Token> t = _partner.lock())
+		{
+			Text::print(to_string(t->_positionInList) + string(4, ' '));
+		}
 	}
 	else
 	{
@@ -46,7 +49,6 @@ void Token::print(map<string, IToken>& tokenMap)
 	}
 	Text::printLine("");
 }
-
 
 void Token::addError()
 {
@@ -167,7 +169,12 @@ void Token::setType(IToken type)
 
 shared_ptr<Token> Token::getPartner()
 {
-	return _partner;
+	if (shared_ptr<Token> t = _partner.lock())
+	{
+		return t;
+	}
+
+	return nullptr;
 }
 
 void Token::setPartner(shared_ptr<Token> partner)
@@ -232,7 +239,12 @@ void Token::setNext(shared_ptr<Token> next)
 
 shared_ptr<Token> Token::getPrevious()
 {
-	return _previous;
+	if (shared_ptr<Token> t = _previous.lock())
+	{
+		return t;
+	}
+
+	return nullptr;
 }
 
 void Token::setPrevious(shared_ptr<Token> previous)

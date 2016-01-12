@@ -73,12 +73,12 @@ void VirtualMachine::setVariable(string key, string value, IToken token)
 	if (hasValueInVariableDictionary(it))
 	{
 		it->second = make_shared<Variable>(value);
-		it->second.get()->setTokenType(token);
+		it->second.get()->setTokenType(token, *this);
 	}
 	else
 	{
 		pair<string, shared_ptr<Variable>> pair = make_pair(key, make_shared<Variable>(value));
-		pair.second.get()->setTokenType(token);
+		pair.second.get()->setTokenType(token, *this);
 		variableDictionary.insert(pair);
 	}
 }

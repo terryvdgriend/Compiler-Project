@@ -17,10 +17,13 @@
 #include "GetAudioFilesInDirectoryCommand.h"
 #include "GetVideoFilesInDirectoryCommand.h"
 #include "RenameFileCommand.h"
+#include "RemoveFileCommand.h"
+#include "RemoveDirectoryCommand.h"
 #include "CountCommand.h"
 #include "GetFileExtensionCommand.h"
 #include "MoveFileCommand.h"
 #include "MoveFilesCommand.h"
+#include "GetDownCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"
@@ -42,6 +45,8 @@
 #include "SmallerEqualsToCommand.h"
 #include "SmallerThanCommand.h"
 #include "TimesCommand.h"
+#include "AndCommand.h"
+#include "OrCommand.h"
 
 // Token
 #include "IToken.h"

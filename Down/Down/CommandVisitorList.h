@@ -14,10 +14,13 @@ class GetFilesInDirectoryByExtensionCommand;
 class GetAudioFilesInDirectoryCommand;
 class GetVideoFilesInDirectoryCommand;
 class RenameFileCommand;
+class RemoveFileCommand;
+class RemoveDirectoryCommand;
 class CountCommand;
 class GetFileExtensionCommand;
 class MoveFileCommand;
 class MoveFilesCommand;
+class GetDownCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;
@@ -39,3 +42,5 @@ class PlusPlusCommand;
 class SmallerEqualsToCommand;
 class SmallerThanCommand;
 class TimesCommand;
+class OrCommand;
+class AndCommand;
