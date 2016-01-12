@@ -471,6 +471,9 @@
     <ClCompile Include="AndCommand.cpp">
       <Filter>Source Files\VM\Commands\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="GetDownCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -795,6 +798,9 @@
       <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
     <ClInclude Include="OrCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="GetDownCommand.h">
       <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
   </ItemGroup>
