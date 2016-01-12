@@ -39,3 +39,5 @@ class PlusPlusCommand;
 class SmallerEqualsToCommand;
 class SmallerThanCommand;
 class TimesCommand;
+class OrCommand;
+class AndCommand;

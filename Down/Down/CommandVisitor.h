@@ -14,6 +14,15 @@ public:
 		pair<string, string> visit(ShowFunctionCommand& command);
 		pair<string, string> visit(ShowUpFunctionCommand& command);
 		pair<string, string> visit(RandomFunctionCommand& command);
+		pair<string, string> visit(CountCommand & command);
+		pair<string, string> visit(GetAllFilesInDirectoryCommand & command);
+		pair<string, string> visit(GetFilesInDirectoryByExtensionCommand & command);
+		pair<string, string> visit(GetAudioFilesInDirectoryCommand & command);
+		pair<string, string> visit(GetVideoFilesInDirectoryCommand & command);
+		pair<string, string> visit(GetFileExtensionCommand & command);
+		pair<string, string> visit(RenameFileCommand & command);
+		pair<string, string> visit(MoveFileCommand & command);
+		pair<string, string> visit(MoveFilesCommand & command);
 
 		// Miscellaneous
 	pair<string, string> visit(ConstantToReturnValueCommand& command);
@@ -35,13 +44,6 @@ public:
 	pair<string, string> visit(SmallerEqualsToCommand& command);
 	pair<string, string> visit(SmallerThanCommand& command);
 	pair<string, string> visit(TimesCommand& command);
-	pair<string, string> visit(CountCommand & command);
-	pair<string, string> visit(GetAllFilesInDirectoryCommand & command);
-	pair<string, string> visit(GetFilesInDirectoryByExtensionCommand & command);
-	pair<string, string> visit(GetAudioFilesInDirectoryCommand & command);
-	pair<string, string> visit(GetVideoFilesInDirectoryCommand & command);
-	pair<string, string> visit(GetFileExtensionCommand & command);
-	pair<string, string> visit(RenameFileCommand & command);
-	pair<string, string> visit(MoveFileCommand & command);
-	pair<string, string> visit(MoveFilesCommand & command);
+	pair<string, string> visit(OrCommand& command);
+	pair<string, string> visit(AndCommand& command);
 };

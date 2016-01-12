@@ -465,6 +465,12 @@
     <ClCompile Include="MoveFilesCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="OrCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="AndCommand.cpp">
+      <Filter>Source Files\VM\Commands\Operators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -778,6 +784,12 @@
     </ClInclude>
     <ClInclude Include="MoveFilesCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="AndCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="OrCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

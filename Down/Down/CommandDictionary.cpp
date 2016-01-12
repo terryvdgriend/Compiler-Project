@@ -31,6 +31,8 @@ CommandDictionary::CommandDictionary()
 	commandDictionary["$<="]						= make_shared<SmallerEqualsToCommand>();
 	commandDictionary["$<"]							= make_shared<SmallerThanCommand>();
 	commandDictionary["$*"]							= make_shared<TimesCommand>();
+	commandDictionary["$||"]						= make_shared<OrCommand>();
+	commandDictionary["$&&"]						= make_shared<AndCommand>();
 
 	for (auto ff : getCustomFunctions())
 	{

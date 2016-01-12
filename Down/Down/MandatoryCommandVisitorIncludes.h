@@ -42,6 +42,8 @@
 #include "SmallerEqualsToCommand.h"
 #include "SmallerThanCommand.h"
 #include "TimesCommand.h"
+#include "AndCommand.h"
+#include "OrCommand.h"
 
 // Token
 #include "IToken.h"

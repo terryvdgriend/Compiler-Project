@@ -56,7 +56,7 @@ void MoveFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 						filename.erase(remove(filename.begin(), filename.end(), '\"'), filename.end());
 
 
-
+						
 						dir = opendir(file.c_str()); /*your directory*/
 						if (dir != nullptr) {
 							throwTypeError(*variable1, *variable1, vm);

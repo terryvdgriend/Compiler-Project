@@ -63,6 +63,8 @@ const map<string, IToken> TokenMap::getTokenMap()
 	tokenMap["increased"]				= IToken::PLUSPLUS;
 	tokenMap["multiplied by"]			= IToken::TIMES;
 	tokenMap["multiply"]				= IToken::TIMES;
+	tokenMap["and"]						= IToken::AND;
+	tokenMap["or"]						= IToken::OR;
 
 	// Types Tokens
 	tokenMap["_fact_"]					= IToken::TYPE_FACT;
