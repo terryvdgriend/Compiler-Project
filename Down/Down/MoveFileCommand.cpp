@@ -68,10 +68,10 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				int result = rename(file.c_str(), newFile.c_str());
 				if (result == 0) {
-					cout << "File " << file << " renamed to " << newFile << endl;
+					cout << "File " << file << " moved to " << newFile << endl;
 				}
 				else {
-					cout << "Error renaming file! Code: " << result << endl;
+					cout << "Error moving file! Code: " << result << endl;
 					char buff[256];
 
 					#ifdef _WIN32

@@ -1,7 +1,13 @@
 exports.reload = function(){
-    var marked = require("marked");
+    if(global.htmlToMarkdown > 0) {
+        global.htmlToMarkdown--;
+        return;
+    }
+
+    var marked = require("./plugins/marked/marked");
+    var renderer = new marked.Renderer();
     marked.setOptions({
-    renderer: new marked.Renderer(),
+    renderer: renderer,
         gfm: true,
         tables: true,
         breaks: false,
@@ -10,9 +16,15 @@ exports.reload = function(){
         smartLists: true,
         smartypants: false
     });
-    var resultDiv = global.$('#markdown');
+
+    renderer.hr = function (text) {
+        return "<hr data-code=\"" + text + "\">\n";
+    }
+
+    var resultDiv = global.$('#markdown #markdownCode');
     var code = global.editor.getValue();
-    resultDiv.html(marked(code));
+    code = code.replace(/ {4}/gm, "");
+    resultDiv.html(marked(code));   
 };
 
 exports.loadText = function(text) {
@@ -38,7 +50,9 @@ exports.chooseFile = function(name, callback) {
     $(name).on("change", function(e) {
         val = $(name).val();
         $(name).val(null); 
-        callback(val);
+        if(val != "") {
+            callback(val);
+        }
         return false;
     });
 
