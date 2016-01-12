@@ -126,6 +126,8 @@ exports.run = function(code, execute) {
 
 			cmd.on('close', function (code) {
 				exports.appendLogResult("<br>Program exited with code " + code + " <br>");
+				$('#log .input').remove();
+				global.editor.focus();
 			});
 
 			global.compilerProcess = cmd;
