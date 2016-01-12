@@ -57,6 +57,19 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 					return;
 				}
 
+				int pos;
+				#ifdef _WIN32
+								pos = oldFile.find_last_of('\\');
+				#else
+								pos = oldFile.find_last_of('\/');
+				#endif
+				if (pos == -1) {
+					throwCustomError("Incorrect input: is the first parameter a full path?", vm);
+					return;
+				}
+
+				newFile = oldFile.substr(0, pos + 1) + newFile;
+
 				int result = rename(oldFile.c_str(), newFile.c_str());
 				if (result != 0) {
 					cout << "Error renaming file! Code: " << result << endl;
