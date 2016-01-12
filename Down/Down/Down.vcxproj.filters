@@ -472,7 +472,7 @@
       <Filter>Source Files\VM\Commands\Operators</Filter>
     </ClCompile>
     <ClCompile Include="GetDownCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -801,7 +801,7 @@
       <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
     <ClInclude Include="GetDownCommand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

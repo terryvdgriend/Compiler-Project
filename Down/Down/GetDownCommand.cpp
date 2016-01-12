@@ -14,6 +14,7 @@ GetDownCommand::~GetDownCommand()
 void GetDownCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
 	string input;
+	cout << ">";
 	cin >> input;
 
 	vm.setReturnValue(input);
