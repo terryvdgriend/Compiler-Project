@@ -47,6 +47,10 @@ a {
     text-decoration: none !important;
 }
 
+.ace_editor input, .ace_editor button {
+    font-family: Arial !important;
+}
+
 #page {
     width: 100%;
     height: 100%;
