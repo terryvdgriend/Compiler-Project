@@ -23,6 +23,8 @@
 #include "GetFileExtensionCommand.h"
 #include "MoveFileCommand.h"
 #include "MoveFilesCommand.h"
+#include "CopyFileCommand.h"
+#include "CopyFilesCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"

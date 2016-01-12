@@ -20,6 +20,8 @@ class CountCommand;
 class GetFileExtensionCommand;
 class MoveFileCommand;
 class MoveFilesCommand;
+class CopyFileCommand;
+class CopyFilesCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;

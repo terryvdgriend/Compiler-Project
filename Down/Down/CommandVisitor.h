@@ -46,4 +46,6 @@ public:
 	pair<string, string> visit(RemoveDirectoryCommand & command);
 	pair<string, string> visit(MoveFileCommand & command);
 	pair<string, string> visit(MoveFilesCommand & command);
+	pair<string, string> visit(CopyFileCommand & command);
+	pair<string, string> visit(CopyFilesCommand & command);
 };
