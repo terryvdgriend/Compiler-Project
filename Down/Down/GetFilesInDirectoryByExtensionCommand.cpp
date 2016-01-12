@@ -35,7 +35,9 @@ void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, Abstrac
 
 	dir = opendir(directory.c_str()); /*your directory*/
 	if (dir == nullptr) {
-		throwTypeError(*var, *var, vm);
+		//throwTypeError(*var, *var, vm);
+		//dir is null dir not found
+		throwCustomError("Directory not found! Cannot get files by extension..", vm);
 		return;
 	}
 	while (dir)

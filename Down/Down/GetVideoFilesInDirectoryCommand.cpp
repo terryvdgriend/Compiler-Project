@@ -38,7 +38,9 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 
 	dir = opendir(directory.c_str()); /*your directory*/
 	if (dir == nullptr) {
-		throwTypeError(*var, *var, vm);
+		//throwTypeError(*var, *var, vm);
+		//dir is null dir not found
+		throwCustomError("Directory not found! Cannot get video files..", vm);
 		return;
 	}
 	while (dir)

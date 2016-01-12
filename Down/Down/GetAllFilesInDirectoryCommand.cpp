@@ -25,8 +25,9 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 
 	if (dir == nullptr) 
 	{
-		throwTypeError(*var, *var, vm);
-
+		//throwTypeError(*var, *var, vm);
+		//dir is null dir not found
+		throwCustomError("Directory not found! Cannot get all files in directory..", vm);
 		return;
 	}
 

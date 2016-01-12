@@ -9,8 +9,8 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	if (var->getTokenType() != IToken::TYPE_FACT_ARRAY && var->getTokenType() != IToken::TYPE_NUMBER_ARRAY && var->getTokenType() != IToken::TYPE_TEXT_ARRAY) 
 	{
-		throwTypeError(*var, *var, vm);
-
+		//throwTypeError(*var, *var, vm);
+		throwCustomError("cannot count array " + var->getValue(), vm);
 		return;
 	}
 	shared_ptr<Array> array =  vm.getVariableArray(parameters[1]);

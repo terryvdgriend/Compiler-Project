@@ -26,17 +26,14 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		}
 		else 
 		{
-            throwTypeError(*variable1, *variable2, vm);
-			vm.triggerRunFailure();
-
+			throwCustomError("cannot divide by zero", vm);
 			return;
 		}
 	}
 	else 
 	{
 		// Exception division requires 2 numbers
-		throwTypeError(*variable1, *variable2, vm);
-
+		throwCustomError("cannot divide " + variable1->getValue() + " by " + variable2->getValue(), vm);
 		return;
 	}
 }

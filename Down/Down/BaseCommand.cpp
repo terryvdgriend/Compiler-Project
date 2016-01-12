@@ -38,7 +38,7 @@ bool BaseCommand::isUndefined(Variable& var1, Variable& var2, VirtualMachine& vm
 	return false;
 }
 
-void BaseCommand::throwTypeError(Variable& var1, Variable& var2, VirtualMachine& vm) 
+void BaseCommand::throwTypeError2(Variable& var1, Variable& var2, VirtualMachine& vm) 
 {
 	CommandVisitor cmdVisitor;
 	pair<string, string> words = accept(cmdVisitor);
