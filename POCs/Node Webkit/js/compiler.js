@@ -74,7 +74,7 @@ exports.run = function(code, execute) {
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.appendLogResult(resultWithSpaces);
 
-				var input = '<br/><div class="input">><input type="text" /></div>';
+				var input = '<div class="input">><input type="text" /></div>';
 				exports.appendLogResult(input);
 				
 				setTimeout(function(){
