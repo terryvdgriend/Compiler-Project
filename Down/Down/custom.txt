@@ -69,8 +69,8 @@ _number_ **temp**
 	[ printdown **number** { **x** } ]
 __
 
-[ printdown "" ]
-[ printdown "" ]
+[ printdown ">" ]
+[ printdown "<" ]
 
 #### for ( _number_ **i**  is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
 --

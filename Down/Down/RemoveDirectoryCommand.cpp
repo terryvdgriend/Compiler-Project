@@ -1,7 +1,12 @@
 #include "stdafx.h"
 #include "RemoveDirectoryCommand.h"
 #include "MandatoryCommandIncludes.h"
+
+// OPLOSSEN DAT WIN32 NIET MEER NODIG IS, OSX STAAT ONDERAAN NU
+
+#ifdef _WIN32
 #include <experimental/filesystem>
+
 namespace fs = std::experimental::filesystem;
 
 
@@ -52,3 +57,38 @@ pair<string, string> RemoveDirectoryCommand::accept(CommandVisitor & cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
 }
+
+
+
+
+
+
+#else // OSX
+
+
+RemoveDirectoryCommand::RemoveDirectoryCommand()
+{
+}
+
+
+RemoveDirectoryCommand::~RemoveDirectoryCommand()
+{
+}
+
+void RemoveDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
+{
+
+}
+
+string RemoveDirectoryCommand::getExtension(const string filename)
+{
+    return "";
+}
+
+pair<string, string> RemoveDirectoryCommand::accept(CommandVisitor & cmdVisitor)
+{
+    return cmdVisitor.visit(*this);
+}
+
+
+#endif

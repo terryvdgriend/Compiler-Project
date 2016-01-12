@@ -32,8 +32,13 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 			int result = remove(file.c_str());
 			if (result != 0) {
 				char buff[256];
+                
+                #ifdef _WIN32
+                    strerror_s(buff, 100, errno);
+                #else
+                    strerror_r(100,buff, errno);
+                #endif
 
-				strerror_s(buff, 100, errno);
 				throwCustomError("Error: " + file + ": " + buff, vm);
 			}
 		}
