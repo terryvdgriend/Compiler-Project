@@ -33,8 +33,21 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 					throwCustomError("Input does not have matching extensions", vm);
 				}
 
-				oldFile.erase(remove(oldFile.begin(), oldFile.end(), '\"'), oldFile.end());
 				newFile.erase(remove(newFile.begin(), newFile.end(), '\"'), newFile.end());
+
+				vector<char> forbidden = vector<char>({ '<', '>', ':', '\"', '\/', '\\', '|' , '?', '*' });
+				for (char& c : newFile) {
+					for (int i = 0; i < forbidden.size(); i++) {
+						if (forbidden.at(i) == c) {
+							// Because appending characters to the end of strings is just ugly :/
+							string error = "Invalid character: ";
+							throwCustomError(error += c, vm);
+							return;
+						}
+					}
+				}
+
+				oldFile.erase(remove(oldFile.begin(), oldFile.end(), '\"'), oldFile.end());
 
 				DIR *dir;
 				dir = opendir(oldFile.c_str());
