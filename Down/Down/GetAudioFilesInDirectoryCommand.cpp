@@ -28,7 +28,6 @@ void GetAudioFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	// These 2 numbers must remain the same!
 	int numberOfExtensions = 9;
 	string extensions[9] = { ".mp3", ".wav", ".flac", ".m4a", ".ogg", ".raw", ".wma", ".mid", ".gsm" };
-	cout << extensions->size();
 	std::vector<string> out;
 	DIR *dir;
 	struct dirent *de;
@@ -71,7 +70,6 @@ void GetAudioFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
 		vm.setVariable(localVariable, out.at(i), IToken::TYPE_TEXT);
-		cout << out.at(i) << endl;
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}
 	vm.setReturnValue(arrayIdentifier);

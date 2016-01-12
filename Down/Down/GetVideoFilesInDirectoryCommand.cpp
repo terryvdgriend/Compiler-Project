@@ -21,7 +21,6 @@ GetVideoFilesInDirectoryCommand::~GetVideoFilesInDirectoryCommand()
 
 void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
-	// TODO: DO EXTENSION STUFF
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
 
@@ -71,7 +70,6 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
 		vm.setVariable(localVariable, out.at(i), IToken::TYPE_TEXT);
-		cout << out.at(i) << endl;
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}
 	vm.setReturnValue(arrayIdentifier);
