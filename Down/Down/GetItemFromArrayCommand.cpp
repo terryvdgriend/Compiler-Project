@@ -6,6 +6,10 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	shared_ptr<Array> varArray = vm.getVariableArray(parameters.at(1));
+	if (varArray == nullptr) {
+		throwCustomError("array is not found.", vm);
+		return;
+	}
 
 	if (varArray->variableArrayDictionary.size() <= 0)
 	{
