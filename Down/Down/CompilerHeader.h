@@ -20,6 +20,7 @@
 
 // Operators
 #include "CompileCondition.h"
+#include "CompileComparison.h"
 #include "CompileEquals.h"
 #include "CompilePlusMinus.h"
 #include "CompileOperator.h"

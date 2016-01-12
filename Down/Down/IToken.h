@@ -65,5 +65,7 @@ enum IToken
 	SWITCH_DEFAULT,
 	SWITCH,
 	LENGTH,
+	AND,
+	OR,
 	ANY
 };

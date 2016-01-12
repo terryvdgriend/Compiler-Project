@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CompileEquals.h"
-#include "CompileCondition.h"
+#include "CompileComparison.h"
 
-CompileEquals::CompileEquals() : CompileOperator(make_shared<CompileCondition>())
+CompileEquals::CompileEquals() : CompileOperator(make_shared<CompileComparison>())
 {
 	tokenMap[IToken::EQUALS] = "$=";
 }

@@ -179,3 +179,12 @@ pair<string, string> CommandVisitor::visit(CopyFilesCommand & command)
 pair<string, string> CommandVisitor::visit(GetFileExtensionCommand& command) {
 	return pair<string, string>("", "");
 }
+
+pair<string, string> CommandVisitor::visit(OrCommand & command)
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> CommandVisitor::visit(AndCommand& command) {
+	return pair<string, string>("", "");
+}

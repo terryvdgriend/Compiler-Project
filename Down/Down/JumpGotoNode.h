@@ -11,5 +11,5 @@ class JumpGoToNode : public ActionNode
 		void setJumpToNode(shared_ptr<ActionNode> value);
 
 	private:
-		shared_ptr<ActionNode> jumpToNode;
+		weak_ptr<ActionNode> _jumpToNode;
 };

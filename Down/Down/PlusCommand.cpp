@@ -14,7 +14,8 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		return;
 	}
 
-	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) {
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) 
+	{
 
 		double number1 = atof(variable1.getValue().c_str());
 		double number2 = atof(variable2.getValue().c_str());
@@ -22,7 +23,8 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		vm.setReturnValue(to_string(number1 + number2));
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else if (variable1.getTokenType() == IToken::TYPE_FACT && variable2.getTokenType() == IToken::TYPE_FACT) {
+	else if (variable1.getTokenType() == IToken::TYPE_FACT && variable2.getTokenType() == IToken::TYPE_FACT)
+	{
 		bool bool1 = (variable1.getValue() == "true") ? true : false;
 		bool bool2 = (variable2.getValue() == "true") ? true : false;
 
@@ -38,14 +40,18 @@ void PlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		}
 		vm.setReturnToken(variable1.getTokenType());
 	}
-	else {
+	else 
+	{
 		string var1 = variable1.getValue();
 		string var2 = variable2.getValue();
 
-		if (variable1.getTokenType() == IToken::TYPE_NUMBER) {
+		if (variable1.getTokenType() == IToken::TYPE_NUMBER) 
+		{
 			var1 = removeUnnecessaryDotsAndZeros(var1);
 		}
-		if (variable1.getTokenType() == IToken::TYPE_NUMBER) {
+
+		if (variable1.getTokenType() == IToken::TYPE_NUMBER) 
+		{
 			var2 = removeUnnecessaryDotsAndZeros(var2);
 		}
 		vm.setReturnValue(var1 + var2);

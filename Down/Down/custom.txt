@@ -135,12 +135,4 @@ _text_ { [count [getAllFilesInDirectory **folderName**]] } **files** is [getAllF
 --
 [printdown **files** { **i** } plus " : " plus [getFileExtension  **files** { **i** }]]
 __
-=======
-_text_ {[count [getAllFilesInDirectory "C:\Users\terry\Pictures\Saved Pictures\test2"]]} **files** is [getAllFilesInDirectory "C:\Users\terry\Pictures\Saved Pictures\test2"]
 
-#### for (_number_ **i** is 0 , **i** smaller than [count **files**] , **i** increased)
---
-	**files** {**i**} is "C:\Users\terry\Pictures\Saved Pictures\test2\" plus **files** {**i**}
-__
-
-[moveFiles **files** , "C:\Users\terry\Pictures\Saved Pictures\test"]
