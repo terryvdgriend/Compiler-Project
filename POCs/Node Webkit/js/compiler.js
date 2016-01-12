@@ -70,10 +70,18 @@ exports.run = function(code, execute) {
 
 			cmd.stdout.on('data', function (data) {
 				data = data.toString();
+
 				var resultWithBrs = data.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.appendLogResult(resultWithSpaces);
 
+				console.log(data);
+				if(!errorOccurred) {
+					var index = $('#log > div a[href="#output"]').parent().index();
+					$("#log > div").tabs("option", "active", index);
+				}
+
+				// Show input field
 				var input = '<div class="input">><input type="text" /></div>';
 				exports.appendLogResult(input);
 				
@@ -81,11 +89,7 @@ exports.run = function(code, execute) {
 					$("#log div.input input[type=text]").focus();
 				}, 50);
 
-				console.log(data);
-				if(!errorOccurred) {
-					var index = $('#log > div a[href="#output"]').parent().index();
-					$("#log > div").tabs("option", "active", index);
-				}
+				
 			});
 
 			cmd.stderr.on('data', function (data) {

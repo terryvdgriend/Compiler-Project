@@ -162,7 +162,7 @@ $(function() {
         // Enter key
         if(keycode == '13') {
             var val = $(this).val();
-            $(this).parent('.input').replaceWith('> ' + val + "<br />");
+            $(this).parent('.input').replaceWith(val + "<br />");
             compiler.write(val);
         }
     });
