@@ -26,7 +26,7 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 			string file = vm.getVariable(parameters[1])->getValue();
 			file.erase(remove(file.begin(), file.end(), '\"'), file.end());
 
-			if (opendir(file.c_str()) == nullptr){
+			if (opendir(file.c_str()) != nullptr){
 				throwCustomError("Cannot remove directories (use removeDirectory to delete directories)", vm,node.getToken());
 				return;
 			}

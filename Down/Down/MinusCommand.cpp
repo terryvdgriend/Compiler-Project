@@ -27,7 +27,7 @@ void MinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	{
 		// Exception minus requires 2 numbers
 		//throwTypeError(variable1, variable2, vm);
-		throwCustomError("cannot subtract" + variable1.getValue() + " by " + variable2.getValue(), vm,node.getToken());
+		throwCustomError("cannot subtract " + variable1.getValue() + " by " + variable2.getValue(), vm,node.getToken());
 		return;
 	}
 }
