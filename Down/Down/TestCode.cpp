@@ -221,3 +221,14 @@ const string TestCode::GetIdentifiers()
 
 	return testCode;
 }
+
+const string TestCode::GetDoubles()
+{
+	string testCode =
+		R"(
+			_number_ **b** is -10
+			_number_ **c** is 0.5
+		)";
+
+	return testCode;
+}
