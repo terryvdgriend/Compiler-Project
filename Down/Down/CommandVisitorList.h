@@ -21,6 +21,7 @@ class GetFileExtensionCommand;
 class MoveFileCommand;
 class MoveFilesCommand;
 class GetDownCommand;
+class ParseIntCommand;
 
 // Miscellaneous
 class ConstantToReturnValueCommand;
