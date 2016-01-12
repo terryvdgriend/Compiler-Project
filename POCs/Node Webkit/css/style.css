@@ -47,6 +47,10 @@ a {
     text-decoration: none !important;
 }
 
+.ace_editor input, .ace_editor button {
+    font-family: Arial !important;
+}
+
 #page {
     width: 100%;
     height: 100%;
@@ -97,10 +101,89 @@ a {
     color: #fff;
     font-family: "Consolas", "Menlo Regular", sans-serif;
     font-size: 16px;
+    position: relative;
+}
+
+#markdown #markdownCode {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#markdown *[id^='case-'], #markdown *[id^='default'] {
+    font-size: 1em;
 }
 
 #markdown *:first-child {
     margin-top: 0;
+}
+
+#markdown h1 {
+    font-size: 2.2em;
+}
+
+#markdown h2 {
+    font-size: 2em;
+}
+
+#markdown h3 {
+    font-size: 1.5em;
+}
+
+#markdown h4 {
+    font-size: 1.17em;
+}
+
+#markdown h1,#markdown h2,#markdown h3,#markdown h4 {
+    margin-bottom: 0.35em;
+}
+
+#markdown p {
+    margin-top: 5px;
+}
+
+#markdown hr {
+    border: 0;
+    height: 1px;
+    background: #fff;
+}
+
+#contextmenu{
+    margin:0;
+    padding:0;
+    /*background: rgba(255,255,255,0.15);*/
+    background: #464646;
+    -webkit-box-shadow: 0 0 17px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 0 17px 0 rgba(0,0,0,0.5);
+}
+
+#contextmenu li {
+    list-style-type:none;
+    margin:0px;
+    padding: 4px 5px;
+    color: #FFF;
+    cursor:pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+    min-width: 110px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ace-twilight .ace_hidden-cursors .ace_cursor {
+    opacity: 0.45 !important;
+}
+
+#contextmenu li:last-child {
+    border: 0;
+}
+
+#contextmenu li.hover{
+    background: rgba(255,255,255,0.3);
 }
 
 #log {
@@ -116,6 +199,10 @@ a {
     font-size: 14px;
     position: relative;
     overflow: hidden;
+}
+
+#log #output {
+    height: calc(100% - 28px);
 }
 
 #log table.errors {
@@ -162,6 +249,34 @@ a {
 
 #log a.save {
     right: 35px;
+}
+
+#log .input {
+    border-top: 1px solid rgba(255,255,255,0.3);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px !important;
+    padding-top: 4px;
+    padding-left: 8px;
+    background: #262626;
+}
+
+#log .input input[type=text] {
+    width: calc(100% - 15px);
+    margin: 0;
+    margin-top: -16px;
+    margin-left: 14px;
+    height: 18px;
+    background: transparent;
+    font-family: "Consolas", "Menlo Regular", sans-serif;
+    color: #fff;
+    font-size: 14px;
+    padding: 0;
+    vertical-align: top;
+    line-height: 18px;
+    border: 0;
 }
 
 .showLog #editor, .showLog #markdown {
@@ -248,7 +363,6 @@ a {
 #settings input, #settings button {
     font-family: Arial !important;
 }
-
 
 
 

@@ -11,6 +11,12 @@ var DownHighlightRules = function() {
    this.$rules = {
         "start" : [
             {
+                token : "string",
+                regex : '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]'
+            }, {
+                token : "paren",
+                regex : "\-\-|\_\_|\\[|\\]"
+            }, {
                 token : "comment",
                 regex : ">$",
                 next : "start"
@@ -21,7 +27,7 @@ var DownHighlightRules = function() {
             },
             {
                 token : "keyword.operator",
-                regex: "is|plus|minus|divide|(?:smaller|larger) than|like|in|increased|decreased|multiply|multiplied by|modulo|and gives|gets|with"
+                regex: " (is|plus|minus|divide|(?:smaller|larger) than|like|in|increased|decreased|multiply|multiplied by|modulo|and gives|gets|with|or)"
             },
             {
                 token : "constant.function",
