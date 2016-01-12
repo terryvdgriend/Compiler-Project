@@ -30,7 +30,6 @@ const map<string, IToken> TokenMap::getTokenMap()
 	// Loop Tokens
 	tokenMap["#### do"]					= IToken::DO;
 	tokenMap["#### for"]				= IToken::FOR;
-	tokenMap["#### foreach"]			= IToken::FOREACH;
 	tokenMap["#### while"]				= IToken::WHILE;
 
 	// Miscellaneous Tokens
@@ -45,7 +44,7 @@ const map<string, IToken> TokenMap::getTokenMap()
 	tokenMap["true"]					= IToken::FACT;
 	tokenMap["\n"]						= IToken::NEWLINE;
 	tokenMap["and gives"]				= IToken::RETURNVALUE;
-	tokenMap["gives"]				= IToken::RETURNVALUE;
+	tokenMap["gives"]					= IToken::RETURNVALUE;
 	tokenMap["gets"]					= IToken::START_PARAMETERS;
 	
 	// Operators Tokens
@@ -63,6 +62,8 @@ const map<string, IToken> TokenMap::getTokenMap()
 	tokenMap["increased"]				= IToken::PLUSPLUS;
 	tokenMap["multiplied by"]			= IToken::TIMES;
 	tokenMap["multiply"]				= IToken::TIMES;
+	tokenMap["and"]						= IToken::AND;
+	tokenMap["or"]						= IToken::OR;
 
 	// Types Tokens
 	tokenMap["_fact_"]					= IToken::TYPE_FACT;

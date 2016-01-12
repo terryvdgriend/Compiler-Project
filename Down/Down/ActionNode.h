@@ -16,6 +16,6 @@ class ActionNode
 		virtual void accept(shared_ptr<NodeVisitor>& visitor) = 0;
 
 	private:
-		shared_ptr<ActionNode> next;
-		shared_ptr<ActionNode> previous;
+		shared_ptr<ActionNode> _next;
+		weak_ptr<ActionNode> _previous;
 };

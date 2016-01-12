@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CompileGetFunction.h"
 #include "CompileCondition.h"
+#include "CompileComparison.h"
 #include "CompileEquals.h"
 #include "CompileFactory.h"
 #include "CompileSingleStatement.h"
@@ -130,7 +131,7 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			}
 			seperator = seperator->getNext();
 		}
-		CompileCondition condition;
+		CompileComparison condition;
         auto eBefore = _functionParams->getLast();
         condition.compile(tokenList, current, seperator, _functionParams, eBefore);
 
@@ -171,20 +172,6 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 			current->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 	}
-
-	//if (parameters.size() > _params.size()) 
-	//{
- //       auto error = make_shared<Error>(_name + " has more parameters than expected", ".md", current->getLineNumber(),
- //                                       current->getPosition(), ErrorType::ERROR);
-	//	ErrorHandler::getInstance()->addError(error);
-	//}
-
-	//if (parameters.size() < _params.size()) 
-	//{
- //       auto error = make_shared<Error>(_name + " has less parameters than expected", ".md", current->getLineNumber(),
- //                                       current->getPosition(), ErrorType::ERROR);
-	//	ErrorHandler::getInstance()->addError(error);
-	//}
 	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
 	pFunction->setArraySize(parameters.size()+1);
 	pFunction->setAt(0, _name.c_str());

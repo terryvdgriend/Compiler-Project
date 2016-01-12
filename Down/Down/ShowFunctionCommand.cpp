@@ -13,30 +13,30 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 		{
 			val += variable2.getValue();
 
-			if (variable2.getTokenType() == IToken::TYPE_NUMBER) {
+			if (variable2.getTokenType() == IToken::TYPE_NUMBER)
+			{
 				val = removeUnnecessaryDotsAndZeros(val);
 			}
 		}
-
 		val.erase(remove(val.begin(), val.end(), '\"'), val.end());
-		
 	}
-	if (parameters.size() >= 3) {
+
+	if (parameters.size() >= 3) 
+	{
 		Variable variable3 = *vm.getVariable(parameters.at(2));
 
 		if (variable3.getType() != VariableType::nulltype)
 		{
 			val += " - "+variable3.getValue();
 
-			if (variable3.getTokenType() == IToken::TYPE_NUMBER) {
+			if (variable3.getTokenType() == IToken::TYPE_NUMBER) 
+			{
 				val = removeUnnecessaryDotsAndZeros(val);
 			}
 		}
-
 		val.erase(remove(val.begin(), val.end(), '\"'), val.end());
 	}
 	cout << val << endl;
-	
 }
 
 pair<string, string> ShowFunctionCommand::accept(CommandVisitor& cmdVisitor)

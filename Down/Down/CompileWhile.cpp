@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CompileWhile.h"
 #include "CompileCondition.h"
+#include "CompileComparison.h"
 #include "CompileFactory.h"
 #include "CompileSingleStatement.h"
 #include "ConditionalJumpNode.h"
@@ -73,7 +74,7 @@ void CompileWhile::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 				if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
 				{
-					condition = make_shared<CompileCondition>();
+					condition = make_shared<CompileComparison>();
 					multiIndex = true;
 				}
 				else

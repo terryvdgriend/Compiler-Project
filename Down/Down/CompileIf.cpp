@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CompileIf.h"
 #include "CompileCondition.h"
+#include "CompileComparison.h"
 #include "CompileElseIf.h"
 #include "CompileFactory.h"
 #include "CompileSingleStatement.h"
@@ -81,7 +82,7 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 				
 				if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
 				{
-					condition = make_shared<CompileCondition>();
+					condition = make_shared<CompileComparison>();
 					multiIndex = true;
 				}
 				else

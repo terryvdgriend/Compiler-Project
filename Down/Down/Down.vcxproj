@@ -44,6 +44,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -86,11 +88,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="custom.txt" />
-    <Text Include="Snippets.txt" />
     <Text Include="custom2.txt" />
     <Text Include="Switch.md" />
-    <Text Include="while.md" />
-    <Text Include="while.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFunctionCall.h" />
@@ -98,6 +97,7 @@
     <ClInclude Include="AddArrayToDictionaryCommand.h" />
     <ClInclude Include="AddItemToArrayAtCommand.h" />
     <ClInclude Include="AddLengthToArrayCommand.h" />
+    <ClInclude Include="AndCommand.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="CommandDictionary.h" />
     <ClInclude Include="CommandVisitor.h" />
@@ -171,6 +171,7 @@
     <ClInclude Include="ModuloCommand.h" />
     <ClInclude Include="NodeVisitor.h" />
     <ClInclude Include="NotEqualsToCommand.h" />
+    <ClInclude Include="OrCommand.h" />
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="ProgramHandler.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="AddArrayToDictionaryCommand.cpp" />
     <ClCompile Include="AddItemToArrayAtCommand.cpp" />
     <ClCompile Include="AddLengthToArrayCommand.cpp" />
+    <ClCompile Include="AndCommand.cpp" />
     <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="CommandDictionary.cpp" />
     <ClCompile Include="CommandVisitor.cpp" />
@@ -272,6 +274,7 @@
     <ClCompile Include="MoveFilesCommand.cpp" />
     <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
+    <ClCompile Include="OrCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
     <ClCompile Include="ProgramHandler.cpp" />
@@ -301,7 +304,6 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\ForFibo.md" />
     <None Include="Array.md" />
     <None Include="functionTest.md" />
     <None Include="SuperTest.md" />

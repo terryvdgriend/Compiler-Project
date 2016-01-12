@@ -17,4 +17,6 @@ class ProgramHandler
 		void runVirtualMachine(const shared_ptr<LinkedActionList>& compiledList);
 		void printElapsedTime();
 		bool errors();
+
+		void cleanup(shared_ptr<LinkedTokenList>& tokenList, shared_ptr<LinkedActionList>& compiledList);
 };

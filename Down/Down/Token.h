@@ -43,7 +43,7 @@ class Token
 		string _text;
 		IToken _subType;
 		IToken _type;
-		shared_ptr<Token> _partner;
+		weak_ptr<Token> _partner;
 		int _positionInList;
 		int _lineNumber;
 		int _position;
@@ -51,5 +51,5 @@ class Token
 		int _scope;
 
 		shared_ptr<Token> _next;
-		shared_ptr<Token> _previous;
+		weak_ptr<Token> _previous;
 };

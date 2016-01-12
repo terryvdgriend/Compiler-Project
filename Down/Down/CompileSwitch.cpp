@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CompileSwitch.h"
 #include "CompileCondition.h"
+#include "CompileComparison.h"
 #include "CompileFactory.h"
 #include "CompileSingleStatement.h"
 #include "DoNothingNode.h"
@@ -77,7 +78,7 @@ void CompileSwitch::compile(const shared_ptr<LinkedTokenList>& tokenList, shared
 
 					if (current->getNext()->getType() != IToken::CONDITION_CLOSE)
 					{
-						condition = make_shared<CompileCondition>();
+						condition = make_shared<CompileComparison>();
 						multiIndex = true;
 					}
 					else
@@ -203,7 +204,7 @@ void CompileSwitch::compileCase(const shared_ptr<LinkedTokenList>& tokenList, sh
 
 						if (current->getNext()->getType() != IToken::CONDITION_CLOSE) 
 						{
-							condition = make_shared<CompileCondition>();
+							condition = make_shared<CompileComparison>();
 							multiIndex = true;
 						}
 						else

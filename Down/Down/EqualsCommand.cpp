@@ -15,7 +15,8 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		if (variable1->getTokenType() == IToken::TYPE_FACT_ARRAY || variable1->getTokenType() == IToken::TYPE_NUMBER_ARRAY || variable1->getTokenType() == IToken::TYPE_TEXT_ARRAY) {
 			setArrayToArray(vm, parameters);
 		}
-		else {
+		else 
+		{
 			variable1 = variable2;
 
 			for (string& item : vm.getFunctionParametersByKey(parameters.at(1)))
@@ -36,48 +37,61 @@ pair<string, string> EqualsCommand::accept(CommandVisitor& commandVisitor)
 	return commandVisitor.visit(*this);
 }
 
-void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& parameters) {
+void EqualsCommand::setArrayToArray(VirtualMachine& vm, vector<string>& parameters)
+{
 	//get both array's
-	auto toIdentifier = parameters[1];
-	auto toArray = vm.getVariableArray(toIdentifier);
+	string toIdentifier = parameters[1];
+	shared_ptr<Array> toArray = vm.getVariableArray(toIdentifier);
 	string functParamByKey = vm.getFunctionParameterValueByKey(toIdentifier);
-	auto fromArray = vm.getVariableArray(parameters[2]);
-	if (fromArray == nullptr) {
+	shared_ptr<Array> fromArray = vm.getVariableArray(parameters[2]);
+
+	if (fromArray == nullptr) 
+	{
 		throwCustomError("array from is not set.", vm);
+
 		return;
 	}
-	for (auto identifier : vm.getFunctionParametersByValue(functParamByKey)) {
-		if(vm.isAnArrayIdentifier(identifier)){
+
+	for (auto identifier : vm.getFunctionParametersByValue(functParamByKey)) 
+	{
+		if(vm.isAnArrayIdentifier(identifier))
+		{
 			toArray = vm.getVariableArray(identifier);
 			toIdentifier = identifier;
 		}
 	}
-	if (toArray == nullptr) {
-		auto arrayVar = vm.getVariable(toIdentifier);
+
+	if (toArray == nullptr) 
+	{
+		shared_ptr<Variable> arrayVar = vm.getVariable(toIdentifier);
 		vm.setFunctionParameter(toIdentifier, functParamByKey);
 		toArray = vm.addArrayToDictionary(toIdentifier, fromArray->arraySizes);
 		vm.addIdentifer(functParamByKey);
 	}
 	
-	if (toArray->variableArrayDictionary.size() == 0) {
+	if (toArray->variableArrayDictionary.size() == 0) 
+	{
 		toArray = vm.addArrayToDictionary(toIdentifier, vector<int>({ static_cast<int>(fromArray->variableArrayDictionary.size()) }));
-		
 	}
-	if (toArray->variableArrayDictionary.size() >= fromArray->variableArrayDictionary.size()) {
+
+	if (toArray->variableArrayDictionary.size() >= fromArray->variableArrayDictionary.size())
+	{
 		string buffer;
 		string localVariable;
 		CompileSingleStatement varGetter = CompileSingleStatement();
+
 		for (size_t i = 0; i < fromArray->variableArrayDictionary.size(); i++)
 		{
-			if (fromArray->variableArrayDictionary.at(i) != nullptr) {
+			if (fromArray->variableArrayDictionary.at(i) != nullptr)
+			{
 				localVariable = varGetter.getNextLocalVariableName(buffer);
 				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), fromArray->variableArrayDictionary.at(i)->getTokenType());
 				vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 			}
-
 		}
 	}
-	else {
+	else 
+	{
 		throwCustomError("index out of bounds array", vm);
 	}
 }
