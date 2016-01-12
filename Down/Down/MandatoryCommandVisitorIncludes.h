@@ -21,6 +21,7 @@
 #include "GetFileExtensionCommand.h"
 #include "MoveFileCommand.h"
 #include "MoveFilesCommand.h"
+#include "GetDownCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"
