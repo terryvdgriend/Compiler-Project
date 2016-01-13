@@ -23,6 +23,11 @@ public:
 		pair<string, string> visit(RenameFileCommand & command);
 		pair<string, string> visit(MoveFileCommand & command);
 		pair<string, string> visit(MoveFilesCommand & command);
+		pair<string, string> visit(CopyFileCommand & command);
+		pair<string, string> visit(CopyFilesCommand & command);
+		pair<string, string> visit(RemoveFileCommand & command);
+		pair<string, string> visit(RemoveFilesCommand & command);
+		pair<string, string> visit(RemoveDirectoryCommand & command);
 		pair<string, string> visit(GetDownCommand & command);
 		pair<string, string> visit(ParseIntCommand & command);
 
@@ -46,8 +51,6 @@ public:
 	pair<string, string> visit(SmallerEqualsToCommand& command);
 	pair<string, string> visit(SmallerThanCommand& command);
 	pair<string, string> visit(TimesCommand& command);
-	pair<string, string> visit(RemoveFileCommand & command);
-	pair<string, string> visit(RemoveDirectoryCommand & command);
 	pair<string, string> visit(OrCommand& command);
 	pair<string, string> visit(AndCommand& command);
 };

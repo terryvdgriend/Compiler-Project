@@ -1,23 +1,22 @@
 #include "stdafx.h"
-#include "MoveFileCommand.h"
+#include "CopyFileCommand.h"
 #include "MandatoryCommandIncludes.h"
-
 #ifdef _WIN32
 #include "dirent.h"
 #else
 #include <dirent.h>
 #endif
 
-MoveFileCommand::MoveFileCommand()
+CopyFileCommand::CopyFileCommand()
 {
 }
 
 
-MoveFileCommand::~MoveFileCommand()
+CopyFileCommand::~CopyFileCommand()
 {
 }
 
-void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
+void CopyFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto variable1 = vm.getVariable(parameters[1]);
@@ -30,7 +29,8 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				string filename = file;
 
-				size_t last_slash_idx; 
+				size_t last_slash_idx;
+
 				#ifdef _WIN32
 					last_slash_idx = filename.find_last_of("\\\\");
 				#else
@@ -45,23 +45,18 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				file.erase(remove(file.begin(), file.end(), '\"'), file.end());
 				newDirectory.erase(remove(newDirectory.begin(), newDirectory.end(), '\"'), newDirectory.end());
 				filename.erase(remove(filename.begin(), filename.end(), '\"'), filename.end());
-								
 
 				DIR *dir;
 
 				dir = opendir(newDirectory.c_str()); /*your directory*/
 				if (dir == nullptr) {
-					//throwTypeError(*variable2, *variable2, vm);
-					//dir is null dir not found
-					throwCustomError("Directory not found! Cannot move file..", vm, node.getToken());
+					throwCustomError("Can not open: " + newDirectory, vm, node.getToken());
 					return;
 				}
 
 				dir = opendir(file.c_str()); /*your directory*/
 				if (dir != nullptr) {
-					//throwTypeError(*variable1, *variable1, vm);
-					//dir is null dir not found
-					throwCustomError("Directory not found! Cannot move file..", vm, node.getToken());
+					throwCustomError(file + " is a directory", vm, node.getToken());
 					return;
 				}
 
@@ -77,33 +72,36 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				string newFile = newDirectory + filename;
 
-				int result = rename(file.c_str(), "");
-				if (result == 0) {
-					cout << "File " << file << " moved to " << newFile << endl;
-				}
-				else {
-					cout << "Error moving file! Code: " << result << endl;
-					char buff[256];
-
-					#ifdef _WIN32
-						strerror_s(buff, 100, errno);
-					#else
-						strerror_r(100,buff, errno);
-					#endif
-					
-					throwCustomError(buff, vm,node.getToken());
+				ifstream  src(file, ios::binary);
+				if (!src.good()) {
+					throwCustomError("Can not open file for copying", vm, node.getToken());
 					return;
 				}
+				ifstream  check(newFile, ios::binary);
+				if (check.good()) {
+					throwCustomError("File already exists in this map", vm, node.getToken());
+					return;
+				}
+				check.close();
+				ofstream  dst(newFile, ios::binary);
+				if (!dst.good()) {
+					throwCustomError("Could not write file", vm, node.getToken());
+					return;
+				}
+
+				dst << src.rdbuf();
+				src.close();
+				dst.close();
 				return;
 			}
-			throwCustomError("Parameters must be of type text.", vm, node.getToken());
+			throwCustomError("Parameters must be of type text.", vm);
 			return;
 		}
 	}
-	throwCustomError("Can't find ", vm, node.getToken());
+	throwCustomError("Can't find ", vm);
 }
 
-pair<string, string> MoveFileCommand::accept(CommandVisitor & cmdVisitor)
+pair<string, string> CopyFileCommand::accept(CommandVisitor & cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
 }

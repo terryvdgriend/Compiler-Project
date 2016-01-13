@@ -65,10 +65,13 @@ list<shared_ptr<Function>>  CommandDictionary::getCustomFunctions()
 	customFunctionDictionary.push_back(make_shared<Function>("count", "a", make_shared<CountCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("count", "aa", make_shared<CountCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("rename", "aa", make_shared<RenameFileCommand>(), vecToken));
-	customFunctionDictionary.push_back(make_shared<Function>("removeFile", "a", make_shared<RemoveFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("remove", "a", make_shared<RemoveFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("removeFiles", "a", make_shared<RemoveFilesCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("removeDirectory", "a", make_shared<RemoveDirectoryCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("moveFile", "aa", make_shared<MoveFileCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("moveFiles", "aa", make_shared<MoveFilesCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("copyFile", "aa", make_shared<CopyFileCommand>(), vecToken));
+	customFunctionDictionary.push_back(make_shared<Function>("copyFiles", "aa", make_shared<CopyFilesCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getFileExtension", "a", make_shared<GetFileExtensionCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("getdown", "", make_shared<GetDownCommand>(), vecToken));
 	customFunctionDictionary.push_back(make_shared<Function>("parseInt", "a", make_shared<ParseIntCommand>(), vecToken));
