@@ -166,34 +166,42 @@ const string TestCode::GetWhile()
 	return testCode;
 }
 
+const string TestCode::GetDoWhile()
+{
+	string testCode =
+		R"(
+			_number_ **inc** is 1
+			#### do
+			--
+				**inc** is **inc** plus 1 
+			__
+			#### while ( **inc** smaller than 10)
+
+			#### if (**inc** smaller than 10)	
+			--	
+				[ ThrowError "inc should be smaller than 10, while loop" ]
+			__	
+		)";
+
+	return testCode;
+}
+
 const string TestCode::GetFor()
 {
 	string testCode =
 		R"(
-			_number_ **size** is 7
-			_number_ { **size** } **number** is { 89 , 76 , 45 , 92 , 67 , 12 , 99 } 
 			_number_ **temp**
-				_number_ **x**
+			_number_ **x**
 
-					#### for ( **x** is 0 , **x** smaller than **size** , **x** is **x** plus 1)
+			#### for ( **x** is 0 , **x** smaller than 10 , **x** is **x** plus 1)
 			--
-			>			[ printdown **number** { **x** } ]
+						**temp** is **x**
 			__
 
-
-
-					#### for ( _number_ **i** is **size** minus 1 , **i** larger than 0 , **i** is **i** minus 1 )
-			--
-				#### for ( _number_ **j** is 0 , **j** like or smaller than  **i** minus 1, **j** is **j** plus 1 )
-				--
-					#### if ( **number** { **j** } larger than **number** { **j**  plus 1 } )
-					--
-						**temp** is **number** { **j** }
-						**number** { **j** } is **number** { **j** plus 1 }
-						**number** { **j** plus 1 } is **temp**
-					__
-				__
-			__
+			#### if (**temp** smaller than 9)	
+			--	
+				[ ThrowError "temp should be smaller than 9, for loop" ]
+			__	
 		)";
 
 	return testCode;
@@ -222,6 +230,65 @@ const string TestCode::GetIdentifiers()
 	return testCode;
 }
 
+const string TestCode::GetArray() {
+	string testCode =
+		R"(
+			_number_ **size** is 10
+			_number_ {**size** } **array**
+
+
+
+			#### for (_number_ **x** is 0 , **x** smaller than **size** , **x** is **x** plus 1)
+			--
+				**array** {**x** } is **x**
+			__
+
+			#### for ( **x** is 0 , **x** smaller than **size** , **x** is **x** plus 1)
+			--
+				#### if (**array**  { **x** } not like **x**)	
+				--	
+					[ ThrowError "array value does not equals index value" ]
+				__	
+				
+			__
+		)";
+
+	return testCode;
+}
+
+const string TestCode::GetMultiArray() {
+	string testCode =
+		R"(
+			_number_ { 2,2 } **array**
+
+
+			_number_ **index** is 0
+			#### for (_number_ **x** is 0 , **x** smaller than 2 , **x** is **x** plus 1)
+			--
+				#### for (_number_ **y** is 0 , **y** smaller than 2 , **y** is **y** plus 1)
+				--
+					**index** increased
+					**array** {**x** , **y**} is **index**
+				__
+			__
+
+			**index** is 0
+			#### for ( **x** is 0 , **x** smaller than 2 , **x** is **x** plus 1)
+			--
+				#### for (**y** is 0 , **y** smaller than 2 , **y** is **y** plus 1)
+				--
+					**index** increased
+					#### if (**array** {**x** , **y**} not like **index**)	
+					--	
+						[ ThrowError "array value does not equals index value" ]
+					__	
+				__
+			__
+		)";
+
+	return testCode;
+}
+
 const string TestCode::GetDoubles()
 {
 	string testCode =
@@ -230,5 +297,194 @@ const string TestCode::GetDoubles()
 			_number_ **c** is 0.5
 		)";
 
+	return testCode;
+}
+
+const string TestCode::GetOperators() {
+	string testCode =
+		R"(
+			_number_ **one** is 1
+
+			**one** is **one** plus 1
+
+			#### if (**one** not like 2)
+			--  
+			[ThrowError "plus operator is not working"]  
+			__    
+  
+			**one** is 1  
+  
+			**one** is **one** minus 1
+
+			#### if (**one** not like 0)
+			--  
+			[ThrowError "minus operator is not working"]  
+			__   
+  
+			**one** is 2  
+  
+			**one** is **one** divide 2
+
+			#### if (**one** not like 1)
+			--  
+			[ThrowError "divide operator is not working"]  
+			__   
+  
+			**one** is 2  
+  
+			**one** is **one** multiply 2
+
+			#### if (**one** not like 4)
+			--  
+			[ThrowError "multiply operator is not working"]  
+			__   
+  
+			**one** is 2    
+    
+			**one** is 2 multiply 3 divide **one**
+
+
+			#### if (**one** not like 3)
+			--  
+			[ThrowError "minus operator is not working"]  
+			__   
+  
+			**one** is 2    
+    
+			**one** increased
+
+
+			#### if (**one** not like 3)
+			--  
+			[ThrowError "plus plus operator is not working"]  
+			__    
+  
+			**one** is 2    
+    
+			**one** decreased
+
+
+			#### if (**one** not like 1)
+			--  
+			[ThrowError "minus minus operator is not working"]  
+			__   
+  
+			**one** is 3    
+    
+			**one** is **one** modulo 5
+
+
+			#### if (**one** not like 3)
+			--  
+			[ThrowError "modulo operator is not working"]  
+			__   
+  
+  
+			_fact_ **fact**  
+  
+			**fact** is 3 like 3  
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "like operator is not working"]  
+			__   
+  
+			**fact** is 3 not like 3  
+  
+			#### if (**fact** like true)
+			--  
+			[ThrowError "not like operator is not working"]  
+			__     
+  
+			**fact** is 2 smaller than 3 
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "smaller than operator is not working"]  
+			__   
+    
+			**fact** is 4 larger than 3 
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "larger than operator is not working"]  
+			__   
+    
+			**fact** is 4 like or larger than 3 
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "like or larger than operator is not working"]  
+			__   
+    
+    
+			**fact** is 3 like or larger than 3 
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "like or larger than operator is not working"]  
+			__  
+
+			**fact** is 2 like or smaller than 3 
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "like or smaller than operator is not working"]  
+			__   
+    
+    
+			**fact** is 3 like or smaller than 3 
+  
+			#### if (**fact** not like true)
+			--  
+			[ThrowError "like or smaller than operator is not working"]  
+			__  
+  
+			#### if (true and true)
+			--  
+ 
+			__    
+			#### else  
+			--  
+			  [ThrowError "and tan operator is not working"] 
+			__
+  
+			#### if (true and false)
+			--  
+				[ThrowError "and  operator is not working"] 
+			__    
+			#### else  
+			--  
+  
+			__  
+  
+			#### if (true or true)
+			--  
+ 
+			__    
+			#### else  
+			--  
+			  [ThrowError "or  operator is not working"] 
+			__
+  
+			#### if (true or false)
+			--  
+    
+			__    
+			#### else  
+			--  
+			  [ThrowError "or operator is not working"] 
+			__  
+  
+			#### if (false or false)
+			--  
+				[ThrowError "or operator is not working"] 
+			__    
+			#### else  
+			--  
+  
+			__  
+  
+		)";
 	return testCode;
 }

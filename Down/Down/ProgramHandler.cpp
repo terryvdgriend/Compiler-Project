@@ -7,7 +7,7 @@
 
 int ProgramHandler::runProgram(int argCounter, char* argValues[])
 {
-	IDEGateway ideGateway;
+	
 
 	//==============IDE==============
 	if (!ideGateway.handleIDEArguments(argCounter, argValues))
@@ -127,7 +127,8 @@ bool ProgramHandler::errors()
 	if (!ErrorHandler::getInstance()->getErrors().empty())
 	{
 		cerr << ErrorHandler::getInstance()->asJson();
-		printElapsedTime();
+		if(ideGateway.doPrintElapsedTime())
+			printElapsedTime();
 
 		return true;
 	}

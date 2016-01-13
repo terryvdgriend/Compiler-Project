@@ -66,20 +66,54 @@ shared_ptr<Variable> VirtualMachine::getVariable(string key)
 	return nullptr;
 }
 
-void VirtualMachine::setVariable(string key, string value, IToken token)
+void VirtualMachine::setVariable(string key, string value, shared_ptr<Token>& token,IToken tokenType)
 {
 	map<string, shared_ptr<Variable>>::iterator it = variableDictionary.find(key);
-
+	shared_ptr<Variable> var;
 	if (hasValueInVariableDictionary(it))
 	{
-		it->second = make_shared<Variable>(value);
-		it->second.get()->setTokenType(token, *this);
+		var = make_shared<Variable>(value);
+		var->setTokenType(tokenType, *this);
+		it->second = var;
 	}
 	else
 	{
-		pair<string, shared_ptr<Variable>> pair = make_pair(key, make_shared<Variable>(value));
-		pair.second.get()->setTokenType(token, *this);
+		var = make_shared<Variable>(value);
+		var->setTokenType(tokenType, *this);
+		pair<string, shared_ptr<Variable>> pair = make_pair(key, var);
 		variableDictionary.insert(pair);
+	}
+
+	// check if type matches ItokenType;
+	if (tokenType == IToken::TYPE_TEXT) {
+		if (var->getType() != VariableType::nulltype && var->getType() != VariableType::text) {
+			ThrowCustomError("type mismatch.",token);
+		}
+	}
+	else if (tokenType == IToken::TYPE_NUMBER) {
+		if (var->getType() != VariableType::nulltype && var->getType() != VariableType::number) {
+			ThrowCustomError("type mismatch.", token);
+		}
+	}
+	else if (tokenType == IToken::TYPE_FACT) {
+		if (var->getType() != VariableType::nulltype && var->getType() != VariableType::fact) {
+			ThrowCustomError("type mismatch.", token);
+		}
+	}
+	else if (tokenType == IToken::TYPE_TEXT_ARRAY) {
+		if (var->getType() != VariableType::nulltype) {
+			ThrowCustomError("type mismatch.", token);
+		}
+	}
+	else if (tokenType == IToken::TYPE_NUMBER_ARRAY) {
+		if (var->getType() != VariableType::nulltype) {
+			ThrowCustomError("type mismatch.", token);
+		}
+	}
+	else if (tokenType == IToken::TYPE_FACT_ARRAY) {
+		if (var->getType() != VariableType::nulltype) {
+			ThrowCustomError("type mismatch.", token);
+		}
 	}
 }
 
@@ -267,18 +301,6 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> ke
 				ErrorHandler::getInstance()->addError(error);
 				triggerRunFailure();
 				return;
-				//if (isMulti) {
-				//	if (i == it->second->arraySizes.size() - 1) {
-				//		index += atoi(key.at(i).c_str());
-				//	}
-				//	else {
-				//		index += (atoi(key.at(i).c_str())* it->second->arraySizes.at(i));
-				//	}
-
-				//}
-				//else {
-				//	
-				//}
 			}			
 		}
 
@@ -458,4 +480,12 @@ bool VirtualMachine::isAnIdentifier(string name)
 bool VirtualMachine::isAnArrayIdentifier(string name)
 {
 	return (variableArrayDictionary.find(name) != variableArrayDictionary.end());
+}
+
+void VirtualMachine::ThrowCustomError(string error, shared_ptr<Token> & token)
+{
+	error.erase(remove(error.begin(), error.end(), '\"'), error.end());
+	auto err = make_shared<Error>(error, ".md", token->getLineNumber(), token->getPosition(), ErrorType::ERROR);
+	ErrorHandler::getInstance()->addError(err);
+	triggerRunFailure();
 }

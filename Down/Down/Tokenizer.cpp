@@ -11,7 +11,7 @@ Tokenizer::Tokenizer()
 	currentScope	= 0;
 	maxScope		= 0;
 	tokenError		= false;
-	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|-?\\d+(?:\\.\\d+)?|\"(?:.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
+	actualRegex		= regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|not like|(like or )?(\\w+) than|-?\\d+(?:\\.\\d+)?|\"(?:.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
 	//actualRegex = regex("(\\*{2}\\S+?\\*{2}|#+ (?:else if|\\w+)|and gives|multiplied by|(>.*)|(like or )?(\\w+) than|^-?\\d.?\\d*$|\"(.*?)\"|\\w+|-{1,3}|[\\S|\\n])");
 
 }
@@ -23,7 +23,7 @@ void Tokenizer::createTokenList(shared_ptr<LinkedTokenList>& tokenList, const st
 
 	replace(code.begin(), code.end(), '\t', ' ');
 	smatch match;
-	int rowNr = 0;
+	int rowNr = 1;
 	int colNr = 1;
 	int lvl = 1;
 

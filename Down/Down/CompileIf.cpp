@@ -62,7 +62,7 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error,expectation.getTokenType(), current->getType());
 				begin = end;
 
@@ -215,7 +215,7 @@ void CompileIf::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_ptr
 
 					if (current->getType() != expectation.getTokenType()) 
 					{
-                        auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                        auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
 						ErrorHandler::getInstance()->addError(error,expectation.getTokenType(), current->getType());
 						begin = end;
 

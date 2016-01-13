@@ -58,6 +58,7 @@ const map<string, IToken> TokenMap::getTokenMap()
 	tokenMap["minus"]					= IToken::MINUS;
 	tokenMap["decreased"]				= IToken::MINUSMINUS;
 	tokenMap["modulo"]					= IToken::MODULO;
+	tokenMap["not like"]				= IToken::NOT_EQUALS_TO;
 	tokenMap["plus"]					= IToken::PLUS;
 	tokenMap["increased"]				= IToken::PLUSPLUS;
 	tokenMap["multiplied by"]			= IToken::TIMES;

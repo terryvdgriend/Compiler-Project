@@ -20,10 +20,13 @@ void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 		for (string & item : vm.getFunctionParametersByKey(parameters.at(1))) 
 		{
-			vm.setVariable(item, to_string(number1), variable.getTokenType());
+			vm.setVariable(item, to_string(number1), node.getToken(), variable.getTokenType());
 		}
 		vm.setReturnValue(to_string(number1));
 		vm.setReturnToken(variable.getTokenType());
+	}
+	else {
+		throwCustomError("cannot decrease an undefined variable.", vm, node.getToken());
 	}
 }
 

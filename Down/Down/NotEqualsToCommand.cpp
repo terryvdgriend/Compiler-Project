@@ -14,15 +14,39 @@ void NotEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		return;
 	}
 
-	if (variable1.getValue() != variable2.getValue())
+	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER)
 	{
-		vm.setReturnValue("true");
+		double number1 = atof(variable1.getValue().c_str());
+		double number2 = atof(variable2.getValue().c_str());
+
+		if (number1 != number2)
+		{
+			vm.setReturnValue("true");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
+		else
+		{
+			vm.setReturnValue("false");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
 	}
 	else
 	{
-		vm.setReturnValue("false");
+		auto val1 = variable1.getValue();
+		auto val2 = variable2.getValue();
+		val1.erase(remove(val1.begin(), val1.end(), '\"'), val1.end());
+		val2.erase(remove(val2.begin(), val2.end(), '\"'), val2.end());
+		if (val1 != val2)
+		{
+			vm.setReturnValue("true");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
+		else
+		{
+			vm.setReturnValue("false");
+			vm.setReturnToken(IToken::TYPE_FACT);
+		}
 	}
-	vm.setReturnToken(IToken::TYPE_FACT);
 }
 
 pair<string, string> NotEqualsToCommand::accept(CommandVisitor& commandVisitor) 

@@ -10,7 +10,7 @@ class ProgramHandler
 				
 	private:
 		clock_t sttime;
-
+		IDEGateway ideGateway;
 		int runDown(IDEGateway& ideGateway);
 		shared_ptr<LinkedTokenList> runTokenizer(const string code, const bool printTokenList);
 		shared_ptr<LinkedActionList> runCompiler(const shared_ptr<LinkedTokenList>&, const bool printCompiledList);
