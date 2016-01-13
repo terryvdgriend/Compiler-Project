@@ -49,12 +49,12 @@ void RemoveFileCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		}
 		else 
 		{
-			throwCustomError("Parameters must be of type text.", vm, node.getToken());
+			throwCustomError("Parameters must be of type text.", vm, supergeheimeToken);
 
 			return;
 		}
 	}
-	throwCustomError("Can't find ", vm, node.getToken());
+	throwCustomError("Can't find ", vm, supergeheimeToken);
 }
 
 pair<string, string> RemoveFileCommand::accept(CommandVisitor& cmdVisitor)
