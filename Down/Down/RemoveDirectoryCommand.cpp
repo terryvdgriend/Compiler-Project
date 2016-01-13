@@ -5,6 +5,8 @@
 #ifdef _WIN32
 	#include "dirent.h"
 	#include <experimental/filesystem>
+
+	namespace fs = experimental::filesystem;
 #else
 	#include <dirent.h>
 #endif
@@ -25,12 +27,16 @@ void RemoveDirectoryCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 	int result = -1;
 
 	#ifdef _WIN32
-		result = experimental::filesystem::remove_all(file.c_str());
+		if (fs::exists(file.c_str()))
+		{
+			fs::remove_all(file.c_str());
+			result = 0;
+		}
 	#else
 		result = RemoveDirectoryRecursiveUnix(file.c_str());
 	#endif
 
-	if (result == 1) 
+	if (result == 0) 
 	{
 		cout << "Directory " << file << " and its contents were removed." << endl;
 	}

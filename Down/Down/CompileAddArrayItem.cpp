@@ -87,7 +87,9 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 					auto tempToken = make_shared<Token>(current);
 
 						for (auto it : itemPositionInMultiArray) {
-							shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(tempToken);
+							auto constTempToken = make_shared<Token>(current);
+							constTempToken->setSubType(IToken::TYPE_NUMBER);
+							shared_ptr<DirectFunctionCall> directFunctionCall = make_shared<DirectFunctionCall>(constTempToken);
 							directFunctionCall->setArraySize(2);
 							directFunctionCall->setAt(0, SET_CONST_TO_RT);
 							directFunctionCall->setAt(1, to_string(it).c_str());

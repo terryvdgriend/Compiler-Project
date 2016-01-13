@@ -55,9 +55,10 @@ void CopyFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 						filename.erase(remove(filename.begin(), filename.end(), '\"'), filename.end());
 
 						dir = opendir(file.c_str());
-						if (dir != nullptr) {
-							throwCustomError(file + " is a directory", vm, supergeheimeToken);
-							return;
+						if (dir != nullptr) 
+						{
+							errors.push_back(file + " is a directory");
+							continue;
 						}
 
 						#ifdef _WIN32
