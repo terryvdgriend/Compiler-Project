@@ -4,6 +4,7 @@
 
 void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	shared_ptr<Variable> variable1 = vm.getVariable(parameters.at(1));
@@ -26,7 +27,7 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		}
 		else 
 		{
-			throwCustomError("cannot divide by zero", vm,node.getToken());
+			throwCustomError("cannot divide by zero", vm,supergeheimeToken);
 			return;
 		}
 	}
@@ -35,7 +36,7 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		Variable variable1 = *vm.getVariable(parameters.at(1));
 		Variable variable2 = *vm.getVariable(parameters.at(2));
 		// Exception division requires 2 numbers
-		throwCustomError("cannot divide " + variable1.getValue() + " by " + variable2.getValue(), vm, node.getToken());
+		throwCustomError("cannot divide " + variable1.getValue() + " by " + variable2.getValue(), vm, supergeheimeToken);
 		return;
 	}
 }

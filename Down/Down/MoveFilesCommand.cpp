@@ -19,6 +19,7 @@ MoveFilesCommand::~MoveFilesCommand()
 
 void MoveFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto variable1 = vm.getVariable(parameters[1]);
 	auto varArray = vm.getVariableArray(parameters.at(1));
@@ -38,7 +39,7 @@ void MoveFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 					if (dir == nullptr) {
 						//throwTypeError(*variable2, *variable2, vm);
 						//dir is null dir not found
-						throwCustomError("Directory not found! Cannot move files..", vm, node.getToken());
+						throwCustomError("Directory not found! Cannot move files..", vm, supergeheimeToken);
 						return;
 					}
 
@@ -63,7 +64,7 @@ void MoveFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 						if (dir != nullptr) {
 							//throwTypeError(*variable1, *variable1, vm);
 							//dir is null dir not found
-							throwCustomError("Directory not found! Cannot move files..", vm, node.getToken());
+							throwCustomError("Directory not found! Cannot move files..", vm, supergeheimeToken);
 							return;
 						}
 
@@ -95,18 +96,18 @@ void MoveFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 						}
 					}
 					for (auto err : errors) {
-						throwCustomError(err, vm, node.getToken());
+						throwCustomError(err, vm, supergeheimeToken);
 					}
 					return;
 				}
-				throwCustomError("Array is empty.", vm, node.getToken());
+				throwCustomError("Array is empty.", vm, supergeheimeToken);
 				return;
 			}
-			throwCustomError("Parameters must be of type text.", vm, node.getToken());
+			throwCustomError("Parameters must be of type text.", vm, supergeheimeToken);
 			return;
 		}
 	}
-	throwCustomError("Can't find ", vm, node.getToken());
+	throwCustomError("Can't find ", vm, supergeheimeToken);
 }
 
 pair<string, string> MoveFilesCommand::accept(CommandVisitor & cmdVisitor)

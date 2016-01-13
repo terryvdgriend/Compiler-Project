@@ -21,6 +21,7 @@ GetVideoFilesInDirectoryCommand::~GetVideoFilesInDirectoryCommand()
 
 void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
 
@@ -39,7 +40,7 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	if (dir == nullptr) {
 		//throwTypeError(*var, *var, vm);
 		//dir is null dir not found
-		throwCustomError("Directory not found! Cannot get video files..", vm, node.getToken());
+		throwCustomError("Directory not found! Cannot get video files..", vm, supergeheimeToken);
 		return;
 	}
 	while (dir)
@@ -61,7 +62,7 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	string localVariable;
 	string arrayDictionary = varGetter.getNextLocalVariableName(buffer);
 	string arrayIdentifier = varGetter.getNextLocalVariableName(buffer);
-	vm.setVariable(arrayDictionary, "", node.getToken(), IToken::TYPE_TEXT_ARRAY);
+	vm.setVariable(arrayDictionary, "", supergeheimeToken, IToken::TYPE_TEXT_ARRAY);
 	auto arrayVar = vm.getVariable(arrayDictionary);
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
 	int size = out.size();
@@ -71,7 +72,7 @@ void GetVideoFilesInDirectoryCommand::execute(VirtualMachine & vm, AbstractFunct
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
-		vm.setVariable(localVariable, out.at(i), node.getToken(), IToken::TYPE_TEXT);
+		vm.setVariable(localVariable, out.at(i), supergeheimeToken, IToken::TYPE_TEXT);
 		cout << out.at(i) << endl;
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}

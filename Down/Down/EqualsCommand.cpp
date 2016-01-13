@@ -5,6 +5,7 @@
 
 void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	shared_ptr<Variable> variable1 = vm.getVariable(parameters.at(1));
@@ -21,7 +22,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 			for (string& item : vm.getFunctionParametersByKey(parameters.at(1)))
 			{
-				vm.setVariable(item, variable1->getValue(),node.getToken(), variable1->getTokenType());
+				vm.setVariable(item, variable1->getValue(),supergeheimeToken, variable1->getTokenType());
 			}
 		}
 
@@ -29,7 +30,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	else
 	{
 		//throwTypeError(*variable1, *variable2, vm);
-		throwCustomError("Cannot assign " + variable1->getValue() + " with " + variable2->getValue(), vm,node.getToken());
+		throwCustomError("Cannot assign " + variable1->getValue() + " with " + variable2->getValue(), vm,supergeheimeToken);
 	}
 }
 
@@ -40,6 +41,7 @@ pair<string, string> EqualsCommand::accept(CommandVisitor& commandVisitor)
 
 void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	//get both array's
 	string toIdentifier = parameters[1];
@@ -49,7 +51,7 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& no
 
 	if (fromArray == nullptr) 
 	{
-		throwCustomError("array from is not set.", vm, node.getToken());
+		throwCustomError("array from is not set.", vm, supergeheimeToken);
 
 		return;
 	}
@@ -87,13 +89,13 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& no
 			if (fromArray->variableArrayDictionary.at(i) != nullptr)
 			{
 				localVariable = varGetter.getNextLocalVariableName(buffer);
-				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), node.getToken(), fromArray->variableArrayDictionary.at(i)->getTokenType());
+				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), supergeheimeToken, fromArray->variableArrayDictionary.at(i)->getTokenType());
 				vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 			}
 		}
 	}
 	else 
 	{
-		throwCustomError("index out of bounds array", vm, node.getToken());
+		throwCustomError("index out of bounds array", vm, supergeheimeToken);
 	}
 }

@@ -4,6 +4,7 @@
 
 void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	Variable variable1 = *vm.getVariable(parameters.at(1));
@@ -27,7 +28,7 @@ void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		Variable variable1 = *vm.getVariable(parameters.at(1));
 		Variable variable2 = *vm.getVariable(parameters.at(2));
 		// Exception division requires 2 numbers
-		throwCustomError("cannot multiply " + variable1.getValue() + " by " + variable2.getValue(), vm, node.getToken());
+		throwCustomError("cannot multiply " + variable1.getValue() + " by " + variable2.getValue(), vm, supergeheimeToken);
 		return;
 	}
 }
