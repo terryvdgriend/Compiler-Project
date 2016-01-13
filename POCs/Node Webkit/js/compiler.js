@@ -44,7 +44,8 @@ exports.run = function(code, execute) {
 		} else {
 			// Stop old process
 			exports.killCompiler();
-
+			exports.clearLogResult();
+			
 			// Create new process
 			var spawn = require('child_process').spawn;
 			var compilerFilePath = exports.getCompilerFile();
