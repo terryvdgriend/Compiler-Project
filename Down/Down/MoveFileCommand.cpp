@@ -92,7 +92,7 @@ void MoveFileCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 						strerror_r(100, buff, errno);
 					#endif
 					
-					throwCustomError(buff, vm,node.getToken());
+					throwCustomError(buff, vm,supergeheimeToken);
 
 					return;
 				}

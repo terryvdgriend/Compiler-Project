@@ -33,7 +33,7 @@ void RemoveDirectoryCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 			result = 0;
 		}
 	#else
-		result = RemoveDirectoryRecursiveUnix(file.c_str());
+		result = UnixRemoveDirectoryRecursive(file.c_str());
 	#endif
 
 	if (result == 0) 
