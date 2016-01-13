@@ -38,7 +38,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 
 				vector<char> forbidden = vector<char>({ '<', '>', ':', '\"', '\/', '\\', '|' , '?', '*' });
 				for (char& c : newFile) {
-					for (int i = 0; i < forbidden.size(); i++) {
+					for (size_t i = 0; i < forbidden.size(); i++) {
 						if (forbidden.at(i) == c) {
 							// Because appending characters to the end of strings is just ugly :/
 							string error = "Invalid character: ";
@@ -58,11 +58,11 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 					return;
 				}
 
-				int pos;
+				int pos = -1;
 				#ifdef _WIN32
-								pos = oldFile.find_last_of('\\\\');
+					pos = oldFile.find_last_of('\\\\');
 				#else
-								pos = oldFile.find_last_of('\\/');
+					pos = oldFile.find_last_of('\\/');
 				#endif
 				if (pos == -1) {
 					throwCustomError("Incorrect input: is the first parameter a full path?", vm, supergeheimeToken);

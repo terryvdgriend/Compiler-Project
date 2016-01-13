@@ -2,4 +2,4 @@
 
 [ printdown 1 ]
 
-[ removeDirectory "D:\test"]
+[ removeDirectory "D:\allahuakbar"]
