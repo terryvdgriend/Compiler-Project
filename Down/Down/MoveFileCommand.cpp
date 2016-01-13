@@ -73,7 +73,7 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				string newFile = newDirectory + filename;
 
-				int result = rename(file.c_str(), newFile.c_str());
+				int result = rename(file.c_str(), "");
 				if (result == 0) {
 					cout << "File " << file << " renamed to " << newFile << endl;
 				}
@@ -96,8 +96,7 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 			return;
 		}
 	}
-	throwCustomError("Can't find ", vm);
-	
+	throwCustomError("Can't find ", vm);	
 }
 
 pair<string, string> MoveFileCommand::accept(CommandVisitor & cmdVisitor)

@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "RemoveDirectoryCommand.h"
 #include "MandatoryCommandIncludes.h"
+#ifdef _WIN32
+#include "dirent.h"
+#else
+#include <dirent.h>
+#endif
 
 // OPLOSSEN DAT WIN32 NIET MEER NODIG IS, OSX STAAT ONDERAAN NU
 
@@ -30,7 +35,8 @@ void RemoveDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall &
 		throwCustomError("Cannot remove files, only directories (use removeFile to delete a file)", vm);
 		return;
 	}
-	int result = fs::remove_all(file.c_str());
+	//int result = fs::remove_all(file.c_str());
+	int result = RemoveDirectoryRecursive(file.c_str());
 	if (result == 1) {
 		cout << "Directory " << file << " and its contents were removed." << endl;
 	}
@@ -51,6 +57,44 @@ string RemoveDirectoryCommand::getExtension(const string filename)
 		return ""; // Return an empty string
 
 	return filename.substr(pos, -1);
+}
+
+int RemoveDirectoryCommand::RemoveDirectoryRecursive(const char *dirname)
+{
+	DIR *dir;
+	struct dirent *entry;
+	char path[PATH_MAX];
+
+	if (path == NULL) {
+		fprintf(stderr, "Out of memory error\n");
+		return 0;
+	}
+	dir = opendir(dirname);
+	if (dir == NULL) {
+		perror("Error opendir()");
+		return 0;
+	}
+
+	while ((entry = readdir(dir)) != NULL) {
+		if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..")) {
+			snprintf(path, (size_t)PATH_MAX, "%s/%s", dirname, entry->d_name);
+			if (entry->d_type == DT_DIR) {
+				RemoveDirectoryRecursive(path);
+			}
+
+			remove(path);
+		}
+
+	}
+	closedir(dir);
+
+	int result = remove(dirname);
+	char buff[256];
+
+	strerror_s(buff, 100, errno);
+	string s = buff;
+
+	return 1;
 }
 
 pair<string, string> RemoveDirectoryCommand::accept(CommandVisitor & cmdVisitor)
