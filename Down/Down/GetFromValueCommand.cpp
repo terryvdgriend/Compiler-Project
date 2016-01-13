@@ -4,6 +4,7 @@
 
 void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	string rValue = vm.getReturnValue();
 	IToken rToken = vm.getReturnToken();
@@ -20,19 +21,19 @@ void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 
 				if (value.size() > 0)
 				{
-					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue(), node.getToken(), rToken);
+					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue(), supergeheimeToken, rToken);
 				}
 				else
 				{
 					// Exception var undefined
-					vm.setVariable(parameters[1], "", node.getToken(), rToken);
+					vm.setVariable(parameters[1], "", supergeheimeToken, rToken);
 				}
 				vm.setFunctionParameter(parameters[1], rValue);
 			}
 		}
 		else
 		{
-			vm.setVariable(parameters[1], rValue, node.getToken(), rToken);
+			vm.setVariable(parameters[1], rValue, supergeheimeToken, rToken);
 		}
 	}
 }

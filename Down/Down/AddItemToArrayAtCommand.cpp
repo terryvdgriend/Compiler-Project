@@ -4,6 +4,7 @@
 
 void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	string arrayIdentifier = vm.getFunctionParameterValueByKey(parameters[1]);
 	shared_ptr<Variable> valueParam = vm.getVariable(parameters.at(parameters.size() - 1));
@@ -24,14 +25,14 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	{
 		if (it->getType() != VariableType::number) 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to set an item from an array, but the index isn't a number", ".md", supergeheimeToken->getLineNumber(), supergeheimeToken->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}
 
 		if (it->getValue() == "") 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the key is empty", ".md", supergeheimeToken->getLineNumber(), supergeheimeToken->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}
@@ -47,7 +48,7 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
             Variable var1 = Variable(arrayTypes.second);
             Variable var2 = Variable(arrayTypes.first);
 			//throwTypeError(var1,var2 , vm);
-			throwCustomError("cannot add " + var2.getValue() + " to array", vm,node.getToken());
+			throwCustomError("cannot add " + var2.getValue() + " to array", vm,supergeheimeToken);
 		}
 		else
 		{
@@ -61,13 +62,13 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	{
 		if (value == "") 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the value is empty", ".md", supergeheimeToken->getLineNumber(), supergeheimeToken->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure(); 
 		}
 		else if (arrayKey == "") 
 		{
-			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+			shared_ptr<Error> error = make_shared<Error>("you want to add an item to an array, but the array is undefined", ".md", supergeheimeToken->getLineNumber(), supergeheimeToken->getPosition(), ErrorType::ERROR);
 			ErrorHandler::getInstance()->addError(error);
 			vm.triggerRunFailure();
 		}

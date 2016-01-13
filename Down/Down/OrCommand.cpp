@@ -14,6 +14,7 @@ OrCommand::~OrCommand()
 
 void OrCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	Variable variable1 = *vm.getVariable(parameters.at(1));
@@ -38,11 +39,11 @@ void OrCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 			}
 		}
 		else {
-			throwCustomError("second variable is not a bool",vm,node.getToken());
+			throwCustomError("second variable is not a bool",vm,supergeheimeToken);
 		}
 	}
 	else {
-		throwCustomError("first variable is not a bool", vm, node.getToken());
+		throwCustomError("first variable is not a bool", vm, supergeheimeToken);
 	}
 }
 

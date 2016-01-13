@@ -13,6 +13,7 @@ ParseIntCommand::~ParseIntCommand()
 
 void ParseIntCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters.at(1));
 
@@ -25,15 +26,15 @@ void ParseIntCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				vm.setReturnValue(val);
 			}
 			else {
-				throwCustomError("given value was not a numeric value.", vm, node.getToken());
+				throwCustomError("given value was not a numeric value.", vm, supergeheimeToken);
 			}
 		}
 		else {
-			throwCustomError("given value was not a string.", vm, node.getToken());
+			throwCustomError("given value was not a string.", vm, supergeheimeToken);
 		}
 	}
 	else {
-		throwCustomError("given value was not set.", vm, node.getToken());
+		throwCustomError("given value was not set.", vm, supergeheimeToken);
 	}
 }
 
