@@ -233,7 +233,7 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 		{
 			if (stack.size() >= 0 && current->getType() == IToken::AND_PARA && current->getPrevious()->getType() == IToken::ARRAY_CLOSE) {
 			}
-			else if (stack.size() >= 0 && current->getType() == IToken::ARRAY_CLOSE  && (current->getNext() !=nullptr && current->getNext()->getType() == IToken::AND_PARA )||stack.size() == 0 && current->getType() == IToken::AND_PARA || stack.size() > 0 && stack.top() == IToken::ARRAY_OPEN && (current->getType() == IToken::AND_PARA || current->getType() == IToken::ARRAY_CLOSE))
+			else if (stack.size() >= 0 && current->getType() == IToken::ARRAY_CLOSE || stack.size() >= 0 && current->getType() == IToken::ARRAY_CLOSE  && (current->getNext() !=nullptr && current->getNext()->getType() == IToken::AND_PARA )||stack.size() == 0 && current->getType() == IToken::AND_PARA || stack.size() > 0 && stack.top() == IToken::ARRAY_OPEN && (current->getType() == IToken::AND_PARA || current->getType() == IToken::ARRAY_CLOSE))
 			{
 				if (param->params->getLast() != nullptr)
 				{
