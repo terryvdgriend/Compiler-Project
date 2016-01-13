@@ -4,10 +4,11 @@
 
 void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	shared_ptr<Array> varArray = vm.getVariableArray(parameters.at(1));
 	if (varArray == nullptr) {
-		throwCustomError("array is not found.", vm, node.getToken());
+		throwCustomError("array is not found.", vm, supergeheimeToken);
 		return;
 	}
 
@@ -73,7 +74,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	}
 	else
 	{
-		shared_ptr<Error> error = make_shared<Error>("the array is still empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
+		shared_ptr<Error> error = make_shared<Error>("the array is still empty", ".md", supergeheimeToken->getLineNumber(), supergeheimeToken->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 		vm.triggerRunFailure();
 	}

@@ -21,6 +21,7 @@ RenameFileCommand::~RenameFileCommand()
 
 void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto variable1 = vm.getVariable(parameters[1]);
 	auto variable2 = vm.getVariable(parameters[2]);
@@ -30,7 +31,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				string oldFile = vm.getVariable(parameters[1])->getValue();
 				string newFile = vm.getVariable(parameters[2])->getValue();
 				if (getExtension(oldFile) != getExtension(newFile)) {
-					throwCustomError("Input does not have matching extensions", vm, node.getToken());
+					throwCustomError("Input does not have matching extensions", vm, supergeheimeToken);
 				}
 
 				newFile.erase(remove(newFile.begin(), newFile.end(), '\"'), newFile.end());
@@ -53,7 +54,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				dir = opendir(oldFile.c_str());
 
 				if (dir != nullptr) {
-					throwCustomError("Cannot rename directories", vm, node.getToken());
+					throwCustomError("Cannot rename directories", vm, supergeheimeToken);
 					return;
 				}
 
@@ -64,7 +65,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 								pos = oldFile.find_last_of('\\/');
 				#endif
 				if (pos == -1) {
-					throwCustomError("Incorrect input: is the first parameter a full path?", vm, node.getToken());
+					throwCustomError("Incorrect input: is the first parameter a full path?", vm, supergeheimeToken);
 					return;
 				}
 
@@ -86,12 +87,12 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				return;
 			}
 			else {
-				throwCustomError("Parameters must be of type 'text'", vm, node.getToken());
+				throwCustomError("Parameters must be of type 'text'", vm, supergeheimeToken);
 				return;
 			}
 		}
 	}
-	throwCustomError("Parameters not set", vm, node.getToken());
+	throwCustomError("Parameters not set", vm, supergeheimeToken);
 }
 
 string RenameFileCommand::getExtension(const string filename)

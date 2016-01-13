@@ -11,6 +11,7 @@
 
 void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
 	string extension = "*.*";
@@ -27,7 +28,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 	{
 		//throwTypeError(*var, *var, vm);
 		//dir is null dir not found
-		throwCustomError("Directory not found! Cannot get all files in directory..", vm, node.getToken());
+		throwCustomError("Directory not found! Cannot get all files in directory..", vm, supergeheimeToken);
 		return;
 	}
 
@@ -58,7 +59,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 	string arrayDictionary = varGetter.getNextLocalVariableName(buffer);
 	string arrayIdentifier = varGetter.getNextLocalVariableName(buffer);
 
-	vm.setVariable(arrayDictionary, "", node.getToken(), IToken::TYPE_TEXT_ARRAY);
+	vm.setVariable(arrayDictionary, "", supergeheimeToken, IToken::TYPE_TEXT_ARRAY);
 	shared_ptr<Variable> arrayVar = vm.getVariable(arrayDictionary);
 
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
@@ -69,7 +70,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
-		vm.setVariable(localVariable, out.at(i), node.getToken(), IToken::TYPE_TEXT);
+		vm.setVariable(localVariable, out.at(i), supergeheimeToken, IToken::TYPE_TEXT);
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}
 	vm.setReturnValue(arrayIdentifier);

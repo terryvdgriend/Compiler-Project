@@ -19,6 +19,7 @@ RemoveFileCommand::~RemoveFileCommand()
 
 void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto variable1 = vm.getVariable(parameters[1]);
 	if (variable1 != nullptr) {
@@ -27,7 +28,7 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 			file.erase(remove(file.begin(), file.end(), '\"'), file.end());
 
 			if (opendir(file.c_str()) != nullptr){
-				throwCustomError("Cannot remove directories (use removeDirectory to delete directories)", vm,node.getToken());
+				throwCustomError("Cannot remove directories (use removeDirectory to delete directories)", vm,supergeheimeToken);
 				return;
 			}
 			int result = remove(file.c_str());
@@ -40,7 +41,7 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
                     strerror_r(100,buff, errno);
                 #endif
 
-				throwCustomError("Error: " + file + ": " + buff, vm, node.getToken());
+				throwCustomError("Error: " + file + ": " + buff, vm, supergeheimeToken);
 			}
 		}
 	}
