@@ -24,7 +24,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 	shared_ptr<Token> paraCheckerEnd = paraChecker->getPartner();
 	stack<IToken> stack;
 
-	while (paraChecker != paraCheckerEnd) {
+	while (*paraChecker != *paraCheckerEnd) {
 		if (paraChecker->getType() == IToken::FUNCTION_DECLARE_OPEN)
 			stack.push(paraChecker->getType());
 		else if (paraChecker->getType() == IToken::FUNCTION_DECLARE_CLOSE)
