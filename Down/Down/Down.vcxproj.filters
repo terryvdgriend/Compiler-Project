@@ -456,9 +456,6 @@
     <ClCompile Include="RemoveFileCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
-    <ClCompile Include="RemoveDirectoryCommand.cpp">
-      <Filter>Source Files\VM\Commands\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="MoveFileCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
@@ -795,9 +792,6 @@
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="RemoveFileCommand.h">
-      <Filter>Header Files\VM\Commands\Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="RemoveDirectoryCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="MoveFileCommand.h">

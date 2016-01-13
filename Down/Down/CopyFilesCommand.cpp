@@ -35,7 +35,7 @@ void CopyFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 					dir = opendir(newDirectory.c_str()); /*your directory*/
 					if (dir == nullptr) {
-						throwTypeError(*variable2, *variable2, vm);
+						throwCustomError("Can not open: " + newDirectory, vm, node.getToken());
 						return;
 					}
 
@@ -55,7 +55,7 @@ void CopyFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 						dir = opendir(file.c_str());
 						if (dir != nullptr) {
-							throwTypeError(*variable1, *variable1, vm);
+							throwCustomError(file + " is a directory", vm, node.getToken());
 							return;
 						}
 
@@ -95,18 +95,18 @@ void CopyFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 						dst.close();
 					}
 					for (auto err : errors) {
-						throwCustomError(err, vm);
+						throwCustomError(err, vm, node.getToken());
 					}
 					return;
 			}
-				throwCustomError("Array is empty.", vm);
+				throwCustomError("Array is empty.", vm, node.getToken());
 				return;
 		}
-			throwCustomError("Parameters must be of type text.", vm);
+			throwCustomError("Parameters must be of type text.", vm, node.getToken());
 			return;
 	}
 }
-	throwCustomError("Can't find ", vm);
+	throwCustomError("Can't find ", vm, node.getToken());
 }
 
 pair<string, string> CopyFilesCommand::accept(CommandVisitor & cmdVisitor)

@@ -2,4 +2,4 @@
 
 [ printdown 1 ]
 
-[ removeDirectory "C:\Prostanden\Pictures\ha\"]
+[ removeDirectory "C:\Prostanden\Pictures\ha"]

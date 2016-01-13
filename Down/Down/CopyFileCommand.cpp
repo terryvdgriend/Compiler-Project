@@ -50,13 +50,13 @@ void CopyFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				dir = opendir(newDirectory.c_str()); /*your directory*/
 				if (dir == nullptr) {
-					throwTypeError(*variable2, *variable2, vm);
+					throwCustomError("Can not open: " + newDirectory, vm, node.getToken());
 					return;
 				}
 
 				dir = opendir(file.c_str()); /*your directory*/
 				if (dir != nullptr) {
-					throwTypeError(*variable1, *variable1, vm);
+					throwCustomError(file + " is a directory", vm, node.getToken());
 					return;
 				}
 
@@ -74,18 +74,18 @@ void CopyFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				ifstream  src(file, ios::binary);
 				if (!src.good()) {
-					throwCustomError("Can not open file for copying", vm);
+					throwCustomError("Can not open file for copying", vm, node.getToken());
 					return;
 				}
 				ifstream  check(newFile, ios::binary);
 				if (check.good()) {
-					throwCustomError("File already exists in this map", vm);
+					throwCustomError("File already exists in this map", vm, node.getToken());
 					return;
 				}
 				check.close();
 				ofstream  dst(newFile, ios::binary);
 				if (!dst.good()) {
-					throwCustomError("Could not write file", vm);
+					throwCustomError("Could not write file", vm, node.getToken());
 					return;
 				}
 
