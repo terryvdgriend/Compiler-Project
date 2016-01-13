@@ -13,7 +13,8 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	if (variable1->getTokenType() == variable2->getTokenType()) 
 	{
-		if (variable1->getTokenType() == IToken::TYPE_FACT_ARRAY || variable1->getTokenType() == IToken::TYPE_NUMBER_ARRAY || variable1->getTokenType() == IToken::TYPE_TEXT_ARRAY) {
+		if (variable1->getTokenType() == IToken::TYPE_FACT_ARRAY || variable1->getTokenType() == IToken::TYPE_NUMBER_ARRAY || variable1->getTokenType() == IToken::TYPE_TEXT_ARRAY) 
+		{
 			setArrayToArray(vm, node);
 		}
 		else 
@@ -25,12 +26,10 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 				vm.setVariable(item, variable1->getValue(),supergeheimeToken, variable1->getTokenType());
 			}
 		}
-		
 	}
 	else 
 	{
-		//throwTypeError(*variable1, *variable2, vm);
-		throwCustomError("Cannot assign " + variable1->getValue() + " with " + variable2->getValue(), vm,supergeheimeToken);
+		throwCustomError("Cannot assign " + variable1->getValue() + " with " + variable2->getValue(), vm, supergeheimeToken);
 	}
 }
 
@@ -58,7 +57,7 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& no
 
 	for (auto identifier : vm.getFunctionParametersByValue(functParamByKey)) 
 	{
-		if(vm.isAnArrayIdentifier(identifier))
+		if (vm.isAnArrayIdentifier(identifier))
 		{
 			toArray = vm.getVariableArray(identifier);
 			toIdentifier = identifier;
@@ -90,13 +89,15 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& no
 			{
 				localVariable = varGetter.getNextLocalVariableName(buffer);
 				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), supergeheimeToken, fromArray->variableArrayDictionary.at(i)->getTokenType());
-				if (fromArray->arraySizes.size() > 1) {
+
+				if (fromArray->arraySizes.size() > 1) 
+				{
 					vm.addItemToVariableArrayAt(toIdentifier,  to_string(i), vm.getVariable(localVariable));
 				}
-				else {
+				else 
+				{
 					vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 				}
-				
 			}
 		}
 	}

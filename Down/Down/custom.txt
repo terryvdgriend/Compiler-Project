@@ -2,4 +2,4 @@
 
 [ printdown 1 ]
 
-[ removeDirectory "D:\allahuakbar"]
+[ copyFile "D:\test\New Text Document.txt", "D:\test2"]

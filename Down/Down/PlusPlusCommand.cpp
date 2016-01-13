@@ -26,7 +26,8 @@ void PlusPlusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		vm.setReturnValue(to_string(number1));
 		vm.setReturnToken(variable.getTokenType());
 	}
-	else {
+	else 
+	{
 		throwCustomError("cannot increase an undefined variable.", vm, supergeheimeToken);
 	}
 }

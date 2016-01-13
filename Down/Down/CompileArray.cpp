@@ -141,7 +141,7 @@ void CompileArray::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_
 
 				pFunction->setArraySize(saArguments.size());
 
-				for (int n = 0; n < saArguments.size(); n++)
+				for (size_t n = 0; n < saArguments.size(); n++)
 				{
 					pFunction->setAt(n, saArguments[n].c_str());
 				}
@@ -303,7 +303,7 @@ bool CompileArray::executeArrayItems(shared_ptr<LinkedActionList> &listActionNod
 
 	if (!isArrayLengthFilled)
 	{
-		for (int i = 0; i < paramList.size(); i++) {
+		for (size_t i = 0; i < paramList.size(); i++) {
 			shared_ptr<Compiler> compileParam;
 			if (paramList.at(i)->params->getSize() > 1) 
 			{

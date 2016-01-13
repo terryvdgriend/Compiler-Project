@@ -36,6 +36,7 @@ void EqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		auto val2 = variable2.getValue();
 		val1.erase(remove(val1.begin(), val1.end(), '\"'), val1.end());
 		val2.erase(remove(val2.begin(), val2.end(), '\"'), val2.end());
+
 		if (val1 == val2)
 		{
 			vm.setReturnValue("true");

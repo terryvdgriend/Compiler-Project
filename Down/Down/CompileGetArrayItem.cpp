@@ -236,7 +236,7 @@ void CompileGetArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 				shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 				pFunction->setArraySize(saArguments.size());
 
-				for (int n = 0; n < saArguments.size(); n++)
+				for (size_t n = 0; n < saArguments.size(); n++)
 				{
 					pFunction->setAt(n, saArguments[n].c_str());
 				}

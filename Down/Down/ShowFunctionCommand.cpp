@@ -6,7 +6,9 @@ void ShowFunctionCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 {
 	string val = "";
 	vector<string>& parameters = node.getContentArrayNonConstant();
-	if (parameters.size() >= 2) {
+
+	if (parameters.size() >= 2) 
+	{
 		Variable variable2 = *vm.getVariable(parameters.at(1));
 
 		if (variable2.getType() != VariableType::nulltype)

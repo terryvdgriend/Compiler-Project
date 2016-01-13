@@ -1,14 +1,8 @@
 #pragma once
 #include "BaseCommand.h"
-class GetDownCommand :
-	public BaseCommand
+class GetDownCommand : public BaseCommand
 {
-public:
-	GetDownCommand();
-	~GetDownCommand();
-
-	// Inherited via BaseCommand
-	virtual void execute(VirtualMachine & vm, AbstractFunctionCall & node) override;
-	virtual pair<string, string> accept(CommandVisitor & cmdVisitor) override;
+	public:
+		void execute(VirtualMachine& vm, AbstractFunctionCall& node);
+		pair<string, string> accept(CommandVisitor& cmdVisitor);
 };
-

@@ -5,8 +5,6 @@ class CommandVisitor;
 class VirtualMachine;
 class Variable;
 
-using namespace std;
-
 class BaseCommand
 {
 	public:

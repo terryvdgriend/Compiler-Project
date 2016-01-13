@@ -2,17 +2,7 @@
 #include "OrCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-
-OrCommand::OrCommand()
-{
-}
-
-
-OrCommand::~OrCommand()
-{
-}
-
-void OrCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
+void OrCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
     auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
@@ -25,29 +15,38 @@ void OrCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 		return;
 	}
 
-	if (variable1.getTokenType() == IToken::TYPE_FACT && variable1.getType() == VariableType::fact) {
-		if (variable2.getTokenType() == IToken::TYPE_FACT && variable2.getType() == VariableType::fact) {
+	if (variable1.getTokenType() == IToken::TYPE_FACT && variable1.getType() == VariableType::fact) 
+	{
+		if (variable2.getTokenType() == IToken::TYPE_FACT && variable2.getType() == VariableType::fact) 
+		{
 			vm.setReturnValue("false");
 			vm.setReturnToken(IToken::TYPE_FACT);
-			if (variable1.getValue() == "true") {
+
+			if (variable1.getValue() == "true") 
+			{
 				vm.setReturnValue("true");
+
 				return;
 			}
-			else if (variable2.getValue() == "true") {
+			else if (variable2.getValue() == "true") 
+			{
 				vm.setReturnValue("true");
+
 				return;
 			}
 		}
-		else {
+		else 
+		{
 			throwCustomError("second variable is not a bool",vm,supergeheimeToken);
 		}
 	}
-	else {
+	else 
+	{
 		throwCustomError("first variable is not a bool", vm, supergeheimeToken);
 	}
 }
 
-pair<string, string> OrCommand::accept(CommandVisitor & cmdVisitor)
+pair<string, string> OrCommand::accept(CommandVisitor& cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
 }

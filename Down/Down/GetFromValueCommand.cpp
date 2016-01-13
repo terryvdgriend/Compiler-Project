@@ -13,6 +13,7 @@ void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 	{
 		vm.setReturnValue("");
 		vm.setReturnToken(IToken::ANY);
+
 		if (vm.isAnIdentifier(rValue))
 		{
 			if (!vm.hasValueInFunctionParameters(parameters[1]))

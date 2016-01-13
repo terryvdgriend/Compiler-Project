@@ -17,7 +17,6 @@ void MinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	if (variable1.getTokenType() == IToken::TYPE_NUMBER && variable2.getTokenType() == IToken::TYPE_NUMBER) 
 	{
-
 		double number1 = atof(variable1.getValue().c_str());
 		double number2 = atof(variable2.getValue().c_str());
 
@@ -27,8 +26,8 @@ void MinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	else 
 	{
 		// Exception minus requires 2 numbers
-		//throwTypeError(variable1, variable2, vm);
-		throwCustomError("cannot subtract " + variable1.getValue() + " by " + variable2.getValue(), vm,supergeheimeToken);
+		throwCustomError("cannot subtract " + variable1.getValue() + " by " + variable2.getValue(), vm, supergeheimeToken);
+
 		return;
 	}
 }

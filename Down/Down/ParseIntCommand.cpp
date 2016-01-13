@@ -2,40 +2,43 @@
 #include "ParseIntCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-ParseIntCommand::ParseIntCommand()
-{
-}
-
-
-ParseIntCommand::~ParseIntCommand()
-{
-}
-
-void ParseIntCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
+void ParseIntCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
     auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters.at(1));
 
-	if (var->getType() != VariableType::nulltype) {
-		if (var->getTokenType() == IToken::TYPE_TEXT) {
+	if (var->getType() != VariableType::nulltype) 
+	{
+		if (var->getTokenType() == IToken::TYPE_TEXT) 
+		{
 			string val = var->getValue();
 			val.erase(remove(val.begin(), val.end(), '\"'), val.end());
-			if (is_number(val)) {
+
+			if (is_number(val)) 
+			{
 				vm.setReturnToken(TYPE_NUMBER);
 				vm.setReturnValue(val);
 			}
-			else {
+			else 
+			{
 				throwCustomError("given value was not a numeric value.", vm, supergeheimeToken);
 			}
 		}
-		else {
+		else 
+		{
 			throwCustomError("given value was not a string.", vm, supergeheimeToken);
 		}
 	}
-	else {
+	else 
+	{
 		throwCustomError("given value was not set.", vm, supergeheimeToken);
 	}
+}
+
+pair<string, string> ParseIntCommand::accept(CommandVisitor& cmdVisitor)
+{
+	return cmdVisitor.visit(*this);
 }
 
 bool ParseIntCommand::is_number(const string& s)
@@ -71,9 +74,4 @@ bool ParseIntCommand::is_number(const string& s)
 	}
 
 	return s.size() > (size_t)minSize && it == s.end();
-}
-
-pair<string, string> ParseIntCommand::accept(CommandVisitor & cmdVisitor)
-{
-	return cmdVisitor.visit(*this);
 }

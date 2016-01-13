@@ -1,14 +1,9 @@
 #pragma once
 #include "BaseCommand.h"
-class AndCommand :
-	public BaseCommand
+
+class AndCommand : public BaseCommand
 {
-public:
-	AndCommand();
-	~AndCommand();
-
-	// Inherited via BaseCommand
-	virtual void execute(VirtualMachine & vm, AbstractFunctionCall & node) override;
-	virtual pair<string, string> accept(CommandVisitor & cmdVisitor) override;
+	public:
+		void execute(VirtualMachine& vm, AbstractFunctionCall& node);
+		pair<string, string> accept(CommandVisitor& cmdVisitor);
 };
-

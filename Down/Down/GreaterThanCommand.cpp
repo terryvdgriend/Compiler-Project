@@ -33,8 +33,8 @@ void GreaterThanCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	else 
 	{
 		// Exception "cannot compare different types than numbers"
-		//throwTypeError(variable1, variable2, vm);
-		throwCustomError("cannot compare " + variable1.getValue() + " with " + variable2.getValue(), vm,supergeheimeToken);
+		throwCustomError("cannot compare " + variable1.getValue() + " with " + variable2.getValue(), vm, supergeheimeToken);
+
 		return;
 	}
 }

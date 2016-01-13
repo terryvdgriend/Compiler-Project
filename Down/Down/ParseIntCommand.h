@@ -1,15 +1,12 @@
 #pragma once
 #include "BaseCommand.h"
-class ParseIntCommand :
-	public BaseCommand
+
+class ParseIntCommand :	public BaseCommand
 {
-public:
-	ParseIntCommand();
-	~ParseIntCommand();
+	public:
+		void execute(VirtualMachine& vm, AbstractFunctionCall& node);
+		pair<string, string> accept(CommandVisitor& cmdVisitor);
 
-	// Inherited via BaseCommand
-	virtual void execute(VirtualMachine & vm, AbstractFunctionCall & node) override;
-	bool is_number(const string & s);
-	virtual pair<string, string> accept(CommandVisitor & cmdVisitor) override;
+	private:
+		bool is_number(const string& s);
 };
-

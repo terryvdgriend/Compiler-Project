@@ -48,24 +48,29 @@ void BaseCommand::throwTypeError2(Variable& var1, Variable& var2, VirtualMachine
 	vm.triggerRunFailure();
 }
 
-string BaseCommand::removeUnnecessaryDotsAndZeros(string input) {
-
-	if (input.find('.') != std::string::npos) {
-
-		while (input.size() != 0) {
+string BaseCommand::removeUnnecessaryDotsAndZeros(string input) 
+{
+	if (input.find('.') != std::string::npos) 
+	{
+		while (input.size() != 0) 
+		{
 			char current = input[input.size() - 1];
 
-			if (current == '0') {
+			if (current == '0') 
+			{
 				input = input.substr(0, input.size() - 1);
 			}
-			else {
-				if (current == '.') {
+			else 
+			{
+				if (current == '.') 
+				{
 					input = input.substr(0, input.size() - 1);
 				}
 				break;
 			}
 		}
 	}
+
 	return input;
 }
 

@@ -29,6 +29,7 @@ void TimesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		Variable variable2 = *vm.getVariable(parameters.at(2));
 		// Exception division requires 2 numbers
 		throwCustomError("cannot multiply " + variable1.getValue() + " by " + variable2.getValue(), vm, supergeheimeToken);
+
 		return;
 	}
 }

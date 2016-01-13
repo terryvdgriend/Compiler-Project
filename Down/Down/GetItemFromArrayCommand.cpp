@@ -7,8 +7,11 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
     auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	shared_ptr<Array> varArray = vm.getVariableArray(parameters.at(1));
-	if (varArray == nullptr) {
+
+	if (varArray == nullptr) 
+	{
 		throwCustomError("array is not found.", vm, supergeheimeToken);
+
 		return;
 	}
 

@@ -10,15 +10,16 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 	if (var->getTokenType() != IToken::TYPE_FACT_ARRAY && var->getTokenType() != IToken::TYPE_NUMBER_ARRAY && var->getTokenType() != IToken::TYPE_TEXT_ARRAY) 
 	{
-		//throwTypeError(*var, *var, vm);
 		throwCustomError("cannot count array " + var->getValue(), vm, supergeheimeToken);
+
 		return;
 	}
 	shared_ptr<Array> array =  vm.getVariableArray(parameters[1]);
 
 	if (array != nullptr) 
 	{
-		if (parameters.size() > 2) {
+		if (parameters.size() > 2) 
+		{
 			auto var = vm.getVariable(parameters[2]);
 
 			if (var->getTokenType() == IToken::TYPE_NUMBER && var->getType() == VariableType::number) 
@@ -29,7 +30,7 @@ void CountCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 				{
 					throwCustomError("index is below zero.", vm, supergeheimeToken);
 				}
-				else if (index > array->arraySizes.size() - 1) 
+				else if (index > (int)array->arraySizes.size() - 1) 
 				{
 					throwCustomError("index out of bounds range.", vm, supergeheimeToken);
 				}

@@ -47,8 +47,7 @@ void AddItemToArrayAtCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 		{
             Variable var1 = Variable(arrayTypes.second);
             Variable var2 = Variable(arrayTypes.first);
-			//throwTypeError(var1,var2 , vm);
-			throwCustomError("cannot add " + var2.getValue() + " to array", vm,supergeheimeToken);
+			throwCustomError("cannot add " + var2.getValue() + " to array", vm, supergeheimeToken);
 		}
 		else
 		{

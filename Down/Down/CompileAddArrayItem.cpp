@@ -136,7 +136,7 @@ void CompileAddArrayItem::compile(const shared_ptr<LinkedTokenList>& tokenList, 
 
 				pFunction->setArraySize(saArguments.size());
 
-				for (int n = 0; n < saArguments.size(); n++)
+				for (size_t n = 0; n < saArguments.size(); n++)
 				{
 					pFunction->setAt(n, saArguments[n].c_str());
 				}

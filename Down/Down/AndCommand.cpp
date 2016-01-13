@@ -2,16 +2,7 @@
 #include "AndCommand.h"
 #include "MandatoryCommandIncludes.h"
 
-AndCommand::AndCommand()
-{
-}
-
-
-AndCommand::~AndCommand()
-{
-}
-
-void AndCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
+void AndCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
     auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
@@ -24,24 +15,28 @@ void AndCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 		return;
 	}
 
-	if (variable1.getTokenType() == IToken::TYPE_FACT && variable1.getType() == VariableType::fact) {
-		if (variable2.getTokenType() == IToken::TYPE_FACT && variable2.getType() == VariableType::fact) {
+	if (variable1.getTokenType() == IToken::TYPE_FACT && variable1.getType() == VariableType::fact) 
+	{
+		if (variable2.getTokenType() == IToken::TYPE_FACT && variable2.getType() == VariableType::fact) 
+		{
 			bool one = (variable1.getValue() == "false") ? false : true;
 			bool two = (variable2.getValue() == "false") ? false : true;
 			bool outcome = (one && two);
 			vm.setReturnValue(outcome ? "true" : "false");
 			vm.setReturnToken(IToken::TYPE_FACT);
 		}
-		else {
+		else 
+		{
 			throwCustomError("second variable is not a bool", vm, supergeheimeToken);
 		}
 	}
-	else {
+	else 
+	{
 		throwCustomError("first variable is not a bool", vm, supergeheimeToken);
 	}
 }
 
-pair<string, string> AndCommand::accept(CommandVisitor & cmdVisitor)
+pair<string, string> AndCommand::accept(CommandVisitor& cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
 }

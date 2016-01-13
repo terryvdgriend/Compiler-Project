@@ -267,7 +267,7 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string index, sha
 
 	if (hasValueInVariableArrayDictionary(it))
 	{
-		if (atoi(index.c_str()) < it->second->variableArrayDictionary.size()) {
+		if (atoi(index.c_str()) < (int)it->second->variableArrayDictionary.size()) {
 			it->second->variableArrayDictionary.at(atoi(index.c_str())) = value;
 		}
 		else {
