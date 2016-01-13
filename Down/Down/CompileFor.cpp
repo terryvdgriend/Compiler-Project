@@ -147,14 +147,17 @@ void CompileFor::compile(const shared_ptr<LinkedTokenList>& tokenList, shared_pt
 			{
 				shared_ptr<Token> next = current->getNext();
 
-				while (next->getType() != IToken::AND_PARA)
+				while (next != nullptr)
 				{
+					if (next->getType() == IToken::AND_PARA && current->getLevel() == next->getLevel()) {
+						break;
+					}
 					next = next->getNext();
 				}
 				shared_ptr<Compiler> condition;
 				bool multiIndex = false;
 
-				if (current->getNext()->getType() != IToken::AND_PARA) 
+				if (current->getNext()->getType() != IToken::AND_PARA)
 				{
 					condition = make_shared<CompileComparison>();
 					multiIndex = true;
