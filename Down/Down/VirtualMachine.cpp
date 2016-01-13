@@ -261,6 +261,24 @@ void VirtualMachine::addItemToVariableArray(string key, shared_ptr<Variable> val
 	}
 }
 
+void VirtualMachine::addItemToVariableArrayAt(string arrayKey, string index, shared_ptr<Variable> value)
+{
+	auto it = variableArrayDictionary.find(arrayKey);
+
+	if (hasValueInVariableArrayDictionary(it))
+	{
+		if (atoi(index.c_str()) < it->second->variableArrayDictionary.size()) {
+			it->second->variableArrayDictionary.at(atoi(index.c_str())) = value;
+		}
+		else {
+			auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+			ErrorHandler::getInstance()->addError(error);
+			triggerRunFailure();
+			return;
+		}
+	}
+}
+
 void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> key, shared_ptr<Variable> value)
 {
 	auto it = variableArrayDictionary.find(arrayKey);
@@ -271,7 +289,14 @@ void VirtualMachine::addItemToVariableArrayAt(string arrayKey, vector<string> ke
 		bool isMulti = (it->second->arraySizes.size() > 1);
 		for (size_t i = 0; i < it->second->arraySizes.size(); i++)
 		{
-			if (atoi(key.at(i).c_str()) < it->second->arraySizes.at(i)) {
+			if (i > key.size() - 1) {
+				auto error = make_shared<Error>("index out of bounds", ".md", -1, -1, ErrorType::ERROR);
+				ErrorHandler::getInstance()->addError(error);
+				triggerRunFailure();
+				return;
+			}
+			int indexAt = atoi(key.at(i).c_str());
+			if (indexAt < it->second->arraySizes.at(i)) {
 				if (isMulti) {
 					if (i == it->second->arraySizes.size() - 1) {
 						index += atoi(key.at(i).c_str());

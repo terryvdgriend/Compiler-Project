@@ -39,6 +39,7 @@ class VirtualMachine
 		shared_ptr<Array> addArrayToDictionary(string key, vector<int> length);
 		shared_ptr<Array> getVariableArray(string key);
 		void addItemToVariableArray(string key, shared_ptr<Variable> value);
+		void addItemToVariableArrayAt(string arrayKey, string index, shared_ptr<Variable> value);
 		void addItemToVariableArrayAt(string arrayKey, vector<string> key, shared_ptr<Variable> value);
 		shared_ptr<Variable> getItemFromVariableArray(string key, vector<int> index);
 		void addArrayTypeToArrayTypes(string arrayName, IToken tokenType);

@@ -90,7 +90,13 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& no
 			{
 				localVariable = varGetter.getNextLocalVariableName(buffer);
 				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), supergeheimeToken, fromArray->variableArrayDictionary.at(i)->getTokenType());
-				vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
+				if (fromArray->arraySizes.size() > 1) {
+					vm.addItemToVariableArrayAt(toIdentifier,  to_string(i), vm.getVariable(localVariable));
+				}
+				else {
+					vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
+				}
+				
 			}
 		}
 	}
