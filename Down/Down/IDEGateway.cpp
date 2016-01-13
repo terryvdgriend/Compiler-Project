@@ -53,8 +53,9 @@ bool IDEGateway::handleIDEArguments(int argCounter, char* argValues[])
 		{
 			printElapsedTime = true;
 		}
-		else if (option == "--build")
+		else if (option == "-b" || option == "--build")
 		{
+			code = fileStreamer.readerFromPath(value);
 			build = true;
 		}
 		else if (option == "--test")
