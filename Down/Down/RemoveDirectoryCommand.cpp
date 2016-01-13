@@ -12,8 +12,9 @@
 
 #ifdef _WIN32
 #include <experimental/filesystem>
-
 namespace fs = std::experimental::filesystem;
+#endif
+
 
 
 RemoveDirectoryCommand::RemoveDirectoryCommand()
@@ -33,7 +34,8 @@ void RemoveDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall &
 	file.erase(remove(file.begin(), file.end(), '\"'), file.end());
 
 	if (getExtension(file) != "") {
-		throwCustomError("Cannot remove files, only directories (use removeFile to delete a file)", vm, node.getToken());
+        auto tempToken = node.getToken();
+		throwCustomError("Cannot remove files, only directories (use removeFile to delete a file)", vm, tempToken);
 		return;
 	}
 	int result = -1;
@@ -49,9 +51,15 @@ void RemoveDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall &
 	}
 	else {
 		char buff[256];
-
-		strerror_s(buff, 100, errno);
-		throwCustomError("Error: " + file + ": " + buff, vm, node.getToken());
+        
+        #ifdef _WIN32
+            strerror_s(buff, 100, errno);
+        #else
+            strerror_r(100,buff, errno);
+        #endif
+                
+        auto tempToken = node.getToken();
+		throwCustomError("Error: " + file + ": " + buff, vm, tempToken);
 	}
 }
 
@@ -101,11 +109,16 @@ int RemoveDirectoryCommand::RemoveDirectoryRecursiveUnix(const char *dirname)
 	}
 	closedir(dir);
 #ifndef _WIN32
-	result = rmdir(dirname);
+	int result = rmdir(dirname);
 #endif
 	char buff[256];
-
-	strerror_s(buff, 100, errno);
+    
+    #ifdef _WIN32
+        strerror_s(buff, 100, errno);
+    #else
+        strerror_r(100,buff, errno);
+    #endif
+        
 	string s = buff;
 
 	cout << s;
@@ -117,38 +130,3 @@ pair<string, string> RemoveDirectoryCommand::accept(CommandVisitor & cmdVisitor)
 {
 	return cmdVisitor.visit(*this);
 }
-
-
-
-
-
-
-#else // OSX
-
-
-RemoveDirectoryCommand::RemoveDirectoryCommand()
-{
-}
-
-
-RemoveDirectoryCommand::~RemoveDirectoryCommand()
-{
-}
-
-void RemoveDirectoryCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
-{
-
-}
-
-string RemoveDirectoryCommand::getExtension(const string filename)
-{
-    return "";
-}
-
-pair<string, string> RemoveDirectoryCommand::accept(CommandVisitor & cmdVisitor)
-{
-    return cmdVisitor.visit(*this);
-}
-
-
-#endif
