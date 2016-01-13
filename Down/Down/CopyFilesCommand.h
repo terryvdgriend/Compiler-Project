@@ -1,15 +1,13 @@
 #pragma once
 #include "BaseCommand.h"
-class RemoveDirectoryCommand :
+class CopyFilesCommand :
 	public BaseCommand
 {
 public:
-	RemoveDirectoryCommand();
-	~RemoveDirectoryCommand();
+	CopyFilesCommand();
+	~CopyFilesCommand();
+	// Inherited via BaseCommand
 	virtual void execute(VirtualMachine & vm, AbstractFunctionCall & node) override;
 	virtual pair<string, string> accept(CommandVisitor & cmdVisitor) override;
-	int RemoveDirectoryRecursive(const char *dirname);
-private:
-	string getExtension(const string fileName);
 };
 

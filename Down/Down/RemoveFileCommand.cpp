@@ -42,19 +42,14 @@ void RemoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 
 				throwCustomError("Error: " + file + ": " + buff, vm, node.getToken());
 			}
+			return;
+		}
+		else {
+			throwCustomError("Parameters must be of type text.", vm, node.getToken());
+			return;
 		}
 	}
-}
-
-string RemoveFileCommand::getExtension(const string filename)
-{
-	int pos;
-	string ext;
-	pos = filename.find_last_of('.');
-	if (pos == -1) // There was no '.' in the file name
-		return ""; // Return an empty string
-
-	return filename.substr(pos, -1);
+	throwCustomError("Can't find ", vm, node.getToken());
 }
 
 pair<string, string> RemoveFileCommand::accept(CommandVisitor & cmdVisitor)
