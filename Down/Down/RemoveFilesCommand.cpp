@@ -32,6 +32,7 @@ void RemoveFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & nod
 
 					if (opendir(file.c_str()) != nullptr) {
 						errors.push_back("File not found: " + file);
+						continue;
 					}
 					int result = remove(file.c_str());
 					if (result != 0) {

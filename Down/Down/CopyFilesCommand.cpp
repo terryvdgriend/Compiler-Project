@@ -55,8 +55,8 @@ void CopyFilesCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 						dir = opendir(file.c_str());
 						if (dir != nullptr) {
-							throwCustomError(file + " is a directory", vm, node.getToken());
-							return;
+							errors.push_back(file + " is a directory");
+							continue;
 						}
 
 						#ifdef _WIN32
