@@ -456,13 +456,16 @@
     <ClCompile Include="RemoveFileCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
-    <ClCompile Include="RemoveDirectoryCommand.cpp">
-      <Filter>Source Files\VM\Commands\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="MoveFileCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="MoveFilesCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="CopyFileCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="CopyFilesCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="OrCommand.cpp">
@@ -471,11 +474,17 @@
     <ClCompile Include="AndCommand.cpp">
       <Filter>Source Files\VM\Commands\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="RemoveFilesCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
     <ClCompile Include="GetDownCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
     <ClCompile Include="ParseIntCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoveDirectoryCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -788,13 +797,16 @@
     <ClInclude Include="RemoveFileCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="RemoveDirectoryCommand.h">
-      <Filter>Header Files\VM\Commands\Functions</Filter>
-    </ClInclude>
     <ClInclude Include="MoveFileCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="MoveFilesCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="CopyFileCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="CopyFilesCommand.h">
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="AndCommand.h">
@@ -803,11 +815,17 @@
     <ClInclude Include="OrCommand.h">
       <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
+    <ClInclude Include="RemoveFilesCommand.h">
+      <Filter>Header Files\VM\Commands\Functions</Filter>
+    </ClInclude>
     <ClInclude Include="GetDownCommand.h">
       <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
     <ClInclude Include="ParseIntCommand.h">
       <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoveDirectoryCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

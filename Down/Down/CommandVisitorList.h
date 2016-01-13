@@ -15,11 +15,14 @@ class GetAudioFilesInDirectoryCommand;
 class GetVideoFilesInDirectoryCommand;
 class RenameFileCommand;
 class RemoveFileCommand;
+class RemoveFilesCommand;
 class RemoveDirectoryCommand;
 class CountCommand;
 class GetFileExtensionCommand;
 class MoveFileCommand;
 class MoveFilesCommand;
+class CopyFileCommand;
+class CopyFilesCommand;
 class GetDownCommand;
 class ParseIntCommand;
 
