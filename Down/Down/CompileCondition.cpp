@@ -9,4 +9,5 @@ CompileCondition::CompileCondition() : CompileOperator(make_shared<CompileUnary>
 	tokenMap[IToken::LARGER_LIKE_THAN]	= "$>=";
 	tokenMap[IToken::LESS_LIKE_THAN]	= "$<=";
 	tokenMap[IToken::EQUALS_TO]			= "$==";
+	tokenMap[IToken::NOT_EQUALS_TO]		= "$!=";
 }

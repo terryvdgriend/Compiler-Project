@@ -13,12 +13,16 @@ void TestDown::runAll()
 	clock_t sttime = clock();
 
 	run("If Else", TestCode::GetIfElse());
-	run("Forloop", TestCode::GetFor());
+	run("For loop", TestCode::GetFor());
 	run("While loop", TestCode::GetWhile());
+	run("Do While loop", TestCode::GetDoWhile());
 	run("Functions", TestCode::GetFunctions());
+	run("array", TestCode::GetArray());
+	run("multi array", TestCode::GetMultiArray());
 	run("Switch Case", TestCode::GetSwitch());
 	run("Identifiers", TestCode::GetIdentifiers());
 	run("Doubles", TestCode::GetDoubles());
+	run("Operators", TestCode::GetOperators());
 	run("Identifier undefined/already defined", "**a** is 5 _number_ **b** _number_ **b**", list<string>{"already", "undefined"});
 
 	double elapsed_secs = double(clock() - sttime) / CLOCKS_PER_SEC;
