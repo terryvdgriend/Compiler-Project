@@ -55,7 +55,7 @@ void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, Abstrac
 	string localVariable;
 	string arrayDictionary = varGetter.getNextLocalVariableName(buffer);
 	string arrayIdentifier = varGetter.getNextLocalVariableName(buffer);
-	vm.setVariable(arrayDictionary, "", IToken::TYPE_TEXT_ARRAY);
+	vm.setVariable(arrayDictionary, "", node.getToken(), IToken::TYPE_TEXT_ARRAY);
 	auto arrayVar = vm.getVariable(arrayDictionary);
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
 	int size = out.size();
@@ -65,7 +65,7 @@ void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, Abstrac
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
-		vm.setVariable(localVariable, out.at(i), IToken::TYPE_TEXT);
+		vm.setVariable(localVariable, out.at(i), node.getToken(), IToken::TYPE_TEXT);
 		cout << out.at(i) << endl;
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}

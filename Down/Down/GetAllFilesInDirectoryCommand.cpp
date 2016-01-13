@@ -58,7 +58,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 	string arrayDictionary = varGetter.getNextLocalVariableName(buffer);
 	string arrayIdentifier = varGetter.getNextLocalVariableName(buffer);
 
-	vm.setVariable(arrayDictionary, "", IToken::TYPE_TEXT_ARRAY);
+	vm.setVariable(arrayDictionary, "", node.getToken(), IToken::TYPE_TEXT_ARRAY);
 	shared_ptr<Variable> arrayVar = vm.getVariable(arrayDictionary);
 
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
@@ -69,7 +69,7 @@ void GetAllFilesInDirectoryCommand::execute(VirtualMachine& vm, AbstractFunction
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
-		vm.setVariable(localVariable, out.at(i), IToken::TYPE_TEXT);
+		vm.setVariable(localVariable, out.at(i), node.getToken(), IToken::TYPE_TEXT);
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}
 	vm.setReturnValue(arrayIdentifier);

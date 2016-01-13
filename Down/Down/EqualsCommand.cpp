@@ -21,7 +21,7 @@ void EqualsCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 			for (string& item : vm.getFunctionParametersByKey(parameters.at(1)))
 			{
-				vm.setVariable(item, variable1->getValue(), variable1->getTokenType());
+				vm.setVariable(item, variable1->getValue(),node.getToken(), variable1->getTokenType());
 			}
 		}
 		
@@ -87,7 +87,7 @@ void EqualsCommand::setArrayToArray(VirtualMachine& vm, AbstractFunctionCall& no
 			if (fromArray->variableArrayDictionary.at(i) != nullptr)
 			{
 				localVariable = varGetter.getNextLocalVariableName(buffer);
-				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), fromArray->variableArrayDictionary.at(i)->getTokenType());
+				vm.setVariable(localVariable, fromArray->variableArrayDictionary.at(i)->getValue(), node.getToken(), fromArray->variableArrayDictionary.at(i)->getTokenType());
 				vm.addItemToVariableArrayAt(toIdentifier, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 			}
 		}
