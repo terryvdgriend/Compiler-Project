@@ -4,6 +4,7 @@
 
 void SmallerEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	Variable variable1 = *vm.getVariable(parameters.at(1));
@@ -33,7 +34,7 @@ void SmallerEqualsToCommand::execute(VirtualMachine& vm, AbstractFunctionCall& n
 	{
 		// Exception "cannot compare different types than numbers"
 		//throwTypeError(variable1, variable2, vm);
-		throwCustomError("cannot compare " + variable1.getValue() + " with " + variable2.getValue(), vm, node.getToken());
+		throwCustomError("cannot compare " + variable1.getValue() + " with " + variable2.getValue(), vm, supergeheimeToken);
 		return;
 	}
 }

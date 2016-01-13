@@ -13,6 +13,7 @@ AndCommand::~AndCommand()
 
 void AndCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	Variable variable1 = *vm.getVariable(parameters.at(1));
@@ -32,11 +33,11 @@ void AndCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 			vm.setReturnToken(IToken::TYPE_FACT);
 		}
 		else {
-			throwCustomError("second variable is not a bool", vm, node.getToken());
+			throwCustomError("second variable is not a bool", vm, supergeheimeToken);
 		}
 	}
 	else {
-		throwCustomError("first variable is not a bool", vm, node.getToken());
+		throwCustomError("first variable is not a bool", vm, supergeheimeToken);
 	}
 }
 

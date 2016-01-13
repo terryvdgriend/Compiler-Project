@@ -4,6 +4,7 @@
 
 void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+    auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 
 	Variable variable = *vm.getVariable(parameters[1]);
@@ -20,13 +21,13 @@ void MinusMinusCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 		for (string & item : vm.getFunctionParametersByKey(parameters.at(1))) 
 		{
-			vm.setVariable(item, to_string(number1), node.getToken(), variable.getTokenType());
+			vm.setVariable(item, to_string(number1), supergeheimeToken, variable.getTokenType());
 		}
 		vm.setReturnValue(to_string(number1));
 		vm.setReturnToken(variable.getTokenType());
 	}
 	else {
-		throwCustomError("cannot decrease an undefined variable.", vm, node.getToken());
+		throwCustomError("cannot decrease an undefined variable.", vm, supergeheimeToken);
 	}
 }
 

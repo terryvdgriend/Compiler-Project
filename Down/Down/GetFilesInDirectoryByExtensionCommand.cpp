@@ -21,6 +21,7 @@ GetFilesInDirectoryByExtensionCommand::~GetFilesInDirectoryByExtensionCommand()
 
 void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 {
+    auto supergeheimeToken = node.getToken();
 	// TODO: DO EXTENSION STUFF
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto var = vm.getVariable(parameters[1]);
@@ -37,7 +38,7 @@ void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, Abstrac
 	if (dir == nullptr) {
 		//throwTypeError(*var, *var, vm);
 		//dir is null dir not found
-		throwCustomError("Directory not found! Cannot get files by extension..", vm, node.getToken());
+		throwCustomError("Directory not found! Cannot get files by extension..", vm, supergeheimeToken);
 		return;
 	}
 	while (dir)
@@ -55,7 +56,7 @@ void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, Abstrac
 	string localVariable;
 	string arrayDictionary = varGetter.getNextLocalVariableName(buffer);
 	string arrayIdentifier = varGetter.getNextLocalVariableName(buffer);
-	vm.setVariable(arrayDictionary, "", node.getToken(), IToken::TYPE_TEXT_ARRAY);
+	vm.setVariable(arrayDictionary, "", supergeheimeToken, IToken::TYPE_TEXT_ARRAY);
 	auto arrayVar = vm.getVariable(arrayDictionary);
 	vm.setFunctionParameter(arrayDictionary, arrayIdentifier);
 	int size = out.size();
@@ -65,7 +66,7 @@ void GetFilesInDirectoryByExtensionCommand::execute(VirtualMachine & vm, Abstrac
 	for (size_t i = 0; i < out.size(); i++)
 	{
 		localVariable = varGetter.getNextLocalVariableName(buffer);
-		vm.setVariable(localVariable, out.at(i), node.getToken(), IToken::TYPE_TEXT);
+		vm.setVariable(localVariable, out.at(i), supergeheimeToken, IToken::TYPE_TEXT);
 		cout << out.at(i) << endl;
 		vm.addItemToVariableArrayAt(arrayDictionary, vector<string>({ to_string(i) }), vm.getVariable(localVariable));
 	}
