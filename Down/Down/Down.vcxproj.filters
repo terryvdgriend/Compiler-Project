@@ -483,6 +483,9 @@
     <ClCompile Include="GetDownCommand.cpp">
       <Filter>Source Files\VM\Commands\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="ParseIntCommand.cpp">
+      <Filter>Source Files\VM\Commands\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -819,6 +822,9 @@
       <Filter>Header Files\VM\Commands\Functions</Filter>
     </ClInclude>
     <ClInclude Include="GetDownCommand.h">
+      <Filter>Header Files\VM\Commands\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseIntCommand.h">
       <Filter>Header Files\VM\Commands\Operators</Filter>
     </ClInclude>
   </ItemGroup>

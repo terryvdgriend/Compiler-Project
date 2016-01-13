@@ -27,7 +27,7 @@ class VirtualMachine
 		IToken getReturnToken();
 		void setReturnToken(IToken value);
 		shared_ptr<Variable> getVariable(string parameter);
-		void setVariable(string key, string value, IToken token);
+		void setVariable(string key, string value, shared_ptr<Token>& token,IToken tokenType);
 
 		list<string> getFunctionParametersByKey(string name);
 		vector<string> getFunctionParametersByValue(string value);
@@ -50,6 +50,8 @@ class VirtualMachine
 		bool isAnIdentifier(string name);
 
 		bool isAnArrayIdentifier(string name);
+
+		void ThrowCustomError(string error, shared_ptr<Token>& token);
 
 	private:
 		string returnValue;

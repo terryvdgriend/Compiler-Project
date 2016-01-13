@@ -19,7 +19,15 @@ exports.getCompilerFile = function() {
 	return compilerFilePath;
 }
 
-exports.run = function(code) {
+exports.write = function(input) {
+	if(global.compilerProcess != null) {
+		exports.appendLogResult(input + "<br/>");
+		global.compilerProcess.stdin.setEncoding = 'utf-8';
+		global.compilerProcess.stdin.write(input + "\r\n");
+	}
+}
+
+exports.run = function(code, execute) {
 	global.editor.getSession().clearAnnotations();
 	exports.clearLogResult();
 	exports.clearErrorLog();
@@ -34,9 +42,19 @@ exports.run = function(code) {
 		if (err) {
 			console.log(err);
 		} else {
+			// Stop old process
+			exports.killCompiler();
+
+			// Create new process
 			var spawn = require('child_process').spawn;
 			var compilerFilePath = exports.getCompilerFile();
-			var arguments = ["-r"];
+			var arguments = [];
+
+			if(execute) {
+				arguments.push("-r");
+			} else {
+				arguments.push("-b");
+			}
 
 			if (global.settings.printTokenList) {
 				arguments.push("-t");
@@ -44,6 +62,10 @@ exports.run = function(code) {
 
 			if (global.settings.printCompilerList) {
 				arguments.push("-c");
+			}
+
+			if (global.settings.printElapsedTime) {
+				arguments.push("--time");
 			}
 
 			arguments.push(tempFile);
@@ -56,10 +78,20 @@ exports.run = function(code) {
 				var resultWithBrs = data.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 				var resultWithSpaces = resultWithBrs.replace(/ /g, '&nbsp;');
 				exports.appendLogResult(resultWithSpaces);
+
+				// Show input field
+				var input = '<div class="input">><input type="text"/></div>';
+				var logDiv = $('#log');
+				logDiv.html(logDiv.html() + input);
+				
+				setTimeout(function(){
+					$("#log div.input input[type=text]").focus();
+				}, 50);
+
 				console.log(data);
 				if(!errorOccurred) {
-					var index = $('#log > div a[href="#output"]').parent().index();
-					$("#log > div").tabs("option", "active", index);
+					var index = $('#log > div.tabs a[href="#output"]').parent().index();
+					$("#log > div.tabs").tabs().tabs("option", "active", index);
 				}
 			});
 
@@ -84,8 +116,8 @@ exports.run = function(code) {
 				errorHtml += "</table>";
 				exports.appendErrorLog(errorHtml);
 
-				var index = $('#log > div a[href="#errors"]').parent().index();
-				$("#log > div").tabs("option", "active", index);
+				var index = $('#log > div.tabs a[href="#errors"]').parent().index();
+				$("#log > div.tabs").tabs().tabs("option", "active", index);
 
 				global.editor.getSession().setAnnotations(errors.map(function(error) {
 					return {
@@ -101,17 +133,27 @@ exports.run = function(code) {
 
 			cmd.on('close', function (code) {
 				exports.appendLogResult("<br>Program exited with code " + code + " <br>");
+				$('#log .input').remove();
+				global.editor.focus();
 			});
+
+			global.compilerProcess = cmd;
 		}
 	});
 };
+
+exports.killCompiler = function() {
+	if(global.compilerProcess != null) {
+		global.compilerProcess.kill('SIGINT');
+	}
+}
 
 exports.getTokenList = function(callback) {
 	var spawn = require('child_process').spawn;
 
 	var compilerFilePath = exports.getCompilerFile();
 	var cmd2 = spawn(compilerFilePath, ['getTokens']);
-
+	
 	cmd2.stdout.on('data', function (data) {
 		var listString = data.toString();
 		var list = JSON.parse(listString);
@@ -162,7 +204,7 @@ exports.appendLogResult = function(html) {
 
 exports.logToBottom = function() {
 	var outputDiv = $('#output');
-	outputDiv.animate({ scrollTop: outputDiv.prop("scrollHeight")}, 300);
+	outputDiv.stop(true, false).animate({ scrollTop: outputDiv.prop("scrollHeight")}, 300);
 }
 
 exports.clearErrorLog = function(html) {

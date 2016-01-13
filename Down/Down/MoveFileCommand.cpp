@@ -51,13 +51,17 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				dir = opendir(newDirectory.c_str()); /*your directory*/
 				if (dir == nullptr) {
-					throwTypeError(*variable2, *variable2, vm);
+					//throwTypeError(*variable2, *variable2, vm);
+					//dir is null dir not found
+					throwCustomError("Directory not found! Cannot move file..", vm, node.getToken());
 					return;
 				}
 
 				dir = opendir(file.c_str()); /*your directory*/
 				if (dir != nullptr) {
-					throwTypeError(*variable1, *variable1, vm);
+					//throwTypeError(*variable1, *variable1, vm);
+					//dir is null dir not found
+					throwCustomError("Directory not found! Cannot move file..", vm, node.getToken());
 					return;
 				}
 
@@ -75,10 +79,10 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 
 				int result = rename(file.c_str(), "");
 				if (result == 0) {
-					cout << "File " << file << " renamed to " << newFile << endl;
+					cout << "File " << file << " moved to " << newFile << endl;
 				}
 				else {
-					cout << "Error renaming file! Code: " << result << endl;
+					cout << "Error moving file! Code: " << result << endl;
 					char buff[256];
 
 					#ifdef _WIN32
@@ -92,11 +96,11 @@ void MoveFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node)
 				}
 				return;
 			}
-			throwCustomError("Parameters must be of type text.", vm);
+			throwCustomError("Parameters must be of type text.", vm, node.getToken());
 			return;
 		}
 	}
-	throwCustomError("Can't find ", vm);	
+	throwCustomError("Can't find ", vm, node.getToken());
 }
 
 pair<string, string> MoveFileCommand::accept(CommandVisitor & cmdVisitor)

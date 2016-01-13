@@ -27,6 +27,7 @@
 #include "CopyFileCommand.h"
 #include "CopyFilesCommand.h"
 #include "GetDownCommand.h"
+#include "ParseIntCommand.h"
 
 // Miscellaneous
 #include "ConstantToReturnValueCommand.h"

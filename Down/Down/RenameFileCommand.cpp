@@ -30,7 +30,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				string oldFile = vm.getVariable(parameters[1])->getValue();
 				string newFile = vm.getVariable(parameters[2])->getValue();
 				if (getExtension(oldFile) != getExtension(newFile)) {
-					throwCustomError("Input does not have matching extensions", vm);
+					throwCustomError("Input does not have matching extensions", vm, node.getToken());
 				}
 
 				newFile.erase(remove(newFile.begin(), newFile.end(), '\"'), newFile.end());
@@ -53,7 +53,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				dir = opendir(oldFile.c_str());
 
 				if (dir != nullptr) {
-					throwCustomError("Cannot rename directories", vm);
+					throwCustomError("Cannot rename directories", vm, node.getToken());
 					return;
 				}
 
@@ -64,7 +64,7 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 								pos = oldFile.find_last_of('\\/');
 				#endif
 				if (pos == -1) {
-					throwCustomError("Incorrect input: is the first parameter a full path?", vm);
+					throwCustomError("Incorrect input: is the first parameter a full path?", vm, node.getToken());
 					return;
 				}
 
@@ -86,12 +86,12 @@ void RenameFileCommand::execute(VirtualMachine & vm, AbstractFunctionCall & node
 				return;
 			}
 			else {
-				throwCustomError("Parameters must be of type 'text'", vm);
+				throwCustomError("Parameters must be of type 'text'", vm, node.getToken());
 				return;
 			}
 		}
 	}
-	throwCustomError("Parameters not set", vm);
+	throwCustomError("Parameters not set", vm, node.getToken());
 }
 
 string RenameFileCommand::getExtension(const string filename)

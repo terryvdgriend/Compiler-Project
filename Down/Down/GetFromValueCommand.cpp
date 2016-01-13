@@ -20,19 +20,19 @@ void GetFromValueCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node
 
 				if (value.size() > 0)
 				{
-					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue(), rToken);
+					vm.setVariable(parameters[1], vm.getVariable(value.back())->getValue(), node.getToken(), rToken);
 				}
 				else
 				{
 					// Exception var undefined
-					vm.setVariable(parameters[1], "", rToken);
+					vm.setVariable(parameters[1], "", node.getToken(), rToken);
 				}
 				vm.setFunctionParameter(parameters[1], rValue);
 			}
 		}
 		else
 		{
-			vm.setVariable(parameters[1], rValue, rToken);
+			vm.setVariable(parameters[1], rValue, node.getToken(), rToken);
 		}
 	}
 }

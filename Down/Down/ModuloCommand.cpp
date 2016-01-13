@@ -24,8 +24,8 @@ void ModuloCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 	}
 	else 
 	{
-		throwTypeError(variable1, variable2, vm);
-
+		//throwTypeError(variable1, variable2, vm);
+		throwCustomError("cannot get remainder (modulo) " + variable1.getValue() + " from " + variable2.getValue(), vm,node.getToken());
 		return;
 	}
 }

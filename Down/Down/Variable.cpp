@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Variable.h"
+#include "VirtualMachine.h"
 
 Variable::Variable()
 {
@@ -43,9 +44,15 @@ IToken Variable::getTokenType()
 	return _tokenType;
 }
 
-void Variable::setTokenType(IToken tokentype)
+void Variable::setTokenType(IToken tokentype, VirtualMachine& vm)
 {
 	_tokenType = tokentype;
+
+	if ((this->getType() == VariableType::text && tokentype != IToken::TYPE_TEXT)) {
+		auto error = make_shared<Error>("Type mismatch found!", ErrorLocation::VM);
+		ErrorHandler::getInstance()->addError(error);
+		vm.triggerRunFailure();
+	}
 }
 
 bool Variable::is_number(const string& s)

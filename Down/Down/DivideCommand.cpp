@@ -26,17 +26,16 @@ void DivideCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 		}
 		else 
 		{
-            throwTypeError(*variable1, *variable2, vm);
-			vm.triggerRunFailure();
-
+			throwCustomError("cannot divide by zero", vm,node.getToken());
 			return;
 		}
 	}
 	else 
 	{
+		Variable variable1 = *vm.getVariable(parameters.at(1));
+		Variable variable2 = *vm.getVariable(parameters.at(2));
 		// Exception division requires 2 numbers
-		throwTypeError(*variable1, *variable2, vm);
-
+		throwCustomError("cannot divide " + variable1.getValue() + " by " + variable2.getValue(), vm, node.getToken());
 		return;
 	}
 }

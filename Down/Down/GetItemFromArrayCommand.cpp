@@ -7,7 +7,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	shared_ptr<Array> varArray = vm.getVariableArray(parameters.at(1));
 	if (varArray == nullptr) {
-		throwCustomError("array is not found.", vm);
+		throwCustomError("array is not found.", vm, node.getToken());
 		return;
 	}
 
@@ -73,7 +73,7 @@ void GetItemFromArrayCommand::execute(VirtualMachine& vm, AbstractFunctionCall& 
 	}
 	else
 	{
-		shared_ptr<Error> error = make_shared<Error>("the array is still empty", ".md", -1, -1, ErrorType::ERROR);
+		shared_ptr<Error> error = make_shared<Error>("the array is still empty", ".md", node.getToken()->getLineNumber(), node.getToken()->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 		vm.triggerRunFailure();
 	}

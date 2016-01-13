@@ -1,10 +1,12 @@
 <script src="../js/plugins/ace/ace.js" type="text/javascript"></script>
 <script src="../js/plugins/ace/theme-twilight.js" type="text/javascript"></script>
 <script src="../js/plugins/ace/ext-language_tools.js" type="text/javascript"></script>
+<script src="../js/plugins/contextmenu/jquery.contextmenu.js" type="text/javascript"></script>
 
 <script>
 var editor = require("./../js/editor.js");
 var compiler = require("./../js/compiler.js");
+var to_markdown = require("../js/plugins/html-to-md/md");
 
 global.setCustomStyle = function() {
     if(global.settings.customStyle != null) {
@@ -30,7 +32,43 @@ global.setCustomStyle = function() {
 
 $(function() {
 
-    var tabs = $("#log > div").tabs();
+    $('#markdown #markdownCode').contextmenu({
+        "Variable": function() {
+            pasteHtmlAtCaret('<b>VARIABLE</b>', false);
+        },
+        "Type": function() {
+            pasteHtmlAtCaret('<i>TYPE</i>', false);
+        },
+        "Function": function() {
+            pasteHtmlAtCaret('<hr data-code="---"><h3 id="calcy">METHOD_NAME</h3><hr data-code="___">', false);
+        },
+        "Comment": function() {
+            pasteHtmlAtCaret('<blockquote><p>Comment</p></blockquote>', false);
+        },
+        "Switch": function() {
+            pasteHtmlAtCaret('<h4 id="switch-value-">switch ( VALUE )</h4><h2 id="case-case-_value-">case ( CASE_VALUE )</h2><p>__</p><h2 id="default">default</h2><p>__</p>', false);
+        },
+        "For-loop": function() {
+            pasteHtmlAtCaret('<h4 id="for-_number_-i-is-0-i-smaller-than-10-i-is-i-plus-1-">for ( <em>number</em> <strong>i</strong> is 0 , <strong>i</strong> smaller than 10 , <strong>i</strong> is <strong>i</strong> plus 1 )</h4><p>--</p><p>__</p>', false);
+        },
+        "While-loop": function() {
+            pasteHtmlAtCaret('<h4 id="while-i-smaller-than-5-">while ( CONDITION )</h4><p>--<br> <br>__</p>', false);
+        },
+        "Do-while": function() {
+            pasteHtmlAtCaret('<h4 id="do">do</h4><p>--</p><p>__</p><h4 id="while-false-">while (false)</h4>', false);
+        },
+        "If": function() {
+            pasteHtmlAtCaret('<h4 id="if-1-like-1-">if (1 like 1)</h4><p>--</p><p>__</p>', false);            
+        },
+        "If/Else": function() {
+            pasteHtmlAtCaret('<h4 id="if-1-like-2-">if (1 like 2)</h4><p>--</p><p>__  </p><h4 id="else">else</h4><p>--</p><p>__</p>', false);
+        },
+        "If/Else/Else If": function() {
+            pasteHtmlAtCaret('<h4 id="if-1-like-2-">if (1 like 2)</h4><p>--</p><p>__ </p><h4 id="else-if-1-like-1-">else if (1 like 1)</h4><p>--</p><p>__  </p><h4 id="else">else</h4><p>--</p><p>__</p>', false);            
+        }
+    }, 'right', 0);
+
+    var tabs = $("#log > div.tabs").tabs();
     tabs.find(".ui-tabs-nav").sortable({
         axis: "x",
         stop: function() {
@@ -62,7 +100,6 @@ $(function() {
     });
 
     global.editor = ace.edit("code");
-
     global.editor.setTheme("ace/theme/" + global.settings.theme);
     global.editor.session.setMode("ace/mode/down");
     global.editor.setOptions({
@@ -97,6 +134,19 @@ $(function() {
         langTools.addCompleter(downCompleter);
     });
 
+    global.editor.commands.addCommand(
+        {
+            name: 'saveFile',
+            bindKey: {
+            win: 'return',
+            mac: 'return',
+            sender: 'editor|cli'
+        }, exec: function(env, args, request) {
+            global.editor.insert("  \n");
+            return true;
+        }
+    });
+
     global.editor.on('change', function(e) {
         editor.reload();
     });
@@ -104,6 +154,16 @@ $(function() {
     $('#log a.close').on('click', function() {
         $('body').removeClass('showLog');
         global.editor.resize();
+    });
+
+    $("#log").on('keyup', '.input input', function (e) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        // Enter key
+        if(keycode == '13') {
+            var val = $(this).val();
+            $(this).parent('.input').remove();
+            compiler.write(val);
+        }
     });
 
     window.ondragover = function(e) { e.preventDefault(); return false };
@@ -116,10 +176,10 @@ $(function() {
 
     $('body').on('click', 'table.errors tr', function(event) {
         event.preventDefault();
-        global.editor.gotoLine($(this).data('line'), $(this).data('column'), true);
+        global.editor.gotoLine($(this).data('line'), $(this).data('column')-1, true);
     });
 
-    $('#log a.save').on('click', function() {
+    $('#log').on('click', 'a.save', function() {
         editor.chooseFile("#saveOutputDialog", function(filename) {
             var fs = require('fs');
             var output = $("#output").html();
@@ -131,33 +191,131 @@ $(function() {
                 if (err) {
                     console.log(err);
                     alert("Could not save file to: " + filename);
-                } else {
-                    alert("File saved to: " + filename);
                 }
             });
         });
     });
 
     global.setCustomStyle();
+
+    $('#markdown #markdownCode').get(0).contentEditable = true;
+    $('#markdown #markdownCode').on('keyup', function() {
+        updateCodeLeft();
+    });
+
+    $('#markdown').on('focus', function() {
+        $('#insert').removeAttr('disabled');
+    });
+
+    global.editor.on('focus', function() {
+        $('#insert').attr('disabled', 'disabled');
+    });
+
+    $('#insert').on('click', function() {
+        pasteHtmlAtCaret('<b>NAME</b>', false);
+    });
 });
 
 global.gui.Window.get().on('focus', function() {
     global.setCustomStyle();
 });
 
+function updateCodeLeft() {
+    global.htmlToMarkdown = 2;
+    var md = to_markdown($('#markdown #markdownCode').html());
+    md = md.replace(/\\_/g, "_");
+    md = md.replace(/\\\[/g, "[");
+    md = md.replace(/\\\]/g, "]");
+    md = md.replace(/\\\#/g, "#");
+    md = md.replace(/^\#\# ([case|default](.*))$/gmi,"$1\n--   ");
+    global.editor.setValue(md, 1);
+}
+
+function pasteHtmlAtCaret(html, selectPastedContent) {
+    html = "&nbsp;" + html + "&nbsp;";
+    var sel, range;
+    if (window.getSelection) {
+        // IE9 and non-IE
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+
+            // Range.createContextualFragment() would be useful here but is
+            // only relatively recently standardized and is not supported in
+            // some browsers (IE9, for one)
+            var el = document.createElement("div");
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(), node, lastNode;
+            while ( (node = el.firstChild) ) {
+                lastNode = frag.appendChild(node);
+            }
+            var firstNode = frag.firstChild;
+            range.insertNode(frag);
+            
+            // Preserve the selection
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                if (selectPastedContent) {
+                    range.setStartBefore(firstNode);
+                } else {
+                    range.collapse(true);
+                }
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    } else if ( (sel = document.selection) && sel.type != "Control") {
+        // IE < 9
+        var originalRange = sel.createRange();
+        originalRange.collapse(true);
+        sel.createRange().pasteHTML(html);
+        if (selectPastedContent) {
+            range = sel.createRange();
+            range.setEndPoint("StartToStart", originalRange);
+            range.select();
+        }
+    }
+
+    updateCodeLeft();
+}
+
+i=0;
+j=0;
+function adaptiveheight(a) {
+    $(a).height(0);
+    var scrollval = $(a)[0].scrollHeight;
+    $(a).height(scrollval);
+    if (parseInt(a.style.height) > $(window).height()) {
+        if(j==0){
+            max=a.selectionEnd;
+        }
+        j++;
+        var i =a.selectionEnd;
+        console.log(i);
+        if(i >=max){
+            $(document).scrollTop(parseInt(a.style.height));
+        }else{
+            $(document).scrollTop(0);
+        }
+    }
+}
 </script>
 
 <div id="customCSS"></div>
 
 <!-- Editor -->
 <div id="editor"><textarea id="code"></textarea></div>
-<div id="markdown"></div>
+<div id="markdown">
+    <div id="markdownCode"></div>
+</div>
 
 <!-- Log -->
 <div id="log">
     <a href="#" class="close">[X]</a>
     <a href="#" class="save">[Save]</a>
-    <div>
+    <div class="tabs">
         <ul>
             <li><a href="#output">Output</a></li>
             <li><a href="#errors">Errors</a></li>

@@ -17,12 +17,9 @@
 		"exe_icon": "img/icon.png", 
 		"min_width": 960,
 		"min_height": 600,
-		"width": 960,
-  		"height": 600,
+		"width": 1200,
+  		"height": 750,
 		"position": "center",
 		"show_in_taskbar": true
-	},
-	"dependencies": {
-		"marked": "^0.3.3"
 	}
 }

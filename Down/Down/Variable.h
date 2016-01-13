@@ -1,5 +1,6 @@
 #pragma once
 #include "VariableType.h"
+class VirtualMachine;
 
 class Variable
 {
@@ -10,7 +11,7 @@ class Variable
 		VariableType getType();
 		string getValue();
 		IToken getTokenType();
-		void setTokenType(IToken tokentype);
+		void setTokenType(IToken tokentype, VirtualMachine& vm);
 
 	private:
 		string _value;

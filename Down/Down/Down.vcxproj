@@ -175,6 +175,7 @@
     <ClInclude Include="NodeVisitor.h" />
     <ClInclude Include="NotEqualsToCommand.h" />
     <ClInclude Include="OrCommand.h" />
+    <ClInclude Include="ParseIntCommand.h" />
     <ClInclude Include="PlusCommand.h" />
     <ClInclude Include="PlusPlusCommand.h" />
     <ClInclude Include="ProgramHandler.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="NodeVisitor.cpp" />
     <ClCompile Include="NotEqualsToCommand.cpp" />
     <ClCompile Include="OrCommand.cpp" />
+    <ClCompile Include="ParseIntCommand.cpp" />
     <ClCompile Include="PlusCommand.cpp" />
     <ClCompile Include="PlusPlusCommand.cpp" />
     <ClCompile Include="ProgramHandler.cpp" />

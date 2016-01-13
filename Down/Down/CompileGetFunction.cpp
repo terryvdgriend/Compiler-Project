@@ -69,7 +69,7 @@ void CompileGetFunction::compile(const shared_ptr<LinkedTokenList>& tokenList, s
 
 			if (current->getType() != expectation.getTokenType()) 
 			{
-                auto error = make_shared<Error>("", ".md", current->getLevel(), current->getPosition(), ErrorType::ERROR);
+                auto error = make_shared<Error>("", ".md", current->getLineNumber(), current->getPosition(), ErrorType::ERROR);
 				ErrorHandler::getInstance()->addError(error,
 													  expectation.getTokenType(), current->getType());
 				begin = end;
@@ -168,11 +168,12 @@ void CompileGetFunction::compileNotUserDefined(const shared_ptr<LinkedTokenList>
 	}
 
 	if (!found) {
-		auto error = make_shared<Error>(_name + " not found with this amount of paramaeters", ".md", current->getLineNumber(),
+		auto error = make_shared<Error>(_name + " not found with this amount of parameters", ".md", current->getLineNumber(),
 			current->getPosition(), ErrorType::ERROR);
 		ErrorHandler::getInstance()->addError(error);
 	}
-	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>();
+	auto tempToken = make_shared<Token>(current);
+	shared_ptr<FunctionCall> pFunction = make_shared<FunctionCall>(tempToken);
 	pFunction->setArraySize(parameters.size()+1);
 	pFunction->setAt(0, _name.c_str());
 
