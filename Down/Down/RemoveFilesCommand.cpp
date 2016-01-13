@@ -10,6 +10,7 @@
 
 void RemoveFilesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 {
+	auto supergeheimeToken = node.getToken();
 	vector<string>& parameters = node.getContentArrayNonConstant();
 	auto varArray = vm.getVariableArray(parameters.at(1));
 	auto variable1 = vm.getVariable(parameters[1]);
@@ -52,20 +53,20 @@ void RemoveFilesCommand::execute(VirtualMachine& vm, AbstractFunctionCall& node)
 
 				for (auto err : errors) 
 				{
-					throwCustomError(err, vm);
+					throwCustomError(err, vm, supergeheimeToken);
 				}
 
 				return;
 			}
-			throwCustomError("Array is empty.", vm);
+			throwCustomError("Array is empty.", vm, supergeheimeToken);
 
 			return;
 		}
-		throwCustomError("Parameters must be of type text.", vm);
+		throwCustomError("Parameters must be of type text.", vm, supergeheimeToken);
 
 		return;
 	}
-	throwCustomError("Can't find ", vm);
+	throwCustomError("Can't find ", vm, supergeheimeToken);
 }
 
 pair<string, string> RemoveFilesCommand::accept(CommandVisitor& cmdVisitor)
